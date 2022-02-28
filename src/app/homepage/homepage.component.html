@@ -1,0 +1,155 @@
+<div class="content" *ngIf="true">
+  <div class="container" #container>
+    <h1 class="center title" @fadeInTitle>Welcome to Vortaro</h1>
+    <div
+      class="section center"
+      [@scrollSlide]="sectionStateArray[1] || 'hiden'"
+    >
+      <p>
+        This page has been designed for autodidactic purposes and as a proof of
+        concept. It is dedicated to people who want to expand their knowledge of
+        foreign language vocabulary.
+      </p>
+    </div>
+    <div
+      class="section center"
+      [@scrollSlide]="sectionStateArray[2] || 'hiden'"
+    >
+      <p>
+        It allows to store words you wish to learn, organize them by groups,
+        practice via different exercises and keep track of your learning
+        progress.
+      </p>
+    </div>
+    <div></div>
+    <p class="title sec-sep center" @fadeIn>My Vocabulary</p>
+    <div class="section" [@scrollSlide]="sectionStateArray[3] || 'hiden'">
+      <img src="..\assets\imgs\homepage\glossary.webp" alt="glossary" />
+      <div class="text-div">
+        <p>
+          This is your glossary, here you can find all your stored words. Here
+          is where you can manage your words and groups by adding, editing and
+          deleting.
+        </p>
+        <p>
+          Even thou group sizes are limitless, we recommend you not to exceed
+          twenty words per group to keep your exercises manageable.
+        </p>
+      </div>
+    </div>
+    <div class="section" [@scrollSlide]="sectionStateArray[4] || 'hiden'">
+      <img src="..\assets\imgs\homepage\newword.webp" alt="new word" />
+      <div class="text-div">
+        <p>To create or edit a word you are given four inputs:</p>
+        <p>• Word - for foreign word.</p>
+        <p>
+          • Translation - here you input a particular translation you wish to
+          learn.
+        </p>
+        <p>
+          • Tips - optional field, here you can write clues about word meaning,
+          so in case you completely forget meaning of the word during exercise
+          you can have a refresher.
+        </p>
+        <p>
+          • Additional translations - another optional field, here you can add
+          supplementary translations that will be counted as correct answers
+          during exercises.
+        </p>
+      </div>
+    </div>
+    <div class="section" [@scrollSlide]="sectionStateArray[4] || 'hiden'">
+      <img
+        src="..\assets\imgs\homepage\addtrandtips.webp"
+        alt="add trand tips"
+      />
+      <div class="text-div">
+        <p>
+          • To see additional translations of the word, press on the eye icon.
+        </p>
+        <p>• To see tips, hover over question icon.</p>
+      </div>
+    </div>
+    <div class="section" [@scrollSlide]="sectionStateArray[4] || 'hiden'">
+      <img src="..\assets\imgs\homepage\ratings.webp" alt="ratings" />
+      <div class="text-div">
+        <p>On "My Vocabulary" page you also can track your progress.</p>
+        <p>
+          • Next to each group you can find rating bars that represent average
+          grade of words in that group.
+        </p>
+        <p>
+          • Next to each word you can find a star that represents your knowledge
+          of that word.
+        </p>
+        <p>
+          Rating bars and starts are color-coded, red signalling need for
+          attention, orange - average and green means you have a solid grasp.
+        </p>
+      </div>
+    </div>
+
+    <div></div>
+    <p class="title sec-sep center" @fadeIn>Settings</p>
+    <div class="section" [@scrollSlide]="sectionStateArray[6] || 'hiden'">
+      <img src="..\assets\imgs\homepage\settings.webp" alt="settings" />
+      <div class="text-div">
+        <p>
+          Settings give you access to multiple theming options under palette
+          icon and learning modes under lightbulb icon.
+        </p>
+        <p>
+          Also, here you can change translation direction. Depending on which
+          direction you have selected you can be practicing meaning of the
+          foreign word or its spelling.
+        </p>
+      </div>
+    </div>
+    <div class="section" [@scrollSlide]="sectionStateArray[7] || 'hiden'">
+      <img src="..\assets\imgs\homepage\modes.webp" alt="modes" />
+      <div class="text-div">
+        <p>
+          There are also two different modes you can choose to do exercises.
+        </p>
+        <p>Choose mode you like before selecting an exercise.</p>
+      </div>
+    </div>
+    <div class="section" [@scrollSlide]="sectionStateArray[8] || 'hiden'">
+      <img src="..\assets\imgs\homepage\quiz.webp" alt="quiz" />
+      <div class="text-div">
+        <p>Quiz is recommended for getting familiarized with new words.</p>
+      </div>
+    </div>
+    <div class="section" [@scrollSlide]="sectionStateArray[9] || 'hiden'">
+      <img src="..\assets\imgs\homepage\spelling.webp" alt="spelling" />
+      <div class="text-div">
+        <p>Spelling is targeted to improve Orthography.</p>
+        <p>
+          Keep in mind spelling mode is the only mode that will allow you to
+          earn scores higher than average.
+        </p>
+      </div>
+    </div>
+    <div></div>
+    <p class="title sec-sep center" @fadeIn>Exercises</p>
+    <div class="section" [@scrollSlide]="sectionStateArray[5] || 'hiden'">
+      <img src="..\assets\imgs\homepage\training.webp" alt="training" />
+      <div class="text-div">
+        <p>Currently there are three types of exercises available.</p>
+        <p>
+          <mat-icon>view_list</mat-icon> "By group" it allows you to exercises
+          all words located in a group.
+        </p>
+        <p>
+          <i class="fas fa-dice"></i> "Random" throws at you 15 random words
+          designed as refresher.
+        </p>
+        <p>
+          <mat-icon>sync_problem</mat-icon> "Error correction" allows you to
+          redeem words with worse scores by giving you an exercise of 15 words
+          with the worse score.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

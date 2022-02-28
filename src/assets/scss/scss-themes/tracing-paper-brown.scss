@@ -1,0 +1,89 @@
+@mixin tracing-paper-brown {
+  --gr-0: #50505a;
+  --tr-0: rgba(75, 52, 31, 0.196);
+  --tr-1: rgba(97, 55, 31, 0.4);
+  --tr-1-1: rgba(53, 29, 16, 0.6);
+  --tr-2: rgba(0, 0, 0, 0.288);
+  --tr-3: rgba(255, 255, 255, 0.05);
+
+  --bg-main: rgb(0, 0, 0);
+
+  --bg-tr: var(--tr-1);
+  --bg-extra-translations: var(--tr-1-1);
+  --bg-tr-cnt: var(--tr-2);
+  --bg-tr-home: var(--tr-3);
+  --bg-btn-primary: #ffa502;
+  --btn-hover: #d35400;
+
+  // --bg-btn-secondary:;
+  --btn-secondary-hover: rgba(255, 255, 255, 0.15);
+  --btn-secondary-border: 1px solid rgba(255, 255, 255, 0.15);
+
+  --bg-tips: rgb(97, 55, 31);
+  --border-tips: var(--tr-1);
+  --hover-tips: #cacada;
+  --circle-tips: rgba(0, 0, 0, 0.4);
+  --circle-tips-spelling: rgba(0, 0, 0, .54);
+
+  --sb-border: 2px solid var(--tr-1);
+  --sb-border-sm: 1px solid var(--gr-0);
+
+  // Set popup submenu text and icons
+  --text-sh-str: 0 0 6px #0a0a0a;
+  --set-pop-menu-bg: rgba(27, 27, 27, 0.637);
+  --set-pop-submenu-bg: var(--bg-btn-primary);
+  --set-pop-filter: drop-shadow(0 0 15px #f6511dff);
+
+  --tr-container-bg: var(--tr-0);
+  --tr-border-xl: 17px solid var(--tr-0);
+  --tr-border-sm: 5px solid var(--tr-0);
+  // firefox outline bug workaround
+  --tr-shadow-xl: 0 0 0 17px var(--tr-0);
+  --tr-shadow-sm: 0 0 0 7px var(--tr-0);
+  //////////////////////////////////////////////////////////////////////////NOOO SHADOW ON TEXT ????????????!!!!!!!!!!!!!!!!!!!
+  --text-primary: white;
+  --text-warning: #f6511dff;
+  --text-sh: 1px 1px 3px var(#756f88be);
+
+  // Rating stars and bars results
+  --bar-border: var(--gr-0);
+  --star-good: rgb(13, 206, 13);
+  --star-medium: rgb(255, 218, 51);
+  --star-bad: rgb(253, 44, 44);
+
+  // Right and Wrong results and spelling
+  --answer-correct: rgb(108, 255, 108);
+  --answer-wrong: rgb(255, 89, 67);
+
+  // Mobile menu
+  --odd-li: rgb(12, 7, 0);
+  --even-li: rgb(31, 9, 0);
+  --li-a-border: 4px solid rgb(22, 0, 0);
+
+  // Hex menu
+  --bg-exercises-btn: rgb(189, 100, 17);
+  // --bg-exercises-btn: rgb(230, 138, 0);
+  --btn-exercises-shadow: drop-shadow(0 0 15px rgb(255, 0, 0));
+
+  // Navbar
+  --text-ember: #ffa502;
+  --text-ember-dark: #d35400;
+
+  // Animation blobs
+  --anim-blob-bg: rgb(255, 94, 0);
+  --anim-blob-sh:
+    0 0 40px 5px rgb(255, 94, 0),
+    0 0 90px 20px rgb(255, 94, 0),
+    0 0 150px 50px rgb(255, 60, 0);
+
+  // Inputs
+  --input-main: slategray;
+  --input-text: white;
+  --input-main-focused: #ff884d;
+
+  // Toggle and Radio
+  --toggle-bar: #7a3100;
+  --toggle-thumb: #d35400;
+  --radio-outer-circle: #d35400;
+  --radio-inner-circle: #d35400;
+}

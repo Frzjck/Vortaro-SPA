@@ -1,0 +1,57 @@
+<div class="container">
+  <div class="star-rating" *ngIf="uiType === 'stars'">
+    <i
+      *ngIf="score < 7"
+      class="far fa-star"
+      [ngStyle]="{
+        color: decorator(1)
+      }"
+    ></i>
+    <i
+      *ngIf="score >= 7 && score < 15"
+      class="fas fa-star-half-alt"
+      [ngStyle]="{
+        color: decorator(1)
+      }"
+    ></i>
+    <i
+      *ngIf="score >= 15"
+      class="fas fa-star"
+      [ngStyle]="{
+        color: decorator(1)
+      }"
+    ></i>
+  </div>
+  <div class="bar-rating" *ngIf="uiType === 'bars'">
+    <div
+      class="bar bar1"
+      [ngStyle]="{
+        'background-color': decorator(1)
+      }"
+    ></div>
+    <div
+      class="bar bar2"
+      [ngStyle]="{
+        'background-color': decorator(2)
+      }"
+    ></div>
+    <div
+      class="bar bar3"
+      [ngStyle]="{
+        'background-color': decorator(3)
+      }"
+    ></div>
+    <div
+      class="bar bar4"
+      [ngStyle]="{
+        'background-color': decorator(4)
+      }"
+    ></div>
+    <div
+      class="bar bar5"
+      [ngStyle]="{
+        'background-color': decorator(5)
+      }"
+    ></div>
+  </div>
+</div>

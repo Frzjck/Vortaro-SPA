@@ -1,0 +1,113 @@
+.content {
+  display: grid;
+  justify-items: center;
+
+  .container {
+    width: 90vw;
+
+    .title {
+      color: var(--text-primary);
+      text-align: center;
+      font-family: var(--title-font);
+      margin-top: 2rem;
+    }
+
+    .sec-sep {
+      font-size: 1.5rem;
+      margin-top: 4rem;
+    }
+
+    .section {
+      display: flex;
+      flex-direction: column;
+      margin-top: 2rem;
+      border: 1px solid rgba(129, 129, 129, 0.2);
+      border-radius: 10px;
+      background-color: var(--bg-tr-home);
+
+      p {
+        padding: 1rem;
+        color: var(--text-primary);
+        align-self: center;
+      }
+
+      img {
+        border-radius: 10px;
+      }
+    }
+  }
+}
+
+
+@media (min-width: 768px) {
+  .content {
+    .container {
+      display: flex;
+      flex-direction: column;
+      width: 90vw;
+
+      .section {
+        display: flex;
+        flex-direction: row;
+        max-width: 90%;
+
+        &:nth-child(even) {
+          transform: translateX(100vw);
+        }
+
+        &:nth-child(odd) {
+          transform: translateX(-100vw);
+        }
+
+
+        .text-div {
+          // display: grid;
+          // align-items: center;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          height: 100%;
+
+          p {
+            min-width: 30ch;
+            align-self: flex-start;
+            padding: 0.4rem 1rem;
+
+            mat-icon {
+              vertical-align: middle;
+            }
+          }
+        }
+
+        img {
+          max-height: 26rem;
+          max-width: 50%;
+          object-fit: contain;
+          align-self: center;
+        }
+      }
+
+      :nth-child(odd) {
+        align-self: flex-end;
+        flex-direction: row-reverse;
+      }
+
+      :nth-child(even) {
+        align-self: flex-start;
+      }
+
+      .center {
+        align-self: center;
+      }
+    }
+  }
+
+}
+
+@media (min-width: 1111px) {
+  .content {
+    .container {
+      width: 70vw;
+    }
+  }
+}

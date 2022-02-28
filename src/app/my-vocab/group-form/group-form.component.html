@@ -1,0 +1,30 @@
+<div
+  class="content"
+  appStopPropagation
+  (keydown.Space)="$event.stopImmediatePropagation()"
+  (focusout)="sendEmit()"
+>
+  <div class="container">
+    <form
+      [formGroup]="groupForm"
+      (submit)="onSubmit()"
+      (keydown.Enter)="onSubmit()"
+    >
+      <div class="grid-container">
+        <mat-form-field class="group-name-field">
+          <input
+            formControlName="groupName"
+            type="text"
+            #groupNameInput
+            placeholder="Group Name"
+            autocomplete="off"
+            matInput
+          />
+        </mat-form-field>
+        <button class="subButton" type="submit" [disabled]="!groupForm.valid">
+          <i class="fas fa-check-square"></i>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

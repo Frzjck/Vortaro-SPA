@@ -1,0 +1,160 @@
+@use "../../../assets/scss/functional-styles/functional-mixins.scss"as *;
+
+app-progress-bar {
+  width: 100%;
+}
+
+.grid-conteiner {
+  @include center;
+  width: 100%;
+
+  mat-card {
+    position: relative;
+    color: var(--text-primary);
+    text-shadow: var(--text-sh);
+    background-color: var(--bg-tr);
+    margin-top: 10vh;
+    width: clamp(10rem, 90vw, 40rem);
+    outline: var(--tr-border-sm);
+    border-radius: 10px;
+    transition: all .5s ease-in;
+
+    mat-card-title {
+      overflow-wrap: anywhere;
+      @include center;
+      font-size: calc(clamp(1rem, 1.4vw + 1rem, 3rem));
+    }
+
+    mat-card-subtitle {
+      position: absolute;
+      top: 5vw;
+      left: 3vw;
+      max-width: 90%;
+      z-index: 2;
+      font-size: 1rem;
+      overflow: hidden;
+
+      .tooltip {
+        margin-left: 5px;
+        overflow-wrap: break-word;
+        font-size: 1.4rem;
+        background-color: var(--bg-tips);
+        color: var(--text-primary);
+        padding: 1px 0.8rem;
+        border-radius: 3px;
+        border: 1px rgba(0, 0, 0, 0.466) solid;
+        transform: translateX(-200%);
+        opacity: 0;
+        transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.5s cubic-bezier(.02, .84, .29, 1.01);
+      }
+
+      .fa-question-circle {
+        color: var(--circle-tips-spelling);
+        z-index: 1;
+        font-size: 2rem;
+        padding-bottom: 2vw;
+
+        &:hover {
+          color: var(--hover-tips);
+        }
+      }
+
+      .fa-question-circle:hover+.tooltip {
+        transform: translateX(0);
+        transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.5s cubic-bezier(1, -0.01, 1, .47);
+        opacity: 1;
+      }
+
+    }
+
+    mat-card-content {
+      display: grid;
+      margin-top: 2rem;
+      gap: 1rem;
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+
+      .option {
+        display: grid;
+        place-items: center;
+        border: var(--btn-secondary-border);
+        border-radius: 5px;
+        font-size: 1.2rem;
+        height: 3rem;
+        transition: all 0.1s;
+
+
+        &.correct {
+          background-color: var(--answer-correct);
+          color: black;
+          font-weight: 500;
+        }
+
+        &.selected {
+          border-color: var(--hover-tips);
+          background-color: var(--bg-btn-primary);
+        }
+
+        &.wrong {
+          background-color: var(--answer-wrong);
+        }
+
+        &:hover {
+          background-color: var(--btn-hover);
+          cursor: pointer;
+        }
+
+        &:active {
+          background-color: var(--bg-btn-primary);
+        }
+      }
+
+
+    }
+
+    mat-card-actions {
+      display: flex;
+      justify-content: flex-end;
+
+      .sbm-btn {
+        font-size: 1.2rem;
+        color: var(--text-primary);
+        margin-right: .6rem;
+        font-family: var(--btn-font);
+
+        &:hover {
+          background-color: var(--btn-secondary-hover);
+        }
+      }
+    }
+  }
+}
+
+
+@media (min-width: 768px) {
+  // mat-card-subtitle {}
+
+  .grid-conteiner {
+    mat-card {
+      padding: 30px;
+      width: clamp(10rem, 80vw, 50rem);
+      outline: var(--tr-border-xl);
+
+      mat-card-content {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        margin-top: 3rem;
+      }
+
+      mat-card-subtitle {
+        display: flex;
+        top: auto;
+        left: auto;
+
+        .fa-question-circle {
+          padding-bottom: 0;
+        }
+      }
+    }
+  }
+}

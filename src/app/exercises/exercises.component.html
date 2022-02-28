@@ -1,0 +1,31 @@
+<div *ngIf="words">
+  <div class="container" *ngIf="exerciseType === 'spelling'">
+    <div class="hex-cell" routerLink="vocabulary-select">
+      <mat-icon>view_list</mat-icon>
+    </div>
+    <div
+      class="hex-cell"
+      [routerLink]="['spelling', 'work-on-mistakes', '000']"
+    >
+      <mat-icon>sync_problem</mat-icon>
+    </div>
+    <div class="hex-cell" [routerLink]="['spelling', 'random', '000']">
+      <i class="fas fa-dice"></i>
+    </div>
+  </div>
+
+  <div class="container" *ngIf="exerciseType === 'quiz'">
+    <div class="hex-cell" routerLink="vocabulary-select">
+      <mat-icon>view_list</mat-icon>
+    </div>
+    <div class="hex-cell" [routerLink]="['quiz', 'work-on-mistakes', '000']">
+      <mat-icon>sync_problem</mat-icon>
+    </div>
+    <div class="hex-cell" [routerLink]="['quiz', 'random', '000']">
+      <i class="fas fa-dice"></i>
+    </div>
+  </div>
+</div>
+<div class="warning" *ngIf="!words">
+  <p>• Please create a group and add words in order to access exercises •</p>
+</div>

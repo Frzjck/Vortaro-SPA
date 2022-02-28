@@ -1,0 +1,75 @@
+<div class="content" appStopPropagation>
+  <mat-card>
+    <div>
+      <mat-slide-toggle (click)="onTogglePixie()" [(ngModel)]="pixie"
+        ><span class="pixies-span">Pixies</span>
+      </mat-slide-toggle>
+    </div>
+    <div>
+      <button
+        class="btn btn-lang"
+        *ngIf="!translateDirection"
+        (click)="onChangeTranslateDirection()"
+      >
+        <span>A</span>
+        <mat-icon>swap_horiz</mat-icon>
+        <span>字</span>
+      </button>
+      <button
+        class="btn btn-lang"
+        *ngIf="translateDirection"
+        (click)="onChangeTranslateDirection()"
+      >
+        <span>字</span>
+        <mat-icon>swap_horiz</mat-icon>
+        <span>A</span>
+      </button>
+    </div>
+    <div
+      class="palette"
+      [ngClass]="{ highlight: themeOpen }"
+      (click)="onPalette()"
+    >
+      <mat-icon>palette</mat-icon>
+    </div>
+    <div
+      class="lightbulb"
+      [ngClass]="{ highlight: modeOpen }"
+      (click)="onLightbulb()"
+    >
+      <mat-icon>lightbulb</mat-icon>
+    </div>
+    <div class="radio-flex" *ngIf="subDropOpen" @slideDown>
+      <div class="dynamic-radio">
+        <div class="theme-select" *ngIf="themeOpen">
+          <mat-radio-group
+            aria-label="Select an option"
+            [(ngModel)]="activeTheme"
+            (change)="onThemeSelect()"
+          >
+            <mat-radio-button
+              *ngFor="let theme of themes"
+              [value]="theme"
+              [checked]="theme === activeTheme ? true : false"
+              >{{ theme | titlecase }}</mat-radio-button
+            >
+          </mat-radio-group>
+        </div>
+        <div class="mode-select" *ngIf="modeOpen">
+          <mat-radio-group
+            aria-label="Select an option"
+            [(ngModel)]="activeMode"
+            (change)="onModeSelect()"
+          >
+            <mat-radio-button
+              *ngFor="let mode of modes"
+              [value]="mode"
+              [checked]="mode === activeMode ? true : false"
+              >{{ mode | titlecase }}</mat-radio-button
+            >
+          </mat-radio-group>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+</div>

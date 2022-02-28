@@ -1,0 +1,51 @@
+.content {
+  display: grid;
+  justify-items: center;
+
+  h1 {
+    color: var(--text-primary);
+    margin-bottom: 0.2rem;
+    font-weight: 500
+  }
+
+  h2 {
+    color: var(--text-primary);
+    margin-bottom: 2vh;
+    font-weight: normal;
+  }
+
+  .container {
+    display: grid;
+    grid-gap: 1rem;
+    grid-template-columns: repeat(auto-fit, 1fr);
+    gap: 0.6rem;
+    width: 80vw;
+    margin-top: 0.5;
+
+    mat-card {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      span {
+        overflow-wrap: break-word;
+        text-align: center;
+      }
+    }
+  }
+}
+
+// minmax(300px, 1fr)
+//clamp(300px, 100%, 1fr)
+
+@media (min-width: 768px) {
+  .content {
+    h1 {
+      margin-top: 1.2rem;
+    }
+
+    .container {
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+  }
+}

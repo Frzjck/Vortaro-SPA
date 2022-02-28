@@ -1,0 +1,194 @@
+@use "../assets/scss/scss-themes/tracing-paper-brown.scss"as *;
+@use "../assets/scss/scss-themes/tracing-paper-blue.scss"as *;
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500&display=swap');
+
+main {
+  position: relative;
+  z-index: 0;
+  height: fit-content;
+  min-height: 100vh;
+  padding-bottom: 6rem;
+  background-color: var(--bg-main);
+  overflow: hidden;
+  transition: background-color 1s ease-in;
+}
+
+.globalVars {
+  --title-font: 'Cinzel', serif;
+  --btn-font: 'Chakra Petch', sans-serif;
+}
+
+// Theming Palettes
+.tracing-paper-brown {
+  @include tracing-paper-brown;
+}
+
+.tracing-paper-blue {
+  @include tracing-paper-blue;
+}
+
+
+//Street Light
+.streetlight {
+  z-index: -5;
+  position: fixed;
+  bottom: 1vh;
+  left: 2vw;
+  width: min-content;
+  height: min-content;
+  filter: brightness(0.4);
+
+  .img-container {
+    height: min(50vh, 50vw);
+    left: 0;
+    top: 5vh;
+    filter: blur(4px);
+  }
+
+  .light-blob {
+    filter: blur(30px);
+    z-index: -1;
+    position: absolute;
+    top: 10%;
+    left: min(3vh, 3vw);
+    width: min(10vh, 10vw);
+    height: min(10vh, 10vw);
+    border-radius: 50%;
+    background-color: rgb(255, 251, 0);
+    box-shadow:
+      0 0 min(5vh, 5vw) min(5vh, 5vw) rgb(255, 187, 0),
+      0 0 min(10vh, 10vw) min(10vh, 10vw) rgb(255, 153, 0),
+      0 0 min(25vh, 25vw) min(20vh, 20vw) rgba(255, 174, 0, 0.616);
+  }
+}
+
+.blobs-box {
+  position: fixed;
+  z-index: -1;
+  inset: 0;
+
+  .blob {
+    z-index: -1;
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--anim-blob-bg);
+    box-shadow: var(--anim-blob-sh);
+    transition: all 2.8s cubic-bezier(.24, .71, .31, 1);
+    // transition: all 2.8s cubic-bezier(.45, .67, .31, .97);
+
+
+    @for $i from 1 through 21 {
+      &:nth-of-type(#{$i}) {
+        top: random(100) + vh;
+        left: random(100) + vw;
+        filter: blur(15px) brightness(0.4) hue-rotate(3.2* random(16) + deg);
+        animation: circle $i+30s linear infinite;
+        animation-delay: -$i*1.5+s;
+
+
+        @keyframes circle {
+          0% {
+            transform: rotate(0deg) translate(-165px) scale($i/16);
+          }
+
+          50% {
+            transform: rotate(180deg) scale($i/64);
+          }
+
+          100% {
+            transform: rotate(360deg) translate(-165px) scale($i/16);
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+@media (min-width: 768px) {
+  .streetlight {
+    .img-container {
+      filter: blur(12px);
+    }
+  }
+
+  // Background Blobs, only desktop
+}
+
+// Input
+::ng-deep .mat-form-field.mat-focused {
+  .mat-form-field-label {
+    color: var(--input-main-focused);
+    font-size: 0.8rem;
+  }
+
+  .mat-form-field-ripple {
+    background-color: var(--input-main-focused);
+  }
+
+  .mat-form-field-required-marker {
+    color: var(--input-main-focused);
+  }
+
+  .mat-input-element {
+    color: var(--input-main-focused);
+  }
+
+  ::ng-deep input {
+    caret-color: var(--input-caret);
+  }
+
+}
+
+::ng-deep .mat-form-field {
+  .mat-input-element {
+    color: var(--input-main);
+  }
+
+  .mat-form-field-label {
+    color: var(--input-main);
+  }
+
+  .mat-form-field-underline {
+    background-color: var(--input-main);
+  }
+
+  .mat-form-field-ripple {
+    background-color: var(--input-main);
+  }
+
+  .mat-form-field-required-marker {
+    color: var(--input-main);
+  }
+}
+
+// Input END
+
+
+// Toggle and Radio
+
+::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+  background-color: var(--toggle-bar);
+}
+
+::ng-deep .mat-slide-toggle .mat-slide-toggle-bar {
+  background-color: var(--toggle-bar);
+}
+
+::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+  background-color: var(--toggle-thumb);
+}
+
+
+::ng-deep .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle,
+::ng-deep .mat-radio-outer-circle {
+  border-color: var(--radio-inner-circle);
+}
+
+::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
+  background-color: var(--radio-inner-circle);
+}

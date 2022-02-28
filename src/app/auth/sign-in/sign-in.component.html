@@ -1,0 +1,88 @@
+<div class="container" *ngIf="!this.authService.successSubmitNewUser">
+  <mat-card>
+    <form (submit)="onSignup(signupForm)" #signupForm="ngForm">
+      <mat-form-field>
+        <input
+          matInput
+          name="email"
+          ngModel
+          type="email"
+          placeholder="E-Mail"
+          #emailInput="ngModel"
+          required
+          email
+        />
+        <mat-error *ngIf="emailInput.invalid"
+          >Please enter a valid email.</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          type="password"
+          name="password"
+          ngModel
+          matInput
+          placeholder="Password"
+          #passwordInput="ngModel"
+          required
+          (keyup)="
+            passwordChecker(repeatPasswordInput.value, passwordInput.value)
+          "
+        />
+        <mat-error *ngIf="passwordInput.invalid"
+          >Please enter a valid password.</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          type="password"
+          name="repeatPasswordInput"
+          ngModel
+          matInput
+          placeholder="Repeat Password"
+          #repeatPasswordInput="ngModel"
+          required
+          (keyup)="
+            passwordChecker(repeatPasswordInput.value, passwordInput.value)
+          "
+        />
+        <div
+          class="form-error"
+          *ngIf="repeatPasswordInput.touched && !passwordMatch"
+        >
+          Passwords do not match.
+        </div>
+        <div
+          class="form-error"
+          *ngIf="passwordInput.touched && passwordInput.value.length < 6"
+        >
+          Passwords must be at least 6 characters long.
+        </div>
+        <div class="form-error" *ngIf="errorMessage">
+          {{ errorMessage }}
+        </div>
+      </mat-form-field>
+      <div class="submit">
+        <div @fadeOut *ngIf="!captcha" class="captcha-div">
+          <re-captcha
+            (resolved)="resolved($event)"
+            siteKey="6LfhvnoeAAAAAE9WkJ-Va2PbihekcNYYhGu64wCO"
+          ></re-captcha>
+        </div>
+        <button
+          *ngIf="captcha"
+          class="btn"
+          mat-raised-button
+          color="accent"
+          type="submit"
+          @fadeIn
+        >
+          Sign Up
+        </button>
+      </div>
+    </form>
+  </mat-card>
+</div>
+<div class="spinner" *ngIf="this.authService.successSubmitNewUser">
+  <app-spinner></app-spinner>
+</div>
