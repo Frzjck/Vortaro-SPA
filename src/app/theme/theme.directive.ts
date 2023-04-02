@@ -9,12 +9,12 @@ import { Theme } from './symbols';
 })
 export class ThemeDirective implements OnInit, OnDestroy {
 
-  private _destroy$ = new Subject();
+  private _destroy$ = new Subject<void>();
 
   constructor(
     private _elementRef: ElementRef,
     private _themeService: ThemeService
-  ) {}
+  ) { }
 
   ngOnInit() {
     const active = this._themeService.getActiveTheme();

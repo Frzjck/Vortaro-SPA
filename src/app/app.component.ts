@@ -3,6 +3,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { SettingsService } from './services/settings.service';
 import { Subscription } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { ThemeService } from './theme/theme.service';
 
 
 @Component({
@@ -30,7 +31,8 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     private groupService: GroupService,
     private wordService: WordManageService,
     private settings: SettingsService,
-    private afs: AngularFirestore
+    private afs: AngularFirestore,
+    private themeService: ThemeService
 
   ) { }
 
@@ -73,6 +75,15 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     if (this.activeTheme === 'brown') {
       return 'tracing-paper-brown';
+    }
+  }
+
+  toggle() {
+    const active = this.themeService.getActiveTheme();
+    if (active.name === 'light') {
+      this.themeService.setTheme('dark');
+    } else {
+      this.themeService.setTheme('light');
     }
   }
 }
