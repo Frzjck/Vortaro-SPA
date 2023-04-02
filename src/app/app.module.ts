@@ -35,6 +35,13 @@ import { TypeTestComponent } from './exercises/type-test/type-test.component';
 import { ExtraTrCardComponent } from './my-vocab/extra-tr-card/extra-tr-card.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
+
+import { AngularFireModule } from "@angular/fire/compat";
+import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
+import { AngularFireAuthModule } from "@angular/fire/compat/auth";
+import { AngularFireStorageModule } from "@angular/fire/compat/storage";
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -79,4 +86,4 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
