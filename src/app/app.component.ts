@@ -2,6 +2,8 @@ import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { SettingsService } from './services/settings.service';
 import { Subscription } from 'rxjs';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+
 
 @Component({
   selector: 'app-root',
@@ -25,11 +27,18 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   pixie: boolean;
   pixieSub: Subscription;
   constructor(
+    private groupService: GroupService,
+    private wordService: WordManageService,
     private settings: SettingsService,
-  ) {
-  }
+    private afs: AngularFirestore
+
+  ) { }
 
   ngOnInit() {
+
+    this.afs.collection("test").snapshotChanges().subscribe(items => {
+      console.log(items.map(x => x.payload.doc.data()))
+    })
     //Theme conf
     this.settings.getTheme();
     this.themeSub = this.settings.activeThemeSub.subscribe((theme) => {
@@ -37,7 +46,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     });
     //Pixie
 
-    // Fetching app setings from local storage
+    // Fetching app settings from local storage
     this.settings.getTranslateDirection();
     this.settings.getExerciseMode();
 
