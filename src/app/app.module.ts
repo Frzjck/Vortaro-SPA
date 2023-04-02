@@ -49,6 +49,8 @@ import { ClassroomModule } from './pages/classroom/classroom.module';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { CustomSerializer } from './store/router/custom-serializer';
 import { LetDirective } from '@ngrx/component';
+import { ThemeModule, lightTheme, darkTheme } from './theme';
+
 
 @NgModule({
   declarations: [
@@ -80,6 +82,10 @@ import { LetDirective } from '@ngrx/component';
     AngularFireStorageModule,
     AngularFireAuthModule,
     AngularFirestoreModule,
+    ThemeModule.forRoot({
+      themes: [lightTheme, darkTheme],
+      active: 'light'
+    })
     StoreRouterConnectingModule.forRoot({
       serializer: CustomSerializer,
     }),
