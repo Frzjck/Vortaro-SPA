@@ -116,5 +116,8 @@
       }
     }
   },
-  "defaultProject": "vocabulary-spa"
+  "defaultProject": "vocabulary-spa",
+  "cli": {
+    "analytics": false
+  }
 }
