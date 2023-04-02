@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Subscription, firstValueFrom } from 'rxjs';
-import { GroupService } from 'src/app/services/group.service';
-import { WordManageService } from 'src/app/services/word-manage.service';
+import { GroupService } from '@app/services/group.service';
+import { WordManageService } from '@app/services/word-manage.service';
 import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     public authService: AuthService,
     private groupService: GroupService,
     private wordService: WordManageService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.authStatusSub = this.authService
