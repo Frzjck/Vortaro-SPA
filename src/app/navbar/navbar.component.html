@@ -7,26 +7,26 @@
     </li>
     <li class="pseudo-el"></li>
     <li class="spacer"></li>
-    <li *ngIf="this.authService.getIsAuth()">
+    <li >
       <a mat-button routerLink="/my-vocabulary" routerLinkActive="activeLink"
         ><mat-icon> auto_stories </mat-icon
         ><span class="nav-text"> Glossary</span></a
       >
     </li>
 
-    <li *ngIf="this.authService.getIsAuth()">
+    <li >
       <a mat-button routerLink="/exercises" routerLinkActive="activeLink">
         <mat-icon> fitness_center </mat-icon
         ><span class="nav-text"> Training</span>
       </a>
     </li>
     <li class="spacer"></li>
-    <li *ngIf="!this.authService.getIsAuth()">
+    <li >
       <a mat-button routerLink="/auth/login" routerLinkActive="activeLink"
         ><mat-icon> login </mat-icon><span class="nav-text"> Log In</span>
       </a>
     </li>
-    <li *ngIf="!this.authService.getIsAuth()">
+    <li >
       <a mat-button routerLink="/auth/signin" routerLinkActive="activeLink"
         ><mat-icon> person_add </mat-icon> Sign In
       </a>
@@ -42,13 +42,13 @@
         @popup
       ></app-settings-popup>
     </li>
-    <li *ngIf="this.authService.getIsAuth()">
-      <p *ngIf="authService.whoAmI" class="loggedInInfo">
-        {{ authService.whoAmI }}
+    <li >
+      <p  class="loggedInInfo">
+        <!-- {{ authService.whoAmI }} -->
       </p>
       <a
         mat-button
-        (click)="this.authService.logout()"
+        
         routerLinkActive="activeLink"
         ><mat-icon>logout</mat-icon> <span class="nav-text"> Log Out</span>
       </a>
@@ -70,7 +70,7 @@
     </a>
     <div class="dropdown-menu" [ngClass]="menuOpen ? 'droped' : ''">
       <ul>
-        <li *ngIf="this.authService.getIsAuth()">
+        <li >
           <a
             routerLink="/my-vocabulary"
             routerLinkActive="activeLink"
@@ -82,7 +82,7 @@
           </a>
         </li>
 
-        <li *ngIf="this.authService.getIsAuth()">
+        <li >
           <a
             routerLink="/exercises"
             routerLinkActive="activeLink"
@@ -93,7 +93,7 @@
             <mat-icon class="arrow"> expand_more </mat-icon>
           </a>
         </li>
-        <li *ngIf="!this.authService.getIsAuth()">
+        <li >
           <a
             routerLink="/auth/login"
             routerLinkActive="activeLink"
@@ -105,11 +105,11 @@
           </a>
         </li>
 
-        <li *ngIf="this.authService.getIsAuth()">
+        <li >
           <a
             routerLinkActive="activeLink"
             (click)="
-              this.authService.logout(); menuOpen = false; onFocusoutSettings()
+               menuOpen = false; onFocusoutSettings()
             "
           >
             <mat-icon class="arrow"> expand_more </mat-icon>
@@ -142,7 +142,7 @@
     </div>
   </div>
 </nav>
-<!-- <li *ngIf="!this.authService.getIsAuth()">
+<!-- <li >
           <a
             routerLink="/auth/signin"
             routerLinkActive="activeLink"

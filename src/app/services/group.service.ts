@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class GroupService {
-  BACKEND_URL = environment.apiUrl + '/groups';
+  BACKEND_URL = "environment.apiUrl + '/groups'";
   // GET to get all groups, POST to create a group
   groupNum = '';
   // GET to get, PUT to edit, DELETE to delete a single group
@@ -19,7 +19,7 @@ export class GroupService {
   constructor(
     private wordService: WordManageService,
     private http: HttpClient
-  ) {}
+  ) { }
 
   private groupsObs = new ReplaySubject<Group[]>(1);
   private groups: Group[];

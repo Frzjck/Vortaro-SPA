@@ -9,11 +9,11 @@ import { environment } from '../../environments/environment';
 export class ResultsService {
   currentWordSet: Word[] = [];
   resultsArr: Boolean[] = [];
-  BACKEND_URL = environment.apiUrl;
+  BACKEND_URL = "environment.apiUrl";
   formatedResults;
   exMode: string;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   saveResultsInfo(resArr, exMode) {
     this.resultsArr = resArr;

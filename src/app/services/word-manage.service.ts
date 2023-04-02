@@ -10,15 +10,15 @@ import { ReplaySubject } from 'rxjs';
   providedIn: 'root',
 })
 export class WordManageService {
-  BACKEND_URL = environment.apiUrl;
-  getAllWordsUrl = this.BACKEND_URL + '/words';
+  BACKEND_URL = "environment.apiUrl";
+  getAllWordsUrl = "this.BACKEND_URL + '/words'";
 
   exerciseType: string;
 
   private wordsObs = new ReplaySubject<Word[]>(1);
   private words: Word[];
 
-  constructor(private router: Router, private http: HttpClient) {}
+  constructor(private router: Router, private http: HttpClient) { }
 
   getWordsFromServer() {
     return this.http

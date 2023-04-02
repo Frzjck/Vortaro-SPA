@@ -27,9 +27,6 @@ import { RatingUIComponent } from './/my-vocab/rating-ui/rating-ui.component';
 import { WordFormComponent } from './my-vocab/word-form/word-form.component';
 import { GroupFormComponent } from './my-vocab/group-form/group-form.component';
 import { StopPropagationDirective } from './directives/stop-propagation.directive';
-import { AuthModule } from './auth/auth.module';
-import { AuthInterceptor } from './auth/auth-interceptor';
-import { AuthGuard } from './auth/auth.guard';
 import { SettingsPopupComponent } from './navbar/settings-popup/settings-popup.component';
 import { TypeTestComponent } from './exercises/type-test/type-test.component';
 import { ExtraTrCardComponent } from './my-vocab/extra-tr-card/extra-tr-card.component';
@@ -75,14 +72,11 @@ import { AngularFireStorageModule } from "@angular/fire/compat/storage";
     BrowserAnimationsModule,
     ReactiveFormsModule,
     FormsModule,
-    AuthModule,
     MatIconModule,
     TextFieldModule,
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: LocationStrategy, useClass: HashLocationStrategy },
-    AuthGuard,
   ],
   bootstrap: [AppComponent],
 })
