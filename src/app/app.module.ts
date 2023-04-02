@@ -13,26 +13,30 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatRadioModule } from '@angular/material/radio';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TextFieldModule } from '@angular/cdk/text-field';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { HomepageComponent } from './homepage/homepage.component';
-import { MyVocabComponent } from './my-vocab/my-vocab.component';
-import { ExercisesComponent } from './exercises/exercises.component';
-import { SpellingComponent } from './exercises/spelling/spelling.component';
-import { ProgressBarComponent } from './exercises/progress-bar/progress-bar.component';
-import { ResultsComponent } from './exercises/results/results.component';
-import { RatingUIComponent } from './/my-vocab/rating-ui/rating-ui.component';
-import { WordFormComponent } from './my-vocab/word-form/word-form.component';
-import { GroupFormComponent } from './my-vocab/group-form/group-form.component';
-import { StopPropagationDirective } from './directives/stop-propagation.directive';
-import { SettingsPopupComponent } from './navbar/settings-popup/settings-popup.component';
-import { TypeTestComponent } from './exercises/type-test/type-test.component';
-import { ExtraTrCardComponent } from './my-vocab/extra-tr-card/extra-tr-card.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
+// At App
+import { AppRoutingModule } from '@app/app-routing.module';
+import { AppComponent } from '@app/app.component';
+import { NavbarComponent } from '@app/navbar/navbar.component';
+import { HomepageComponent } from '@app/homepage/homepage.component';
+import { MyVocabComponent } from '@app/my-vocab/my-vocab.component';
+import { ExercisesComponent } from '@app/exercises/exercises.component';
+import { SpellingComponent } from '@app/exercises/spelling/spelling.component';
+import { ProgressBarComponent } from '@app/exercises/progress-bar/progress-bar.component';
+import { ResultsComponent } from '@app/exercises/results/results.component';
+import { RatingUIComponent } from '@app//my-vocab/rating-ui/rating-ui.component';
+import { WordFormComponent } from '@app/my-vocab/word-form/word-form.component';
+import { GroupFormComponent } from '@app/my-vocab/group-form/group-form.component';
+import { StopPropagationDirective } from '@app/directives/stop-propagation.directive';
+import { SettingsPopupComponent } from '@app/navbar/settings-popup/settings-popup.component';
+import { TypeTestComponent } from '@app/exercises/type-test/type-test.component';
+import { ExtraTrCardComponent } from '@app/my-vocab/extra-tr-card/extra-tr-card.component';
 
+// Environment
+import { environment } from "@env/environment";
+
+// Firebase
 import { AngularFireModule } from "@angular/fire/compat";
 import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
 import { AngularFireAuthModule } from "@angular/fire/compat/auth";
@@ -74,6 +78,10 @@ import { AngularFireStorageModule } from "@angular/fire/compat/storage";
     FormsModule,
     MatIconModule,
     TextFieldModule,
+    AngularFireModule.initializeApp(environment.firebase.config),
+    AngularFireStorageModule,
+    AngularFireAuthModule,
+    AngularFirestoreModule,
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
