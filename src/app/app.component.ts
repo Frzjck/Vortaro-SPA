@@ -8,7 +8,41 @@ import { ThemeService } from './theme/theme.service';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
+  template: `
+
+<main theme class="globalVars">
+  <button class="app-a " (click)="toggle()">FAT UGLY BTN</button>
+  <div class="streetlight">
+    <img
+      class="img-container"
+      draggable="false"
+      src=".\assets\imgs\streetlight.webp"
+      alt="streetlight"
+    />
+    <div class="light-blob"></div>
+  </div>
+
+  <app-navbar></app-navbar>
+  <router-outlet></router-outlet>
+  <div class="blobs-box" *ngIf="pixie" @fadeIn>
+    <div class="blob"></div>
+    <div class="blob"></div>
+    <div class="blob"></div>
+    <div class="blob" *ngIf="extraPixies"></div>
+    <div class="blob" *ngIf="extraPixies"></div>
+
+    <div class="blob" *ngIf="extraPixies"></div>
+    <div class="blob" *ngIf="extraPixies"></div>
+    <div class="blob" *ngIf="extraPixies"></div>
+    <div class="blob" *ngIf="extraPixies"></div>
+    <div class="blob" *ngIf="extraPixies"></div>
+    <div class="blob" *ngIf="extraPixies"></div>
+    <div class="blob" *ngIf="extraPixies"></div>
+    <div class="blob" *ngIf="extraPixies"></div>
+    <div class="blob" *ngIf="extraPixies"></div>
+    <div class="blob" *ngIf="extraPixies"></div>
+  </div>
+</main>`,
   styleUrls: ['./app.component.scss'],
   animations: [
     trigger('fadeIn', [
@@ -80,10 +114,10 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
   toggle() {
     const active = this.themeService.getActiveTheme();
-    if (active.name === 'light') {
-      this.themeService.setTheme('dark');
+    if (active.name === 'tracingPaperBlue') {
+      this.themeService.setTheme('tracingPaperBrown');
     } else {
-      this.themeService.setTheme('light');
+      this.themeService.setTheme('tracingPaperBlue');
     }
   }
 }

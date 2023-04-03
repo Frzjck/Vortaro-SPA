@@ -1,7 +1,7 @@
 import { Theme } from './symbols';
 
-export const lightTheme: Theme = {
-  name: 'light',
+export const tracingPaperBrown: Theme = {
+  name: 'tracingPaperBrown',
   properties: {
     '--gr-0': '#50505a',
     '--tr-0': 'rgba(75, 52, 31, 0.196)',

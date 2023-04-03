@@ -4,7 +4,11 @@ app-progress-bar {
   width: 100%;
 }
 
+<<<<<<< PopUpNgrx:src/app/pages/classroom/practice/pages/exercises/components/modes/quiz/quiz.component.scss
 .grid-container {
+=======
+.grid-conteiner {
+>>>>>>> Working theme directive-service:src/app/exercises/type-test/type-test.component.scss
   // @include center;
   width: 100%;
 
@@ -21,7 +25,11 @@ app-progress-bar {
 
     mat-card-title {
       overflow-wrap: anywhere;
+<<<<<<< PopUpNgrx:src/app/pages/classroom/practice/pages/exercises/components/modes/quiz/quiz.component.scss
       // @include center;
+=======
+      // @include center;s
+>>>>>>> Working theme directive-service:src/app/exercises/type-test/type-test.component.scss
       font-size: calc(clamp(1rem, 1.4vw + 1rem, 3rem));
     }
 
