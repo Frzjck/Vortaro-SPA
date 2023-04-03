@@ -10,7 +10,7 @@ export class ResultsService {
   currentWordSet: Word[] = [];
   resultsArr: Boolean[] = [];
   BACKEND_URL = "environment.apiUrl";
-  formatedResults;
+  formattedResults;
   exMode: string;
 
   constructor(private http: HttpClient) { }
@@ -21,15 +21,15 @@ export class ResultsService {
     this.formatResults();
     return this.http.put(
       this.BACKEND_URL + '/words/results',
-      this.formatedResults
+      this.formattedResults
     );
   }
 
   // Formating results for server
   formatResults() {
-    // We differentiate between modes to place cap on maximum score gained by using quizz
+    // We differentiate between modes to place cap on maximum score gained by using quiz
     if (this.exMode === 'quiz') {
-      return (this.formatedResults = this.currentWordSet
+      return (this.formattedResults = this.currentWordSet
         .map((word, index) => {
           let proficiency = 0;
           if (this.resultsArr[index] && word.proficiency < 14) proficiency = 1;
@@ -43,7 +43,7 @@ export class ResultsService {
         })
         .filter((result) => result !== undefined));
     } else if (this.exMode === 'spelling') {
-      return (this.formatedResults = this.currentWordSet
+      return (this.formattedResults = this.currentWordSet
         .map((word, index) => {
           let proficiency = -1;
           if (this.resultsArr[index] && word.proficiency < 20) proficiency = 1;
