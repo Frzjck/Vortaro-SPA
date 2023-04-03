@@ -38,9 +38,19 @@ import { environment } from "@env/environment";
 
 // Firebase
 import { AngularFireModule } from "@angular/fire/compat";
-import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
-import { AngularFireAuthModule } from "@angular/fire/compat/auth";
-import { AngularFireStorageModule } from "@angular/fire/compat/storage";
+import {
+  AngularFirestoreModule,
+  USE_EMULATOR as USE_FIRESTORE_EMULATOR,
+} from "@angular/fire/compat/firestore";
+import {
+  AngularFireAuthModule,
+  USE_EMULATOR as USE_AUTH_EMULATOR,
+} from "@angular/fire/compat/auth";
+import {
+  AngularFireStorageModule,
+  USE_EMULATOR as USE_FUNCTIONS_EMULATOR,
+} from "@angular/fire/compat/storage";
+
 
 
 @NgModule({
@@ -85,6 +95,24 @@ import { AngularFireStorageModule } from "@angular/fire/compat/storage";
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
+    {
+      provide: USE_AUTH_EMULATOR,
+      useValue: environment.useEmulators
+        ? ["http://localhost:9099"]
+        : undefined,
+    },
+    {
+      provide: USE_FIRESTORE_EMULATOR,
+      useValue: environment.useEmulators
+        ? ["http://localhost:8080"]
+        : undefined,
+    },
+    {
+      provide: USE_FUNCTIONS_EMULATOR,
+      useValue: environment.useEmulators
+        ? ["http://localhost:5001"]
+        : undefined,
+    },
   ],
   bootstrap: [AppComponent],
 })
