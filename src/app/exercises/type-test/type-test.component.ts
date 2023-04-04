@@ -53,7 +53,7 @@ export class TypeTestComponent implements OnInit, OnDestroy {
     private settings: SettingsService,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     // Settings config fetching
@@ -117,7 +117,7 @@ export class TypeTestComponent implements OnInit, OnDestroy {
           .saveResultsInfo(this.scoreArr, 'quiz')
           .subscribe(() => {
             this.wordService.getWordsFromServer();
-            this.groupService.getGroupsFromServer();
+            this.groupService.loadGroups();
           });
         this.router.navigate(['results'], { relativeTo: this.route });
         return;

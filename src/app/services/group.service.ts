@@ -1,77 +1,67 @@
 import { Injectable } from '@angular/core';
 import { Group } from '../models/group-model';
-import { WordManageService } from './word-manage.service';
-import { HttpClient } from '@angular/common/http';
-import { ReplaySubject } from 'rxjs';
-import { environment } from '../../environments/environment';
-import { map } from 'rxjs/operators';
+import { from, Observable } from 'rxjs';
+import { concatMap, map } from 'rxjs/operators';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { convertSnaps } from "./db-utils";
 
 @Injectable({
   providedIn: 'root',
 })
 export class GroupService {
-  BACKEND_URL = "environment.apiUrl + '/groups'";
-  // GET to get all groups, POST to create a group
-  groupNum = '';
-  // GET to get, PUT to edit, DELETE to delete a single group
-  getGroupUrl = '/groups/' + this.groupNum;
-
   constructor(
-    private wordService: WordManageService,
-    private http: HttpClient
+    private db: AngularFirestore
   ) { }
 
-  private groupsObs = new ReplaySubject<Group[]>(1);
-  private groups: Group[];
 
-  getGroupsFromServer() {
-    return this.http
-      .get<{ message: string; data: any }>(this.BACKEND_URL)
+  createGroup(newGroup: Partial<Group>, groupId?: string) {
+    groupId = undefined;
+    return this.db
+      .collection("courses", (ref) => ref.orderBy("seqNo", "desc").limit(1))
+      .get()
       .pipe(
-        map((res: { message: string; data: any }) => {
-          return res.data.map((group): Group => {
-            return {
-              groupNum: group._id,
-              name: group.title,
-              averageProficiency: group.averageProficiency,
-            };
-          });
+        concatMap((result) => {
+          const groups = convertSnaps<Group>(result);
+          const lastSeqNo = groups[0]?.seqNo ?? 0;
+          const group = {
+            ...newGroup,
+            seqNo: lastSeqNo + 1,
+          };
+          let save$: Observable<any>;
+
+          if (groupId)
+            save$ = from(this.db.doc(`groups/${groupId}`).set(group));
+          else save$ = from(this.db.collection("groups").add(group));
+          return save$.pipe(
+            map((res) => {
+              return {
+                id: groupId ?? res.id,
+                ...group,
+              };
+            })
+          );
         })
+      );
+  }
+
+  updateGroup(groupId: string, changes: Partial<Group>): Observable<any> {
+    return from(this.db.doc(`groups/${groupId}`).update(changes));
+  }
+
+  loadGroups(): Observable<Group[]> {
+    return this.db
+      .collection("groups", (ref) => {
+        return ref.orderBy("seqNo")
+      }
       )
-      .subscribe((transformedPostData) => {
-        this.groups = transformedPostData;
-        this.groupsObs.next([...this.groups]);
-      });
+      .get()
+      .pipe(map((results) => convertSnaps<Group>(results)));
   }
 
-  groupsObsListener() {
-    return this.groupsObs.asObservable();
+  deleteGroup(groupId: string) {
+    return from(this.db.doc(`groups/${groupId}`).delete());
   }
 
-  getAllGroups() {
-    return [...this.groups];
-  }
-  // Return single group, LATER ON SHOULD BE CHANGED TO ID SEARCH
-  //delete???? TODO
-  getGroup(name: string) {
-    const group: Group = this.groups.find((group) => {
-      return group.name === name;
-    });
-    return group;
-  }
 
-  editOrCreate(newName, groupNum?) {
-    if (groupNum) {
-      return this.http.put(this.BACKEND_URL + '/' + groupNum, {
-        title: newName,
-      });
-    } else {
-      return this.http.post(this.BACKEND_URL, {
-        title: newName,
-      });
-    }
-  }
-  deteleGroup(groupId) {
-    return this.http.delete(this.BACKEND_URL + '/' + groupId);
-  }
+
 }

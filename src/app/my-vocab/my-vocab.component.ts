@@ -51,11 +51,11 @@ export class MyVocabComponent implements OnInit, OnDestroy {
   private wordSub: Subscription;
 
   constructor(
-    private groupService: GroupService,
+    public groupService: GroupService,
     private wordService: WordManageService,
     private settings: SettingsService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.urlArr = this.router.url.split('/');
@@ -64,7 +64,7 @@ export class MyVocabComponent implements OnInit, OnDestroy {
     }
     // Subscribe to groups
     this.groupSub = this.groupService
-      .groupsObsListener()
+      .loadGroups()
       .subscribe((groups) => {
         this.groups = groups;
       });
@@ -152,8 +152,8 @@ export class MyVocabComponent implements OnInit, OnDestroy {
 
   onDeleteGroup(groupName, groupId) {
     if (confirm('Are you sure you want to delete ' + groupName)) {
-      this.groupService.deteleGroup(groupId).subscribe(() => {
-        this.groupService.getGroupsFromServer();
+      this.groupService.deleteGroup(groupId).subscribe(() => {
+        this.groupService.loadGroups();
       });
     }
   }
@@ -171,7 +171,7 @@ export class MyVocabComponent implements OnInit, OnDestroy {
     if (confirm('Are you sure you want to delete ')) {
       this.wordService.deleteWord(id).subscribe(() => {
         this.wordService.getWordsFromServer();
-        this.groupService.getGroupsFromServer();
+        this.groupService.loadGroups();
       });
     }
   }

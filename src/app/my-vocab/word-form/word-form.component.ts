@@ -17,7 +17,7 @@ export class WordFormComponent implements OnInit {
   constructor(
     private wordService: WordManageService,
     private groupService: GroupService
-  ) {}
+  ) { }
 
   additionalTrArray: string[];
 
@@ -53,7 +53,7 @@ export class WordFormComponent implements OnInit {
           this.formatAdditionalTr()
         )
         .subscribe(() => {
-          this.groupService.getGroupsFromServer();
+          this.groupService.loadGroups();
           this.wordService.getWordsFromServer();
         });
     } else {
@@ -68,7 +68,7 @@ export class WordFormComponent implements OnInit {
         )
         .subscribe(() => {
           this.wordService.getWordsFromServer();
-          this.groupService.getGroupsFromServer();
+          this.groupService.loadGroups();
         });
     }
     this.additionalTrArray = undefined;

@@ -54,7 +54,7 @@ export class SpellingComponent implements OnInit, AfterViewInit, OnDestroy {
     private settings: SettingsService,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.typeOfOS = window.navigator.platform;
@@ -132,7 +132,7 @@ export class SpellingComponent implements OnInit, AfterViewInit, OnDestroy {
           .saveResultsInfo(this.scoreArr, 'spelling')
           .subscribe(() => {
             this.wordService.getWordsFromServer();
-            this.groupService.getGroupsFromServer();
+            this.groupService.loadGroups();
           });
         this.router.navigate(['results'], { relativeTo: this.route });
         return;
