@@ -8,6 +8,9 @@ import { TypeTestComponent } from './exercises/type-test/type-test.component';
 import { ResultsComponent } from './exercises/results/results.component';
 import { MyVocabComponent } from './my-vocab/my-vocab.component';
 
+
+import { LoginComponent } from "./login/login.component";
+
 const routes: Routes = [
   { path: '', component: HomepageComponent },
   {
@@ -37,6 +40,10 @@ const routes: Routes = [
 
   },
   // -------- Spelling exercice routes END --------
+  {
+    path: "login",
+    component: LoginComponent,
+  },
 
   // -------- Type Test exercice routes --------
   {

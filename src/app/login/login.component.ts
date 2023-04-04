@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, NgZone, OnDestroy, OnInit } from "@angular/core";
 import * as firebaseui from "firebaseui";
+
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { Router } from "@angular/router";
 import firebase from "firebase/compat/app";
@@ -12,7 +13,6 @@ import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
   imports: [CommonModule],
   template: `
 <div class="login">
-	<h2>Sign In</h2>
 	<div id="firebaseui-auth-container" class="auth-container"></div>
 </div>
   `,
@@ -44,6 +44,7 @@ export class LoginComponent {
         callbacks: {
           signInSuccessWithAuthResult: this.onLoginSuccess.bind(this),
         },
+        signInFlow: "popup",
       };
       this.ui = new firebaseui.auth.AuthUI(app.auth());
       this.ui.start("#firebaseui-auth-container", uiConfig);
@@ -57,7 +58,7 @@ export class LoginComponent {
 
   onLoginSuccess(result) {
     console.log("Firebase UI result: ", result);
-    this.router.navigateByUrl("/courses");
+    // this.router.navigateByUrl("/courses");
   }
 }
 
