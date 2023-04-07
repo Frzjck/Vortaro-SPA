@@ -58,6 +58,7 @@ export class LoginComponent {
 
   onLoginSuccess(result) {
     console.log("Firebase UI result: ", result);
+    console.log("Firebase id? result: ", result.user.uid);
     // this.router.navigateByUrl("/courses");
   }
 }

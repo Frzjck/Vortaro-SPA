@@ -45,7 +45,7 @@
     </li>
     <li *ngIf="user.isLoggedIn$ | async" (click)="logout()">
       <p class="loggedInInfo">
-        {{ (user.whoAmI$ | async)?.email }}
+        {{ user.user?.email }}
       </p>
       <a mat-button routerLinkActive="activeLink"
         ><mat-icon>logout</mat-icon> <span class="nav-text"> Log Out</span>

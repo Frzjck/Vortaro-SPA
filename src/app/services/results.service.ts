@@ -25,7 +25,7 @@ export class ResultsService {
     );
   }
 
-  // Formating results for server
+  // Formatting results for server
   formatResults() {
     // We differentiate between modes to place cap on maximum score gained by using quiz
     if (this.exMode === 'quiz') {
@@ -37,8 +37,6 @@ export class ResultsService {
           return {
             _id: word.id,
             proficiency: word.proficiency + proficiency,
-            group: word.groupNum,
-            user: word.user,
           };
         })
         .filter((result) => result !== undefined));
@@ -51,8 +49,6 @@ export class ResultsService {
           return {
             _id: word.id,
             proficiency: word.proficiency + proficiency,
-            group: word.groupNum,
-            user: word.user,
           };
         })
         .filter((result) => result !== undefined));

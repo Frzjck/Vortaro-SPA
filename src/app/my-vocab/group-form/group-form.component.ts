@@ -48,21 +48,21 @@ export class GroupFormComponent implements OnInit, AfterViewInit {
     }, 200);
   }
   onSubmit() {
-    if (this.group) {
-      // Edit existing group
-      this.groupService
-        .createGroup(this.groupForm.value.groupName, this.group.groupNum)
-        .subscribe(() => {
-          this.groupService.loadGroups();
-        });
-    } else {
-      // Create new group
-      this.groupService
-        .createGroup(this.groupForm.value.groupName)
-        .subscribe(() => {
-          this.groupService.loadGroups();
-        });
-    }
-    this.onFinishSubmit.emit();
+    // if (this.group) {
+    //   // Edit existing group
+    //   this.groupService
+    //     .createGroup(this.groupForm.value.groupName, this.group.id)
+    //     .subscribe(() => {
+    //       this.groupService.loadGroups();
+    //     });
+    // } else {
+    //   // Create new group
+    //   this.groupService
+    //     .createGroup(this.groupForm.value.groupName)
+    //     .subscribe(() => {
+    //       this.groupService.loadGroups();
+    //     });
+    // }
+    // this.onFinishSubmit.emit();
   }
 }

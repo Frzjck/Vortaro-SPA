@@ -12,16 +12,19 @@ import firebase from 'firebase/compat/app';
 export class UserService {
   isLoggedIn$: Observable<boolean>;
   isLoggedOut$: Observable<boolean>;
-  pictureUrl$: Observable<string>;
-  whoAmI$: Observable<firebase.User>;
+  user: firebase.User;
 
   constructor(private afAuth: AngularFireAuth, private router: Router) {
     this.isLoggedIn$ = afAuth.authState.pipe(map((user) => !!user));
     this.isLoggedOut$ = this.isLoggedIn$.pipe(map((loggedIn) => !loggedIn));
-    this.pictureUrl$ = afAuth.authState.pipe(
-      map((user) => (user ? user.photoURL : null))
-    );
-    this.whoAmI$ = afAuth.authState;
+    this.user = JSON.parse(localStorage.getItem('user'))
+    if (!this.user) {
+      this.afAuth.authState.subscribe(user => {
+        console.log("GOT THE USER", user)
+        this.user = user;
+        localStorage.setItem('user', JSON.stringify(this.user));
+      });
+    }
   }
 
 

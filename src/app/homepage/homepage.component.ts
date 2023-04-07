@@ -1,3 +1,4 @@
+import { UserService } from '../login/user.service';
 import {
   Component,
   HostListener,
@@ -13,6 +14,11 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { getAuth } from 'firebase/auth';
+import { GroupService } from '../services/group.service';
+import { WordService } from '../services/word.service';
+
 
 @Component({
   selector: 'app-homepage',
@@ -21,12 +27,12 @@ import {
   animations: [
     trigger('scrollSlide', [
       // state('void', style({ transform: 'translateX(150%)' })),
-      state('hiden', style({})),
+      state('hidden', style({})),
       state('show', style({ transform: 'translateX(0)' })),
 
       // transition('void => show', animate('1200ms ease-out')),
-      transition('hiden => show', animate('900ms ease-out')),
-      transition('show => hiden', animate('700ms ease-in')),
+      transition('hidden => show', animate('900ms ease-out')),
+      transition('show => hidden', animate('700ms ease-in')),
     ]),
     trigger('fadeInTitle', [
       transition('void => *', [
@@ -50,13 +56,23 @@ export class HomepageComponent implements OnInit, AfterViewInit {
   yOffset = 0;
   sectionHeightArr = [];
 
-  constructor() {}
+  constructor(private userService: UserService, private db: AngularFirestore, public GroupService: GroupService, private WordService: WordService) { }
   testTriggerButton() {
-    if (this.sectionState === 'hiden') {
+    if (this.sectionState === 'hidden') {
       this.sectionState = 'show';
     } else if (this.sectionState === 'show') {
-      this.sectionState = 'hiden';
+      this.sectionState = 'hidden';
     }
+  }
+
+  async uglyButton() {
+    // await this.userService.getUser();
+    // console.log(this.db.doc("/users/gTsSvxlF4Cfd0hvxhmT0Y8yAQHXU/groups/6K99FrtrafPByz2mzydc/words/mBfuRLABfjXV6OFJliuz").get().subscribe(snap => {
+    //   console.log(snap.data())
+    // }))
+    // this.GroupService.uglyButton()
+    this.WordService.getWordsFromServer().subscribe(res => console.log(res))
+    // console.log(getAuth().currentUser.email)
   }
 
   @HostListener('window:resize', ['$event'])
@@ -101,7 +117,7 @@ export class HomepageComponent implements OnInit, AfterViewInit {
       }
 
       if (spaceLeft < 0) {
-        this.sectionStateArray[i] = 'hiden';
+        this.sectionStateArray[i] = 'hidden';
         return;
       }
       this.sectionStateArray[i] = 'show';
@@ -110,7 +126,7 @@ export class HomepageComponent implements OnInit, AfterViewInit {
   assignHide() {
     for (let i = 0; i < this.children.length; i++) {
       setTimeout(() => {
-        this.sectionStateArray.push('hiden');
+        this.sectionStateArray.push('hidden');
       }, 500);
     }
   }

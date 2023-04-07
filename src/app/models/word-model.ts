@@ -1,3 +1,6 @@
+import firebase from "firebase/compat/app";
+
+
 export type Score =
   | 1
   | 2
@@ -20,12 +23,11 @@ export type Score =
   | 19
   | 20;
 export interface Word {
-  id: string;
+  id?: string;
   name: string;
   translation: string;
-  user: string;
-  groupNum: string;
   proficiency: Score;
   tips?: string;
   additionalTr?: string[];
+  date: firebase.firestore.Timestamp;
 }

@@ -26,12 +26,12 @@ import { SpellingComponent } from '@app/exercises/spelling/spelling.component';
 import { ProgressBarComponent } from '@app/exercises/progress-bar/progress-bar.component';
 import { ResultsComponent } from '@app/exercises/results/results.component';
 import { RatingUIComponent } from '@app//my-vocab/rating-ui/rating-ui.component';
-import { WordFormComponent } from '@app/my-vocab/word-form/word-form.component';
+import { WordFormComponent } from '@app/my-vocab/word-grid/word-form/word-form.component';
 import { GroupFormComponent } from '@app/my-vocab/group-form/group-form.component';
 import { StopPropagationDirective } from '@app/directives/stop-propagation.directive';
 import { SettingsPopupComponent } from '@app/navbar/settings-popup/settings-popup.component';
 import { TypeTestComponent } from '@app/exercises/type-test/type-test.component';
-import { ExtraTrCardComponent } from '@app/my-vocab/extra-tr-card/extra-tr-card.component';
+import { WordGridComponent } from '@app/my-vocab/word-grid/word-grid.component';
 
 // Environment
 import { environment } from "@env/environment";
@@ -69,7 +69,6 @@ import {
     StopPropagationDirective,
     SettingsPopupComponent,
     TypeTestComponent,
-    ExtraTrCardComponent,
   ],
   imports: [
     BrowserModule,
@@ -92,6 +91,7 @@ import {
     AngularFireStorageModule,
     AngularFireAuthModule,
     AngularFirestoreModule,
+    WordGridComponent,
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },

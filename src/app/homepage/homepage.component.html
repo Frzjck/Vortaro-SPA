@@ -1,9 +1,10 @@
 <div class="content" *ngIf="true">
+  <button (click)="uglyButton()">UGLY BUTTON</button>
   <div class="container" #container>
     <h1 class="center title" @fadeInTitle>Welcome to Vortaro</h1>
     <div
       class="section center"
-      [@scrollSlide]="sectionStateArray[1] || 'hiden'"
+      [@scrollSlide]="sectionStateArray[1] || 'hidden'"
     >
       <p>
         This page has been designed for autodidactic purposes and as a proof of
@@ -13,7 +14,7 @@
     </div>
     <div
       class="section center"
-      [@scrollSlide]="sectionStateArray[2] || 'hiden'"
+      [@scrollSlide]="sectionStateArray[2] || 'hidden'"
     >
       <p>
         It allows to store words you wish to learn, organize them by groups,
@@ -23,7 +24,7 @@
     </div>
     <div></div>
     <p class="title sec-sep center" @fadeIn>My Vocabulary</p>
-    <div class="section" [@scrollSlide]="sectionStateArray[3] || 'hiden'">
+    <div class="section" [@scrollSlide]="sectionStateArray[3] || 'hidden'">
       <img src="..\assets\imgs\homepage\glossary.webp" alt="glossary" />
       <div class="text-div">
         <p>
@@ -37,7 +38,7 @@
         </p>
       </div>
     </div>
-    <div class="section" [@scrollSlide]="sectionStateArray[4] || 'hiden'">
+    <div class="section" [@scrollSlide]="sectionStateArray[4] || 'hidden'">
       <img src="..\assets\imgs\homepage\newword.webp" alt="new word" />
       <div class="text-div">
         <p>To create or edit a word you are given four inputs:</p>
@@ -58,7 +59,7 @@
         </p>
       </div>
     </div>
-    <div class="section" [@scrollSlide]="sectionStateArray[4] || 'hiden'">
+    <div class="section" [@scrollSlide]="sectionStateArray[4] || 'hidden'">
       <img
         src="..\assets\imgs\homepage\addtrandtips.webp"
         alt="add trand tips"
@@ -70,7 +71,7 @@
         <p>• To see tips, hover over question icon.</p>
       </div>
     </div>
-    <div class="section" [@scrollSlide]="sectionStateArray[4] || 'hiden'">
+    <div class="section" [@scrollSlide]="sectionStateArray[4] || 'hidden'">
       <img src="..\assets\imgs\homepage\ratings.webp" alt="ratings" />
       <div class="text-div">
         <p>On "My Vocabulary" page you also can track your progress.</p>
@@ -91,7 +92,7 @@
 
     <div></div>
     <p class="title sec-sep center" @fadeIn>Settings</p>
-    <div class="section" [@scrollSlide]="sectionStateArray[6] || 'hiden'">
+    <div class="section" [@scrollSlide]="sectionStateArray[6] || 'hidden'">
       <img src="..\assets\imgs\homepage\settings.webp" alt="settings" />
       <div class="text-div">
         <p>
@@ -105,7 +106,7 @@
         </p>
       </div>
     </div>
-    <div class="section" [@scrollSlide]="sectionStateArray[7] || 'hiden'">
+    <div class="section" [@scrollSlide]="sectionStateArray[7] || 'hidden'">
       <img src="..\assets\imgs\homepage\modes.webp" alt="modes" />
       <div class="text-div">
         <p>
@@ -114,13 +115,13 @@
         <p>Choose mode you like before selecting an exercise.</p>
       </div>
     </div>
-    <div class="section" [@scrollSlide]="sectionStateArray[8] || 'hiden'">
+    <div class="section" [@scrollSlide]="sectionStateArray[8] || 'hidden'">
       <img src="..\assets\imgs\homepage\quiz.webp" alt="quiz" />
       <div class="text-div">
         <p>Quiz is recommended for getting familiarized with new words.</p>
       </div>
     </div>
-    <div class="section" [@scrollSlide]="sectionStateArray[9] || 'hiden'">
+    <div class="section" [@scrollSlide]="sectionStateArray[9] || 'hidden'">
       <img src="..\assets\imgs\homepage\spelling.webp" alt="spelling" />
       <div class="text-div">
         <p>Spelling is targeted to improve Orthography.</p>
@@ -132,7 +133,7 @@
     </div>
     <div></div>
     <p class="title sec-sep center" @fadeIn>Exercises</p>
-    <div class="section" [@scrollSlide]="sectionStateArray[5] || 'hiden'">
+    <div class="section" [@scrollSlide]="sectionStateArray[5] || 'hidden'">
       <img src="..\assets\imgs\homepage\training.webp" alt="training" />
       <div class="text-div">
         <p>Currently there are three types of exercises available.</p>

@@ -1,41 +1,26 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { animate, style, transition, trigger } from '@angular/animations';
 import { GroupService } from '../services/group.service';
-import { WordManageService } from '../services/word-manage.service';
+import { WordService } from '../services/word.service';
 import { SettingsService } from '../services/settings.service';
 
 import { Group } from '../models/group-model';
 import { Word } from '../models/word-model';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { UserService } from '@app/login/user.service';
 
 @Component({
   selector: 'app-my-vocab',
   templateUrl: './my-vocab.component.html',
   styleUrls: ['./my-vocab.component.scss'],
-  animations: [
-    trigger('expandDown', [
-      transition('void => *', [
-        style({ height: 0, padding: 0 }),
-        animate('400ms cubic-bezier(.49,.99,.27,.98)'),
-      ]),
-      transition('* => void', [
-        animate(
-          '400ms cubic-bezier(.49,.99,.27,.98)',
-          style({ height: 0, padding: 0 })
-        ),
-      ]),
-    ]),
-  ],
+
 })
 export class MyVocabComponent implements OnInit, OnDestroy {
   groups: Group[] = [];
   words: Word[] = [];
   editMode: Boolean = false;
   groupEdit: Boolean = false;
-  wordEdit: Boolean = false;
   groupEditId: String;
-  wordEditId: String;
   newWordMode: Boolean = false;
   newGroupMode: Boolean = false;
   translationsOpen: Boolean = false;
@@ -46,98 +31,91 @@ export class MyVocabComponent implements OnInit, OnDestroy {
 
   exerciseMode = false;
   urlArr = [];
-
-  private groupSub: Subscription;
-  private wordSub: Subscription;
+  groups$;
+  words$;
 
   constructor(
     public groupService: GroupService,
-    private wordService: WordManageService,
+    private wordService: WordService,
     private settings: SettingsService,
-    private router: Router
+    private router: Router,
+    public userService: UserService
   ) { }
 
   ngOnInit(): void {
-    this.urlArr = this.router.url.split('/');
-    if (this.urlArr[this.urlArr.length - 1] === 'vocabulary-select') {
-      this.exerciseMode = true;
-    }
+    // this.urlArr = this.router.url.split('/');
+    // if (this.urlArr[this.urlArr.length - 1] === 'vocabulary-select') {
+    //   this.exerciseMode = true;
+    // }
     // Subscribe to groups
-    this.groupSub = this.groupService
-      .loadGroups()
-      .subscribe((groups) => {
-        this.groups = groups;
-      });
+    // this.groupSub = this.groupService
+    //   .loadGroups()
+    //   .subscribe((groups) => {
+    //     this.groups = groups;
+    //   });
 
     // Subscribe to words
-    this.wordSub = this.wordService.wordsObsListener().subscribe((words) => {
-      this.words = words;
-    });
+    // this.wordSub = this.wordService.wordsObsListener().subscribe((words) => {
+    //   this.words = words;
+    // });
 
     // Subscribe to exercise type
-    this.exerciseTypeSub = this.settings.exerciseModeSub.subscribe((type) => {
-      this.exerciseType = type;
-    });
+    // this.exerciseTypeSub = this.settings.exerciseModeSub.subscribe((type) => {
+    //   this.exerciseType = type;
+    // });
+    this.groups$ = this.groupService.loadGroups();
+    this.words$ = this.wordService.getWordsFromServer();
+  }
+
+  ngAfterViewInit(): void {
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
+
   }
 
   ngOnDestroy(): void {
-    this.groupSub.unsubscribe();
-    this.wordSub.unsubscribe();
+    // this.groupSub.unsubscribe();
+    // this.wordSub.unsubscribe();
   }
 
   // To hide collapse all button on 0 additional translates groups
-  areThereAddTr(groupNum) {
-    let thereAre =
-      this.getGroupWords(groupNum).filter(
-        (word) => word.additionalTr.length > 0
-      ).length !== 0;
-    return thereAre;
+  areThereAddTr(groupId) {
+    // let thereAre =
+    //   this.getGroupWords(groupId).filter(
+    //     (word) => word.additionalTr.length > 0
+    //   ).length !== 0;
+    // return thereAre;
   }
 
-  conditionalForSeeAll(groupNum) {
-    let totWordWithAddTr = this.getGroupWords(groupNum).filter(
-      (word) => word.additionalTr.length > 0
-    ).length;
-    let visible = totWordWithAddTr !== this.translationArrOpen.length;
-    return visible;
+  conditionalForSeeAll(groupId) {
+    // let totWordWithAddTr = this.getGroupWords(groupId).filter(
+    //   (word) => word.additionalTr.length > 0
+    // ).length;
+    // let visible = totWordWithAddTr !== this.translationArrOpen.length;
+    // return visible;
   }
-
   changePanReset() {
-    this.wordEditId = null;
+    // this.wordEditId = null;
     this.groupEdit = false;
     this.newWordMode = false;
     this.editMode = false;
     this.closeAllTranslations();
   }
 
-  toggleTranslations(wordId) {
-    if (this.translationArrOpen.includes(wordId)) {
-      this.translationArrOpen = this.translationArrOpen.filter(
-        (word) => word !== wordId
-      );
-    } else {
-      this.translationArrOpen.push(wordId);
-    }
-  }
-  openAllTranslations(groupNum) {
-    const allWordIds = this.getGroupWords(groupNum)
-      .filter((word) => word.additionalTr.length > 0)
-      .map((word) => word.id);
-    this.translationArrOpen.length = 0;
-    this.translationArrOpen = allWordIds;
+  openAllTranslations(groupId) {
+    // const allWordIds = this.getGroupWords(groupId)
+    //   .filter((word) => word.additionalTr.length > 0)
+    //   .map((word) => word.id);
+    // this.translationArrOpen.length = 0;
+    // this.translationArrOpen = allWordIds;
   }
 
   closeAllTranslations() {
     this.translationArrOpen.length = 0;
   }
 
-  getGroupWords(groupNum) {
-    const words = this.words.filter((word) => word.groupNum === groupNum);
-    return words;
-  }
-
   onEditMode(groupId) {
-    this.wordEditId = null;
+    // this.wordEditId = null;
     this.groupEdit = false;
     this.newWordMode = false;
     this.closeAllTranslations();
@@ -153,28 +131,14 @@ export class MyVocabComponent implements OnInit, OnDestroy {
   onDeleteGroup(groupName, groupId) {
     if (confirm('Are you sure you want to delete ' + groupName)) {
       this.groupService.deleteGroup(groupId).subscribe(() => {
-        this.groupService.loadGroups();
+        // this.groupService.loadGroups();
       });
     }
   }
 
-  onEditWord(wordId) {
-    if (this.wordEditId === wordId && this.wordEdit === true) {
-      this.wordEdit = false;
-    } else {
-      this.wordEdit = true;
-    }
-    this.wordEditId = wordId;
-  }
 
-  onDeleteWord(id) {
-    if (confirm('Are you sure you want to delete ')) {
-      this.wordService.deleteWord(id).subscribe(() => {
-        this.wordService.getWordsFromServer();
-        this.groupService.loadGroups();
-      });
-    }
-  }
+
+
 
   onEditGroupName() {
     this.groupEdit = !this.groupEdit;
@@ -186,38 +150,24 @@ export class MyVocabComponent implements OnInit, OnDestroy {
 
   // Conditionals for ngIf
   // Groups
-  hideOnEdit(groupNum) {
+  hideOnEdit(groupId) {
     return (
       this.editMode === false ||
-      (this.editMode === true && this.groupEditId !== groupNum)
+      (this.editMode === true && this.groupEditId !== groupId)
     );
   }
 
-  showOnEdit(groupNum) {
-    return this.editMode === true && this.groupEditId === groupNum;
+  showOnEdit(groupId) {
+    return this.editMode === true && this.groupEditId === groupId;
   }
 
-  preventCollapse(groupNum) {
-    if (this.groupEditId === groupNum) {
+  preventCollapse(groupId) {
+    if (this.groupEditId === groupId) {
       return true;
     }
   }
-  // Words
-  hideOnEditWord(wordId, groupNum) {
-    return (
-      this.wordEdit === false ||
-      (this.wordEdit === true && this.groupEditId !== groupNum) ||
-      (this.wordEdit === true && this.wordEditId !== wordId)
-    );
-  }
-  showOnEditWord(wordId, groupNum) {
-    return (
-      this.wordEdit === true &&
-      this.wordEditId === wordId &&
-      this.groupEditId === groupNum
-    );
-  }
-  hideOnGroupEdit(groupNum) {
-    return this.groupEdit === true && this.groupEditId === groupNum;
+
+  hideOnGroupEdit(groupId) {
+    return this.groupEdit === true && this.groupEditId === groupId;
   }
 }

@@ -1,9 +1,10 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { GroupService } from './services/group.service';
-import { WordManageService } from './services/word-manage.service';
+import { WordService } from './services/word.service';
 import { SettingsService } from './services/settings.service';
 import { Subscription } from 'rxjs';
+import { UserService } from './login/user.service';
 
 @Component({
   selector: 'app-root',
@@ -27,10 +28,9 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   pixie: boolean;
   pixieSub: Subscription;
   constructor(
-    private groupService: GroupService,
-    private wordService: WordManageService,
-    private settings: SettingsService
-  ) { }
+    private settings: SettingsService,
+  ) {
+  }
 
   ngOnInit() {
     //Theme conf
