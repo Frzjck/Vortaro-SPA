@@ -1,0 +1,148 @@
+<nav>
+  <ul class="desktop-menu">
+    <li>
+      <a mat-button routerLink="/"
+        ><mat-icon> home </mat-icon><span class="nav-text"> Home</span>
+      </a>
+    </li>
+    <li class="pseudo-el"></li>
+    <li class="spacer"></li>
+    <li>
+      <a mat-button routerLink="/my-vocabulary" routerLinkActive="activeLink"
+        ><mat-icon> auto_stories </mat-icon
+        ><span class="nav-text"> Glossary</span></a
+      >
+    </li>
+
+    <li>
+      <a mat-button routerLink="/exercises" routerLinkActive="activeLink">
+        <mat-icon> fitness_center </mat-icon
+        ><span class="nav-text"> Training</span>
+      </a>
+    </li>
+    <li class="spacer"></li>
+    <li (click)="onSettings()" (mouseleave)="startTimer()">
+      <a mat-button
+        ><mat-icon>settings</mat-icon> <span class="nav-text"> Settings</span>
+      </a>
+      <app-settings-popup
+        *ngIf="dropdownOpen"
+        (mouseleave)="startTimer()"
+        (mouseenter)="stopTimer()"
+        @popup
+      ></app-settings-popup>
+    </li>
+    <li *ngIf="user.isLoggedOut$ | async">
+      <a mat-button routerLink="/login" routerLinkActive="activeLink"
+        ><mat-icon> login </mat-icon><span class="nav-text"> Log In</span>
+      </a>
+    </li>
+    <li *ngIf="user.isLoggedIn$ | async" (click)="logout()">
+      <p class="loggedInInfo">
+        {{ user.user?.email }}
+      </p>
+      <a mat-button routerLinkActive="activeLink"
+        ><mat-icon>logout</mat-icon> <span class="nav-text"> Log Out</span>
+      </a>
+    </li>
+  </ul>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu">
+    <a mat-button routerLink="/" class="page-logo-home"
+      ><mat-icon> home </mat-icon><span class="nav-text"> Home</span>
+    </a>
+    <a
+      mat-button
+      class="open-btn"
+      (click)="onOpenMenu()"
+      routerLinkActive="activeLink"
+    >
+      <mat-icon class="menu-icon">menu</mat-icon>
+    </a>
+    <div class="dropdown-menu" [ngClass]="menuOpen ? 'droped' : ''">
+      <ul>
+        <li>
+          <a
+            routerLink="/my-vocabulary"
+            routerLinkActive="activeLink"
+            (click)="menuOpen = false; onFocusoutSettings()"
+          >
+            <mat-icon class="arrow"> expand_more </mat-icon>
+            <mat-icon> auto_stories </mat-icon>
+            <mat-icon class="arrow"> expand_more </mat-icon>
+          </a>
+        </li>
+
+        <li>
+          <a
+            routerLink="/exercises"
+            routerLinkActive="activeLink"
+            (click)="menuOpen = false; onFocusoutSettings()"
+          >
+            <mat-icon class="arrow"> expand_more </mat-icon>
+            <mat-icon> fitness_center </mat-icon>
+            <mat-icon class="arrow"> expand_more </mat-icon>
+          </a>
+        </li>
+        <li>
+          <a
+            routerLink="/auth/login"
+            routerLinkActive="activeLink"
+            (click)="menuOpen = false; onFocusoutSettings()"
+            *ngIf="user.isLoggedOut$ | async"
+          >
+            <mat-icon class="arrow"> expand_more </mat-icon>
+            <mat-icon> login </mat-icon>
+            <mat-icon class="arrow"> expand_more </mat-icon>
+          </a>
+        </li>
+
+        <li>
+          <a
+            routerLinkActive="activeLink"
+            (click)="menuOpen = false; onFocusoutSettings()"
+            *ngIf="user.isLoggedIn$ | async"
+            (click)="logout()"
+          >
+            <mat-icon class="arrow"> expand_more </mat-icon>
+            <mat-icon> logout </mat-icon>
+            <mat-icon class="arrow"> expand_more </mat-icon>
+          </a>
+        </li>
+
+        <li>
+          <a routerLinkActive="activeLink" (click)="onSettingsMobile()">
+            <mat-icon class="arrow"> expand_more </mat-icon>
+            <mat-icon> settings </mat-icon>
+            <mat-icon class="arrow"> expand_more </mat-icon>
+          </a>
+        </li>
+        <li @mob-settings *ngIf="dropdownMobileOpen" class="settings-popup">
+          <app-settings-popup></app-settings-popup>
+        </li>
+        <li>
+          <a
+            routerLinkActive="activeLink"
+            (click)="menuOpen = false; this.dropdownOpen = false"
+          >
+            <mat-icon class="arrow"> expand_more </mat-icon>
+            <mat-icon> cancel </mat-icon>
+            <mat-icon class="arrow"> expand_more </mat-icon>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- <li >
+          <a
+            routerLink="/auth/signin"
+            routerLinkActive="activeLink"
+            (click)="menuOpen = false; onFocusoutSettings()"
+          >
+            <mat-icon class="arrow"> expand_more </mat-icon>
+            <mat-icon> person_add </mat-icon>
+            <mat-icon class="arrow"> expand_more </mat-icon>
+          </a>
+        </li> -->

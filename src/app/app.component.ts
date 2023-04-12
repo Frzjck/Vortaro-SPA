@@ -4,7 +4,7 @@ import { GroupService } from './services/group.service';
 import { WordService } from './services/word.service';
 import { SettingsService } from './services/settings.service';
 import { Subscription } from 'rxjs';
-import { UserService } from './login/user.service';
+import { UserService } from './pages/login/user.service';
 
 @Component({
   selector: 'app-root',

@@ -5,9 +5,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatRadioModule } from '@angular/material/radio';
@@ -18,20 +17,9 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 // At App
 import { AppRoutingModule } from '@app/app-routing.module';
 import { AppComponent } from '@app/app.component';
-import { NavbarComponent } from '@app/navbar/navbar.component';
-import { HomepageComponent } from '@app/homepage/homepage.component';
-import { MyVocabComponent } from '@app/my-vocab/my-vocab.component';
-import { ExercisesComponent } from '@app/exercises/exercises.component';
-import { SpellingComponent } from '@app/exercises/spelling/spelling.component';
-import { ProgressBarComponent } from '@app/exercises/progress-bar/progress-bar.component';
-import { ResultsComponent } from '@app/exercises/results/results.component';
-import { RatingUIComponent } from '@app//my-vocab/rating-ui/rating-ui.component';
-import { WordFormComponent } from '@app/my-vocab/word-grid/word-form/word-form.component';
-import { GroupFormComponent } from '@app/my-vocab/group-form/group-form.component';
-import { StopPropagationDirective } from '@app/directives/stop-propagation.directive';
-import { SettingsPopupComponent } from '@app/navbar/settings-popup/settings-popup.component';
-import { TypeTestComponent } from '@app/exercises/type-test/type-test.component';
-import { WordGridComponent } from '@app/my-vocab/word-grid/word-grid.component';
+import { HomepageComponent } from '@app/pages/homepage/homepage.component';
+import { StopPropagationDirective } from '@app/shared/directives/stop-propagation.directive';
+import { SettingsPopupComponent } from '@app/components/navbar/components/settings-popup/settings-popup.component';
 
 // Environment
 import { environment } from "@env/environment";
@@ -50,6 +38,9 @@ import {
   AngularFireStorageModule,
   USE_EMULATOR as USE_FUNCTIONS_EMULATOR,
 } from "@angular/fire/compat/storage";
+import { NavbarComponent } from './components';
+import { GlossaryComponent } from './pages/glossary/glossary.component';
+import { ExercisesComponent } from './pages/exercises/exercises.component';
 
 
 
@@ -58,17 +49,9 @@ import {
     AppComponent,
     NavbarComponent,
     HomepageComponent,
-    MyVocabComponent,
-    ExercisesComponent,
-    SpellingComponent,
-    ProgressBarComponent,
-    ResultsComponent,
-    RatingUIComponent,
-    WordFormComponent,
-    GroupFormComponent,
     StopPropagationDirective,
     SettingsPopupComponent,
-    TypeTestComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -78,7 +61,6 @@ import {
     MatRadioModule,
     MatButtonModule,
     MatToolbarModule,
-    MatExpansionModule,
     MatProgressSpinnerModule,
     MatSlideToggleModule,
     HttpClientModule,
@@ -91,7 +73,8 @@ import {
     AngularFireStorageModule,
     AngularFireAuthModule,
     AngularFirestoreModule,
-    WordGridComponent,
+    ExercisesComponent,
+    GlossaryComponent,
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },

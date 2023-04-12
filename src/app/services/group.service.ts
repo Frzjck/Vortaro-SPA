@@ -3,10 +3,10 @@ import { Group } from '../models/group-model';
 import { from, Observable, of } from 'rxjs';
 import { concatMap, map } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { convertSnaps } from './db-utils';
+import { convertSnaps } from '../shared/utils/db-utils';
 import { Word } from '@app/models/word-model';
 
-import { UserService } from '../login/user.service';
+import { UserService } from '../pages/login/user.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { QuerySnapshot, DocumentChange } from '@firebase/firestore-types';
 
@@ -22,7 +22,6 @@ export class GroupService {
 
 
   createGroup(newGroup: Partial<Group>, groupId?: string): Observable<Partial<Group>> {
-
     let save$: Observable<any>;
     if (groupId)
       save$ = from(this.db.doc(`users/${this.userService.user.uid}/groups/${groupId}`).set(newGroup));
@@ -43,7 +42,6 @@ export class GroupService {
   }
 
   loadGroups(): Observable<Group[] | any> {
-    console.log("loadGroups()")
     // return of(["test"]);
     return this.db
       .collection(`users/${this.userService.user.uid}/groups`)
@@ -61,7 +59,6 @@ export class GroupService {
     // }));
     // await this.loadGroups().subscribe((res) => console.log("RES", res))
     let test = await (this.loadGroups() as Observable<QuerySnapshot>);
-    console.log("this.loadGroups() as Observable<QuerySnapshot>)", test);
   }
   // let user = this.afAuth.auth.currentUser;
   // uid = user.uid;

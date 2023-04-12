@@ -1,21 +1,27 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { HomepageComponent } from './homepage/homepage.component';
+import { HomepageComponent } from './pages/homepage/homepage.component';
 import { ExercisesComponent } from './exercises/exercises.component';
 import { SpellingComponent } from './exercises/spelling/spelling.component';
 import { TypeTestComponent } from './exercises/type-test/type-test.component';
 import { ResultsComponent } from './exercises/results/results.component';
-import { MyVocabComponent } from './my-vocab/my-vocab.component';
+import { GlossaryComponent } from './glossary/glossary.component';
 
 
-import { LoginComponent } from "./login/login.component";
+import { LoginComponent } from "./pages/login/login.component";
+import { SharedComponent } from './pages/demo/shared/shared.component';
 
 const routes: Routes = [
   { path: '', component: HomepageComponent },
   {
+    path: 'shared',
+    component: SharedComponent,
+
+  },
+  {
     path: 'my-vocabulary',
-    component: MyVocabComponent,
+    component: GlossaryComponent,
 
   },
   {
@@ -25,7 +31,7 @@ const routes: Routes = [
   },
   {
     path: 'exercises/vocabulary-select',
-    component: MyVocabComponent,
+    component: GlossaryComponent,
 
   },
   // -------- Spelling exercice routes --------

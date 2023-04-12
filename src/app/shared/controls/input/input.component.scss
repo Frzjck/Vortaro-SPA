@@ -1,0 +1,8 @@
+// @import "styles/colors";
+
+:host-context(.form-field_error) {
+  input {
+    // border: 1px solid $error;
+    border: 1px solid pink;
+  }
+}

@@ -3,11 +3,11 @@ import { Word } from '../models/word-model';
 import { map } from 'rxjs/operators';
 import { from, Observable, ReplaySubject } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { convertSnaps } from './db-utils';
+import { convertSnaps } from '../shared/utils/db-utils';
 
 
 import firebase from "firebase/compat/app";
-import { UserService } from '../login/user.service';
+import { UserService } from '../pages/login/user.service';
 import OrderByDirection = firebase.firestore.OrderByDirection;
 
 @Injectable({
