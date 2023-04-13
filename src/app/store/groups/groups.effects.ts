@@ -1,86 +1,77 @@
 import { Injectable } from '@angular/core';
-import { Actions, ofType, createEffect } from '@ngrx/effects';
+import { createEffect, Actions, ofType } from '@ngrx/effects';
 
-import { AngularFirestore, DocumentChangeAction } from '@angular/fire/compat/firestore';
+import * as firestore from "@google-cloud/firestore";
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
-import { Observable, of, zip } from 'rxjs';
+import { Observable, from, of } from 'rxjs';
 import { map, switchMap, catchError, take } from 'rxjs/operators';
 
-import { Dictionaries, Dictionary, Word, Group } from './groups.models';
 
 import * as fromActions from './groups.actions';
-
+import { extractDocumentChangeActionData } from '@app/shared/utils/db-utils';
+import { FireGroup, Group } from './groups.models';
 
 type Action = fromActions.All;
 
-const documentToItem = (x: DocumentChangeAction<any>): Item => {
-    const data = x.payload.doc.data();
-    return {
-        id: x.payload.doc.id,
-        ...data
-    };
-};
-
-const itemToControlItem = (x: Item): ControlItem => ({
-    value: x.id,
-    label: x.name,
-    icon: x.icon
-});
-
-const addDictionary = (items: Item[]): Dictionary => ({
-    items,
-    controlItems: [...items].map(x => itemToControlItem(x))
-});
-
 @Injectable()
-export class DictionariesEffects {
+export class ListEffects {
 
     constructor(
         private actions: Actions,
         private afs: AngularFirestore
     ) { }
 
-    read$ = createEffect(() => this.actions.pipe(
+    read$: Observable<Action> = createEffect(() => this.actions.pipe(
         ofType(fromActions.Types.READ),
         switchMap(() =>
-            zip(
-                this.afs.collection('roles').snapshotChanges().pipe(
-                    take(1),
-                    map(items => items.map(x => documentToItem(x)))
-                ),
-                this.afs.collection('specializations').snapshotChanges().pipe(
-                    take(1),
-                    map(items => items.map(x => documentToItem(x)))
-                ),
-                this.afs.collection('qualifications').snapshotChanges().pipe(
-                    take(1),
-                    map(items => items.map(x => documentToItem(x)))
-                ),
-                this.afs.collection('skills').snapshotChanges().pipe(
-                    take(1),
-                    map(items => items.map(x => documentToItem(x)))
-                ),
-                of((jsonCountries as any).default.map(country => ({
-                    id: country.code.toUpperCase(),
-                    name: country.name,
-                    icon: {
-                        src: null,
-                        cssClass: 'fflag fflag-' + country.code.toUpperCase()
-                    }
-                }))
-                )
-            ).pipe(
-                map(([roles, specializations, qualifications, skills, countries]) => {
-                    const dictionaries: Dictionaries = {
-                        roles: addDictionary(roles),
-                        specializations: addDictionary(specializations),
-                        qualifications: addDictionary(qualifications),
-                        skills: addDictionary(skills),
-                        countries: addDictionary(countries)
-                    };
-                    return fromActions.ReadSuccess(dictionaries);
-                }),
-                catchError(err => of(fromActions.ReadError(err.message)))
+            this.afs.collection('jobs', ref => ref.orderBy('created')).snapshotChanges().pipe(
+                take(1),
+                map(changes => changes.map(x => extractDocumentChangeActionData(x))),
+                map((items: Group[]) => new fromActions.ReadSuccess(items)),
+                catchError(err => of(new fromActions.ReadError(err.message)))
+            )
+        )
+    ));
+
+    create$: Observable<Action> = createEffect(() => this.actions.pipe(
+        ofType(fromActions.Types.CREATE),
+        map((action: fromActions.Create) => action.group),
+        map((group: FireGroup) => ({
+            ...group,
+            created: firestore.FieldValue.serverTimestamp()
+        })),
+        switchMap((request: FireGroup) =>
+            from(this.afs.collection('groups').add(request)).pipe(
+                map(res => ({ ...request, id: res.id })),
+                map((group: Group) => new fromActions.CreateSuccess(group)),
+                catchError(err => of(new fromActions.CreateError(err.message)))
+            )
+        )
+    ));
+
+    update$: Observable<Action> = createEffect(() => this.actions.pipe(
+        ofType(fromActions.Types.UPDATE),
+        map((action: fromActions.Update) => action.group),
+        map((group: Group) => ({
+            ...group,
+            updated: firestore.FieldValue.serverTimestamp()
+        })),
+        switchMap((group) =>
+            from(this.afs.collection('groups').doc(group.id).set(group)).pipe(
+                map(() => new fromActions.UpdateSuccess(group.id, group)),
+                catchError(err => of(new fromActions.UpdateError(err.message)))
+            )
+        )
+    ));
+
+    delete$: Observable<Action> = createEffect(() => this.actions.pipe(
+        ofType(fromActions.Types.DELETE),
+        map((action: fromActions.Delete) => action.id),
+        switchMap(id =>
+            from(this.afs.collection('groups').doc(id).delete()).pipe(
+                map(() => new fromActions.DeleteSuccess(id)),
+                catchError(err => of(new fromActions.DeleteError(err.message)))
             )
         )
     ));

@@ -1,3 +1,5 @@
+import { DocumentChangeAction } from '@angular/fire/compat/firestore';
+
 export function convertSnaps<T>(results) {
 	return <T[]>results.docs.map((snap) => {
 		return {
@@ -6,3 +8,14 @@ export function convertSnaps<T>(results) {
 		};
 	});
 }
+
+
+export const extractDocumentChangeActionData = (x: DocumentChangeAction<any>, addId = true) => {
+	const data = x.payload.doc.data();
+
+	if (addId) {
+		data.id = x.payload.doc.id;
+	}
+
+	return data;
+};
