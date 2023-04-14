@@ -42,7 +42,8 @@ import { NavbarComponent } from './components';
 import { GlossaryComponent } from './pages/glossary/glossary.component';
 import { ExercisesComponent } from './pages/exercises/exercises.component';
 
-
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+const StoreDevtools = !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 50 }) : [];
 
 @NgModule({
   declarations: [
@@ -75,6 +76,7 @@ import { ExercisesComponent } from './pages/exercises/exercises.component';
     AngularFirestoreModule,
     ExercisesComponent,
     GlossaryComponent,
+    StoreDevtools
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
