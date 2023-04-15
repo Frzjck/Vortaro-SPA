@@ -29,10 +29,7 @@ export class GroupsEffects {
                 take(1),
                 map(changes => changes.map(x => extractDocumentChangeActionData(x))),
                 map((groups: Group[]) => fromActions.readGroupsSuccess({ groups })),
-                catchError(err => {
-                    console.error("------>>>>>>", err);
-                    return of(fromActions.readGroupsError(err.message))
-                })
+                catchError(err => of(fromActions.readGroupsError(err.message)))
             )
         )
     ));
