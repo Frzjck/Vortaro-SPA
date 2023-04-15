@@ -1,25 +1,46 @@
-import { Action } from '@ngrx/store';
-import { Dictionaries } from './words.models';
+import { createAction, props } from '@ngrx/store';
+import { Word, FireWord } from './words.models';
 
 export enum Types {
-    READ = '[Dictionaries] Read: Start',
-    READ_SUCCESS = '[Dictionaries] Read: Success',
-    READ_ERROR = '[Dictionaries] Read: Error'
+
+    READ = '[Words] Read: Start',
+    READ_SUCCESS = '[Words] Read: Success',
+    READ_ERROR = '[Words] Read: Error',
+
+    CREATE = '[Words] Create: Start',
+    CREATE_SUCCESS = '[Words] Create: Success',
+    CREATE_ERROR = '[Words] Create: Error',
+
+    UPDATE = '[Words] Update: Start',
+    UPDATE_SUCCESS = '[Words] Update: Success',
+    UPDATE_ERROR = '[Words] Update: Error',
+
+    DELETE = '[Words] Delete: Start',
+    DELETE_SUCCESS = '[Words] Delete: Success',
+    DELETE_ERROR = '[Words] Delete: Error',
 }
 
-export class Read implements Action {
-    readonly type = Types.READ;
-    constructor() { }
-}
+// Read
+export const readWords = createAction(Types.READ);
+export const readWordsSuccess = createAction(Types.READ_SUCCESS, props<{ words: Word[] }>());
+export const readWordsError = createAction(Types.READ_ERROR, props<{ error: string }>());
 
-export class ReadSuccess implements Action {
-    readonly type = Types.READ_SUCCESS;
-    constructor(public dictionaries: Dictionaries) { }
-}
+// Create
+export const createWord = createAction(Types.CREATE, props<{ word: FireWord }>());
+export const createWordSuccess = createAction(Types.CREATE_SUCCESS, props<{ word: Word }>());
+export const createWordError = createAction(Types.CREATE_ERROR, props<{ error: string }>());
 
-export class ReadError implements Action {
-    readonly type = Types.READ_ERROR;
-    constructor(public error: string) { }
-}
 
-export type All = Read | ReadSuccess | ReadError;
+// Update
+export const updateWord = createAction(Types.UPDATE, props<{ word: Word }>());
+export const updateWordSuccess = createAction(Types.UPDATE_SUCCESS, props<{
+    id: string,
+    changes: Partial<Word>
+}>());
+export const updateWordError = createAction(Types.UPDATE_ERROR, props<{ error: string }>());
+
+
+// Delete
+export const deleteWord = createAction(Types.DELETE, props<{ id: string }>());
+export const deleteWordSuccess = createAction(Types.DELETE_SUCCESS, props<{ id: string }>());
+export const deleteWordError = createAction(Types.DELETE_ERROR, props<{ error: string }>());

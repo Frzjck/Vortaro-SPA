@@ -1,39 +1,39 @@
-import { Dictionaries } from './words.models';
+import { EntityState, createEntityAdapter } from '@ngrx/entity';
+import { createReducer, on } from '@ngrx/store';
+import { Word } from './words.models';
 import * as fromActions from './words.actions';
 
-export interface DictionariesState {
-    entities: Dictionaries;
+
+export const adapter = createEntityAdapter<Word>();
+
+export interface WordsState extends EntityState<Word> {
     loading: boolean;
     error: string;
 }
 
-const initialState: DictionariesState = {
-    entities: null,
+export const initialState: WordsState = adapter.getInitialState({
     loading: null,
     error: null
-};
+});
 
-export function reducer(
-    state = initialState,
-    action: fromActions.All
-): DictionariesState {
-    switch (action.type) {
+export const reducer = createReducer(
+    initialState,
+    on(fromActions.readWords, (state) => ({ ...state, loading: true, error: null })),
+    on(fromActions.readWordsSuccess, (state, { words }) => adapter.setAll(words, { ...state, loading: false })),
+    on(fromActions.readWordsError, (state, { error }) => ({ ...state, loading: false, error: error })),
 
-        case fromActions.Types.READ: {
-            return { ...state, loading: true, error: null };
-        }
+    on(fromActions.createWord, (state) => ({ ...state, loading: true, error: null })),
+    on(fromActions.createWordSuccess, (state, { word }) => adapter.addOne(word, { ...state, loading: false })),
+    on(fromActions.createWordError, (state, { error }) => ({ ...state, loading: false, error: error })),
 
-        case fromActions.Types.READ_SUCCESS: {
-            return { ...state, entities: action.dictionaries, loading: false };
-        }
+    on(fromActions.updateWord, (state) => ({ ...state, loading: true, error: null })),
+    on(fromActions.updateWordSuccess, (state, { id, changes }) => (adapter.updateOne({
+        id: id,
+        changes: changes
+    }, state))),
+    on(fromActions.updateWordError, (state, { error }) => ({ ...state, loading: false, error: error })),
 
-        case fromActions.Types.READ_ERROR: {
-            return { ...state, entities: null, loading: false, error: action.error };
-        }
-
-        default: {
-            return state;
-        }
-
-    }
-}
+    on(fromActions.deleteWord, (state) => ({ ...state, loading: true, error: null })),
+    on(fromActions.deleteWordSuccess, (state, { id }) => adapter.removeOne(id, state)),
+    on(fromActions.deleteWordError, (state, { error }) => ({ ...state, loading: false, error: error })),
+);
