@@ -4,15 +4,17 @@ import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { SettingsService } from '@app/services/settings.service';
 import { WordService } from '@app/services/word.service';
+import { ProgressBarComponent } from './shared/progress-bar/progress-bar.component';
+
 @Component({
   selector: 'app-exercises',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ProgressBarComponent],
   templateUrl: './exercises.component.html',
   styleUrls: ['./exercises.component.scss'],
 })
 export class ExercisesComponent implements OnInit, OnDestroy {
-  private wordSub: Subscription;
+  // private wordSub: Subscription;
   words: boolean = false;
 
   exerciseTypeSub: Subscription;

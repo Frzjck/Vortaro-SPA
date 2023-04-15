@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { createEffect, Actions, ofType } from '@ngrx/effects';
 
-import * as firestore from "@google-cloud/firestore";
+import firebase from "firebase/compat/app";
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 import { Observable, from, of } from 'rxjs';
@@ -15,7 +15,7 @@ import { createGroup } from './groups.actions';
 
 
 @Injectable()
-export class ListEffects {
+export class GroupsEffects {
 
     constructor(
         private actions$: Actions,
@@ -39,7 +39,7 @@ export class ListEffects {
         map((action) => action.group),
         map((group: FireGroup) => ({
             ...group,
-            created: firestore.FieldValue.serverTimestamp()
+            created: firebase.firestore.FieldValue.serverTimestamp()
         })),
         switchMap((request: FireGroup) =>
             from(this.afs.collection('groups').add(request)).pipe(
@@ -55,7 +55,7 @@ export class ListEffects {
         map((action) => action.group),
         map((group: Group) => ({
             ...group,
-            updated: firestore.FieldValue.serverTimestamp()
+            updated: firebase.firestore.FieldValue.serverTimestamp()
         })),
         switchMap((group) =>
             from(this.afs.collection('groups').doc(group.id).set(group)).pipe(

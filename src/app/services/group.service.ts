@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Group } from '../models/group-model';
 import { from, Observable, of } from 'rxjs';
 import { concatMap, map } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { convertSnaps } from '../shared/utils/db-utils';
-import { Word } from '@app/models/word-model';
 
 import { UserService } from '../pages/login/user.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { QuerySnapshot, DocumentChange } from '@firebase/firestore-types';
+import { Word } from '@app/store/words';
+import { Group } from '@app/store/groups';
 
 @Injectable({
   providedIn: 'root',

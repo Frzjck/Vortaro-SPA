@@ -1,10 +1,10 @@
-import * as firestore from "@google-cloud/firestore";
+import firebase from "firebase/compat/app";
 
 export interface FireGroup {
     name: string;
     averageProficiency: number;
     shared_with?: string[];
 
-    created: firestore.FieldValue;
-    updated?: firestore.FieldValue;
+    created: firebase.firestore.FieldValue;
+    updated?: firebase.firestore.FieldValue;
 }

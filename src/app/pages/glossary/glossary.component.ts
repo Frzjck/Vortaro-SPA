@@ -6,8 +6,8 @@ import { Subscription } from 'rxjs';
 import { UserService } from '@app/pages/login/user.service';
 import { GroupService } from '@app/services/group.service';
 import { WordService } from '@app/services/word.service';
-import { Group } from '@app/models/backend/group';
-import { Word } from '@app/models/backend/word';
+import { Group } from '@app/store/groups';
+import { Word } from '@app/store/words';
 
 @Component({
   selector: 'app-glossary',

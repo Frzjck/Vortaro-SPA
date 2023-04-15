@@ -6,8 +6,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
 import { animate, style, transition, trigger } from '@angular/animations';
-import { ExtraTrCardComponent } from './component/extra-tr-card/extra-tr-card.component';
-import { WordUiComponent } from './component/word-ui/word-ui.component';
+import { ExtraTrCardComponent } from './components/extra-tr-card/extra-tr-card.component';
+import { WordUiComponent } from './components/word-ui/word-ui.component';
 
 
 @Component({

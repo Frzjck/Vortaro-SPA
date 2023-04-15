@@ -1,17 +1,22 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatCardModule } from '@angular/material/card';
+import { CommonModule } from '@angular/common';
 
-import { Word } from '../../models/word-model';
-import { ProgressBarService } from '../../services/progress-bar.service';
-import { WordService } from '../../services/word.service';
-import { GroupService } from '../../services/group.service';
-import { SettingsService } from '../../services/settings.service';
 
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { ResultsService } from '../../services/results.service';
+import { GroupService } from '@app/services/group.service';
+import { ProgressBarService } from '@app/services/progress-bar.service';
+import { ResultsService } from '@app/services/results.service';
+import { SettingsService } from '@app/services/settings.service';
+import { WordService } from '@app/services/word.service';
+import { Word } from '@app/store/words';
 import { Subscription } from 'rxjs';
+import { ProgressBarComponent } from '../../shared/progress-bar/progress-bar.component';
 
 @Component({
   selector: 'app-type-test',
+  standalone: true,
+  imports: [CommonModule, ProgressBarComponent, MatCardModule],
   templateUrl: './type-test.component.html',
   styleUrls: ['./type-test.component.scss'],
 })

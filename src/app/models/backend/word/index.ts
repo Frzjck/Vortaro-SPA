@@ -1,4 +1,4 @@
-import * as firestore from "@google-cloud/firestore";
+import firebase from "firebase/compat/app";
 
 
 export type Score =
@@ -30,6 +30,6 @@ export interface FireWord {
     tips?: string;
     additionalTr?: string[];
 
-    created: firestore.FieldValue;
-    updated?: firestore.FieldValue;
+    created: firebase.firestore.FieldValue;
+    updated?: firebase.firestore.FieldValue;
 }

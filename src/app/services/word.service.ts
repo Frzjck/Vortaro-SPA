@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Word } from '../models/word-model';
 import { map } from 'rxjs/operators';
 import { from, Observable, ReplaySubject } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
@@ -9,6 +8,7 @@ import { convertSnaps } from '../shared/utils/db-utils';
 import firebase from "firebase/compat/app";
 import { UserService } from '../pages/login/user.service';
 import OrderByDirection = firebase.firestore.OrderByDirection;
+import { Word } from '@app/store/words';
 
 @Injectable({
   providedIn: 'root',
@@ -47,7 +47,7 @@ export class WordService {
   createWord(newWord: Partial<Word>, groupId: string, wordId?: string): Observable<Partial<Word>> {
     newWord = {
       ...newWord,
-      date: firebase.firestore.FieldValue.serverTimestamp() as firebase.firestore.Timestamp,
+      created: firebase.firestore.FieldValue.serverTimestamp() as firebase.firestore.Timestamp,
     };
 
     let save$: Observable<any>;

@@ -2,15 +2,14 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { HomepageComponent } from './pages/homepage/homepage.component';
-import { ExercisesComponent } from './exercises/exercises.component';
-import { SpellingComponent } from './exercises/spelling/spelling.component';
-import { TypeTestComponent } from './exercises/type-test/type-test.component';
-import { ResultsComponent } from './exercises/results/results.component';
-import { GlossaryComponent } from './glossary/glossary.component';
-
 
 import { LoginComponent } from "./pages/login/login.component";
 import { SharedComponent } from './pages/demo/shared/shared.component';
+import { GlossaryComponent } from './pages/glossary/glossary.component';
+import { ExercisesComponent } from './pages/exercises/exercises.component';
+import { SpellingComponent } from './pages/exercises/pages/spelling/spelling.component';
+import { ResultsComponent } from './pages/exercises/pages/results/results.component';
+import { TypeTestComponent } from './pages/exercises/pages/type-test/type-test.component';
 
 const routes: Routes = [
   { path: '', component: HomepageComponent },
