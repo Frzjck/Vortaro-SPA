@@ -1,4 +1,4 @@
-import { Action } from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
 import { User, EmailPasswordCredentials, UserCreateRequest } from './user.models';
 
 export enum Types {
@@ -29,131 +29,36 @@ export enum Types {
 }
 
 // Init
-
-export class Init implements Action {
-    readonly type = Types.INIT;
-    constructor() { }
-}
-
-export class InitAuthorized implements Action {
-    readonly type = Types.INIT_AUTHORIZED;
-    constructor(public uid: string, public user: User) { }
-}
-
-export class InitUnauthorized implements Action {
-    readonly type = Types.INIT_UNAUTHORIZED;
-    constructor() { }
-}
-
-export class InitError implements Action {
-    readonly type = Types.INIT_ERROR;
-    constructor(public error: string) { }
-}
-
+export const userInit = createAction(Types.INIT);
+export const userInitAuthorized = createAction(Types.INIT_AUTHORIZED, props<{ uid: string, user: User }>);
+export const userInitUnauthorized = createAction(Types.INIT_UNAUTHORIZED);
+export const userInitError = createAction(Types.INIT_ERROR, props<{ error: string }>);
 
 // Sign In
+export const userSignInEmail = createAction(Types.SIGN_IN_EMAIL, props<{ credentials: EmailPasswordCredentials }>);
+export const userSignInEmailSuccess = createAction(Types.SIGN_IN_EMAIL_SUCCESS, props<{ uid: string, user: User }>);
+export const userSignInEmailError = createAction(Types.SIGN_IN_EMAIL_ERROR, props<{ error: string }>);
 
-export class SignInEmail implements Action {
-    readonly type = Types.SIGN_IN_EMAIL;
-    constructor(public credentials: EmailPasswordCredentials) { }
-}
-
-export class SignInEmailSuccess implements Action {
-    readonly type = Types.SIGN_IN_EMAIL_SUCCESS;
-    constructor(public uid: string, public user: User) { }
-}
-
-export class SignInEmailError implements Action {
-    readonly type = Types.SIGN_IN_EMAIL_ERROR;
-    constructor(public error: string) { }
-}
+export const userSignInWithGoogle = createAction(Types.SIGN_IN_EMAIL, props<{ credentials: EmailPasswordCredentials }>);
+export const userSignInWithGoogleSuccess = createAction(Types.SIGN_IN_EMAIL_SUCCESS, props<{ uid: string, user: User }>);
+export const userSignInWithGoogleError = createAction(Types.SIGN_IN_EMAIL_ERROR, props<{ error: string }>);
 
 // Sign Up
-
-export class SignUpEmail implements Action {
-    readonly type = Types.SIGN_UP_EMAIL;
-    constructor(public credentials: EmailPasswordCredentials) { }
-}
-
-export class SignUpEmailSuccess implements Action {
-    readonly type = Types.SIGN_UP_EMAIL_SUCCESS;
-    constructor(public uid: string) { }
-}
-
-export class SignUpEmailError implements Action {
-    readonly type = Types.SIGN_UP_EMAIL_ERROR;
-    constructor(public error: string) { }
-}
+export const userSignUpEmail = createAction(Types.SIGN_UP_EMAIL, props<{ credentials: EmailPasswordCredentials }>);
+export const userSignUpEmailSuccess = createAction(Types.SIGN_UP_EMAIL_SUCCESS, props<{ uid: string }>);
+export const userSignUpEmailError = createAction(Types.SIGN_UP_EMAIL_ERROR, props<{ error: string }>);
 
 // Sign Out
-
-export class SignOut implements Action {
-    readonly type = Types.SIGN_OUT;
-    constructor() { }
-}
-
-export class SignOutSuccess implements Action {
-    readonly type = Types.SIGN_OUT_SUCCESS;
-    constructor() { }
-}
-
-export class SignOutError implements Action {
-    readonly type = Types.SIGN_OUT_ERROR;
-    constructor(public error: string) { }
-}
+export const userSignOut = createAction(Types.SIGN_OUT);
+export const userSignOutSuccess = createAction(Types.SIGN_OUT_SUCCESS);
+export const userSignOutError = createAction(Types.SIGN_OUT_ERROR, props<{ error: string }>);
 
 // Create
-
-export class Create implements Action {
-    readonly type = Types.CREATE;
-    constructor(public user: UserCreateRequest) { }
-}
-
-export class CreateSuccess implements Action {
-    readonly type = Types.CREATE_SUCCESS;
-    constructor(public user: User) { }
-}
-
-export class CreateError implements Action {
-    readonly type = Types.CREATE_ERROR;
-    constructor(public error: string) { }
-}
+export const userCreate = createAction(Types.CREATE, props<{ user: UserCreateRequest }>);
+export const userCreateSuccess = createAction(Types.CREATE_SUCCESS, props<{ user: User }>);
+export const userCreateError = createAction(Types.CREATE_ERROR, props<{ error: string }>);
 
 // Update
-
-export class Update implements Action {
-    readonly type = Types.UPDATE;
-    constructor(public user: User) { }
-}
-
-export class UpdateSuccess implements Action {
-    readonly type = Types.UPDATE_SUCCESS;
-    constructor(public user: User) { }
-}
-
-export class UpdateError implements Action {
-    readonly type = Types.UPDATE_ERROR;
-    constructor(public error: string) { }
-}
-
-
-export type All
-    = Init
-    | InitAuthorized
-    | InitUnauthorized
-    | InitError
-    | SignInEmail
-    | SignInEmailSuccess
-    | SignInEmailError
-    | SignUpEmail
-    | SignUpEmailSuccess
-    | SignUpEmailError
-    | SignOut
-    | SignOutSuccess
-    | SignOutError
-    | Create
-    | CreateSuccess
-    | CreateError
-    | Update
-    | UpdateSuccess
-    | UpdateError;
+export const userUpdate = createAction(Types.UPDATE, props<{ user: User }>);
+export const userUpdateSuccess = createAction(Types.UPDATE_SUCCESS, props<{ user: User }>);
+export const userUpdateError = createAction(Types.UPDATE_ERROR, props<{ error: string }>);
