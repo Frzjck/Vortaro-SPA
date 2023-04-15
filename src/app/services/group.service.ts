@@ -41,28 +41,6 @@ export class GroupService {
     return from(this.db.doc(`groups/${groupId}`).update(changes));
   }
 
-  loadGroups(): Observable<Group[] | any> {
-    // return of(["test"]);
-    return this.db
-      .collection(`users/${this.userService.user.uid}/groups`)
-      .get()
-      .pipe(map((results) => convertSnaps<Group>(results)));
-  }
-
-  async uglyButton() {
-
-    let userId = (await this.afAuth.currentUser).uid;
-    // let uid = user;
-    // throw new Error('Method not implemented.');
-    // console.log(this.db.collection(`/users/${userId}/groups`).snapshotChanges().subscribe(snaps => {
-    //   console.log(snaps)
-    // }));
-    // await this.loadGroups().subscribe((res) => console.log("RES", res))
-    let test = await (this.loadGroups() as Observable<QuerySnapshot>);
-  }
-  // let user = this.afAuth.auth.currentUser;
-  // uid = user.uid;
-
   loadGroupsAndWords(): Observable<Group[]> {
     return this.db.collection<Group>(`users/${this.userService.user.uid}/groups`).snapshotChanges()
       .pipe(

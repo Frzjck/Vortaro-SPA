@@ -44,7 +44,7 @@ import { CommonModule } from '@angular/common';
     width: 100%;
     height: 1.4rem;
     background-color: var(--btn-hover);
-    // transition: 0.5s ease;
+    /* // transition: 0.5s ease; */
   }
 }
 

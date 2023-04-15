@@ -14,7 +14,7 @@ export interface LexiconState {
 
 export const reducers: ActionReducerMap<LexiconState> = {
     groups: fromGroups.reducer,
-    words: fromWords.reducer
+    words: fromWords.reducer,
 };
 
 export const effects: any[] = [

@@ -4,12 +4,11 @@ import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { SettingsService } from '@app/services/settings.service';
 import { WordService } from '@app/services/word.service';
-import { ProgressBarComponent } from './shared/progress-bar/progress-bar.component';
 
 @Component({
   selector: 'app-exercises',
   standalone: true,
-  imports: [CommonModule, ProgressBarComponent],
+  imports: [CommonModule],
   templateUrl: './exercises.component.html',
   styleUrls: ['./exercises.component.scss'],
 })

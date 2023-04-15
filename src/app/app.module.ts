@@ -43,7 +43,10 @@ import { GlossaryComponent } from './pages/glossary/glossary.component';
 import { ExercisesComponent } from './pages/exercises/exercises.component';
 
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-const StoreDevtools = !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 50 }) : [];
+import { StoreModule } from '@ngrx/store';
+// const StoreDevtools = !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 50 }) : [];
+import { reducers, effects } from './store';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [
@@ -76,7 +79,17 @@ const StoreDevtools = !environment.production ? StoreDevtoolsModule.instrument({
     AngularFirestoreModule,
     ExercisesComponent,
     GlossaryComponent,
-    StoreDevtools
+    // StoreDevtools,
+    StoreModule.forRoot(reducers, {
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true
+      },
+    }),
+    EffectsModule.forRoot(effects),
+    StoreDevtoolsModule.instrument({
+      maxAge: 15,
+    }),
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },

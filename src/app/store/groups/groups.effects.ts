@@ -11,7 +11,6 @@ import { map, switchMap, catchError, take } from 'rxjs/operators';
 import * as fromActions from './groups.actions';
 import { extractDocumentChangeActionData } from '@app/shared/utils/db-utils';
 import { FireGroup, Group } from './groups.models';
-import { createGroup } from './groups.actions';
 
 
 @Injectable()
@@ -25,11 +24,15 @@ export class GroupsEffects {
     read$ = createEffect(() => this.actions$.pipe(
         ofType(fromActions.readGroups),
         switchMap(() =>
-            this.afs.collection('jobs', ref => ref.orderBy('created')).snapshotChanges().pipe(
+            // , ref => ref.orderBy('created')
+            this.afs.collection('/users/gTsSvxlF4Cfd0hvxhmT0Y8yAQHXU/groups').snapshotChanges().pipe(
                 take(1),
                 map(changes => changes.map(x => extractDocumentChangeActionData(x))),
                 map((groups: Group[]) => fromActions.readGroupsSuccess({ groups })),
-                catchError(err => of(fromActions.readGroupsError(err.message)))
+                catchError(err => {
+                    console.error("------>>>>>>", err);
+                    return of(fromActions.readGroupsError(err.message))
+                })
             )
         )
     ));

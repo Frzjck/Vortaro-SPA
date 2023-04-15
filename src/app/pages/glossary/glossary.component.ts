@@ -3,11 +3,10 @@ import { CommonModule } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
 
 import { Subscription } from 'rxjs';
-import { UserService } from '@app/pages/login/user.service';
-import { GroupService } from '@app/services/group.service';
-import { WordService } from '@app/services/word.service';
-import { Group } from '@app/store/groups';
+import { Group, getGroups, readGroups } from '@app/store/groups';
 import { Word } from '@app/store/words';
+
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-glossary',
@@ -38,14 +37,14 @@ export class GlossaryComponent implements OnInit {
   words$;
 
   constructor(
-    public groupService: GroupService,
-    private wordService: WordService,
-    public userService: UserService
-  ) { }
+    private store: Store
+  ) {
+    this.groups$ = store.select(getGroups);
+  }
 
   ngOnInit(): void {
+    this.store.dispatch(readGroups());
 
-    this.groups$ = this.groupService.loadGroups();
     // this.words$ = this.wordService.getWordsFromServer();
     // this.words = this.words$.then((words) => words);
 
@@ -103,9 +102,9 @@ export class GlossaryComponent implements OnInit {
 
   onDeleteGroup(groupName, groupId) {
     if (confirm('Are you sure you want to delete ' + groupName)) {
-      this.groupService.deleteGroup(groupId).subscribe(() => {
-        // this.groupService.loadGroups();
-      });
+      // this.groupService.deleteGroup(groupId).subscribe(() => {
+      //   // this.groupService.loadGroups();
+      // });
     }
   }
 

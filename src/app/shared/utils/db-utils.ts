@@ -1,7 +1,7 @@
 import { DocumentChangeAction } from '@angular/fire/compat/firestore';
 
 export function convertSnaps<T>(results) {
-	return <T[]>results.docs.map((snap) => {
+	return results.docs.map((snap) => {
 		return {
 			id: snap.id,
 			...(<any>snap.data()),
@@ -11,6 +11,7 @@ export function convertSnaps<T>(results) {
 
 
 export const extractDocumentChangeActionData = (x: DocumentChangeAction<any>, addId = true) => {
+	console.log(x, addId);
 	const data = x.payload.doc.data();
 
 	if (addId) {

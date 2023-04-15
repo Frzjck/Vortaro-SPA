@@ -13,8 +13,8 @@ export const { selectAll, selectEntities, selectTotal } = adapter.getSelectors()
 
 
 export const getGroups = createSelector(
-    selectAll,
-    (groups) => groups
+    getGroupsState,
+    selectAll
 );
 
 export const getLoading = createSelector(
