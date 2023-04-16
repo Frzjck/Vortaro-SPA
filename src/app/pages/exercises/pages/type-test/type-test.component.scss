@@ -1,11 +1,11 @@
-@use "../../../assets/scss/functional-styles/functional-mixins.scss"as *;
+// @use "../../../assets/scss/functional-styles/functional-mixins.scss"as *;
 
 app-progress-bar {
   width: 100%;
 }
 
 .grid-conteiner {
-  @include center;
+  // @include center;
   width: 100%;
 
   mat-card {
@@ -17,11 +17,11 @@ app-progress-bar {
     width: clamp(10rem, 90vw, 40rem);
     outline: var(--tr-border-sm);
     border-radius: 10px;
-    transition: all .5s ease-in;
+    transition: all 0.5s ease-in;
 
     mat-card-title {
       overflow-wrap: anywhere;
-      @include center;
+      // @include center;
       font-size: calc(clamp(1rem, 1.4vw + 1rem, 3rem));
     }
 
@@ -45,7 +45,8 @@ app-progress-bar {
         border: 1px rgba(0, 0, 0, 0.466) solid;
         transform: translateX(-200%);
         opacity: 0;
-        transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.5s cubic-bezier(.02, .84, .29, 1.01);
+        transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55),
+          opacity 0.5s cubic-bezier(0.02, 0.84, 0.29, 1.01);
       }
 
       .fa-question-circle {
@@ -59,12 +60,12 @@ app-progress-bar {
         }
       }
 
-      .fa-question-circle:hover+.tooltip {
+      .fa-question-circle:hover + .tooltip {
         transform: translateX(0);
-        transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.5s cubic-bezier(1, -0.01, 1, .47);
+        transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55),
+          opacity 0.5s cubic-bezier(1, -0.01, 1, 0.47);
         opacity: 1;
       }
-
     }
 
     mat-card-content {
@@ -82,7 +83,6 @@ app-progress-bar {
         font-size: 1.2rem;
         height: 3rem;
         transition: all 0.1s;
-
 
         &.correct {
           background-color: var(--answer-correct);
@@ -108,8 +108,6 @@ app-progress-bar {
           background-color: var(--bg-btn-primary);
         }
       }
-
-
     }
 
     mat-card-actions {
@@ -119,7 +117,7 @@ app-progress-bar {
       .sbm-btn {
         font-size: 1.2rem;
         color: var(--text-primary);
-        margin-right: .6rem;
+        margin-right: 0.6rem;
         font-family: var(--btn-font);
 
         &:hover {
@@ -129,7 +127,6 @@ app-progress-bar {
     }
   }
 }
-
 
 @media (min-width: 768px) {
   // mat-card-subtitle {}

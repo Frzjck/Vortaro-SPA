@@ -47,16 +47,15 @@ export const userSignInWithGoogle = createAction(Types.SIGN_IN_GOOGLE, props<{ c
 export const userSignInWithGoogleSuccess = createAction(Types.SIGN_IN_GOOGLE_SUCCESS, props<{ uid: string, user: User }>());
 export const userSignInWithGoogleError = createAction(Types.SIGN_IN_GOOGLE_ERROR, props<{ error: string }>());
 
-// Sign Up
-export const userSignUpEmail = createAction(Types.SIGN_UP_EMAIL, props<{ credentials: EmailPasswordCredentials }>());
-export const userSignUpEmailSuccess = createAction(Types.SIGN_UP_EMAIL_SUCCESS, props<{ uid: string }>());
-export const userSignUpEmailError = createAction(Types.SIGN_UP_EMAIL_ERROR, props<{ error: string }>());
-
 // Sign Out
 export const userSignOut = createAction(Types.SIGN_OUT);
 export const userSignOutSuccess = createAction(Types.SIGN_OUT_SUCCESS);
 export const userSignOutError = createAction(Types.SIGN_OUT_ERROR, props<{ error: string }>());
 
+// // Sign Up
+// export const userSignUpEmail = createAction(Types.SIGN_UP_EMAIL, props<{ credentials: EmailPasswordCredentials }>());
+// export const userSignUpEmailSuccess = createAction(Types.SIGN_UP_EMAIL_SUCCESS, props<{ uid: string, user: User }>());
+// export const userSignUpEmailError = createAction(Types.SIGN_UP_EMAIL_ERROR, props<{ error: string }>());
 
 // Update
 // export const userUpdate = createAction(Types.UPDATE, props<{ user: User }>());

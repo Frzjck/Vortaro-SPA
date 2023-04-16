@@ -48,7 +48,7 @@ export class LoginComponent {
       };
       this.ui = new firebaseui.auth.AuthUI(app.auth());
       this.ui.start("#firebaseui-auth-container", uiConfig);
-      this.ui.disableAutoSignIn();
+      // this.ui.disableAutoSignIn();
     });
   }
 

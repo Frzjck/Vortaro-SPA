@@ -5,6 +5,8 @@ import { map } from "rxjs/operators";
 import { Router } from "@angular/router";
 import firebase from 'firebase/compat/app';
 
+import { Store } from '@ngrx/store';
+import { userSignOut } from "@app/store/user";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +16,8 @@ export class UserService {
   isLoggedOut$: Observable<boolean>;
   user: firebase.User;
 
-  constructor(private afAuth: AngularFireAuth, private router: Router) {
+
+  constructor(private afAuth: AngularFireAuth, private router: Router, private store: Store) {
     this.isLoggedIn$ = afAuth.authState.pipe(map((user) => !!user));
     this.isLoggedOut$ = this.isLoggedIn$.pipe(map((loggedIn) => !loggedIn));
     this.user = JSON.parse(localStorage.getItem('user'))
@@ -29,10 +32,6 @@ export class UserService {
 
 
   logout() {
-    this.afAuth.signOut().then(() => {
-      this.router.navigateByUrl("/login");
-    });
+    this.store.dispatch(userSignOut());
   }
-
-
 }

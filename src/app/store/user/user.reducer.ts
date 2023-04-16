@@ -15,6 +15,7 @@ const initialState: UserState = {
     loading: null,
     error: null
 };
+
 export const reducer = createReducer(
     initialState,
 
@@ -34,14 +35,14 @@ export const reducer = createReducer(
     on(fromActions.userSignInWithGoogleSuccess, (state, { uid, user }) => ({ ...state, entity: user, uid, loading: false, error: null })),
     on(fromActions.userSignInWithGoogleError, (state, { error }) => ({ ...state, loading: false, error })),
 
-    // // Sign Up
-    // on(fromActions.userSignUpEmail, (state) => ({ ...state, loading: true })),
-    // on(fromActions.userSignUpEmailSuccess, (state, { uid, user }) => ({ ...state, entity: user, uid, loading: false, error: null })),
-    // on(fromActions.userSignUpEmailError, (state, { error }) => ({ ...state, loading: false, error })),
-
     // Sign Out
     on(fromActions.userSignOut, (state) => ({ ...state, loading: true })),
     on(fromActions.userSignOutSuccess, () => ({ ...initialState })),
     on(fromActions.userSignOutError, (state, { error }) => ({ ...state, loading: false, error })),
+
+    // Sign Up
+    // on(fromActions.userSignUpEmail, (state) => ({ ...state, loading: true })),
+    // on(fromActions.userSignUpEmailSuccess, (state, { uid, user }) => ({ ...state, entity: user, uid, loading: false, error: null })),
+    // on(fromActions.userSignUpEmailError, (state, { error }) => ({ ...state, loading: false, error })),
 
 );

@@ -1,18 +1,16 @@
 import { Injectable } from '@angular/core';
 import { createEffect, Actions, ofType } from '@ngrx/effects';
-import { Router } from '@angular/router';
 
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 
-import { Observable, from, of } from 'rxjs';
+import { from, of } from 'rxjs';
 import { map, switchMap, catchError, take, tap, withLatestFrom } from 'rxjs/operators';
 
 import { User } from './user.models';
 
 import * as fromActions from './user.actions';
 
-import { NotificationService } from '@app/services';
 import firebase from 'firebase/compat/app';
 
 
@@ -89,7 +87,4 @@ export class UserEffects {
             })
         )
     );
-
-
-
 }
