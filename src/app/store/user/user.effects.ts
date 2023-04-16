@@ -21,24 +21,40 @@ export class UserEffects {
     constructor(
         private actions$: Actions,
         private afAuth: AngularFireAuth,
+        private afs: AngularFirestore,
     ) { }
 
-    signInUserEmail$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(fromActions.userSignInEmail),
-            map((action) => action.credentials),
-            switchMap((credentials) => {
-                return from(this.afAuth.signInWithEmailAndPassword(credentials.email, credentials.password)).pipe(
-                    map((res) => {
-                        const user = res.user;
-                        return fromActions.userSignInEmailSuccess({ uid: user.uid, user });
-                    }),
-                    catchError((error) => {
-                        return of(fromActions.userSignInEmailError({ error: error.message }));
-                    })
+    init$ = createEffect(() => this.actions$.pipe(
+        ofType(fromActions.userInit),
+        switchMap(() => this.afAuth.authState.pipe(take(1))),
+        switchMap(authState => {
+            if (authState) {
+                return this.afs.doc<User>(`users/${authState.uid}`).valueChanges().pipe(
+                    take(1),
+                    map(user => fromActions.userInitAuthorized({ uid: authState.uid, user })),
+                    catchError(err => of(fromActions.userInitError(err.message)))
                 );
-            })
-        )
+            } else {
+                return of(fromActions.userInitUnauthorized());
+            }
+        })
+    ));
+
+    signInUserEmail$ = createEffect(() => this.actions$.pipe(
+        ofType(fromActions.userSignInEmail),
+        map((action) => action.credentials),
+        switchMap((credentials) => {
+            return from(this.afAuth.signInWithEmailAndPassword(credentials.email, credentials.password)).pipe(
+                map((res) => {
+                    const user = res.user;
+                    return fromActions.userSignInEmailSuccess({ uid: user.uid, user });
+                }),
+                catchError((error) => {
+                    return of(fromActions.userSignInEmailError({ error: error.message }));
+                })
+            );
+        })
+    )
     );
 
     signInUserGoogle$ = createEffect(() =>
@@ -74,23 +90,6 @@ export class UserEffects {
         )
     );
 
-    // @Effect()
-    // init: Observable<Action> = this.actions.pipe(
-    //     ofType(fromActions.Types.INIT),
-    //     switchMap(() => this.afAuth.authState.pipe(take(1))),
-    //     switchMap(authState => {
-    //         if (authState) {
 
-    //             return this.afs.doc<User>(`users/${authState.uid}`).valueChanges().pipe(
-    //                 take(1),
-    //                 map(user => new fromActions.InitAuthorized(authState.uid, user || null)),
-    //                 catchError(err => of(new fromActions.InitError(err.message)))
-    //             );
-
-    //         } else {
-    //             return of(new fromActions.InitUnauthorized());
-    //         }
-    //     })
-    // );
 
 }
