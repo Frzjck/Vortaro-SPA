@@ -11,6 +11,10 @@ export enum Types {
     SIGN_IN_EMAIL_SUCCESS = '[User] Sign In with email: Success',
     SIGN_IN_EMAIL_ERROR = '[User] Sign In with email: Error',
 
+    SIGN_IN_GOOGLE = '[User] Sign In with email: Start',
+    SIGN_IN_GOOGLE_SUCCESS = '[User] Sign In with email: Success',
+    SIGN_IN_GOOGLE_ERROR = '[User] Sign In with email: Error',
+
     SIGN_UP_EMAIL = '[User] Sign Up with email: Start',
     SIGN_UP_EMAIL_SUCCESS = '[User] Sign Up with email: Success',
     SIGN_UP_EMAIL_ERROR = '[User] Sign Up with email: Error',
@@ -39,9 +43,9 @@ export const userSignInEmail = createAction(Types.SIGN_IN_EMAIL, props<{ credent
 export const userSignInEmailSuccess = createAction(Types.SIGN_IN_EMAIL_SUCCESS, props<{ uid: string, user: User }>());
 export const userSignInEmailError = createAction(Types.SIGN_IN_EMAIL_ERROR, props<{ error: string }>());
 
-export const userSignInWithGoogle = createAction(Types.SIGN_IN_EMAIL, props<{ credentials: EmailPasswordCredentials }>());
-export const userSignInWithGoogleSuccess = createAction(Types.SIGN_IN_EMAIL_SUCCESS, props<{ uid: string, user: User }>());
-export const userSignInWithGoogleError = createAction(Types.SIGN_IN_EMAIL_ERROR, props<{ error: string }>());
+export const userSignInWithGoogle = createAction(Types.SIGN_IN_GOOGLE, props<{ credentials: EmailPasswordCredentials }>());
+export const userSignInWithGoogleSuccess = createAction(Types.SIGN_IN_GOOGLE_SUCCESS, props<{ uid: string, user: User }>());
+export const userSignInWithGoogleError = createAction(Types.SIGN_IN_GOOGLE_ERROR, props<{ error: string }>());
 
 // Sign Up
 export const userSignUpEmail = createAction(Types.SIGN_UP_EMAIL, props<{ credentials: EmailPasswordCredentials }>());
