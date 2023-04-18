@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RatingUIComponent } from '@app/pages/glossary/shared';
-import { Word } from '@app/models/backend/word';
+import { Word } from '@app/store/words';
 
 @Component({
   selector: 'app-word-ui',
@@ -37,7 +37,6 @@ import { Word } from '@app/models/backend/word';
       uiType="stars"
       [score]="word.proficiency"
       ></app-rating-ui>
-      <!-- *ngIf="!edit" -->
     <div class="tooltip">
       <span>{{ word.tips | titlecase }} </span>
     </div>

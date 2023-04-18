@@ -12,22 +12,22 @@ import { userSignOut } from "@app/store/user";
   providedIn: 'root'
 })
 export class UserService {
-  isLoggedIn$: Observable<boolean>;
-  isLoggedOut$: Observable<boolean>;
+  // isLoggedIn$: Observable<boolean>;
+  // isLoggedOut$: Observable<boolean>;
   user: firebase.User;
 
 
   constructor(private afAuth: AngularFireAuth, private router: Router, private store: Store) {
-    this.isLoggedIn$ = afAuth.authState.pipe(map((user) => !!user));
-    this.isLoggedOut$ = this.isLoggedIn$.pipe(map((loggedIn) => !loggedIn));
-    this.user = JSON.parse(localStorage.getItem('user'))
-    if (!this.user) {
-      this.afAuth.authState.subscribe(user => {
-        console.log("GOT THE USER", user)
-        this.user = user;
-        localStorage.setItem('user', JSON.stringify(this.user));
-      });
-    }
+    // this.isLoggedIn$ = afAuth.authState.pipe(map((user) => !!user));
+    // this.isLoggedOut$ = this.isLoggedIn$.pipe(map((loggedIn) => !loggedIn));
+    // this.user = JSON.parse(localStorage.getItem('user'))
+    // if (!this.user) {
+    // this.afAuth.authState.subscribe(user => {
+    //   console.log("GOT THE USER", user)
+    //   this.user = user;
+    //   // localStorage.setItem('user', JSON.stringify(this.user));
+    // });
+    // }
   }
 
 

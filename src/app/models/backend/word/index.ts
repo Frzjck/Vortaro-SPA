@@ -30,6 +30,7 @@ export interface FireWord {
     tips?: string;
     additionalTr?: string[];
 
+    groupId: string;
     created: firebase.firestore.FieldValue;
     updated?: firebase.firestore.FieldValue;
 }

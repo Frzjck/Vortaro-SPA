@@ -5,16 +5,19 @@ import * as firebaseui from "firebaseui";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { Router } from "@angular/router";
 import firebase from "firebase/compat/app";
-import EmailAuthProvider = firebase.auth.EmailAuthProvider;
-import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
+import { Store } from '@ngrx/store';
+import { userSignInWithGoogle } from '@app/store/user';
+import { take } from 'rxjs';
+
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [CommonModule],
   template: `
-<div class="login">
-	<div id="firebaseui-auth-container" class="auth-container"></div>
-</div>
+  <div class="login">
+    <button (click)="uglybtn()"> GOOGLE LOGIN </button>
+    <!-- <div><code><pre>{{__authState$ | async | json }}</pre></code></div> -->
+  </div>
   `,
   styles: [`
   .auth-container {
@@ -30,37 +33,24 @@ import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
   ]
 })
 export class LoginComponent {
-  ui: firebaseui.auth.AuthUI;
 
-  constructor(private afAuth: AngularFireAuth, private router: Router) { }
+  constructor(private afAuth: AngularFireAuth, private router: Router, private store: Store) {
+  }
 
   ngOnInit() {
-    this.afAuth.app.then((app) => {
-      const uiConfig = {
-        signInOptions: [
-          EmailAuthProvider.PROVIDER_ID,
-          GoogleAuthProvider.PROVIDER_ID,
-        ],
-        callbacks: {
-          signInSuccessWithAuthResult: this.onLoginSuccess.bind(this),
-        },
-        signInFlow: "popup",
-      };
-      this.ui = new firebaseui.auth.AuthUI(app.auth());
-      this.ui.start("#firebaseui-auth-container", uiConfig);
-      // this.ui.disableAutoSignIn();
-    });
   }
 
   ngOnDestroy() {
-    this.ui.delete();
   }
 
-  onLoginSuccess(result) {
-    console.log("Firebase UI result: ", result);
-    console.log("Firebase id? result: ", result.user.uid);
-    // this.router.navigateByUrl("/courses");
+  uglybtn() {
+    // this.afAuth.authState.pipe(take(1)).subscribe((authState) => {
+    //   console.log(JSON.parse(JSON.stringify(authState)));
+    // });
+    this.store.dispatch(userSignInWithGoogle());
   }
+
+
 }
 
 
