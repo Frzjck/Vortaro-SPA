@@ -27,7 +27,7 @@ export class WordsEffects {
     read$ = createEffect(() => this.actions$.pipe(
         ofType(fromActions.readWords),
         switchMap(() =>
-            this.afs.collection('jobs', ref => ref.orderBy('created')).snapshotChanges().pipe(
+            this.afs.collection('words', ref => ref.orderBy('created')).snapshotChanges().pipe(
                 take(1),
                 map(changes => changes.map(x => extractDocumentChangeActionData(x))),
                 map((words: Word[]) => fromActions.readWordsSuccess({ words })),

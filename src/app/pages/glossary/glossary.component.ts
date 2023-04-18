@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
 
 import { Subscription } from 'rxjs';
-import { Group, getGroups, readGroups } from '@app/store/groups';
+import { Group, getGroups } from '@app/store/groups';
 import { Word } from '@app/store/words';
 
 import { Store } from '@ngrx/store';
@@ -43,7 +43,6 @@ export class GlossaryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(readGroups());
 
     // this.words$ = this.wordService.getWordsFromServer();
     // this.words = this.words$.then((words) => words);

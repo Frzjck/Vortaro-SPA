@@ -9,6 +9,7 @@ import firebase from "firebase/compat/app";
 import { UserService } from '../pages/login/user.service';
 import OrderByDirection = firebase.firestore.OrderByDirection;
 import { Word } from '@app/store/words';
+import { getAuth } from 'firebase/auth';
 
 @Injectable({
   providedIn: 'root',
@@ -38,7 +39,10 @@ export class WordService {
   }
 
   getWordsFromServer() {
-    const userRef = this.db.collection("users").doc(`${this.userService.user.uid}`).ref
+    const user = this.db.collection("users").doc("gTsSvxlF4Cfd0hvxhmT0Y8yAQHXU");
+    const userRef = user.ref
+    // console.log("kinda user", JSON.stringify(userRef))
+    console.log("kinda ref", JSON.parse(JSON.stringify(userRef)))
 
     // Purpose of next line is to extract all collections named "word" located inside a certain user. We order by __name__ (internal fire id, alternatively firebase.firestore.FieldPath.documentId()), as far as I understand because user has no other fields (must be a different reason since substitution with __createTime__ throws an error).
     return this.db.collectionGroup('words', (ref) => ref.orderBy("__name__").startAt(userRef.path).endAt(userRef.path + "\uf8ff")).get().pipe(map((results) => convertSnaps<Word>(results)));

@@ -66,6 +66,7 @@ export class HomepageComponent implements OnInit, AfterViewInit {
   }
 
   async uglyButton() {
+
     // await this.userService.getUser();
     // console.log(this.db.doc("/users/gTsSvxlF4Cfd0hvxhmT0Y8yAQHXU/groups/6K99FrtrafPByz2mzydc/words/mBfuRLABfjXV6OFJliuz").get().subscribe(snap => {
     //   console.log(snap.data())
