@@ -24,7 +24,7 @@ export const getEmail = createSelector(
     (state) => state.entity.email
 );
 
-export const getUId = createSelector(
+export const getUserId = createSelector(
     getUser,
     (state) => state.uid
 );

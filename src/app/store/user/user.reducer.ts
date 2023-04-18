@@ -5,6 +5,7 @@ import { createReducer, on } from '@ngrx/store';
 export interface UserState {
     entity: User;
     uid: string;
+    userRef: string;
     loading: boolean;
     error: string;
 }
@@ -12,6 +13,7 @@ export interface UserState {
 const initialState: UserState = {
     entity: null,
     uid: null,
+    userRef: null,
     loading: null,
     error: null
 };
@@ -27,12 +29,12 @@ export const reducer = createReducer(
 
     // Sign In Email
     on(fromActions.userSignInEmail, (state) => ({ ...state, loading: true })),
-    on(fromActions.userSignInEmailSuccess, (state, { uid, user }) => ({ ...state, entity: user, uid, loading: false, error: null })),
+    on(fromActions.userSignInEmailSuccess, (state, { uid, user }) => ({ ...state, uid, entity: user, loading: false, error: null })),
     on(fromActions.userSignInEmailError, (state, { error }) => ({ ...state, loading: false, error })),
 
     // Sign In Google
     on(fromActions.userSignInWithGoogle, (state) => ({ ...state, loading: true })),
-    on(fromActions.userSignInWithGoogleSuccess, (state, { uid, user }) => ({ ...state, entity: user, uid, loading: false, error: null })),
+    on(fromActions.userSignInWithGoogleSuccess, (state, { uid, user }) => ({ ...state, uid, entity: user, loading: false, error: null })),
     on(fromActions.userSignInWithGoogleError, (state, { error }) => ({ ...state, loading: false, error })),
 
     // Sign Out

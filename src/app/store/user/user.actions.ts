@@ -11,25 +11,17 @@ export enum Types {
     SIGN_IN_EMAIL_SUCCESS = '[User] Sign In with email: Success',
     SIGN_IN_EMAIL_ERROR = '[User] Sign In with email: Error',
 
-    SIGN_IN_GOOGLE = '[User] Sign In with email: Start',
-    SIGN_IN_GOOGLE_SUCCESS = '[User] Sign In with email: Success',
-    SIGN_IN_GOOGLE_ERROR = '[User] Sign In with email: Error',
-
-    SIGN_UP_EMAIL = '[User] Sign Up with email: Start',
-    SIGN_UP_EMAIL_SUCCESS = '[User] Sign Up with email: Success',
-    SIGN_UP_EMAIL_ERROR = '[User] Sign Up with email: Error',
+    SIGN_IN_GOOGLE = '[User] Sign In with Google: Start',
+    SIGN_IN_GOOGLE_SUCCESS = '[User] Sign In with Google: Success',
+    SIGN_IN_GOOGLE_ERROR = '[User] Sign In with Google: Error',
 
     SIGN_OUT = '[User] Sign Out: Start',
     SIGN_OUT_SUCCESS = '[User] Sign Out: Success',
     SIGN_OUT_ERROR = '[User] Sign Out: Error',
 
-    CREATE = '[User] Create: Start',
-    CREATE_SUCCESS = '[User] Create: Success',
-    CREATE_ERROR = '[User] Create: Error',
-
-    UPDATE = '[User] Update: Start',
-    UPDATE_SUCCESS = '[User] Update: Success',
-    UPDATE_ERROR = '[User] Update: Error'
+    // SIGN_UP_EMAIL = '[User] Sign Up with email: Start',
+    // SIGN_UP_EMAIL_SUCCESS = '[User] Sign Up with email: Success',
+    // SIGN_UP_EMAIL_ERROR = '[User] Sign Up with email: Error',
 }
 
 // Init
@@ -38,12 +30,13 @@ export const userInitAuthorized = createAction(Types.INIT_AUTHORIZED, props<{ ui
 export const userInitUnauthorized = createAction(Types.INIT_UNAUTHORIZED);
 export const userInitError = createAction(Types.INIT_ERROR, props<{ error: string }>());
 
-// Sign In
+// Sign In Email
 export const userSignInEmail = createAction(Types.SIGN_IN_EMAIL, props<{ credentials: EmailPasswordCredentials }>());
 export const userSignInEmailSuccess = createAction(Types.SIGN_IN_EMAIL_SUCCESS, props<{ uid: string, user: User }>());
 export const userSignInEmailError = createAction(Types.SIGN_IN_EMAIL_ERROR, props<{ error: string }>());
 
-export const userSignInWithGoogle = createAction(Types.SIGN_IN_GOOGLE, props<{ credentials: EmailPasswordCredentials }>());
+// Sign In Google
+export const userSignInWithGoogle = createAction(Types.SIGN_IN_GOOGLE);
 export const userSignInWithGoogleSuccess = createAction(Types.SIGN_IN_GOOGLE_SUCCESS, props<{ uid: string, user: User }>());
 export const userSignInWithGoogleError = createAction(Types.SIGN_IN_GOOGLE_ERROR, props<{ error: string }>());
 
