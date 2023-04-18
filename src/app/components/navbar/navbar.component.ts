@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { UserService } from '@app/pages/login/user.service';
+import { Store, select } from '@ngrx/store';
+import { User, getEmail, getUser, userSignOut } from "@app/store/user";
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -28,12 +32,18 @@ export class NavbarComponent implements OnInit {
   dropdownOpen = false;
   dropdownMobileOpen = false;
   myTimeout;
+  user$: Observable<User>;
   constructor(
     private breakPointObs: BreakpointObserver,
-    public user: UserService
+    public store: Store,
+    private afAuth: AngularFireAuth,
+
   ) { }
 
   ngOnInit(): void {
+
+    this.user$ = this.store.pipe(select(getUser));
+
     this.breakPointObs
       .observe(['(max-width: 768px)', '(min-width: 768px)'])
       .subscribe((result) => {
@@ -67,7 +77,7 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
-    this.user.logout()
+    this.store.dispatch(userSignOut());
   }
 
   onFocusoutSettings() { }
