@@ -7,6 +7,7 @@ import { Group, getGroups } from '@app/store/groups';
 import { Word, getWords, getWordsByGroupId } from '@app/store/words';
 
 import { Store } from '@ngrx/store';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-glossary',
@@ -36,12 +37,16 @@ export class GlossaryComponent implements OnInit {
   groupsAndWords$: Observable<{ group: Group, words$: Observable<Word[]> }[]>;
 
   constructor(
-    private store: Store
+    private store: Store,
+    private router: Router
   ) {
   }
 
   ngOnInit(): void {
-
+    this.urlArr = this.router.url.split('/');
+    if (this.urlArr[this.urlArr.length - 1] === 'vocabulary-select') {
+      this.exerciseMode = true;
+    }
     // this.words$ = this.wordService.getWordsFromServer();
     // this.words = this.words$.then((words) => words);
     this.groupsAndWords$ = this.store.select(getGroups).pipe(

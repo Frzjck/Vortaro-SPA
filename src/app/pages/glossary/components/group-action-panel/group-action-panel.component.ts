@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { editGroup } from '@app/store/groups';
+import { editGroup, isEditingGroup } from '@app/store/groups';
 import { Store } from '@ngrx/store';
+import { getExerciseType } from '@app/store/app';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-group-action-panel',
@@ -9,7 +11,7 @@ import { Store } from '@ngrx/store';
   imports: [CommonModule],
   template: `
    <button
-    *ngIf="conditionalForSeeAll(group.id) && editMode === false"
+    *ngIf="conditionalForSeeAll(group.id) && (editMode|async) === false"
     mat-button
     color="warn"
     class="dlt-btn"
@@ -20,7 +22,7 @@ import { Store } from '@ngrx/store';
   <button
     *ngIf="
       !conditionalForSeeAll() &&
-      editMode === false &&
+      (editMode|async) === false &&
       areThereAddTr(group.id)
     "
     mat-button
@@ -50,7 +52,7 @@ import { Store } from '@ngrx/store';
     DELETE
   </button>
   <button
-    *ngIf="exerciseMode && exerciseType === 'spelling'"
+    *ngIf="exerciseMode && (exerciseType | async) === 'spelling'"
     mat-button
     class="practice-btn"
     [routerLink]="['/exercises/spelling', 'word-group', group.id]"
@@ -59,7 +61,7 @@ import { Store } from '@ngrx/store';
     Practice
   </button>
   <button
-    *ngIf="exerciseMode && exerciseType === 'quiz'"
+    *ngIf="exerciseMode && (exerciseType | async) === 'quiz'"
     mat-button
     class="practice-btn"
     [routerLink]="['/exercises/quiz', 'word-group', group.id]"
@@ -74,11 +76,20 @@ import { Store } from '@ngrx/store';
 export class GroupActionPanelComponent {
 
 
-  constructor(public store: Store,) { }
+  constructor(public store: Store) { }
 
   @Input() groupId: string;
+  @Input() exerciseMode: boolean;
+
+  exerciseType: Observable<any>;
+  editMode: Observable<boolean>;
 
   onEditMode() {
     this.store.dispatch(editGroup({ groupId: this.groupId }));
+  }
+
+  ngOnInit(): void {
+    this.exerciseType = this.store.select(getExerciseType);
+    this.editMode = this.store.select(isEditingGroup);
   }
 }
