@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { editGroup } from '@app/store/groups';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-group-action-panel',
@@ -32,7 +34,7 @@ import { CommonModule } from '@angular/common';
     *ngIf="!exerciseMode"
     mat-button
     class="edit-btn"
-    (click)="onEditMode(group.id)"
+    (click)="onEditMode()"
   >
     {{
       editMode === true && groupEditId === group.id ? "Save" : "Edit"
@@ -71,4 +73,12 @@ import { CommonModule } from '@angular/common';
 })
 export class GroupActionPanelComponent {
 
+
+  constructor(public store: Store,) { }
+
+  @Input() groupId: string;
+
+  onEditMode() {
+    this.store.dispatch(editGroup({ groupId: this.groupId }));
+  }
 }

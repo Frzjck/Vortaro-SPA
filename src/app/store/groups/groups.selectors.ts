@@ -33,3 +33,14 @@ export const getGroupById = (id: string) => createSelector(
     selectEntities,
     (entities) => entities[id]
 );
+
+
+export const getEditingGroup = createSelector(
+    getGroupsState,
+    (state) => state.editingGroupId
+);
+
+export const isEditingGroup = createSelector(
+    getGroupsState,
+    (state) => !!state.editingGroupId
+);

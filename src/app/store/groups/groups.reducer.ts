@@ -9,11 +9,13 @@ export const adapter = createEntityAdapter<Group>();
 export interface GroupsState extends EntityState<Group> {
     loading: boolean;
     error: string;
+    editingGroupId: string;
 }
 
 export const initialState: GroupsState = adapter.getInitialState({
     loading: null,
-    error: null
+    error: null,
+    editingGroupId: null,
 });
 
 export const reducer = createReducer(
@@ -21,6 +23,8 @@ export const reducer = createReducer(
     on(fromActions.readGroups, (state) => ({ ...state, loading: true, error: null })),
     on(fromActions.readGroupsSuccess, (state, { groups }) => adapter.setAll(groups, { ...state, loading: false })),
     on(fromActions.readGroupsError, (state, { error }) => ({ ...state, loading: false, error: error })),
+
+    on(fromActions.editGroup, (state, action) => ({ ...state, editingGroupId: action.groupId })),
 
     on(fromActions.createGroup, (state) => ({ ...state, loading: true, error: null })),
     on(fromActions.createGroupSuccess, (state, { group }) => adapter.addOne(group, { ...state, loading: false })),

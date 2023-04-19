@@ -7,6 +7,9 @@ export enum Types {
     READ_SUCCESS = '[Groups] Read: Success',
     READ_ERROR = '[Groups] Read: Error',
 
+
+    EDIT = '[Books Page] Select Book',
+
     CREATE = '[Groups] Create: Start',
     CREATE_SUCCESS = '[Groups] Create: Success',
     CREATE_ERROR = '[Groups] Create: Error',
@@ -29,6 +32,10 @@ export const readGroupsError = createAction(Types.READ_ERROR, props<{ error: str
 export const createGroup = createAction(Types.CREATE, props<{ group: FireGroup }>());
 export const createGroupSuccess = createAction(Types.CREATE_SUCCESS, props<{ group: Group }>());
 export const createGroupError = createAction(Types.CREATE_ERROR, props<{ error: string }>());
+
+
+// Edit
+export const editGroup = createAction(Types.EDIT, props<{ groupId: string }>());
 
 
 // Update
