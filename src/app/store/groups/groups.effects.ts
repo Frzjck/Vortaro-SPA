@@ -8,8 +8,8 @@ import { Observable, from, of } from 'rxjs';
 import { map, switchMap, catchError, take, tap } from 'rxjs/operators';
 
 
-import * as fromGroupsActions from './groups.actions';
-import * as fromUserActions from '../user/user.actions';
+import * as groupsActions from './groups.actions';
+import * as userActions from '../user/user.actions';
 
 import { getUserId } from '../user/user.selectors';
 
@@ -30,23 +30,34 @@ export class GroupsEffects {
     ) { }
 
     read$ = createEffect(() => this.actions$.pipe(
-        ofType(fromGroupsActions.readGroups, fromUserActions.userInitAuthorized),
-        // switchMap(() => this.store.pipe(select(getUserId))),s
+        ofType(groupsActions.readGroups),
+        switchMap(() => this.store.pipe(select(getUserId))),
         switchMap((userId) => {
-            console.log("USER ID", userId)
-            // return this.afs.collection(`/users/${userId}/groups`, ref => ref.orderBy('created')).snapshotChanges().pipe(
-            return this.afs.collection(`/users/gTsSvxlF4Cfd0hvxhmT0Y8yAQHXU/groups`, ref => ref.orderBy('created')).snapshotChanges().pipe(
+            return this.afs.collection(`/users/${userId}/groups`).snapshotChanges().pipe(
                 take(1),
                 map(changes => changes.map(x => extractDocumentChangeActionData(x))),
-                map((groups: Group[]) => fromGroupsActions.readGroupsSuccess({ groups })),
-                catchError(err => of(fromGroupsActions.readGroupsError(err.message)))
+                map((groups: Group[]) => groupsActions.readGroupsSuccess({ groups })),
+                catchError(err => of(groupsActions.readGroupsError(err.message)))
+            )
+        }
+        )
+    ));
+
+    readInit$ = createEffect(() => this.actions$.pipe(
+        ofType(userActions.userInitAuthorized),
+        switchMap((res) => {
+            return this.afs.collection(`/users/${res.uid}/groups`).snapshotChanges().pipe(
+                take(1),
+                map(changes => changes.map(x => extractDocumentChangeActionData(x))),
+                map((groups: Group[]) => groupsActions.readGroupsSuccess({ groups })),
+                catchError(err => of(groupsActions.readGroupsError(err.message)))
             )
         }
         )
     ));
 
     create$ = createEffect(() => this.actions$.pipe(
-        ofType(fromGroupsActions.createGroup),
+        ofType(groupsActions.createGroup),
         map((action) => action.group),
         map((group: FireGroup) => ({
             ...group,
@@ -55,14 +66,14 @@ export class GroupsEffects {
         switchMap((request: FireGroup) =>
             from(this.afs.collection('groups').add(request)).pipe(
                 map(res => ({ ...request, id: res.id })),
-                map((group: Group) => fromGroupsActions.createGroupSuccess({ group })),
-                catchError(err => of(fromGroupsActions.createGroupError(err.message)))
+                map((group: Group) => groupsActions.createGroupSuccess({ group })),
+                catchError(err => of(groupsActions.createGroupError(err.message)))
             )
         )
     ));
 
     update$ = createEffect(() => this.actions$.pipe(
-        ofType(fromGroupsActions.updateGroup),
+        ofType(groupsActions.updateGroup),
         map((action) => action.group),
         map((group: Group) => ({
             ...group,
@@ -70,19 +81,19 @@ export class GroupsEffects {
         })),
         switchMap((group) =>
             from(this.afs.collection('groups').doc(group.id).set(group)).pipe(
-                map(() => fromGroupsActions.updateGroupSuccess({ id: group.id, changes: group })),
-                catchError(err => of(fromGroupsActions.updateGroupError(err.message)))
+                map(() => groupsActions.updateGroupSuccess({ id: group.id, changes: group })),
+                catchError(err => of(groupsActions.updateGroupError(err.message)))
             )
         )
     ));
 
     delete$ = createEffect(() => this.actions$.pipe(
-        ofType(fromGroupsActions.deleteGroup),
+        ofType(groupsActions.deleteGroup),
         map((action) => action.id),
         switchMap(id =>
             from(this.afs.collection('groups').doc(id).delete()).pipe(
-                map(() => fromGroupsActions.deleteGroupSuccess({ id })),
-                catchError(err => of(fromGroupsActions.deleteGroupError(err.message)))
+                map(() => groupsActions.deleteGroupSuccess({ id })),
+                catchError(err => of(groupsActions.deleteGroupError(err.message)))
             )
         )
     ));

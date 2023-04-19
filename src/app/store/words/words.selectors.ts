@@ -27,3 +27,13 @@ export const getIsReady = createSelector(
     getLoading,
     (total, loading) => total > 0 && !loading
 );
+
+export const getError = createSelector(
+    getWordsState,
+    (state) => state.error
+);
+
+export const getWordsByGroupId = (groupId: string) => createSelector(
+    getWords,
+    (words) => words.filter(word => word.groupId === groupId)
+);

@@ -6,7 +6,7 @@ export const getUserState = createFeatureSelector<UserState>('user');
 
 export const getUser = createSelector(
     getUserState,
-    (state) => state.entity
+    (state) => state.user
 );
 
 export const getLoading = createSelector(
@@ -21,7 +21,7 @@ export const getIsAuthorized = createSelector(
 
 export const getEmail = createSelector(
     getUserState,
-    (state) => state.entity.email
+    (state) => state.user.email
 );
 
 export const getUserId = createSelector(

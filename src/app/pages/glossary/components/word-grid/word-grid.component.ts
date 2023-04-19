@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { ExtraTrCardComponent } from './components/extra-tr-card/extra-tr-card.component';
 import { WordUiComponent } from './components/word-ui/word-ui.component';
+import { Word } from '@app/store/words';
 
 
 @Component({
@@ -31,24 +32,22 @@ import { WordUiComponent } from './components/word-ui/word-ui.component';
     ]),
   ],
 })
-export class WordGridComponent implements OnInit {
-  @Input() groupId: string;
+export class WordGridComponent {
   @Input() groupEditId: string;
+  @Input() groupId: string;
   @Input() editMode: boolean;
   @Input() newWordMode: boolean;
+  @Input() words: Word[];
 
   wordEditId: String;
   wordEdit: Boolean = false;
 
-  words$;
   translationsOpen: Boolean = false;
   translationArrOpen: String[] = [];
 
   constructor(private wordService: WordService) { }
 
-  ngOnInit(): void {
-    this.words$ = this.wordService.getGroupWords(this.groupId);
-  }
+
 
 
   showOnEdit(groupId) {
@@ -94,6 +93,8 @@ export class WordGridComponent implements OnInit {
       this.groupEditId === groupId
     );
   }
+
+
   onDeleteWord(id) {
     if (confirm('Are you sure you want to delete ')) {
       // this.wordService.deleteWord(id).subscribe(() => {

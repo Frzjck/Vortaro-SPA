@@ -1,5 +1,5 @@
 <div class="grid-container">
-  <div class="wordCardDiv" *ngFor="let word of words$ | async">
+  <div class="wordCardDiv" *ngFor="let word of words | async">
     <mat-card class="mat-elevation-z4">
       <span *ngIf="hideOnEditWord(word.id, groupId)">
         {{ word.name | titlecase }}

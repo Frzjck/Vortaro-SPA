@@ -2,9 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
 
-import { Subscription } from 'rxjs';
+import { Observable, Subscription, combineLatest, map } from 'rxjs';
 import { Group, getGroups } from '@app/store/groups';
-import { Word } from '@app/store/words';
+import { Word, getWords, getWordsByGroupId } from '@app/store/words';
 
 import { Store } from '@ngrx/store';
 
@@ -18,8 +18,6 @@ import { Store } from '@ngrx/store';
 })
 export class GlossaryComponent implements OnInit {
   //tododelete
-  groups: Group[] = [];
-  words: Word[] = [];
   editMode: Boolean = false;
   groupEdit: Boolean = false;
   groupEditId: String;
@@ -33,19 +31,30 @@ export class GlossaryComponent implements OnInit {
 
   exerciseMode = false;
   urlArr = [];
-  groups$;
-  words$;
+  // groups$: Observable<any>;
+  // words$;
+  groupsAndWords$: Observable<{ group: Group, words$: Observable<Word[]> }[]>;
 
   constructor(
     private store: Store
   ) {
-    this.groups$ = store.select(getGroups);
   }
 
   ngOnInit(): void {
 
     // this.words$ = this.wordService.getWordsFromServer();
     // this.words = this.words$.then((words) => words);
+    this.groupsAndWords$ = this.store.select(getGroups).pipe(
+      map((groups) => {
+        return groups.map((group) => {
+          console.log("------>>>>>>>>>>>>>", group)
+          return {
+            group,
+            words$: this.store.select(getWordsByGroupId(group.id))
+          }
+        })
+      })
+    );
 
   }
 
@@ -59,11 +68,11 @@ export class GlossaryComponent implements OnInit {
   }
 
   async conditionalForSeeAll() {
-    let totWordWithAddTr = this.words.filter(
-      (word) => word.additionalTr.length > 0
-    ).length;
-    let visible = totWordWithAddTr !== this.translationArrOpen.length;
-    return visible;
+    // let totWordWithAddTr = this.words.filter(
+    //   (word) => word.additionalTr.length > 0
+    // ).length;
+    // let visible = totWordWithAddTr !== this.translationArrOpen.length;
+    // return visible;
   }
   changePanReset() {
     // this.wordEditId = null;
@@ -74,11 +83,11 @@ export class GlossaryComponent implements OnInit {
   }
 
   openAllTranslations() {
-    const allWordIds = this.words
-      .filter((word) => word.additionalTr.length > 0)
-      .map((word) => word.id);
-    this.translationArrOpen.length = 0;
-    this.translationArrOpen = allWordIds;
+    // const allWordIds = this.words
+    //   .filter((word) => word.additionalTr.length > 0)
+    //   .map((word) => word.id);
+    // this.translationArrOpen.length = 0;
+    // this.translationArrOpen = allWordIds;
   }
 
   closeAllTranslations() {

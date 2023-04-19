@@ -25,6 +25,7 @@ export const readWords = createAction(Types.READ);
 export const readWordsSuccess = createAction(Types.READ_SUCCESS, props<{ words: Word[] }>());
 export const readWordsError = createAction(Types.READ_ERROR, props<{ error: string }>());
 
+
 // Create
 export const createWord = createAction(Types.CREATE, props<{ word: FireWord }>());
 export const createWordSuccess = createAction(Types.CREATE_SUCCESS, props<{ word: Word }>());
