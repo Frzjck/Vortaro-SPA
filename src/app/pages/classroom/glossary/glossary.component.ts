@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
 
 import { Observable, Subscription, combineLatest, map } from 'rxjs';
-import { Group, getGroups } from '@app/store/groups';
-import { Word, getWords, getWordsByGroupId } from '@app/store/words';
+import { Group, getGroups } from '@app/pages/classroom/store/groups-list';
+import { Word, getWords, getWordsByGroupId } from '@app/pages/classroom/store/words-list';
 
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';

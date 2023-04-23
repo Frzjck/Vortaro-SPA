@@ -16,7 +16,7 @@ import { GroupService } from '@app/services/group.service';
 import { ProgressBarService } from '@app/services/progress-bar.service';
 import { ResultsService } from '@app/services/results.service';
 import { SettingsService } from '@app/services/settings.service';
-import { Word } from '@app/store/words';
+import { Word } from '@app/pages/classroom/store/words-list';
 import { Subscription } from 'rxjs';
 import { ProgressBarComponent } from '../../shared/progress-bar/progress-bar.component';
 

@@ -6,6 +6,11 @@ export const getGlossaryState = createFeatureSelector<GlossaryState>('app');
 
 
 
+export const getUnfoldedWords = createSelector(
+    getGlossaryState,
+    (state) => state.unfoldedWords
+);
+
 export const getEditingGroup = createSelector(
     getGlossaryState,
     (state) => state.editingGroupId
@@ -15,3 +20,5 @@ export const isEditingGroup = createSelector(
     getGlossaryState,
     (state) => !!state.editingGroupId
 );
+
+

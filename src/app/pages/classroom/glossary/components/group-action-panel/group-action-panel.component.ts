@@ -1,9 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { editGroup, isEditingGroup } from '@app/store/groups';
+
+import * as fromGroups from '@app/pages/classroom/store/groups-list';
+import * as fromWords from '@app/pages/classroom/store/words-list';
+import * as fromGlossary from '@glossary/store/page-state';
+import * as fromApp from '@app/store/app';
+
 import { Store } from '@ngrx/store';
-import { getExerciseType } from '@app/store/app';
-import { Observable } from 'rxjs';
+import { Observable, map, combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-group-action-panel',
@@ -11,7 +15,7 @@ import { Observable } from 'rxjs';
   imports: [CommonModule],
   template: `
    <button
-    *ngIf="conditionalForSeeAll(group.id) && (editMode|async) === false"
+    *ngIf="conditionalForSeeAll() && (editMode|async) === false"
     mat-button
     color="warn"
     class="dlt-btn"
@@ -23,7 +27,7 @@ import { Observable } from 'rxjs';
     *ngIf="
       !conditionalForSeeAll() &&
       (editMode|async) === false &&
-      areThereAddTr(group.id)
+      areThereAddTr(groupId)
     "
     mat-button
     color="warn"
@@ -85,11 +89,29 @@ export class GroupActionPanelComponent {
   editMode: Observable<boolean>;
 
   onEditMode() {
-    this.store.dispatch(editGroup({ groupId: this.groupId }));
+    this.store.dispatch(fromGroups.editGroup({ groupId: this.groupId }));
   }
 
   ngOnInit(): void {
-    this.exerciseType = this.store.select(getExerciseType);
-    this.editMode = this.store.select(isEditingGroup);
+    this.exerciseType = this.store.select(fromApp.getExerciseType);
+    this.editMode = this.store.select(fromGlossary.isEditingGroup);
   }
+
+
+  conditionalForSeeAll() {
+    let groupWords$ = this.store.select(fromWords.getWordsByGroupId(this.groupId));
+    let unfoldedWords$ = this.store.select(fromGlossary.getUnfoldedWords);
+
+    let show$ = combineLatest([groupWords$, unfoldedWords$]).pipe(
+      map(([words, unfolded]) => words.filter((word) => word.additionalTr.length > 0).length !== unfolded.length))
+
+    return show$;
+  }
+
+  closeAllTranslations() { }
+  openAllTranslations() { }
+  onDeleteGroup() { }
+
+  //required?
+  areThereAddTr(groupId: string) { }
 }

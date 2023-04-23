@@ -7,8 +7,8 @@ import { convertSnaps } from '../shared/utils/db-utils';
 import { UserService } from '../pages/login/user.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { QuerySnapshot, DocumentChange } from '@firebase/firestore-types';
-import { Word } from '@app/store/words';
-import { Group } from '@app/store/groups';
+import { Word } from '@app/pages/classroom/store/words-list';
+import { Group } from '@app/pages/classroom/store/groups-list';
 
 @Injectable({
   providedIn: 'root',

@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RatingUIComponent } from '@app/pages/glossary/shared';
-import { Word } from '@app/store/words';
+import { RatingUIComponent } from '@glossary/shared';
+import { Word } from '@app/pages/classroom/store/words-list';
 
 @Component({
   selector: 'app-word-ui',

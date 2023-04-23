@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { ExtraTrCardComponent } from './components/extra-tr-card/extra-tr-card.component';
 import { WordUiComponent } from './components/word-ui/word-ui.component';
-import { Word } from '@app/store/words';
+import { Word } from '@app/pages/classroom/store/words-list';
 
 
 @Component({
@@ -38,7 +38,12 @@ export class WordGridComponent {
   @Input() editMode: boolean;
   @Input() newWordMode: boolean;
   @Input() words: Word[];
-
+  // https://www.youtube.com/watch?v=M0lWGx9QpfU 16:23
+  // @Input() set collapseAll(collapseAll:boolean){
+  //   if(collapseAll){
+  //     this.translationArrOpen = [];
+  //   }
+  // }
   wordEditId: String;
   wordEdit: Boolean = false;
 

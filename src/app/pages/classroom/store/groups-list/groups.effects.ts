@@ -9,9 +9,9 @@ import { map, switchMap, catchError, take, tap } from 'rxjs/operators';
 
 
 import * as groupsActions from './groups.actions';
-import * as userActions from '../user/user.actions';
+import * as userActions from '../../../../store/user/user.actions';
 
-import { getUserId } from '../user/user.selectors';
+import { getUserId } from '../../../../store/user/user.selectors';
 
 
 import { extractDocumentChangeActionData } from '@app/shared/utils/db-utils';

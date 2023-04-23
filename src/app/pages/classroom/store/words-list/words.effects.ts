@@ -9,7 +9,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { from, of } from 'rxjs';
 import { map, switchMap, catchError, take } from 'rxjs/operators';
 
-import * as userActions from '../user/user.actions';
+import * as userActions from '../../../../store/user/user.actions';
 import * as wordsActions from './words.actions';
 import { extractDocumentChangeActionData } from '@app/shared/utils/db-utils';
 import { FireWord, Word } from './words.models';

@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { editGroup } from '@app/store/groups';
+import { editGroup } from '@app/pages/classroom/store/groups-list';
 import { addUnfoldedWords, resetEditingGroup, setEditingGroup } from './glossary.actions';
 
 

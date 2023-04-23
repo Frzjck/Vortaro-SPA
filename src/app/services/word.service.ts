@@ -8,7 +8,7 @@ import { convertSnaps } from '../shared/utils/db-utils';
 import firebase from "firebase/compat/app";
 import { UserService } from '../pages/login/user.service';
 import OrderByDirection = firebase.firestore.OrderByDirection;
-import { Word } from '@app/store/words';
+import { Word } from '@app/pages/classroom/store/words-list';
 import { getAuth } from 'firebase/auth';
 
 @Injectable({
