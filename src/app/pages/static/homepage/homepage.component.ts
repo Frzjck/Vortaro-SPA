@@ -1,4 +1,4 @@
-import { UserService } from '../login/user.service';
+import { UserService } from '../../login/user.service';
 import {
   Component,
   HostListener,
@@ -16,8 +16,8 @@ import {
 } from '@angular/animations';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { getAuth } from 'firebase/auth';
-import { GroupService } from '../../services/group.service';
-import { WordService } from '../../services/word.service';
+import { GroupService } from '../../../services/group.service';
+import { WordService } from '../../../services/word.service';
 
 
 @Component({

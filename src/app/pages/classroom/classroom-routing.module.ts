@@ -4,7 +4,6 @@ import { GlossaryComponent } from './glossary/glossary.component';
 import { ExercisesComponent } from './exercises/exercises.component';
 import { SpellingComponent } from './exercises/pages/spelling/spelling.component';
 import { ResultsComponent } from './exercises/pages/results/results.component';
-import { LoginComponent } from '../login/login.component';
 import { TypeTestComponent } from './exercises/pages/type-test/type-test.component';
 
 const routes: Routes = [{

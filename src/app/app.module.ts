@@ -17,7 +17,7 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 // At App
 import { AppRoutingModule } from '@app/app-routing.module';
 import { AppComponent } from '@app/app.component';
-import { HomepageComponent } from '@app/pages/homepage/homepage.component';
+import { HomepageComponent } from '@app/pages/static/homepage/homepage.component';
 import { StopPropagationDirective } from '@app/shared/directives/stop-propagation.directive';
 import { SettingsPopupComponent } from '@app/components/navbar/components/settings-popup/settings-popup.component';
 
