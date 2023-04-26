@@ -11,7 +11,6 @@ export function convertSnaps<T>(results) {
 
 
 export const extractDocumentChangeActionData = (x: DocumentChangeAction<any>, addId = true) => {
-	console.log(x, addId);
 	const data = x.payload.doc.data();
 
 	if (addId) {

@@ -8,8 +8,14 @@ import { UserService } from '../pages/login/user.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { QuerySnapshot, DocumentChange } from '@firebase/firestore-types';
 import { Word } from '@app/pages/classroom/store/words-list';
-import { Group } from '@app/pages/classroom/store/groups-list';
+// import { Group } from '@app/pages/classroom/store/groups-list';
 
+
+import { FireGroup } from "@app/models/backend/group";
+
+export interface Group extends FireGroup {
+  id: string;
+}
 @Injectable({
   providedIn: 'root',
 })

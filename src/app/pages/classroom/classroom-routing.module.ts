@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { GlossaryComponent } from './glossary/glossary.component';
 import { ExercisesComponent } from './exercises/exercises.component';
 import { SpellingComponent } from './exercises/pages/spelling/spelling.component';

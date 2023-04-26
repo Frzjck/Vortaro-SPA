@@ -19,5 +19,3 @@ export const reducers: ActionReducerMap<State> = {
 export const effects: any[] = [
     UserEffects,
 ];
-
-// export const getLexiconState = createFeatureSelector<LexiconState>('lexicon');

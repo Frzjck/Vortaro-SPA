@@ -12,9 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { GroupService } from '@app/services/group.service';
 import { ProgressBarService } from '@app/services/progress-bar.service';
-import { ResultsService } from '@app/services/results.service';
 import { SettingsService } from '@app/services/settings.service';
 import { Word } from '@app/pages/classroom/store/words-list';
 import { Subscription } from 'rxjs';
@@ -53,8 +51,6 @@ export class SpellingComponent implements OnInit, AfterViewInit, OnDestroy {
   private wordSub: Subscription;
 
   constructor(
-    private resultsService: ResultsService,
-    private groupService: GroupService,
     private progressService: ProgressBarService,
     private settings: SettingsService,
     private router: Router,
