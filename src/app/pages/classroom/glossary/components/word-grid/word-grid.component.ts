@@ -50,7 +50,9 @@ export class WordGridComponent {
   translationsOpen: Boolean = false;
   translationArrOpen: String[] = [];
 
-  constructor(private wordService: WordService) { }
+  constructor(private wordService: WordService) {
+    console.log("word grid constructor", this.words)
+  }
 
 
 

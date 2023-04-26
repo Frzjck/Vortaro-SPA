@@ -7,12 +7,13 @@ import { Observable, Subscription, combineLatest, map } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { GlossaryState } from './glossary.state';
+import { WordGridComponent } from './components/word-grid/word-grid.component';
 
 @Component({
   selector: 'app-glossary',
   standalone: true,
 
-  imports: [CommonModule, MatExpansionModule],
+  imports: [CommonModule, MatExpansionModule, WordGridComponent],
   templateUrl: './glossary.component.html',
   styleUrls: ['./glossary.component.scss'],
   providers: [GlossaryState],

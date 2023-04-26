@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
-import { Word } from '@app/models/backend/word';
+import { Word } from '@app/pages/classroom/store/words-list';
 
 @Component({
   selector: 'app-extra-tr-card',
