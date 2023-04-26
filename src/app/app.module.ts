@@ -39,14 +39,13 @@ import {
   USE_EMULATOR as USE_FUNCTIONS_EMULATOR,
 } from "@angular/fire/compat/storage";
 import { NavbarComponent } from './components';
-import { GlossaryComponent } from './pages/glossary/glossary.component';
-import { ExercisesComponent } from './pages/exercises/exercises.component';
 
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreModule } from '@ngrx/store';
 // const StoreDevtools = !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 50 }) : [];
 import { reducers, effects } from './store';
 import { EffectsModule } from '@ngrx/effects';
+import { ClassroomModule } from './pages/classroom/classroom.module';
 
 @NgModule({
   declarations: [
@@ -58,6 +57,7 @@ import { EffectsModule } from '@ngrx/effects';
 
   ],
   imports: [
+    ClassroomModule,
     BrowserModule,
     AppRoutingModule,
     MatInputModule,
@@ -77,8 +77,6 @@ import { EffectsModule } from '@ngrx/effects';
     AngularFireStorageModule,
     AngularFireAuthModule,
     AngularFirestoreModule,
-    ExercisesComponent,
-    GlossaryComponent,
     // StoreDevtools,
     StoreModule.forRoot(reducers, {
       runtimeChecks: {
