@@ -1,7 +1,7 @@
 import { ComponentStore, tapResponse } from '@ngrx/component-store';
 import { Injectable } from '@angular/core';
 import { Word, getWords, getWordsByGroupId } from '@app/pages/classroom/store/words-list';
-// import { Group, getGroups } from '@app/pages/classroom/store/groups-list';
+import { Group, getGroups } from '@app/pages/classroom/store/groups-list';
 import { Store } from '@ngrx/store';
 import { Observable, exhaustMap, map, tap } from 'rxjs';
 
@@ -70,26 +70,25 @@ export class GlossaryState extends ComponentStore<GlossaryStateModel> {
     // );
 
     // GroupsAndWords
-    // readonly groupsAndWordsObs$ = this.store.select(getGroups)
-    // .pipe(
-    //     map((groups: Group[]) => {
-    //         return groups.map((group) => {
-    //             return {
-    //                 group,
-    //                 words$: this.store.select(getWordsByGroupId(group.id))
-    //             }
-    //         })
-    //     })
-    // )
+    readonly groupsAndWordsObs$ = this.store.select(getGroups)
+        .pipe(
+            map((groups: Group[]) => {
+                return groups.map((group) => {
+                    return {
+                        group,
+                        words$: this.store.select(getWordsByGroupId(group.id))
+                    }
+                })
+            })
+        )
 
-    // readonly groupsAndWords$ = this.select(
-    //     // this.groupsAndWordsObs$,
-    //     this.store.select(getGroups),
-    //     (groupsAndWordsObs) => {
-    //         console.log("aaaaaaaaaa", groupsAndWordsObs);
-    //         return groupsAndWordsObs;
-    //     }
-    // )
+    readonly groupsAndWords$ = this.select(
+        this.groupsAndWordsObs$,
+        // this.store.select(getGroups),
+        (groupsAndWordsObs) => {
+            return groupsAndWordsObs;
+        }
+    )
 
 
 }

@@ -4,7 +4,10 @@
   <div class="container">
     <mat-accordion>
       <mat-expansion-panel
-        *ngFor="let groupsAndWords of groupsAndWords$ | async; let i = index"
+        *ngFor="
+          let groupsAndWords of GlossaryState.groupsAndWords$ | async;
+          let i = index
+        "
         class="mat-elevation-z6"
         (focusin)="newGroupMode = false"
         [expanded]="preventCollapse(groupsAndWords.group.id)"

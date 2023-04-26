@@ -3,11 +3,10 @@ import { CommonModule } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
 
 import { Observable, Subscription, combineLatest, map } from 'rxjs';
-import { Group, getGroups } from '@app/pages/classroom/store/groups-list';
-import { Word, getWords, getWordsByGroupId } from '@app/pages/classroom/store/words-list';
 
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
+import { GlossaryState } from './glossary.state';
 
 @Component({
   selector: 'app-glossary',
@@ -16,6 +15,7 @@ import { Router } from '@angular/router';
   imports: [CommonModule, MatExpansionModule],
   templateUrl: './glossary.component.html',
   styleUrls: ['./glossary.component.scss'],
+  providers: [GlossaryState],
 })
 export class GlossaryComponent implements OnInit {
   //tododelete
@@ -34,11 +34,12 @@ export class GlossaryComponent implements OnInit {
   urlArr = [];
   // groups$: Observable<any>;
   // words$;
-  groupsAndWords$: Observable<{ group: Group, words$: Observable<Word[]> }[]>;
+  groupsAndWords$: Observable<any>;
+  // groupsAndWords$: Observable<{ group: Group, words$: Observable<Word[]> }[]>;
 
   constructor(
-    private store: Store,
-    private router: Router
+    private router: Router,
+    public GlossaryState: GlossaryState
   ) {
   }
 
@@ -47,20 +48,6 @@ export class GlossaryComponent implements OnInit {
     if (this.urlArr[this.urlArr.length - 1] === 'vocabulary-select') {
       this.exerciseMode = true;
     }
-    // this.words$ = this.wordService.getWordsFromServer();
-    // this.words = this.words$.then((words) => words);
-    this.groupsAndWords$ = this.store.select(getGroups).pipe(
-      map((groups) => {
-        return groups.map((group) => {
-          console.log("------>>>>>>>>>>>>>", group)
-          return {
-            group,
-            words$: this.store.select(getWordsByGroupId(group.id))
-          }
-        })
-      })
-    );
-
   }
 
   // To hide collapse all button on 0 additional translates groups

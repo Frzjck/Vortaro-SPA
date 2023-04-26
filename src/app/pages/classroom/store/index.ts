@@ -3,8 +3,8 @@ import { ActionReducerMap, createFeatureSelector } from '@ngrx/store';
 import * as fromGroups from './groups-list/groups.reducer';
 import * as fromWords from './words-list/words.reducer';
 
-import { GroupsEffects } from './groups-list/groups.effects';
 import { WordsEffects } from './words-list/words.effects';
+import { GroupsEffects } from './groups-list/groups.effects';
 
 
 export interface LexiconState {
