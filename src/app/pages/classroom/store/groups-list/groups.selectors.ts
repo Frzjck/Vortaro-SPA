@@ -1,8 +1,9 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store';
+import { getLexiconState, LexiconState } from '../index';
 
 import { GroupsState, adapter } from './groups.reducer';
 
-export const getGroupsState = createFeatureSelector<GroupsState>('groups');
+// export const getGroupsState = createFeatureSelector<GroupsState>('groups');
 
 // selectIds: Returns an array of the IDs of all entities in the collection.
 // selectAll: Returns an array of all entities in the collection.
@@ -11,6 +12,10 @@ export const getGroupsState = createFeatureSelector<GroupsState>('groups');
 // selectEntity: Returns a single entity from the collection, based on its ID.
 export const { selectAll, selectEntities, selectTotal } = adapter.getSelectors();
 
+export const getGroupsState = createSelector(
+    getLexiconState,
+    (state: LexiconState) => state.groups
+);
 
 export const getGroups = createSelector(
     getGroupsState,

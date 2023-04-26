@@ -1,8 +1,8 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store';
+import { getLexiconState, LexiconState } from '../index';
 
 import { WordsState, adapter } from './words.reducer';
 
-export const getWordsState = createFeatureSelector<WordsState>('words');
 
 // selectIds: Returns an array of the IDs of all entities in the collection.
 // selectAll: Returns an array of all entities in the collection.
@@ -11,6 +11,10 @@ export const getWordsState = createFeatureSelector<WordsState>('words');
 // selectEntity: Returns a single entity from the collection, based on its ID.
 export const { selectAll, selectEntities, selectTotal } = adapter.getSelectors();
 
+export const getWordsState = createSelector(
+    getLexiconState,
+    (state: LexiconState) => state.words
+);
 
 export const getWords = createSelector(
     selectAll,
@@ -19,7 +23,7 @@ export const getWords = createSelector(
 
 export const getLoading = createSelector(
     getWordsState,
-    (state) => state.loading
+    (state: WordsState) => state.loading
 );
 
 export const getIsReady = createSelector(
@@ -30,7 +34,7 @@ export const getIsReady = createSelector(
 
 export const getError = createSelector(
     getWordsState,
-    (state) => state.error
+    (state: WordsState) => state.error
 );
 
 export const getWordsByGroupId = (groupId: string) => createSelector(
