@@ -26,7 +26,6 @@ export class GroupsEffects {
         private actions$: Actions,
         private afs: AngularFirestore,
         private store: Store
-
     ) { }
 
     read$ = createEffect(() => this.actions$.pipe(

@@ -50,13 +50,6 @@ export class WordGridComponent {
   translationsOpen: Boolean = false;
   translationArrOpen: String[] = [];
 
-  constructor(private wordService: WordService) {
-    console.log("word grid constructor", this.words)
-  }
-
-
-
-
   showOnEdit(groupId) {
     return this.editMode === true && this.groupEditId === groupId;
   }
@@ -104,10 +97,6 @@ export class WordGridComponent {
 
   onDeleteWord(id) {
     if (confirm('Are you sure you want to delete ')) {
-      // this.wordService.deleteWord(id).subscribe(() => {
-      //   this.wordService.getWordsFromServer();
-      //   this.groupService.loadGroups();
-      // });
     }
   }
 

@@ -1,36 +1,22 @@
 <div class="content">
-  <h1 *ngIf="!exerciseMode">My Vocabulary</h1>
-  <h1 *ngIf="exerciseMode">Choose Group To Practice</h1>
+  <h1>My Vocabulary</h1>
   <div class="container">
     <mat-accordion>
       <mat-expansion-panel
-        *ngFor="
-          let groupsAndWords of GlossaryState.groupsAndWords$ | async;
-          let i = index
-        "
+        *ngFor="let groupsAndWords of GlossaryState.groupsAndWords$ | async"
         class="mat-elevation-z6"
         (focusin)="newGroupMode = false"
         [expanded]="preventCollapse(groupsAndWords.group.id)"
       >
-        <mat-expansion-panel-header *ngIf="!exerciseMode || true">
-          <div class="flex-title" (click)="changePanReset()">
-            <span *ngIf="!hideOnGroupEdit(groupsAndWords.group.id)">
+        <mat-expansion-panel-header>
+          <div class="flex-title">
+            <span>
               {{ groupsAndWords.group.name | titlecase }}
-              <i
-                class="far fa-edit"
-                *ngIf="showOnEdit(groupsAndWords.group.id)"
-                (click)="onEditGroupName()"
-                appStopPropagation
-              ></i>
+              <i class="far fa-edit" appStopPropagation></i>
             </span>
-            <app-group-form
-              *ngIf="showOnEdit(groupsAndWords.group.id) && groupEdit"
-              [group]="groupsAndWords.group"
-              (onFinishSubmit)="groupEdit = false"
-            ></app-group-form>
+            <!-- <app-group-form ></app-group-form> -->
             <div class="bars-wrap">
               <app-rating-ui
-                *ngIf="true"
                 uiType="bars"
                 [score]="groupsAndWords.group.averageProficiency"
               ></app-rating-ui>
@@ -48,21 +34,11 @@
           <app-group-action-panel></app-group-action-panel>
         </mat-action-row>
       </mat-expansion-panel>
-      <div class="add-group-div" *ngIf="!exerciseMode">
-        <button
-          *ngIf="newGroupMode === false"
-          class="btn btn-add-group"
-          mat-button
-          (click)="newGroupMode = true"
-          appStopPropagation
-        >
+      <div class="add-group-div">
+        <button class="btn btn-add-group" mat-button appStopPropagation>
           Create New Group <mat-icon>add_box</mat-icon>
         </button>
-        <app-group-form
-          class="input-add-group"
-          *ngIf="newGroupMode === true"
-          (onFinishSubmit)="newGroupMode = false"
-        ></app-group-form>
+        <!-- <app-group-form ></app-group-form> -->
       </div>
     </mat-accordion>
   </div>
