@@ -3,6 +3,15 @@ import { CommonModule } from '@angular/common';
 import { RatingUIComponent } from '@glossary/shared';
 import { Word } from '@app/pages/classroom/store/words-list';
 
+interface WordUiComponentInterface {
+  eye: boolean;
+  eyeSlash: boolean;
+  questionCircle: boolean;
+  edit: boolean;
+  trash: boolean;
+  word: Word;
+}
+
 @Component({
   selector: 'app-word-ui',
   standalone: true,
@@ -74,14 +83,17 @@ import { Word } from '@app/pages/classroom/store/words-list';
   `
   ]
 })
+
 export class WordUiComponent {
 
-  @Input() eye: boolean;
-  @Input() eyeSlash: boolean;
-  @Input() questionCircle: boolean;
-  @Input() edit: boolean;
-  @Input() trash: boolean;
-  @Input() word: Word;
+  @Input() componentInterface: WordUiComponentInterface;
+
+  // @Input() eye: boolean;
+  // @Input() eyeSlash: boolean;
+  // @Input() questionCircle: boolean;
+  // @Input() edit: boolean;
+  // @Input() trash: boolean;
+  // @Input() word: Word;
 
   @Output() iconPressed = new EventEmitter();
 
