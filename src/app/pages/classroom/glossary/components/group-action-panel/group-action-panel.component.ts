@@ -3,16 +3,16 @@ import { CommonModule } from '@angular/common';
 
 import * as fromGroups from '@app/pages/classroom/store/groups-list';
 import * as fromWords from '@app/pages/classroom/store/words-list';
-import * as fromGlossary from '@glossary/store/page-state';
 import * as fromApp from '@app/store/app';
 
 import { Store } from '@ngrx/store';
-import { Observable, map, combineLatest } from 'rxjs';
+import { Observable } from 'rxjs';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-group-action-panel',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatButtonModule],
   template: `
    <button
     *ngIf="conditionalForSeeAll() && (editMode|async) === false"
@@ -94,18 +94,18 @@ export class GroupActionPanelComponent {
 
   ngOnInit(): void {
     this.exerciseType = this.store.select(fromApp.getExerciseType);
-    this.editMode = this.store.select(fromGlossary.isEditingGroup);
+    // this.editMode = this.store.select(fromGlossary.isEditingGroup);
   }
 
 
   conditionalForSeeAll() {
     let groupWords$ = this.store.select(fromWords.getWordsByGroupId(this.groupId));
-    let unfoldedWords$ = this.store.select(fromGlossary.getUnfoldedWords);
+    // let unfoldedWords$ = this.store.select(fromGlossary.getUnfoldedWords);
 
-    let show$ = combineLatest([groupWords$, unfoldedWords$]).pipe(
-      map(([words, unfolded]) => words.filter((word) => word.additionalTr.length > 0).length !== unfolded.length))
+    // let show$ = combineLatest([groupWords$, unfoldedWords$]).pipe(
+    //   map(([words, unfolded]) => words.filter((word) => word.additionalTr.length > 0).length !== unfolded.length))
 
-    return show$;
+    return true;
   }
 
   closeAllTranslations() { }
