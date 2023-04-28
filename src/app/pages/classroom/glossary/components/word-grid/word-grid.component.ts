@@ -1,20 +1,33 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { WordService } from '@app/services/word.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
 import { animate, style, transition, trigger } from '@angular/animations';
 import { ExtraTrCardComponent } from './components/extra-tr-card/extra-tr-card.component';
-import { WordUiComponent } from './components/word-ui/word-ui.component';
+import { WordUiComponent, WordUiViewInputInterface } from './components/word-ui/word-ui.component';
 import { Word } from '@app/pages/classroom/store/words-list';
+import { GlossaryStateFacade } from '../../glossary.state.facade';
+import { Observable } from 'rxjs';
+import { LetModule } from '@ngrx/component';
 
+
+export interface WordGridInputInterface {
+  groupId: string;
+  words: Word[];
+}
+
+export interface WordGridViewInterface {
+  editingGroupId: string;
+  isEditingGroup: boolean;
+  isAddingNewWord: boolean;
+}
 
 @Component({
   selector: 'app-word-grid',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule, ExtraTrCardComponent, WordUiComponent, MatIconModule],
+  imports: [CommonModule, MatCardModule, MatButtonModule, ExtraTrCardComponent, WordUiComponent, MatIconModule, LetModule],
   templateUrl: './word-grid.component.html',
   styleUrls: ['./word-grid.component.scss'],
   animations: [
@@ -33,83 +46,62 @@ import { Word } from '@app/pages/classroom/store/words-list';
   ],
 })
 export class WordGridComponent {
-  @Input() groupEditId: string;
-  @Input() groupId: string;
-  @Input() editMode: boolean;
-  @Input() newWordMode: boolean;
-  @Input() words: Word[];
-  // https://www.youtube.com/watch?v=M0lWGx9QpfU 16:23
-  // @Input() set collapseAll(collapseAll:boolean){
-  //   if(collapseAll){
-  //     this.translationArrOpen = [];
-  //   }
-  // }
-  wordEditId: String;
-  wordEdit: Boolean = false;
+  @Input() wordGridInput: WordGridInputInterface;
+  wordGridInterface$: Observable<WordGridViewInterface> = this.state.wordGridView$();
 
-  translationsOpen: Boolean = false;
-  translationArrOpen: String[] = [];
-
-  showOnEdit(groupId) {
-    return this.editMode === true && this.groupEditId === groupId;
-  }
+  // wordUiInput: WordUiComponentInterface;
 
 
-  hideOnEdit(groupId) {
-    return (
-      this.editMode === false ||
-      (this.editMode === true && this.groupEditId !== groupId)
-    );
-  }
-  toggleTranslations(wordId) {
-    if (this.translationArrOpen.includes(wordId)) {
-      this.translationArrOpen = this.translationArrOpen.filter(
-        (word) => word !== wordId
-      );
-    } else {
-      this.translationArrOpen.push(wordId);
-    }
-  }
-  onEditWord(wordId) {
-    if (this.wordEditId === wordId && this.wordEdit === true) {
-      this.wordEdit = false;
-    } else {
-      this.wordEdit = true;
-    }
-    this.wordEditId = wordId;
-  }
-  // Words
-  hideOnEditWord(wordId, groupId) {
-    return (
-      this.wordEdit === false ||
-      (this.wordEdit === true && this.groupEditId !== groupId) ||
-      (this.wordEdit === true && this.wordEditId !== wordId)
-    );
-  }
-  showOnEditWord(wordId, groupId) {
-    return (
-      this.wordEdit === true &&
-      this.wordEditId === wordId &&
-      this.groupEditId === groupId
-    );
-  }
+  // iconPressed = (event) => console.log(event);
 
-
-  onDeleteWord(id) {
-    if (confirm('Are you sure you want to delete ')) {
-    }
+  constructor(private state: GlossaryStateFacade) {
   }
 
   iconPressed(params) {
-    if (params.option === "toggleTranslations") {
-      this.toggleTranslations(params.id)
-    }
-    else if (params.option === "onEditWord") {
-      this.onEditWord(params.id)
-    }
-    else if (params.option === "onDeleteWord") {
-      this.onDeleteWord(params.id)
+    switch (params.option) {
+      case "unfoldTranslations":
+        this.state.unfoldTranslationsWord(params.id)
+        break;
+      case "foldTranslations":
+        this.state.foldTranslationsWord(params.id)
+        break;
+      case "onEditWord":
+        // this.onEditWord(params.id)
+        break;
+      case "onDeleteWord":
+        if (confirm('Are you sure you want to delete ')) {
+          this.state.deleteWord(params.id)
+        }
+        break;
     }
   }
+
+
+  // if (params.option === "unfoldTranslations") {
+  //   console.log("piu piu piu")
+  //   // this.toggleTranslations(params.id)
+  // }
+  // else if (params.option === "onEditWord") {
+  //   console.log("not piu piu piu")
+
+  //   // this.onEditWord(params.id)
+  // }
+  // else if (params.option === "foldTranslations") {
+  //   // this.onDeleteWord(params.id)
+  // }
+  // else if (params.option === "onDeleteWord") {
+  //   // this.onDeleteWord(params.id)
+  // }
+
+  onAddNewWord() { }
+
+
+  onDeleteWord(id) {
+
+  }
+
+
+
+
 }
 
