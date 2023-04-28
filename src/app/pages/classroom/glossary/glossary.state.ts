@@ -32,14 +32,15 @@ export class GlossaryState extends ComponentStore<GlossaryStateModel> {
     constructor(private store: Store) {
         super(initialState);
     }
-    // State selectors:
+    // ------------- State selectors:
     readonly unfoldedWords$ = this.select(state => state.unfoldedWords);
+    readonly isWordUnfolded$ = (wordId: string) => this.select(state => state.unfoldedWords.includes(wordId));
 
     readonly editingGroupId$ = this.select(state => state.editingGroupId);
     readonly editingWordId$ = this.select(state => state.editingWordId);
     readonly isAddingNewWord$ = this.select(state => state.addNewWordMode);
 
-    // Global state selectors:
+    // ------------- Global state selectors:
     readonly groupsAndWordsObs$ = this.store.select(getGroups)
         .pipe(
             map((groups: Group[]) => {
@@ -53,7 +54,7 @@ export class GlossaryState extends ComponentStore<GlossaryStateModel> {
         )
 
 
-    // Combined selectors:
+    // ------------- Combined selectors:
     readonly isAllFolded$ = this.select(state => state.unfoldedWords.length === 0);
 
     readonly isEditingWord$ = this.select(state => !!state.editingWordId);
@@ -68,7 +69,7 @@ export class GlossaryState extends ComponentStore<GlossaryStateModel> {
         }
     )
 
-    // ViewModels and Interfaces:
+    // ------------- ViewModels and Interfaces:
     readonly wordGridView$: Observable<WordGridViewInterface> = this.select(
         this.editingGroupId$,
         this.isEditingGroup$,
@@ -90,11 +91,31 @@ export class GlossaryState extends ComponentStore<GlossaryStateModel> {
 
 
 
-    // Updaters:
+    // ------------- Updaters:
+    // Addition translations fold/unfold
+    readonly foldTranslationsGroup = this.updater(state => ({
+        ...state,
+        unfoldedWords: initialState.unfoldedWords,
+    }));
 
-    // Effects:
+    readonly setUnfoldedTranslationsGroup = this.updater((state, wordIds: string[]) => ({
+        ...state,
+        unfoldedWords: wordIds,
+    }));
+
+    readonly foldTranslationsWord = this.updater((state, wordId: string) => ({
+        ...state,
+        unfoldedWords: state.unfoldedWords.filter((id) => id !== wordId),
+    }));
+
+    readonly unfoldTranslationsWord = this.updater((state, wordId: string) => ({
+        ...state,
+        unfoldedWords: state.unfoldedWords.concat(wordId),
+    }));
 
 
+
+    // ------------- Effects:
     readonly setEditingGroup = (groupId: string) => this.patchState({ editingGroupId: groupId });
     readonly resetEditingGroup = this.updater(state => ({
         ...state,
@@ -106,26 +127,6 @@ export class GlossaryState extends ComponentStore<GlossaryStateModel> {
 
 
 
-    // UnfoldedWords
-
-
-    readonly foldAllWords = this.updater(state => ({
-        ...state,
-        unfoldedWords: initialState.unfoldedWords,
-    }));
-
-    readonly foldWord = this.updater((state, wordId: string) => ({
-        ...state,
-        unfoldedWords: state.unfoldedWords.filter((id) => id !== wordId),
-    }));
-    readonly unfoldWord = this.updater((state, wordId: string) => ({
-        ...state,
-        unfoldedWords: state.unfoldedWords.concat(wordId),
-    }));
-    readonly setUnfoldedWords = this.updater((state, wordIds: string[]) => ({
-        ...state,
-        unfoldedWords: wordIds,
-    }));
 
     // readonly unfoldAll = (groupId: string) => this.effect<void>(
     //     $ => $.pipe(
