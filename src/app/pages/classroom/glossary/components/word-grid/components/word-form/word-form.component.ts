@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Word } from '@app/models/backend/word';
+import { Word } from '@app/pages/classroom/store/words-list';
 import { GroupService } from '@app/services/group.service';
 import { WordService } from '@app/services/word.service';
 
@@ -11,9 +11,9 @@ import { WordService } from '@app/services/word.service';
 })
 export class WordFormComponent implements OnInit {
   @Input() word: Word;
-  @Input() group: Word;
+  @Input() group: Word;//tododelete
   wordForm: FormGroup;
-  @Output() onFinishSubmit = new EventEmitter();
+  // @Output() onFinishSubmit = new EventEmitter();
   constructor(
     private wordService: WordService,
     private groupService: GroupService
@@ -76,7 +76,7 @@ export class WordFormComponent implements OnInit {
   }
 
   onClose() {
-    this.onFinishSubmit.emit();
+    // this.onFinishSubmit.emit();
   }
 
   formatAdditionalTr() {
