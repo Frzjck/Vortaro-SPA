@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RatingUIComponent } from '@glossary/shared';
 import { Word } from '@app/pages/classroom/store/words-list';
 
-interface WordUiComponentInterface {
+export interface WordUiComponentInterface {
   eye: boolean;
   eyeSlash: boolean;
   questionCircle: boolean;
@@ -17,39 +17,41 @@ interface WordUiComponentInterface {
   standalone: true,
   imports: [CommonModule, RatingUIComponent],
   template: `
-  <div class="ui-wrap">
-    <i
-      *ngIf="eye"
-      class="far fa-eye"
-      (click)="_iconPressed('toggleTranslations')"
-    ></i>
-    <i
-      *ngIf="eyeSlash"
-      class="far fa-eye-slash"
-      (click)="_iconPressed('toggleTranslations')"
-    ></i>
-    <i
-      class="far fa-question-circle"
-      *ngIf="questionCircle"
-    ></i>
-    <i
-      class="far fa-edit"
-      *ngIf="edit"
-      (click)="_iconPressed('onEditWord')"
-    ></i
-    ><i
-      class="far fa-trash-alt"
-      *ngIf="trash"
-      (click)="_iconPressed('onDeleteWord')"
-    ></i>
-    <app-rating-ui
-      uiType="stars"
-      [score]="word.proficiency"
-      ></app-rating-ui>
-    <div class="tooltip">
-      <span>{{ word.tips | titlecase }} </span>
+  <ng-container *ngIf="wordUiInterface as view">
+    <div class="ui-wrap">
+      <i
+        *ngIf="view.eye"
+        class="far fa-eye"
+        (click)="_iconPressed('toggleTranslations')"
+      ></i>
+      <i
+        *ngIf="view.eyeSlash"
+        class="far fa-eye-slash"
+        (click)="_iconPressed('toggleTranslations')"
+      ></i>
+      <i
+        class="far fa-question-circle"
+        *ngIf="view.questionCircle"
+      ></i>
+      <i
+        class="far fa-edit"
+        *ngIf="view.edit"
+        (click)="_iconPressed('onEditWord')"
+      ></i
+      ><i
+        class="far fa-trash-alt"
+        *ngIf="view.trash"
+        (click)="_iconPressed('onDeleteWord')"
+      ></i>
+      <app-rating-ui
+        uiType="stars"
+        [score]="word.proficiency"
+        ></app-rating-ui>
+      <div class="tooltip">
+        <span>{{ word.tips | titlecase }} </span>
+      </div>
     </div>
-  </div>
+  </ng-container>
   `,
   styles: [`      
   .ui-wrap {
@@ -86,21 +88,14 @@ interface WordUiComponentInterface {
 
 export class WordUiComponent {
 
-  @Input() componentInterface: WordUiComponentInterface;
-
-  // @Input() eye: boolean;
-  // @Input() eyeSlash: boolean;
-  // @Input() questionCircle: boolean;
-  // @Input() edit: boolean;
-  // @Input() trash: boolean;
-  // @Input() word: Word;
+  @Input() wordUiInterface: WordUiComponentInterface;
 
   @Output() iconPressed = new EventEmitter();
 
   _iconPressed(option) {
     this.iconPressed.emit({
       option: option,
-      id: this.word.id
+      id: this.wordUiInterface.word.id
     });
   }
 
