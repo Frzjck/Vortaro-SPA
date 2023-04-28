@@ -15,6 +15,7 @@ import { reducers, effects } from './store';
     ClassroomRoutingModule,
     StoreModule.forFeature('lexicon', reducers),
     EffectsModule.forFeature(effects),
-  ]
+  ],
+
 })
 export class ClassroomModule { }
