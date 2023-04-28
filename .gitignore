@@ -50,3 +50,5 @@ firestore-debug.log
 # System Files
 .DS_Store
 Thumbs.db
+
+ui-debug.log
