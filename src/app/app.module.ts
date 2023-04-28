@@ -20,6 +20,7 @@ import { AppComponent } from '@app/app.component';
 import { HomepageComponent } from '@app/pages/static/homepage/homepage.component';
 import { StopPropagationDirective } from '@app/shared/directives/stop-propagation.directive';
 import { SettingsPopupComponent } from '@app/components/navbar/components/settings-popup/settings-popup.component';
+import { NavbarComponent } from './components';
 
 // Environment
 import { environment } from "@env/environment";
@@ -38,11 +39,10 @@ import {
   AngularFireStorageModule,
   USE_EMULATOR as USE_FUNCTIONS_EMULATOR,
 } from "@angular/fire/compat/storage";
-import { NavbarComponent } from './components';
 
+// NgRx
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreModule } from '@ngrx/store';
-// const StoreDevtools = !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 50 }) : [];
 import { reducers, effects } from './store';
 import { EffectsModule } from '@ngrx/effects';
 import { ClassroomModule } from './pages/classroom/classroom.module';
