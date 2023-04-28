@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RatingUIComponent } from '@glossary/shared';
 import { Word } from '@app/pages/classroom/store/words-list';
 
-export interface WordUiComponentInterface {
+export interface WordUiViewInputInterface {
   eye: boolean;
   eyeSlash: boolean;
   questionCircle: boolean;
@@ -17,38 +17,38 @@ export interface WordUiComponentInterface {
   standalone: true,
   imports: [CommonModule, RatingUIComponent],
   template: `
-  <ng-container *ngIf="wordUiInterface as view">
+  <ng-container *ngIf="wordUiViewInput as view">
     <div class="ui-wrap">
       <i
         *ngIf="view.eye"
         class="far fa-eye"
-        (click)="_iconPressed('toggleTranslations')"
+        (click)="_iconPressed('unfoldTranslations')"
       ></i>
       <i
         *ngIf="view.eyeSlash"
         class="far fa-eye-slash"
-        (click)="_iconPressed('toggleTranslations')"
+        (click)="_iconPressed('foldTranslations')"
       ></i>
       <i
+      *ngIf="view.questionCircle"
         class="far fa-question-circle"
-        *ngIf="view.questionCircle"
       ></i>
       <i
+      *ngIf="view.edit"
         class="far fa-edit"
-        *ngIf="view.edit"
         (click)="_iconPressed('onEditWord')"
       ></i
       ><i
+      *ngIf="view.trash"
         class="far fa-trash-alt"
-        *ngIf="view.trash"
         (click)="_iconPressed('onDeleteWord')"
       ></i>
       <app-rating-ui
         uiType="stars"
-        [score]="word.proficiency"
+        [score]="view.word.proficiency"
         ></app-rating-ui>
       <div class="tooltip">
-        <span>{{ word.tips | titlecase }} </span>
+        <span>{{ view.word.tips | titlecase }} </span>
       </div>
     </div>
   </ng-container>
@@ -88,14 +88,14 @@ export interface WordUiComponentInterface {
 
 export class WordUiComponent {
 
-  @Input() wordUiInterface: WordUiComponentInterface;
+  @Input() wordUiViewInput: WordUiViewInputInterface;
 
   @Output() iconPressed = new EventEmitter();
 
   _iconPressed(option) {
     this.iconPressed.emit({
       option: option,
-      id: this.wordUiInterface.word.id
+      id: this.wordUiViewInput.word.id
     });
   }
 
