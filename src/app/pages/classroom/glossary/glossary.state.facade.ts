@@ -17,46 +17,38 @@ export class GlossaryStateFacade {
     constructor(private store: Store, private glossaryState: GlossaryState) { }
 
     // ViewModels and Interfaces:
-    wordGridView$(): Observable<WordGridViewInterface> {
-        return this.glossaryState.wordGridView$;
-    }
-
-    glossaryView$(): Observable<GlossaryViewInterface> {
-        return this.glossaryState.glossaryView$;
-    }
+    wordGridView$ = (): Observable<WordGridViewInterface> => this.glossaryState.wordGridView$;
+    glossaryView$ = (): Observable<GlossaryViewInterface> => this.glossaryState.glossaryView$;
 
     // CRUD operations:
-    deleteWord(wordId: string) {
-        this.store.dispatch(deleteWord({ id: wordId }));
-    }
+    deleteWord = (wordId: string) => this.store.dispatch(deleteWord({ id: wordId }));
+    deleteGroup = (groupId: string) => this.store.dispatch(deleteGroup({ id: groupId }));
 
-    deleteGroup(groupId: string) {
-        this.store.dispatch(deleteGroup({ id: groupId }));
-    }
+
+    // Editing:
+    isEditingGroup$ = () => this.glossaryState.isEditingGroup$;
 
     // Addition translations fold/unfold
-    foldTranslationsWord(wordId: string) {
+    isWordUnfolded$ = (wordId: string) => this.glossaryState.isWordUnfolded$(wordId);
+    groupHasUnfoldedTranslations$ = (groupId: string) => this.glossaryState.groupHasUnfoldedTranslations$(groupId);
+    isAllGroupTranslationsUnfolded$ = (groupId: string) => this.glossaryState.isAllGroupTranslationsUnfolded$(groupId);
+
+    foldTranslationsWord = (wordId: string) =>
         this.glossaryState.foldTranslationsWord(wordId);
-    }
 
-    unfoldTranslationsWord(wordId: string) {
+    unfoldTranslationsWord = (wordId: string) =>
         this.glossaryState.unfoldTranslationsWord(wordId);
-    }
 
-    isWordUnfolded$(wordId: string) {
-        return this.glossaryState.isWordUnfolded$(wordId);
-    }
-
-    unfoldTranslationsGroup(groupId: string) {
-        console.log('unfoldTranslationsGroup ▄▄▄▄▄▄▄▄▄', groupId);
+    unfoldTranslationsGroup = (groupId: string) =>
         this.store.select(getWordsByGroupId(groupId)).pipe(take(1)).subscribe((words) => {
             let wordIds = words.map((word) => word.id);
             this.glossaryState.setUnfoldedTranslationsGroup(wordIds);
         });
-    }
 
-    foldTranslationsGroup() {
+    foldTranslationsGroup = () =>
         this.glossaryState.foldTranslationsGroup();
-    }
+
+
+
 
 }
