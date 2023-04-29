@@ -58,6 +58,7 @@ export class GlossaryComponent {
         this.state.foldTranslationsGroup()
         break;
       case "edit":
+        this.state.foldTranslationsGroup()
         this.state.toggleEditGroup(params.id)
         break;
       case "done":
