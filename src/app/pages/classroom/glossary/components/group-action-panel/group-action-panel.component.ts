@@ -1,17 +1,17 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { MatButtonModule } from '@angular/material/button';
-
-import { GlossaryStateFacade } from '../../glossary.state.facade';
 import { LetModule } from '@ngrx/component';
 
 
 export interface GroupActionPanelInputInterface {
   groupId: string;
-  // groupEditId: string;
-  // exerciseMode: boolean;
+  seeAll: boolean;
+  collapseAll: boolean;
+  done: boolean;
+  delete: boolean;
 }
+
 @Component({
   selector: 'app-group-action-panel',
   standalone: true,
@@ -22,8 +22,8 @@ export interface GroupActionPanelInputInterface {
       mat-button
       color="warn"
       class="dlt-btn"
-      (click)="store.unfoldTranslationsGroup(vm.groupId)"
-      *ngIf="!(store.isAllGroupTranslationsUnfolded$(vm.groupId) | async)"
+      (click)="_buttonPressed('unfoldTranslations')"
+      *ngIf="vm.seeAll"
     >
       See All
     </button>
@@ -31,31 +31,34 @@ export interface GroupActionPanelInputInterface {
       mat-button
       color="warn"
       class="dlt-btn"
-      (click)="store.foldTranslationsGroup()"
-      *ngIf="store.groupHasUnfoldedTranslations$(vm.groupId) | async"
+      (click)="_buttonPressed('foldTranslations')"
+      *ngIf="vm.collapseAll"
     >
       Collapse All
     </button>
+    <ng-template #editBtn>
     <button
       mat-button
       class="edit-btn"
-      *ngIf="true; else saveBtn"
+      (click)="_buttonPressed('edit')"
     >
       EDIT
     </button>
-    <ng-template #saveBtn>
-      <button
-        mat-button
-        class="edit-btn"
-      >
-        SAVE
-      </button>
     </ng-template> 
+    <button
+      mat-button
+      class="edit-btn"
+      (click)="_buttonPressed('done')"
+      *ngIf="vm.done; else editBtn"
+    >
+      DONE
+    </button>
     <button
       mat-button
       color="warn"
       class="dlt-btn"
-      (click)="onDelete()"
+      (click)="_buttonPressed('delete')"
+      *ngIf="vm.delete"
     >
       DELETE
     </button>
@@ -67,14 +70,17 @@ export interface GroupActionPanelInputInterface {
 export class GroupActionPanelComponent {
 
 
-  constructor(public store: GlossaryStateFacade) { }
+  constructor() { }
 
   @Input() groupActionPanelInput: GroupActionPanelInputInterface;
 
-  onDelete() {
-    if (confirm('Are you sure you want to delete ')) {
-      this.store.deleteGroup(this.groupActionPanelInput.groupId);
-    }
+  @Output() buttonPressed = new EventEmitter();
+
+  _buttonPressed(option) {
+    this.buttonPressed.emit({
+      option: option,
+      id: this.groupActionPanelInput.groupId
+    });
   }
 }
 
