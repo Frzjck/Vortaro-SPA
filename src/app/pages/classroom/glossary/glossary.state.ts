@@ -10,7 +10,6 @@ import { GlossaryViewInterface } from './glossary.component';
 export interface GlossaryStateModel {
     unfoldedWords: string[];
 
-
     editingGroupId: string;
     editingGroupNameId: string;
     editingWordId: string;
@@ -34,7 +33,6 @@ export class GlossaryState extends ComponentStore<GlossaryStateModel> {
     }
     // ------------- State selectors:
     readonly unfoldedWords$ = this.select(state => state.unfoldedWords);
-    readonly isWordUnfolded$ = (wordId: string) => this.select(state => state.unfoldedWords.includes(wordId));
 
     readonly editingGroupId$ = this.select(state => state.editingGroupId);
     readonly editingWordId$ = this.select(state => state.editingWordId);
@@ -54,12 +52,39 @@ export class GlossaryState extends ComponentStore<GlossaryStateModel> {
         )
 
 
-    // ------------- Combined selectors:
+    // ------------- Transformative single level selectors:
     readonly isAllFolded$ = this.select(state => state.unfoldedWords.length === 0);
 
     readonly isEditingWord$ = this.select(state => !!state.editingWordId);
     readonly isEditingGroup$ = this.select(state => !!state.editingGroupId);
     readonly isEditingGroupName$ = this.select(state => !!state.editingGroupNameId);
+
+    // get only unfoldable group words
+    readonly unfoldableGroupWords$ = (groupId) => this.select(
+        this.store.select(getWordsByGroupId(groupId)),
+        (groupWords) => {
+            return groupWords.filter((word) => word.additionalTr && word.additionalTr?.length > 0)
+        }
+    )
+
+    readonly isWordUnfolded$ = (wordId: string) => this.select(state => state.unfoldedWords.includes(wordId));
+
+    // ------------- Combined selectors:
+    readonly groupHasUnfoldedTranslations$ = (groupId: string) => this.select(
+        this.unfoldableGroupWords$(groupId),
+        this.unfoldedWords$,
+        (groupWords, unfoldedWords) => {
+            return unfoldedWords.some((wordId) => groupWords.some((word) => word.id === wordId));
+        }
+    )
+
+    readonly isAllGroupTranslationsUnfolded$ = (groupId: string) => this.select(
+        this.unfoldableGroupWords$(groupId),
+        this.unfoldedWords$,
+        (groupWords, unfoldedWords) => {
+            return groupWords.every((word) => unfoldedWords.some((wordId) => word.id === wordId));
+        }
+    )
 
     readonly groupsAndWords$ = this.select(
         this.groupsAndWordsObs$,
@@ -88,8 +113,6 @@ export class GlossaryState extends ComponentStore<GlossaryStateModel> {
             groupsAndWords: groupsAndWords,
         })
     );
-
-
 
     // ------------- Updaters:
     // Addition translations fold/unfold
