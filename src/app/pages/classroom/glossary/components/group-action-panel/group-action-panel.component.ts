@@ -23,6 +23,7 @@ export interface GroupActionPanelInputInterface {
       color="warn"
       class="dlt-btn"
       (click)="store.unfoldTranslationsGroup(vm.groupId)"
+      *ngIf="!(store.isAllGroupTranslationsUnfolded$(vm.groupId) | async)"
     >
       See All
     </button>
@@ -31,20 +32,30 @@ export interface GroupActionPanelInputInterface {
       color="warn"
       class="dlt-btn"
       (click)="store.foldTranslationsGroup()"
+      *ngIf="store.groupHasUnfoldedTranslations$(vm.groupId) | async"
     >
       Collapse All
     </button>
     <button
       mat-button
       class="edit-btn"
+      *ngIf="true; else saveBtn"
     >
-
+      EDIT
     </button>
+    <ng-template #saveBtn>
+      <button
+        mat-button
+        class="edit-btn"
+      >
+        SAVE
+      </button>
+    </ng-template> 
     <button
       mat-button
       color="warn"
       class="dlt-btn"
-      (click)="store.deleteGroup(vm.groupId)"
+      (click)="onDelete()"
     >
       DELETE
     </button>
@@ -60,6 +71,11 @@ export class GroupActionPanelComponent {
 
   @Input() groupActionPanelInput: GroupActionPanelInputInterface;
 
+  onDelete() {
+    if (confirm('Are you sure you want to delete ')) {
+      this.store.deleteGroup(this.groupActionPanelInput.groupId);
+    }
+  }
 }
 
 // {{
