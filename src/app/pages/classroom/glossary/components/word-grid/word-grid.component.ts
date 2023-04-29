@@ -9,7 +9,7 @@ import { ExtraTrCardComponent } from './components/extra-tr-card/extra-tr-card.c
 import { WordUiComponent, WordUiViewInputInterface } from './components/word-ui/word-ui.component';
 import { Word } from '@app/pages/classroom/store/words-list';
 import { GlossaryStateFacade } from '../../glossary.state.facade';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { LetModule } from '@ngrx/component';
 
 
@@ -18,7 +18,7 @@ export interface WordGridInputInterface {
   words: Word[];
 }
 
-export interface WordGridViewInterface {
+export interface WordGridStateInterface {
   editingGroupId: string;
   isEditingGroup: boolean;
   isAddingNewWord: boolean;
@@ -47,17 +47,15 @@ export interface WordGridViewInterface {
 })
 export class WordGridComponent {
   @Input() wordGridInput: WordGridInputInterface;
-  wordGridInterface$: Observable<WordGridViewInterface> = this.state.wordGridView$();
-
-  // wordUiInput: WordUiComponentInterface;
+  wordGridState$: Observable<WordGridStateInterface> = this.state.wordGridState$;
 
 
   // iconPressed = (event) => console.log(event);
 
-  constructor(private state: GlossaryStateFacade) {
+  constructor(public state: GlossaryStateFacade) {
   }
 
-  iconPressed(params) {
+  wordAction(params) {
     switch (params.option) {
       case "unfoldTranslations":
         this.state.unfoldTranslationsWord(params.id)
@@ -65,15 +63,19 @@ export class WordGridComponent {
       case "foldTranslations":
         this.state.foldTranslationsWord(params.id)
         break;
-      case "onEditWord":
+      case "edit":
         // this.onEditWord(params.id)
         break;
-      case "onDeleteWord":
+      case "delete":
         if (confirm('Are you sure you want to delete ')) {
           this.state.deleteWord(params.id)
         }
         break;
     }
+  }
+
+  hasAddTranslations(word) {
+    return word?.additionalTr?.length > 0
   }
 
 
