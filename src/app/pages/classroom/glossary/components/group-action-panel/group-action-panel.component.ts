@@ -37,13 +37,13 @@ export interface GroupActionPanelInputInterface {
       Collapse All
     </button>
     <ng-template #editBtn>
-    <button
-      mat-button
-      class="edit-btn"
-      (click)="_buttonPressed('edit')"
-    >
-      EDIT
-    </button>
+      <button
+        mat-button
+        class="edit-btn"
+        (click)="_buttonPressed('edit')"
+      >
+        EDIT
+      </button>
     </ng-template> 
     <button
       mat-button
