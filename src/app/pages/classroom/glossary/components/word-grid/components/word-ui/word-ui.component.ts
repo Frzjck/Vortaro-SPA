@@ -34,16 +34,17 @@ export interface WordUiViewInputInterface {
         class="far fa-question-circle"
       ></i>
       <i
-      *ngIf="view.edit"
+       *ngIf="view.edit"
         class="far fa-edit"
-        (click)="_iconPressed('onEditWord')"
+        (click)="_iconPressed('edit')"
       ></i
       ><i
       *ngIf="view.trash"
         class="far fa-trash-alt"
-        (click)="_iconPressed('onDeleteWord')"
+        (click)="_iconPressed('delete')"
       ></i>
       <app-rating-ui
+       *ngIf="view.rating"
         uiType="stars"
         [score]="view.word.proficiency"
         ></app-rating-ui>

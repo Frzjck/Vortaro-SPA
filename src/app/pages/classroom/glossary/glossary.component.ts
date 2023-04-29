@@ -16,7 +16,7 @@ import { Word } from '../store/words-list/words.models';
 
 
 
-export interface GlossaryViewInterface {
+export interface GlossaryStateInterface {
   groupsAndWords: { group: Group, words$: Observable<Word[]> }[];
 }
 
@@ -48,6 +48,28 @@ export class GlossaryComponent {
 
   preventCollapse() { }
   // To hide collapse all button on 0 additional translates groups
+
+  groupAction(params) {
+    switch (params.option) {
+      case "unfoldTranslations":
+        this.state.unfoldTranslationsGroup(params.id)
+        break;
+      case "foldTranslations":
+        this.state.foldTranslationsGroup()
+        break;
+      case "edit":
+        this.state.toggleEditGroup(params.id)
+        break;
+      case "done":
+        this.state.toggleEditGroup(params.id)
+        break;
+      case "delete":
+        if (confirm('Are you sure you want to delete ')) {
+          this.state.deleteGroup(params.id);
+        }
+        break;
+    }
+  }
 
 
 }
