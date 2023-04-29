@@ -4,8 +4,8 @@ import { getWordsByGroupId } from '@app/pages/classroom/store/words-list';
 import { Group, getGroups } from '@app/pages/classroom/store/groups-list';
 import { Store } from '@ngrx/store';
 import { Observable, map } from 'rxjs';
-import { WordGridViewInterface } from './components/word-grid/word-grid.component';
-import { GlossaryViewInterface } from './glossary.component';
+import { WordGridStateInterface } from './components/word-grid/word-grid.component';
+import { GlossaryStateInterface as GlossaryStateInterface } from './glossary.component';
 
 export interface GlossaryStateModel {
     unfoldedWords: string[];
@@ -57,6 +57,7 @@ export class GlossaryState extends ComponentStore<GlossaryStateModel> {
 
     readonly isEditingWord$ = this.select(state => !!state.editingWordId);
     readonly isEditingGroup$ = this.select(state => !!state.editingGroupId);
+    readonly isEditingGroupId$ = (groupId) => this.select(state => state.editingGroupId === groupId);
     readonly isEditingGroupName$ = this.select(state => !!state.editingGroupNameId);
 
     // get only unfoldable group words
@@ -95,7 +96,7 @@ export class GlossaryState extends ComponentStore<GlossaryStateModel> {
     )
 
     // ------------- ViewModels and Interfaces:
-    readonly wordGridView$: Observable<WordGridViewInterface> = this.select(
+    readonly wordGridState$: Observable<WordGridStateInterface> = this.select(
         this.editingGroupId$,
         this.isEditingGroup$,
         this.isAddingNewWord$,
@@ -105,9 +106,8 @@ export class GlossaryState extends ComponentStore<GlossaryStateModel> {
             isAddingNewWord,
         })
     );
-    // : Observable<GlossaryViewInterface>
 
-    readonly glossaryView$: Observable<GlossaryViewInterface> = this.select(
+    readonly glossaryState$: Observable<GlossaryStateInterface> = this.select(
         this.groupsAndWords$,
         (groupsAndWords) => ({
             groupsAndWords: groupsAndWords,
@@ -134,6 +134,12 @@ export class GlossaryState extends ComponentStore<GlossaryStateModel> {
     readonly unfoldTranslationsWord = this.updater((state, wordId: string) => ({
         ...state,
         unfoldedWords: state.unfoldedWords.concat(wordId),
+    }));
+
+    // Editing group
+    readonly toggleEditGroup = this.updater((state, groupId: string) => ({
+        ...state,
+        editingGroupId: state.editingGroupId === groupId ? null : groupId,
     }));
 
 
