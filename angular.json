@@ -17,11 +17,29 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/vocabulary-spa",
+            "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
+            "optimization": false,
+            "outputHashing": "all",
+            "sourceMap": true,
+            "namedChunks": false,
+            "extractLicenses": true,
+            "vendorChunk": false,
+            "buildOptimizer": false,
+            "budgets": [{
+                "type": "initial",
+                "maximumWarning": "2mb",
+                "maximumError": "5mb"
+              },
+              {
+                "type": "anyComponentStyle",
+                "maximumWarning": "6kb",
+                "maximumError": "15kb"
+              }
+            ],
             "assets": [
               "src/favicon.ico",
               "src/assets"
@@ -30,38 +48,24 @@
               "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.scss"
             ],
-            "scripts": [],
-            "vendorChunk": true,
-            "extractLicenses": false,
-            "buildOptimizer": false,
-            "sourceMap": true,
-            "optimization": false,
-            "namedChunks": true
+            "scripts": []
           },
           "configurations": {
-            "production": {
+            "dev": {
+              "fileReplacements": [{
+                "replace": "src/environments/environment.ts",
+                "with": "src/environments/environment.dev.ts"
+              }]
+
+            },
+            "prod": {
               "fileReplacements": [{
                 "replace": "src/environments/environment.ts",
                 "with": "src/environments/environment.prod.ts"
               }],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": true,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
+              "sourceMap": false,
               "buildOptimizer": true,
-              "budgets": [{
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "15kb"
-                }
-              ]
+              "optimization": true
             }
           },
           "defaultConfiguration": ""
@@ -69,11 +73,15 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "vocabulary-spa:build"
+            "browserTarget": "vocabulary-spa:build",
+            "port":5200
           },
           "configurations": {
-            "production": {
-              "browserTarget": "vocabulary-spa:build:production"
+            "prod": {
+              "browserTarget": "vocabulary-spa:build:prod"
+            },
+            "dev": {
+              "browserTarget": "vocabulary-spa:build:dev"
             }
           }
         },
@@ -116,5 +124,8 @@
       }
     }
   },
-  "defaultProject": "vocabulary-spa"
+  "defaultProject": "vocabulary-spa",
+  "cli": {
+    "analytics": false
+  }
 }

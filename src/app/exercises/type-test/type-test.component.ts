@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { Word } from '../../models/word-model';
 import { ProgressBarService } from '../../services/progress-bar.service';
-import { WordManageService } from '../../services/word-manage.service';
+import { WordService } from '../../services/word.service';
 import { GroupService } from '../../services/group.service';
 import { SettingsService } from '../../services/settings.service';
 
@@ -19,7 +19,6 @@ export class TypeTestComponent implements OnInit, OnDestroy {
   words: Word[];
   activeWordIndex = 0;
   activeWord: Word;
-  groupNumber;
 
   pendingFstSub = true;
 
@@ -46,14 +45,14 @@ export class TypeTestComponent implements OnInit, OnDestroy {
   private wordSub: Subscription;
 
   constructor(
-    private wordService: WordManageService,
+    private wordService: WordService,
     private resultsService: ResultsService,
     private groupService: GroupService,
     private progressService: ProgressBarService,
     private settings: SettingsService,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     // Settings config fetching
@@ -63,23 +62,23 @@ export class TypeTestComponent implements OnInit, OnDestroy {
       this.exTypeParam = params['type'];
     });
     // Subscribe to words
-    this.wordSub = this.wordService.wordsObsListener().subscribe(() => {
-      // Loading words
-      this.words = this.wordService.getRightWords(
-        this.exTypeParam,
-        this.groupIdParam
-      );
-      this.activeWord = this.words[this.activeWordIndex];
-      // Calculating percetage per word for progress bar
-      this.wordWorthPercent = 100 / this.words.length;
-      // Save array for results
-      this.resultsService.saveWordArr(this.words);
-      // Posible responses
-      this.updateQuizzOptions();
-    });
+    // this.wordSub = this.wordService.wordsObsListener().subscribe(() => {
+    //   // Loading words
+    //   this.words = this.wordService.getRightWords(
+    //     this.exTypeParam,
+    //     this.groupIdParam
+    //   );
+    //   this.activeWord = this.words[this.activeWordIndex];
+    //   // Calculating percetage per word for progress bar
+    //   this.wordWorthPercent = 100 / this.words.length;
+    //   // Save array for results
+    //   this.resultsService.saveWordArr(this.words);
+    //   // Posible responses
+    //   this.updateQuizzOptions();
+    // });
   }
   ngOnDestroy() {
-    this.wordSub.unsubscribe();
+    // this.wordSub.unsubscribe();
   }
 
   onOptionSelect(option, order) {
@@ -113,12 +112,12 @@ export class TypeTestComponent implements OnInit, OnDestroy {
       // Break functionality when reached end of array
       if (this.activeWordIndex === this.words.length - 1) {
         // TODO Redirect to RESULTS PAGE and send results
-        this.resultsService
-          .saveResultsInfo(this.scoreArr, 'quiz')
-          .subscribe(() => {
-            this.wordService.getWordsFromServer();
-            this.groupService.getGroupsFromServer();
-          });
+        // this.resultsService
+        //   .saveResultsInfo(this.scoreArr, 'quiz')
+        //   .subscribe(() => {
+        //     this.wordService.getWordsFromServer();
+        //     this.groupService.loadGroups();
+        //   });
         this.router.navigate(['results'], { relativeTo: this.route });
         return;
       }

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { WordManageService } from '../services/word-manage.service';
+import { WordService } from '../services/word.service';
 import { SettingsService } from '../services/settings.service';
 
 import { Subscription } from 'rxjs';
@@ -16,15 +16,15 @@ export class ExercisesComponent implements OnInit, OnDestroy {
   exerciseType: string;
 
   constructor(
-    private wordService: WordManageService,
+    private wordService: WordService,
     private settings: SettingsService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     // Subscribe to words
-    this.wordSub = this.wordService.wordsObsListener().subscribe((words) => {
-      this.words = words.length < 1 ? false : true;
-    });
+    // this.wordSub = this.wordService.wordsObsListener().subscribe((words) => {
+    //   this.words = words.length < 1 ? false : true;
+    // });
 
     // Subscribe to exercise type
     this.exerciseTypeSub = this.settings.exerciseModeSub.subscribe((type) => {
@@ -32,7 +32,7 @@ export class ExercisesComponent implements OnInit, OnDestroy {
     });
   }
   ngOnDestroy(): void {
-    this.wordSub.unsubscribe();
-    this.exerciseTypeSub.unsubscribe();
+    // this.wordSub.unsubscribe();
+    // this.exerciseTypeSub.unsubscribe();
   }
 }

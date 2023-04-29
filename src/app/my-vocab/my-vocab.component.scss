@@ -14,7 +14,7 @@
     box-shadow: var(--tr-shadow-sm);
     border-radius: 5px;
     background-color: var(--tr-container-bg);
-    transition: all .5s ease-in;
+    transition: all 0.5s ease-in;
   }
 }
 
@@ -28,7 +28,7 @@ mat-expansion-panel {
   @for $i from 1 through 50 {
     &:nth-of-type(#{$i}) {
       // transition: all .2s ease-in-out, background-color $i/8+.2s cubic-bezier(1, -0.35, .57, 1.95);
-      transition: all .2s ease-in-out, background-color $i/8+.2s ease-in-out;
+      transition: all 0.2s ease-in-out, background-color $i/8 + 0.2s ease-in-out;
     }
   }
 
@@ -36,82 +36,6 @@ mat-expansion-panel {
     display: flex;
     color: var(--text-primary);
     text-shadow: var(--text-sh);
-  }
-}
-
-
-.grid-conteiner {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  max-width: 100vw;
-  gap: 0.5rem;
-
-  .wordCardDiv {
-    position: relative;
-    width: 100%;
-    max-width: 100%;
-    margin-top: 0.5rem;
-
-    .extraTranslations {
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 0 5px 5px 5px;
-    }
-
-    mat-card {
-      color: var(--text-primary);
-      text-shadow: var(--text-sh);
-      background-color: var(--bg-tr);
-      display: flex;
-      overflow: hidden;
-      align-items: center;
-
-
-      span {
-        display: flex;
-        align-items: center;
-        overflow-wrap: anywhere;
-        word-wrap: anywhere;
-        gap: 4px;
-
-        svg {
-          min-width: 1.2rem;
-        }
-      }
-
-      .spacer {
-        flex: 1 1 auto;
-      }
-
-      .ui-wrap {
-        display: flex;
-        align-items: center;
-      }
-    }
-  }
-}
-
-.tooltip {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--bg-tips);
-  border: 1px solid var(--border-tips);
-  border-radius: 14px;
-  position: absolute;
-  height: 100%;
-  padding: 5px;
-  width: 83%;
-  left: 0;
-  transform: translateX(-110%);
-  transition: 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-
-  span {
-    text-align: center;
   }
 }
 
@@ -129,12 +53,6 @@ mat-expansion-panel {
 .far:hover {
   color: var(--hover-tips);
 }
-
-
-.fa-question-circle:hover~.tooltip {
-  transform: translateX(0);
-}
-
 
 // Score UI config
 .flex-title {
@@ -159,44 +77,6 @@ mat-expansion-panel {
   }
 }
 
-.add-word-div {
-  color: var(--text-primary);
-  text-shadow: var(--text-sh);
-  background-color: var(--bg-tr);
-  display: flex;
-  overflow: hidden;
-  align-items: center;
-  max-width: 100%;
-  width: clamp(20ch, 100%, 53ch);
-  height: 3.26rem;
-  margin-top: 0.5rem;
-  border-radius: 5px;
-
-
-  .btn-new-word {
-    font-size: 1.2rem;
-    margin: auto;
-    padding: 0.2rem 1rem;
-    width: 100%;
-    height: 100%;
-    font-family: var(--btn-font);
-
-    &:hover {
-      background-color: var(--btn-secondary-hover);
-    }
-
-    mat-icon {
-      font-size: 2.6rem;
-      height: min-content;
-      width: min-content;
-    }
-
-    .input-add-group:disabled {
-      color: black;
-    }
-  }
-}
-
 .practice-btn {
   color: var(--text-primary);
   font-size: 1.4rem;
@@ -213,7 +93,7 @@ mat-expansion-panel {
   display: grid;
   place-items: center;
   background-color: var(--bg-tr);
-  transition: all .2s ease-in;
+  transition: all 0.2s ease-in;
   border-radius: 0 0 5px 5px;
 
   .btn-add-group {
@@ -237,8 +117,6 @@ mat-expansion-panel {
   }
 }
 
-
-
 @media (min-width: 768px) {
   ::ng-deep .mat-expansion-panel-body {
     padding: 0 24px 16px 24px !important;
@@ -254,15 +132,6 @@ mat-expansion-panel {
       box-shadow: var(--tr-shadow-xl);
     }
   }
-
-
-  .grid-conteiner {
-    .wordCardDiv {
-      height: 100%;
-      width: clamp(20ch, 100%, 53ch);
-    }
-  }
-
 }
 
 .new-group-pan {

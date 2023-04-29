@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { AuthService } from '../auth/auth.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { UserService } from '../login/user.service';
 
 @Component({
   selector: 'app-navbar',
@@ -29,9 +29,9 @@ export class NavbarComponent implements OnInit {
   dropdownMobileOpen = false;
   myTimeout;
   constructor(
-    public authService: AuthService,
-    private breakPointObs: BreakpointObserver
-  ) {}
+    private breakPointObs: BreakpointObserver,
+    public user: UserService
+  ) { }
 
   ngOnInit(): void {
     this.breakPointObs
@@ -65,4 +65,10 @@ export class NavbarComponent implements OnInit {
   onSettingsMobile() {
     this.dropdownMobileOpen = !this.dropdownMobileOpen;
   }
+
+  logout() {
+    this.user.logout()
+  }
+
+  onFocusoutSettings() { }
 }

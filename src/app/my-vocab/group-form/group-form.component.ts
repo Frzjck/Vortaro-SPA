@@ -22,7 +22,7 @@ export class GroupFormComponent implements OnInit, AfterViewInit {
   groupForm: FormGroup;
   @Output() onFinishSubmit = new EventEmitter();
   @ViewChild('groupNameInput') private groupNameInput: ElementRef;
-  constructor(private groupService: GroupService) {}
+  constructor(private groupService: GroupService) { }
 
   ngOnInit(): void {
     if (this.group) {
@@ -48,21 +48,21 @@ export class GroupFormComponent implements OnInit, AfterViewInit {
     }, 200);
   }
   onSubmit() {
-    if (this.group) {
-      // Edit existing group
-      this.groupService
-        .editOrCreate(this.groupForm.value.groupName, this.group.groupNum)
-        .subscribe(() => {
-          this.groupService.getGroupsFromServer();
-        });
-    } else {
-      // Create new group
-      this.groupService
-        .editOrCreate(this.groupForm.value.groupName)
-        .subscribe(() => {
-          this.groupService.getGroupsFromServer();
-        });
-    }
-    this.onFinishSubmit.emit();
+    // if (this.group) {
+    //   // Edit existing group
+    //   this.groupService
+    //     .createGroup(this.groupForm.value.groupName, this.group.id)
+    //     .subscribe(() => {
+    //       this.groupService.loadGroups();
+    //     });
+    // } else {
+    //   // Create new group
+    //   this.groupService
+    //     .createGroup(this.groupForm.value.groupName)
+    //     .subscribe(() => {
+    //       this.groupService.loadGroups();
+    //     });
+    // }
+    // this.onFinishSubmit.emit();
   }
 }

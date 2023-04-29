@@ -1,8 +1,8 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Word } from '../../models/word-model';
-import { WordManageService } from '../../services/word-manage.service';
-import { GroupService } from '../../services/group.service';
+import { Word } from '../../../models/word-model';
+import { WordService } from '../../../services/word.service';
+import { GroupService } from '../../../services/group.service';
 
 @Component({
   selector: 'app-word-form',
@@ -15,9 +15,9 @@ export class WordFormComponent implements OnInit {
   wordForm: FormGroup;
   @Output() onFinishSubmit = new EventEmitter();
   constructor(
-    private wordService: WordManageService,
+    private wordService: WordService,
     private groupService: GroupService
-  ) {}
+  ) { }
 
   additionalTrArray: string[];
 
@@ -42,37 +42,37 @@ export class WordFormComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.word) {
-      this.wordService
-        .editOrCreate(
-          this.wordForm.value.word,
-          this.wordForm.value.translation,
-          this.wordForm.value.tips,
-          undefined,
-          this.word.id,
-          this.formatAdditionalTr()
-        )
-        .subscribe(() => {
-          this.groupService.getGroupsFromServer();
-          this.wordService.getWordsFromServer();
-        });
-    } else {
-      this.wordService
-        .editOrCreate(
-          this.wordForm.value.word,
-          this.wordForm.value.translation,
-          this.wordForm.value.tips,
-          this.group.groupNum,
-          undefined,
-          this.formatAdditionalTr()
-        )
-        .subscribe(() => {
-          this.wordService.getWordsFromServer();
-          this.groupService.getGroupsFromServer();
-        });
-    }
-    this.additionalTrArray = undefined;
-    this.onFinishSubmit.emit();
+    // if (this.word) {
+    //   this.wordService
+    //     .editOrCreate(
+    //       this.wordForm.value.word,
+    //       this.wordForm.value.translation,
+    //       this.wordForm.value.tips,
+    //       undefined,
+    //       this.word.id,
+    //       this.formatAdditionalTr()
+    //     )
+    //     .subscribe(() => {
+    //       this.groupService.loadGroups();
+    //       this.wordService.getWordsFromServer();
+    //     });
+    // } else {
+    //   this.wordService
+    //     .editOrCreate(
+    //       this.wordForm.value.word,
+    //       this.wordForm.value.translation,
+    //       this.wordForm.value.tips,
+    //       this.group.id,
+    //       undefined,
+    //       this.formatAdditionalTr()
+    //     )
+    //     .subscribe(() => {
+    //       this.wordService.getWordsFromServer();
+    //       this.groupService.loadGroups();
+    //     });
+    // }
+    // this.additionalTrArray = undefined;
+    // this.onFinishSubmit.emit();
   }
 
   onClose() {

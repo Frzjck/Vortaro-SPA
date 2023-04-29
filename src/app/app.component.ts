@@ -1,10 +1,10 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { AuthService } from './auth/auth.service';
 import { GroupService } from './services/group.service';
-import { WordManageService } from './services/word-manage.service';
+import { WordService } from './services/word.service';
 import { SettingsService } from './services/settings.service';
 import { Subscription } from 'rxjs';
+import { UserService } from './login/user.service';
 
 @Component({
   selector: 'app-root',
@@ -28,21 +28,11 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   pixie: boolean;
   pixieSub: Subscription;
   constructor(
-    public authService: AuthService,
-    private groupService: GroupService,
-    private wordService: WordManageService,
-    private settings: SettingsService
-  ) {}
+    private settings: SettingsService,
+  ) {
+  }
 
   ngOnInit() {
-    this.authService.autoAuthUser();
-
-    if (this.authService.getIsAuth()) {
-      this.wordService.getWordsFromServer();
-      this.groupService.getGroupsFromServer();
-      this.authService.getMe();
-    }
-
     //Theme conf
     this.settings.getTheme();
     this.themeSub = this.settings.activeThemeSub.subscribe((theme) => {
@@ -64,7 +54,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  ngAfterViewInit() {}
+  ngAfterViewInit() { }
 
   ngOnDestroy(): void {
     this.themeSub.unsubscribe();
