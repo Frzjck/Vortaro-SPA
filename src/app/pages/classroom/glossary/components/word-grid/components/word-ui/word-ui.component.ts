@@ -6,9 +6,7 @@ import { Word } from '@app/pages/classroom/store/words-list';
 export interface WordUiViewInputInterface {
   eye: boolean;
   eyeSlash: boolean;
-  questionCircle: boolean;
-  edit: boolean;
-  trash: boolean;
+  editingMode: boolean;
   word: Word;
 }
 
@@ -19,38 +17,38 @@ export interface WordUiViewInputInterface {
   template: `
   <ng-container *ngIf="wordUiViewInput as view">
     <div class="ui-wrap">
-      <i
-        *ngIf="view.eye"
-        class="far fa-eye"
-        (click)="_iconPressed('unfoldTranslations')"
-      ></i>
-      <i
-        *ngIf="view.eyeSlash"
-        class="far fa-eye-slash"
-        (click)="_iconPressed('foldTranslations')"
-      ></i>
-      <i
-      *ngIf="view.questionCircle"
-        class="far fa-question-circle"
-      ></i>
-      <i
-       *ngIf="view.edit"
-        class="far fa-edit"
-        (click)="_iconPressed('edit')"
-      ></i
-      ><i
-      *ngIf="view.trash"
-        class="far fa-trash-alt"
-        (click)="_iconPressed('delete')"
-      ></i>
-      <app-rating-ui
-       *ngIf="view.rating"
-        uiType="stars"
-        [score]="view.word.proficiency"
-        ></app-rating-ui>
-      <div class="tooltip">
-        <span>{{ view.word.tips | titlecase }} </span>
-      </div>
+      <ng-template #editSet>
+        <i
+          class="far fa-edit"
+          (click)="_iconPressed('edit')"
+        ></i
+        ><i
+          class="far fa-trash-alt"
+          (click)="_iconPressed('delete')"
+        ></i>
+      </ng-template>
+      <ng-container *ngIf="!view.editingMode; else editSet">
+        <i
+          *ngIf="view.eye"
+          class="far fa-eye"
+          (click)="_iconPressed('unfoldTranslations')"
+        ></i>
+        <i
+          *ngIf="view.eyeSlash"
+          class="far fa-eye-slash"
+          (click)="_iconPressed('foldTranslations')"
+        ></i>
+        <i
+          class="far fa-question-circle"
+        ></i>
+        <app-rating-ui
+          uiType="stars"
+          [score]="view.word.proficiency"
+          ></app-rating-ui>
+        <div class="tooltip">
+          <span>{{ view.word.tips | titlecase }} </span>
+        </div>
+      </ng-container>
     </div>
   </ng-container>
   `,

@@ -15,11 +15,8 @@
           [wordUiViewInput]="{
             eye: !vm.isUnfolded && hasAddTranslations(word),
             eyeSlash: vm.isUnfolded && hasAddTranslations(word),
-            questionCircle: !vm.isEditingGroup,
-            edit: vm.isEditingGroup,
-            trash: vm.isEditingGroup,
-            rating: !vm.isEditingGroup,
-            word: word
+            editingMode: vm.isEditingGroup,
+            word: word,
           }"
           (iconPressed)="wordAction($event)"
         ></app-word-ui>

@@ -9,7 +9,6 @@ import { ExtraTrCardComponent } from './components/extra-tr-card/extra-tr-card.c
 import { WordUiComponent, WordUiViewInputInterface } from './components/word-ui/word-ui.component';
 import { Word } from '@app/pages/classroom/store/words-list';
 import { GlossaryStateFacade } from '../../glossary.state.facade';
-import { Observable, of } from 'rxjs';
 import { LetModule } from '@ngrx/component';
 
 
@@ -47,10 +46,7 @@ export interface WordGridStateInterface {
 })
 export class WordGridComponent {
   @Input() wordGridInput: WordGridInputInterface;
-  wordGridState$: Observable<WordGridStateInterface> = this.state.wordGridState$;
-
-
-  // iconPressed = (event) => console.log(event);
+  // wordGridState$: Observable<WordGridStateInterface> = this.state.wordGridState$;
 
   constructor(public state: GlossaryStateFacade) {
   }
