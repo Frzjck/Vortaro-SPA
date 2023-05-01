@@ -39,7 +39,6 @@ export class GlossaryStateFacade {
     isAllGroupTranslationsUnfolded$ = (groupId: string) => this.glossaryState.isAllGroupTranslationsUnfolded$(groupId);
 
     foldTranslationsWord = (wordId: string) => this.glossaryState.foldTranslationsWord(wordId);
-
     unfoldTranslationsWord = (wordId: string) => this.glossaryState.unfoldTranslationsWord(wordId);
 
     unfoldTranslationsGroup = (groupId: string) =>
@@ -47,6 +46,5 @@ export class GlossaryStateFacade {
             let wordIds = words.map((word) => word.id);
             this.glossaryState.setUnfoldedTranslationsGroup(wordIds);
         });
-
     foldTranslationsGroup = () => this.glossaryState.foldTranslationsGroup();
 }

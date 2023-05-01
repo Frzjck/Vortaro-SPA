@@ -33,10 +33,8 @@ export const createGroup = createAction(Types.CREATE, props<{ group: FireGroup }
 export const createGroupSuccess = createAction(Types.CREATE_SUCCESS, props<{ group: Group }>());
 export const createGroupError = createAction(Types.CREATE_ERROR, props<{ error: string }>());
 
-
 // Edit
 export const editGroup = createAction(Types.EDIT, props<{ groupId: string }>());
-
 
 // Update
 export const updateGroup = createAction(Types.UPDATE, props<{ group: Group }>());
@@ -45,7 +43,6 @@ export const updateGroupSuccess = createAction(Types.UPDATE_SUCCESS, props<{
     changes: Partial<Group>
 }>());
 export const updateGroupError = createAction(Types.UPDATE_ERROR, props<{ error: string }>());
-
 
 // Delete
 export const deleteGroup = createAction(Types.DELETE, props<{ id: string }>());

@@ -142,38 +142,8 @@ export class GlossaryState extends ComponentStore<GlossaryStateModel> {
         editingGroupId: state.editingGroupId === groupId ? null : groupId,
     }));
 
-
-
-    // ------------- Effects:
-    readonly setEditingGroup = (groupId: string) => this.patchState({ editingGroupId: groupId });
-    readonly resetEditingGroup = this.updater(state => ({
+    readonly stopEditingGroup = this.updater(state => ({
         ...state,
         editingGroupId: initialState.editingGroupId,
     }));
-
-    // readonly wordUiInterface = this.select(state => state.editingGroupId)
-
-
-
-
-
-    // readonly unfoldAll = (groupId: string) => this.effect<void>(
-    //     $ => $.pipe(
-    //         exhaustMap(() => this.store.select(getWordsByGroupId(groupId)).pipe(
-    //             tapResponse(
-    //                 (words: Word[]) => {
-    //                     const wordIds = words.map(word => word.id)
-    //                     return this.setUnfoldedWords(wordIds)
-    //                 },
-    //                 (error) => console.log(error),
-    //             )
-    //         )
-    //         )
-    //     )
-    // );
-
-    // GroupsAndWords
-
-
-
 }
