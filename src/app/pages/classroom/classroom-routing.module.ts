@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { GlossaryComponent } from './glossary/glossary.component';
-import { ExercisesComponent } from './exercises/exercises.component';
+import { ExerciseMenuComponent } from './exercises/exercise-menu.component';
 import { SpellingComponent } from './exercises/pages/spelling/spelling.component';
 import { ResultsComponent } from './exercises/pages/results/results.component';
 import { QuizComponent } from './exercises/pages/quiz/quiz.component';
@@ -13,7 +13,7 @@ const routes: Routes = [{
 },
 {
   path: 'exercises',
-  component: ExercisesComponent,
+  component: ExerciseMenuComponent,
 
 },
 {

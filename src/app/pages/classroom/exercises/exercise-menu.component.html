@@ -1,16 +1,19 @@
-<div *ngIf="words">
+<div *ngIf="thereAreWords | async; else noData">
   <div class="container" *ngIf="exerciseType === 'spelling'">
     <div class="hex-cell" routerLink="vocabulary-select">
       <mat-icon>view_list</mat-icon>
+      <p>Select group</p>
     </div>
     <div
       class="hex-cell"
       [routerLink]="['spelling', 'work-on-mistakes', '000']"
     >
       <mat-icon>sync_problem</mat-icon>
+      <p>work on mistakes</p>
     </div>
     <div class="hex-cell" [routerLink]="['spelling', 'random', '000']">
       <i class="fas fa-dice"></i>
+      <p>Random words</p>
     </div>
   </div>
 
@@ -26,6 +29,9 @@
     </div>
   </div>
 </div>
-<div class="warning" *ngIf="!words">
-  <p>• Please create a group and add words in order to access exercises •</p>
-</div>
+
+<ng-template #noData>
+  <div class="warning">
+    <p>• Please create a group and add words in order to access exercises •</p>
+  </div>
+</ng-template>
