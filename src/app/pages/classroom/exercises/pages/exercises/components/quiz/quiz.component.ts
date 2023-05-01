@@ -11,7 +11,7 @@ import { SettingsService } from '@app/services/settings.service';
 import { WordService } from '@app/services/word.service';
 import { Word } from '@app/pages/classroom/store/words-list';
 import { Subscription } from 'rxjs';
-import { ProgressBarComponent } from '../../shared/progress-bar/progress-bar.component';
+import { ProgressBarComponent } from '../../../../shared/progress-bar/progress-bar.component';
 
 @Component({
   selector: 'app-quiz',
