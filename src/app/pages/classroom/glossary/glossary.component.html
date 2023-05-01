@@ -1,0 +1,68 @@
+<div class="content">
+  <h1>My Vocabulary</h1>
+  <div class="container">
+    <mat-accordion>
+      <mat-expansion-panel
+        *ngFor="
+          let groupAndWords of (state.glossaryState$ | async)?.groupsAndWords
+        "
+        class="mat-elevation-z6"
+      >
+        <mat-expansion-panel-header>
+          <div class="flex-title">
+            <span>
+              {{ groupAndWords.group.name | titlecase }}
+              <i
+                class="far fa-edit"
+                *ngIf="state.isEditingGroupId$(groupAndWords.group.id) | async"
+                appStopPropagation
+              ></i>
+            </span>
+            <!-- <app-group-form ></app-group-form> -->
+            <div class="bars-wrap">
+              <app-rating-ui
+                uiType="bars"
+                [score]="groupAndWords.group.averageProficiency"
+              ></app-rating-ui>
+            </div>
+          </div>
+        </mat-expansion-panel-header>
+        <app-word-grid
+          [wordGridInput]="{
+              groupId: groupAndWords.group.id,
+              words: groupAndWords.words$ | async,
+            }"
+        ></app-word-grid>
+        <mat-action-row>
+          <app-group-action-panel
+            *ngrxLet="{
+              groupId: groupAndWords.group.id,
+              isAllOpen:
+                (state.isAllGroupTranslationsUnfolded$(groupAndWords.group.id)
+                | async),
+              isAnyOpen:
+                (state.groupHasUnfoldedTranslations$(groupAndWords.group.id)
+                | async),
+              isBeingEdited:
+                (state.isEditingGroupId$(groupAndWords.group.id) | async)
+            } as gAPI"
+            [groupActionPanelInput]="{ 
+                groupId: gAPI.groupId,
+                seeAll: !gAPI.isAllOpen && !gAPI.isBeingEdited,
+                collapseAll: gAPI.isAnyOpen && !gAPI.isBeingEdited,
+                done: gAPI.isBeingEdited,
+                delete: gAPI.isBeingEdited,
+              }"
+            (buttonPressed)="groupAction($event)"
+          ></app-group-action-panel>
+        </mat-action-row>
+      </mat-expansion-panel>
+      <div class="add-group-div">
+        <button class="btn btn-add-group" mat-button appStopPropagation>
+          Create New Group <mat-icon>add_box</mat-icon>
+        </button>
+        <!-- <app-group-form ></app-group-form> -->
+      </div>
+    </mat-accordion>
+  </div>
+</div>

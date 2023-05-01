@@ -1,15 +1,21 @@
 import { Injectable } from '@angular/core';
-import { Group } from '../models/group-model';
 import { from, Observable, of } from 'rxjs';
 import { concatMap, map } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { convertSnaps } from './db-utils';
-import { Word } from '@app/models/word-model';
+import { convertSnaps } from '../shared/utils/db-utils';
 
-import { UserService } from '../login/user.service';
+import { UserService } from '../pages/login/user.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { QuerySnapshot, DocumentChange } from '@firebase/firestore-types';
+import { Word } from '@app/pages/classroom/store/words-list';
+// import { Group } from '@app/pages/classroom/store/groups-list';
 
+
+import { FireGroup } from "@app/models/backend/group";
+
+export interface Group extends FireGroup {
+  id: string;
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -22,7 +28,6 @@ export class GroupService {
 
 
   createGroup(newGroup: Partial<Group>, groupId?: string): Observable<Partial<Group>> {
-
     let save$: Observable<any>;
     if (groupId)
       save$ = from(this.db.doc(`users/${this.userService.user.uid}/groups/${groupId}`).set(newGroup));
@@ -41,30 +46,6 @@ export class GroupService {
   updateGroup(groupId: string, changes: Partial<Group>): Observable<any> {
     return from(this.db.doc(`groups/${groupId}`).update(changes));
   }
-
-  loadGroups(): Observable<Group[] | any> {
-    console.log("loadGroups()")
-    // return of(["test"]);
-    return this.db
-      .collection(`users/${this.userService.user.uid}/groups`)
-      .get()
-      .pipe(map((results) => convertSnaps<Group>(results)));
-  }
-
-  async uglyButton() {
-
-    let userId = (await this.afAuth.currentUser).uid;
-    // let uid = user;
-    // throw new Error('Method not implemented.');
-    // console.log(this.db.collection(`/users/${userId}/groups`).snapshotChanges().subscribe(snaps => {
-    //   console.log(snaps)
-    // }));
-    // await this.loadGroups().subscribe((res) => console.log("RES", res))
-    let test = await (this.loadGroups() as Observable<QuerySnapshot>);
-    console.log("this.loadGroups() as Observable<QuerySnapshot>)", test);
-  }
-  // let user = this.afAuth.auth.currentUser;
-  // uid = user.uid;
 
   loadGroupsAndWords(): Observable<Group[]> {
     return this.db.collection<Group>(`users/${this.userService.user.uid}/groups`).snapshotChanges()

@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Word } from '../models/word-model';
 import { map } from 'rxjs/operators';
 import { from, Observable, ReplaySubject } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { convertSnaps } from './db-utils';
+import { convertSnaps } from '../shared/utils/db-utils';
 
 
 import firebase from "firebase/compat/app";
-import { UserService } from '../login/user.service';
+import { UserService } from '../pages/login/user.service';
 import OrderByDirection = firebase.firestore.OrderByDirection;
+import { Word } from '@app/pages/classroom/store/words-list';
+import { getAuth } from 'firebase/auth';
 
 @Injectable({
   providedIn: 'root',
@@ -38,8 +39,7 @@ export class WordService {
   }
 
   getWordsFromServer() {
-    const userRef = this.db.collection("users").doc(`${this.userService.user.uid}`).ref
-
+    const userRef = this.db.collection("users").doc("gTsSvxlF4Cfd0hvxhmT0Y8yAQHXU").ref;
     // Purpose of next line is to extract all collections named "word" located inside a certain user. We order by __name__ (internal fire id, alternatively firebase.firestore.FieldPath.documentId()), as far as I understand because user has no other fields (must be a different reason since substitution with __createTime__ throws an error).
     return this.db.collectionGroup('words', (ref) => ref.orderBy("__name__").startAt(userRef.path).endAt(userRef.path + "\uf8ff")).get().pipe(map((results) => convertSnaps<Word>(results)));
   }
@@ -47,7 +47,7 @@ export class WordService {
   createWord(newWord: Partial<Word>, groupId: string, wordId?: string): Observable<Partial<Word>> {
     newWord = {
       ...newWord,
-      date: firebase.firestore.FieldValue.serverTimestamp() as firebase.firestore.Timestamp,
+      created: firebase.firestore.FieldValue.serverTimestamp() as firebase.firestore.Timestamp,
     };
 
     let save$: Observable<any>;

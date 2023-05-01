@@ -5,7 +5,11 @@
     "baseUrl": "src",
     "paths":{
       "@app/*":["app/*"],
-      "@env/*":["environments/*"]
+      "@shared/*":["app/shared/*"],
+      "@services/*":["app/shared/services/*"],
+      "@env/*":["environments/*"],
+      "@glossary/*":["app/pages/classroom/glossary/*"],
+      "@exercises/*":["app/pages/classroom/exercises/*"],
     },
     "outDir": "./dist/out-tsc",
     "sourceMap": true,

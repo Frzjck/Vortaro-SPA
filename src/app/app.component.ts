@@ -1,10 +1,7 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { GroupService } from './services/group.service';
-import { WordService } from './services/word.service';
 import { SettingsService } from './services/settings.service';
 import { Subscription } from 'rxjs';
-import { UserService } from './login/user.service';
 
 @Component({
   selector: 'app-root',

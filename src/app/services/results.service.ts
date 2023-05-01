@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Word } from '../models/word-model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { Word } from '@app/pages/classroom/store/words-list';
 
 @Injectable({
   providedIn: 'root',
