@@ -14,13 +14,13 @@ import { Subscription } from 'rxjs';
 import { ProgressBarComponent } from '../../shared/progress-bar/progress-bar.component';
 
 @Component({
-  selector: 'app-type-test',
+  selector: 'app-quiz',
   standalone: true,
   imports: [CommonModule, ProgressBarComponent, MatCardModule],
-  templateUrl: './type-test.component.html',
-  styleUrls: ['./type-test.component.scss'],
+  templateUrl: './quiz.component.html',
+  styleUrls: ['./quiz.component.scss'],
 })
-export class TypeTestComponent implements OnInit, OnDestroy {
+export class QuizComponent implements OnInit, OnDestroy {
   words: Word[];
   activeWordIndex = 0;
   activeWord: Word;

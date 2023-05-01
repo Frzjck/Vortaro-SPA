@@ -5,7 +5,7 @@ import { GlossaryComponent } from './glossary/glossary.component';
 import { ExercisesComponent } from './exercises/exercises.component';
 import { SpellingComponent } from './exercises/pages/spelling/spelling.component';
 import { ResultsComponent } from './exercises/pages/results/results.component';
-import { TypeTestComponent } from './exercises/pages/type-test/type-test.component';
+import { QuizComponent } from './exercises/pages/quiz/quiz.component';
 
 const routes: Routes = [{
   path: 'my-vocabulary',
@@ -38,7 +38,7 @@ const routes: Routes = [{
 // -------- Type Test exercise routes --------
 {
   path: 'exercises/quiz/:type/:id',
-  component: TypeTestComponent,
+  component: QuizComponent,
 
 },
 {
