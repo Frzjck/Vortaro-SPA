@@ -43,3 +43,8 @@ export const getWordsByGroupId = (groupId: string) => createSelector(
         return words?.filter(word => word.groupId === groupId)
     }
 );
+
+export const thereAreWords = createSelector(
+    getWords,
+    (words) => words.length > 0
+);
