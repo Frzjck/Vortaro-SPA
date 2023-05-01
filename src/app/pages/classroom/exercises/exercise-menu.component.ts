@@ -5,13 +5,14 @@ import { Subscription } from 'rxjs';
 import { SettingsService } from '@app/services/settings.service';
 import { Store } from '@ngrx/store';
 import { thereAreWords } from '../store/words-list/words.selectors';
-import { getExerciseType } from '@app/store/app/app.selectors';
+import { getExerciseMode } from '@app/store/app/app.selectors';
 import { MatIconModule } from '@angular/material/icon';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-exercises',
   standalone: true,
-  imports: [CommonModule, MatIconModule],
+  imports: [CommonModule, MatIconModule, RouterModule],
   templateUrl: './exercise-menu.component.html',
   styleUrls: ['./exercise-menu.component.scss'],
 })
@@ -19,8 +20,8 @@ export class ExerciseMenuComponent implements OnInit, OnDestroy {
   // private wordSub: Subscription;
   words: boolean = false;
 
-  exerciseTypeSub: Subscription;
-  exerciseType: string;
+  exerciseModeSub: Subscription;
+  exerciseMode: string;
 
   thereAreWords = this.store.select(thereAreWords);
 
@@ -29,8 +30,8 @@ export class ExerciseMenuComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.store.select(getExerciseType).subscribe((type) => {
-      this.exerciseType = type;
+    this.store.select(getExerciseMode).subscribe((type) => {
+      this.exerciseMode = type;
       console.log(type);
     });
 
@@ -40,13 +41,13 @@ export class ExerciseMenuComponent implements OnInit, OnDestroy {
     // });
 
     // Subscribe to exercise type
-    // this.exerciseTypeSub = this.settings.exerciseModeSub.subscribe((type) => {
-    //   this.exerciseType = type;
+    // this.exerciseModeSub = this.settings.exerciseModeSub.subscribe((type) => {
+    //   this.exerciseMode = type;
     // });
   }
 
   ngOnDestroy(): void {
     // this.wordSub.unsubscribe();
-    // this.exerciseTypeSub.unsubscribe();
+    // this.exerciseModeSub.unsubscribe();
   }
 }

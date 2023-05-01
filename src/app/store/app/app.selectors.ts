@@ -21,7 +21,7 @@ export const translateDirection = createSelector(
     (app) => app.translateDirection
 );
 
-export const getExerciseType = createSelector(
+export const getExerciseMode = createSelector(
     getAppState,
-    (app) => app.exerciseType
+    (app) => app.exerciseMode
 );

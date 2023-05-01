@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { changeExerciseType, changeTheme, togglePixies, toggleTranslateDirection } from './app.actions';
+import { changeExerciseMode, changeTheme, togglePixies, toggleTranslateDirection } from './app.actions';
 
 
 
@@ -10,7 +10,7 @@ export interface AppState {
     // and your knowledge of spelling if false
     translateDirection: boolean;
 
-    exerciseType: string;
+    exerciseMode: string;
 }
 
 export const initialState: AppState = {
@@ -18,12 +18,12 @@ export const initialState: AppState = {
     activeTheme: "blue",
     translateDirection: true,
 
-    exerciseType: "quiz",
+    exerciseMode: "quiz",
 };
 
 export const reducer = createReducer(
     initialState,
-    on(changeExerciseType, (state, { exerciseType }) => ({ ...state, exerciseType })),
+    on(changeExerciseMode, (state, { exerciseMode }) => ({ ...state, exerciseMode })),
     on(toggleTranslateDirection, (state => ({ ...state, translateDirection: !state.translateDirection }))),
     on(togglePixies, (state) => ({ ...state, pixies: !state.pixies })),
     on(changeTheme, (state, { theme }) => ({ ...state, activeTheme: theme })),

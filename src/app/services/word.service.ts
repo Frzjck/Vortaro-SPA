@@ -16,7 +16,7 @@ import { getAuth } from 'firebase/auth';
 })
 export class WordService {
 
-  exerciseType: string;
+  exerciseMode: string;
 
   constructor(private db: AngularFirestore, private userService: UserService) { }
 

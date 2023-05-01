@@ -8,7 +8,7 @@ export enum Types {
 }
 
 
-export const changeExerciseType = createAction(Types.CHANGE_EXERCISE_TYPE, props<{ exerciseType: string }>());
+export const changeExerciseMode = createAction(Types.CHANGE_EXERCISE_TYPE, props<{ exerciseMode: string }>());
 
 export const toggleTranslateDirection = createAction(Types.CHANGE_EXERCISE_TYPE, props<{ translateDirection: boolean }>());
 
