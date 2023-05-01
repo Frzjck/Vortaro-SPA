@@ -1,11 +1,15 @@
+import { CommonModule } from '@angular/common';
+
 import { Component, OnInit } from '@angular/core';
 import { ResultsService } from '@app/services/results.service';
 import { Word } from '@app/pages/classroom/store/words-list';
 
 @Component({
   selector: 'app-results',
+  standalone: true,
+  imports: [CommonModule],
   template: `
-  <div class="content" *ngIf="resultsArr.length > 0">
+  <div class="content" *ngIf="true">
   <h1>Results:</h1>
   <h2>answered correctly {{ countCorrect }} out of {{ countTotal }}</h2>
   <div class="container">
