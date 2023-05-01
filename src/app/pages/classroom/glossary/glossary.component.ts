@@ -13,6 +13,7 @@ import { GlossaryStateFacade } from './glossary.state.facade';
 import { Group } from '../store/groups-list';
 import { Observable } from 'rxjs/internal/Observable';
 import { Word } from '../store/words-list/words.models';
+import { combineLatest, map, of } from 'rxjs';
 
 
 
@@ -42,9 +43,30 @@ export class GlossaryComponent {
 
   constructor(
     public state: GlossaryStateFacade,
-  ) { }
+  ) {
+
+  }
   // wordGridInterface: WordGridComponentInterface = this.GlossaryState.wordGridInterface;
   // wordUiInterface: WordUiComponentInterface = this.GlossaryState.wordUiInterface;
+
+
+  getGroupActionInput(groupId) {
+    return combineLatest([
+      of(groupId),
+      this.state.isAllGroupTranslationsUnfolded$(groupId),
+      this.state.groupHasUnfoldedTranslations$(groupId),
+      this.state.isEditingGroupId$(groupId)
+    ]).pipe(
+      map(([groupId, isAllOpen, isAnyOpen, isBeingEdited]) => {
+        return {
+          groupId: groupId,
+          seeAll: !isAllOpen && !isBeingEdited,
+          collapseAll: isAnyOpen && !isBeingEdited,
+          done: isBeingEdited,
+          delete: isBeingEdited,
+        }
+      }))
+  }
 
   preventCollapse() { }
   // To hide collapse all button on 0 additional translates groups

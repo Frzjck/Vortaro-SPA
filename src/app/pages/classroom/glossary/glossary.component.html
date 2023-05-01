@@ -35,24 +35,9 @@
         ></app-word-grid>
         <mat-action-row>
           <app-group-action-panel
-            *ngrxLet="{
-              groupId: groupAndWords.group.id,
-              isAllOpen:
-                (state.isAllGroupTranslationsUnfolded$(groupAndWords.group.id)
-                | async),
-              isAnyOpen:
-                (state.groupHasUnfoldedTranslations$(groupAndWords.group.id)
-                | async),
-              isBeingEdited:
-                (state.isEditingGroupId$(groupAndWords.group.id) | async)
-            } as gAPI"
-            [groupActionPanelInput]="{ 
-                groupId: gAPI.groupId,
-                seeAll: !gAPI.isAllOpen && !gAPI.isBeingEdited,
-                collapseAll: gAPI.isAnyOpen && !gAPI.isBeingEdited,
-                done: gAPI.isBeingEdited,
-                delete: gAPI.isBeingEdited,
-              }"
+            [groupActionPanelInput]="
+              getGroupActionInput(groupAndWords.group.id) | async
+            "
             (buttonPressed)="groupAction($event)"
           ></app-group-action-panel>
         </mat-action-row>
