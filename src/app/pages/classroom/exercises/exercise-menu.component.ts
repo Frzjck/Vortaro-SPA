@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { Subscription } from 'rxjs';
-import { SettingsService } from '@app/services/settings.service';
 import { Store } from '@ngrx/store';
 import { thereAreWords } from '../store/words-list/words.selectors';
 import { getExerciseMode } from '@app/store/app/app.selectors';
@@ -33,6 +32,7 @@ export class ExerciseMenuComponent implements OnInit, OnDestroy {
     this.store.select(getExerciseMode).subscribe((type) => {
       this.exerciseMode = type;
     });
+
 
     // Subscribe to words
     // this.wordSub = this.wordService.wordsObsListener().subscribe((words) => {

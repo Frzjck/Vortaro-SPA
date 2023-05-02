@@ -80,7 +80,7 @@ import { CustomSerializer } from './store/router/custom-serializer';
     AngularFireAuthModule,
     AngularFirestoreModule,
     StoreRouterConnectingModule.forRoot({
-      serializer: CustomSerializer
+      serializer: CustomSerializer,
     }),
     // StoreDevtools,
     StoreModule.forRoot(reducers, {

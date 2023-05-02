@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { QuizComponent } from './pages/modes/quiz/quiz.component';
 import { SpellingComponent } from './pages/modes/spelling/spelling.component';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { getCurrentRoute } from '@app/store/router/router.selector';
 
 @Component({
   selector: 'app-exercises',
@@ -23,12 +25,15 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 })
 export class ExerciseContainerComponent {
 
-  constructor(private router: Router, private route: ActivatedRoute) { }
+  constructor(private store: Store, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     // if selected quiz redirect to quiz component
     // this.router.navigate(['results'], { relativeTo: this.route });
     // if selected spelling redirect to spelling component
+    this.store.select(getCurrentRoute).subscribe((router) => {
+      console.log("ROUTER", router);
+    });
 
   }
 
