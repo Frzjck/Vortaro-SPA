@@ -32,7 +32,6 @@ export class ExerciseMenuComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.store.select(getExerciseMode).subscribe((type) => {
       this.exerciseMode = type;
-      console.log(type);
     });
 
     // Subscribe to words

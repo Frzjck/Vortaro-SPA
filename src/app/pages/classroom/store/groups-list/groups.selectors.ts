@@ -1,9 +1,7 @@
-import { createSelector, createFeatureSelector } from '@ngrx/store';
+import { createSelector } from '@ngrx/store';
 import { getLexiconState, LexiconState } from '../index';
 
-import { GroupsState, adapter } from './groups.reducer';
-
-// export const getGroupsState = createFeatureSelector<GroupsState>('groups');
+import { adapter } from './groups.reducer';
 
 export const getGroupsState = createSelector(
     getLexiconState,

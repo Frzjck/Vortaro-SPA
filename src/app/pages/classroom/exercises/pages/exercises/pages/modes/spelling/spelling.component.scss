@@ -4,7 +4,7 @@ app-progress-bar {
   width: 100%;
 }
 
-.grid-conteiner {
+.grid-container {
   // @include center;
   width: 100%;
 
@@ -110,7 +110,7 @@ app-progress-bar {
 @media (min-width: 768px) {
   // mat-card-subtitle {}
 
-  .grid-conteiner {
+  .grid-container {
     mat-card {
       padding: 30px;
       width: clamp(10rem, 80vw, 40rem);

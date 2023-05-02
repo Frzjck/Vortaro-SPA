@@ -16,7 +16,7 @@ import { ProgressBarService } from '@app/services/progress-bar.service';
 import { SettingsService } from '@app/services/settings.service';
 import { Word } from '@app/pages/classroom/store/words-list';
 import { Subscription } from 'rxjs';
-import { ProgressBarComponent } from '../../shared/progress-bar/progress-bar.component';
+import { ProgressBarComponent } from '../../../shared/progress-bar/progress-bar.component';
 
 @Component({
   selector: 'app-spelling',
