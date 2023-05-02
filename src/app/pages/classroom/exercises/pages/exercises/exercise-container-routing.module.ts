@@ -1,16 +1,16 @@
 import { Route } from '@angular/router';
 
-import { QuizComponent } from './pages/quiz/quiz.component';
+import { QuizComponent } from './pages/modes/quiz/quiz.component';
 import { ResultsComponent } from './pages/results/results.component';
-import { SpellingComponent } from './pages/spelling/spelling.component';
+import { SpellingComponent } from './pages/modes/spelling/spelling.component';
 
 export default [
   {
-    path: 'quiz',
+    path: 'quiz/:id',
     component: QuizComponent,
   },
   {
-    path: 'spelling',
+    path: 'spelling/:id',
     component: SpellingComponent,
   },
   {
