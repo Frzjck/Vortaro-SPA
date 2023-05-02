@@ -1,0 +1,86 @@
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 3rem;
+  gap: 2.5rem 4rem;
+  * {
+    //dev proposes
+    background-color: rgba(56, 127, 233, 0.3);
+  }
+}
+.group-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 20rem;
+  width: 36rem;
+  background-color: red;
+
+  .group-card__title {
+    height: 3.7rem;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    justify-items: center;
+    & > :last-child {
+      justify-self: end;
+      margin-right: 0.5rem;
+    }
+  }
+
+  .group-card__content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 0.6rem;
+    width: 95%;
+    height: 100%;
+    margin: 0.3rem;
+    overflow: auto;
+
+    .group-card__content__word {
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 2.3rem;
+      width: 48%;
+    }
+  }
+  .group-card__footer-actions {
+    display: flex;
+    justify-content: flex-end;
+    height: 2.2rem;
+    width: 100%;
+    button {
+      margin-right: 0.2rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+  }
+}
+
+//--------------------------- Scrollbar ---------------------------//
+
+/* width */
+.group-card__content::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Track */
+.group-card__content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+.group-card__content::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+.group-card__content::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
