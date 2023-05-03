@@ -1,31 +1,30 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { QuizComponent } from './pages/modes/quiz/quiz.component';
-import { SpellingComponent } from './pages/modes/spelling/spelling.component';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { QuizComponent } from './components/modes/quiz/quiz.component';
+import { SpellingComponent } from './components/modes/spelling/spelling.component';
+import { RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { getCurrentRoute } from '@app/store/router/router.selector';
+import { ResultsComponent } from './components/results/results.component';
 
 @Component({
   selector: 'app-exercises',
   standalone: true,
-  imports: [CommonModule, QuizComponent, SpellingComponent, RouterModule],
+  imports: [CommonModule, QuizComponent, SpellingComponent, RouterModule, ResultsComponent],
   template: `
-  <h1>exercises works!</h1>
-  <img
-    src="https://www.giantfreakinrobot.com/wp-content/uploads/2022/06/hellotherethumb.jpg"
-    alt=""
-    style="height: 15rem"
-  />
-  <h2>router outlet ↓</h2>
-  <router-outlet></router-outlet>
-  <h2>router outlet ↑</h2>
+    <ng-container [ngSwitch]="content">
+      <app-spelling *ngSwitchCase="'spelling'" />
+      <app-quiz *ngSwitchCase="'quiz'" />
+      <app-results *ngSwitchCase="'results'" />
+    </ng-container>
 `,
   styles: [],
 })
 export class ExerciseContainerComponent {
 
-  constructor(private store: Store, private router: Router, private route: ActivatedRoute) { }
+  constructor(private store: Store) { }
+
+  public content = 'results';
 
   ngOnInit(): void {
     // if selected quiz redirect to quiz component
@@ -33,6 +32,7 @@ export class ExerciseContainerComponent {
     // if selected spelling redirect to spelling component
     this.store.select(getCurrentRoute).subscribe((router) => {
       console.log("ROUTER", router);
+      // console.log("ROUTER", router.urlSegment?[0].path);
     });
 
   }

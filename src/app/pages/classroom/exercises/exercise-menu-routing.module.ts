@@ -10,9 +10,8 @@ export default [
     component: ExerciseMenuComponent,
   },
   {
-    path: 'exercises',
+    path: 'exercises/:exerciseType/:groupId',
     component: ExerciseContainerComponent,
-    loadChildren: () => import('./pages/exercises/exercise-container-routing.module')
   },
   {
     path: 'select-group',

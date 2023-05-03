@@ -9,5 +9,5 @@ export const getRouterState = createFeatureSelector<
 
 export const getCurrentRoute = createSelector(
     getRouterState,
-    (router) => router
+    (router) => router.state
 );
