@@ -13,7 +13,7 @@ import * as userActions from '../../../../store/user/user.actions';
 import * as wordsActions from './words.actions';
 import { extractDocumentChangeActionData } from '@app/shared/utils/db-utils';
 import { FireWord, Word } from './words.models';
-import { WordService } from '@app/services/word.service';
+import { WordService } from '@app/pages/classroom/services/word.service';
 
 
 @Injectable()

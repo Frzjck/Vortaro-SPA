@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { GlossaryComponent } from './glossary/glossary.component';
-import { SpellingComponent } from './exercises/pages/exercises/pages/modes/spelling/spelling.component';
-import { ResultsComponent } from './exercises/pages/exercises/pages/results/results.component';
-import { QuizComponent } from './exercises/pages/exercises/pages/modes/quiz/quiz.component';
+import { SpellingComponent } from './exercises/pages/exercises/components/modes/spelling/spelling.component';
+import { ResultsComponent } from './exercises/pages/exercises/components/results/results.component';
+import { QuizComponent } from './exercises/pages/exercises/components/modes/quiz/quiz.component';
 import { ExerciseMenuComponent } from './exercises/exercise-menu.component';
 
 const routes: Routes = [{
