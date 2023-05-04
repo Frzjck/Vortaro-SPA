@@ -6,11 +6,13 @@ import { changeTheme, togglePixies } from './app.actions';
 export interface AppState {
     pixies: boolean;
     activeTheme: string;
+    typeOfOS: string;
 }
 
 export const initialState: AppState = {
     pixies: false,
     activeTheme: "blue",
+    typeOfOS: "Windows",
 };
 
 export const reducer = createReducer(
