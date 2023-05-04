@@ -7,7 +7,7 @@ import { Store } from '@ngrx/store';
 import { getParams } from '@app/store/router/router.selector';
 import { ResultsComponent } from './components/results/results.component';
 import { map } from 'rxjs';
-import { getExerciseMode, getExerciseStatus } from '@exercises/store/exercises';
+import { ExerciseContainerPageAction, selectExerciseMode, selectExerciseStatus } from '../../store/exercises';
 
 @Component({
   selector: 'app-exercises',
@@ -27,11 +27,11 @@ export class ExerciseContainerComponent {
 
   constructor(private store: Store) { }
 
-  public exerciseMode$ = this.store.select(getExerciseMode);
-  public exerciseStatus$ = this.store.select(getExerciseStatus)
+  public exerciseMode$ = this.store.select(selectExerciseMode);
+  public exerciseStatus$ = this.store.select(selectExerciseStatus)
 
   ngOnInit(): void {
-    this.exerciseMode$.subscribe(console.log)
+    this.store.dispatch(ExerciseContainerPageAction.enter())
   }
 
 }

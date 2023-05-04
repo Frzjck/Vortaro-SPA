@@ -1,18 +1,20 @@
 <div class="grid-container">
   <app-progress-bar></app-progress-bar>
   <mat-card class="mat-elevation-z24">
-    <mat-card-title *ngIf="words && translateDirection">{{
+    <mat-card-title *ngIf="translateDirection$ | async">{{
       this.activeWord.name | titlecase
     }}</mat-card-title>
-    <mat-card-title *ngIf="words && !translateDirection">{{
+
+    <mat-card-title *ngIf="!translateDirection$ | async">{{
       this.activeWord.translation | titlecase
     }}</mat-card-title>
-    <mat-card-subtitle *ngIf="words"
+
+    <!-- <mat-card-subtitle
       ><i class="far fa-question-circle" *ngIf="this.activeWord.tips"></i>
       <div class="tooltip">
         {{ this.activeWord.tips | titlecase }}
       </div></mat-card-subtitle
-    >
+    > -->
     <mat-card-content>
       <mat-form-field>
         <input
@@ -21,16 +23,8 @@
           matInput
           class="res-input"
           autocomplete="off"
-          [disabled]="!pendingFstSub"
           [(ngModel)]="inputValue"
           #wordInput
-          [style.color]="
-            !pendingFstSub && correct
-              ? 'var(--answer-correct)'
-              : !pendingFstSub && !correct
-              ? 'var(--answer-wrong)'
-              : 'var(--text-primary)'
-          "
           (keyup.enter)="onSend()"
         />
         <input
@@ -43,7 +37,7 @@
     </mat-card-content>
     <mat-card-actions
       ><button class="sbm-btn" mat-button color="primary" (click)="onSend()">
-        {{
+        <!-- {{
           pendingFstSub
             ? "Submit"
             : !pendingFstSub && activeWordIndex === words.length - 1
@@ -51,7 +45,7 @@
             : !pendingFstSub
             ? "Next"
             : ""
-        }}
+        }} -->
       </button>
     </mat-card-actions>
   </mat-card>

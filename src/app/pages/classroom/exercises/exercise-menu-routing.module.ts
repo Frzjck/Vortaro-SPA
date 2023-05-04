@@ -3,19 +3,22 @@ import { Route } from '@angular/router';
 import { ExerciseContainerComponent } from './pages/exercises/exercise-container.component';
 import { ExerciseMenuComponent } from './exercise-menu.component';
 import { SelectGroupComponent } from './pages/select-group/select-group.component';
+import { StoreModule, provideState, provideStore } from '@ngrx/store';
+import { exercisesFeature } from './store/exercises/exercises.reducers';
 import { importProvidersFrom } from '@angular/core';
-import { StoreModule } from '@ngrx/store';
-import { exercisesFeatureKey } from './store';
-import { exercisesReducer } from './store/exercises/exercises.reducers';
+import { EffectsModule } from '@ngrx/effects';
+import { ExercisesEffects } from './store/exercises/exercises.effects';
 
 export default [
   {
     path: '',
     component: ExerciseMenuComponent,
     providers: [
+      // provideState(exercisesFeature),
       importProvidersFrom(
-        StoreModule.forFeature(exercisesFeatureKey, exercisesReducer)
-      )
+        StoreModule.forFeature(exercisesFeature),
+        EffectsModule.forFeature([ExercisesEffects]),
+      ),
     ],
   },
   {

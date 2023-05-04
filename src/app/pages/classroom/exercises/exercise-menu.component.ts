@@ -2,16 +2,20 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { Subscription } from 'rxjs';
-import { Store } from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import { thereAreWords } from '../store/words-list/words.selectors';
-import { getExerciseMode } from '@app/store/app/app.selectors';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
+import { getParams } from '@app/store/router/router.selector';
 
 @Component({
   selector: 'app-exercises',
   standalone: true,
-  imports: [CommonModule, MatIconModule, RouterModule],
+  imports: [
+    CommonModule,
+    MatIconModule,
+    RouterModule,
+  ],
   templateUrl: './exercise-menu.component.html',
   styleUrls: ['./exercise-menu.component.scss'],
 })
@@ -29,9 +33,9 @@ export class ExerciseMenuComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.store.select(getExerciseMode).subscribe((type) => {
-      this.exerciseMode = type;
-    });
+    // this.store.select(getExerciseMode).subscribe((type) => {
+    //   this.exerciseMode = type;
+    // });
 
 
     // Subscribe to words
@@ -43,6 +47,9 @@ export class ExerciseMenuComponent implements OnInit, OnDestroy {
     // this.exerciseModeSub = this.settings.exerciseModeSub.subscribe((type) => {
     //   this.exerciseMode = type;
     // });
+
+    //todo: remove this
+    this.store.select(getParams).subscribe(console.log)
   }
 
   ngOnDestroy(): void {
