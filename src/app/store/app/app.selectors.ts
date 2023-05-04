@@ -1,10 +1,7 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store';
 import { AppState } from './app.reducer';
 
-
 export const getAppState = createFeatureSelector<AppState>('app');
-
-
 
 export const isPixies = createSelector(
     getAppState,
@@ -16,12 +13,3 @@ export const getTheme = createSelector(
     (app) => app.activeTheme
 );
 
-export const translateDirection = createSelector(
-    getAppState,
-    (app) => app.translateDirection
-);
-
-export const getExerciseMode = createSelector(
-    getAppState,
-    (app) => app.exerciseMode
-);
