@@ -7,7 +7,12 @@ export const getRouterState = createFeatureSelector<
 >('router');
 
 
-export const getCurrentRoute = createSelector(
+export const getRoute = createSelector(
     getRouterState,
     (router) => router.state
+);
+
+export const getParams = createSelector(
+    getRoute,
+    (route) => route.params
 );
