@@ -33,3 +33,12 @@ export function switchCase<T, R>(
 //     [(value: number) => value === 6, () => of('six')]
 //   )
 // );
+
+
+// this.store.select(getParams).pipe(
+//     switchCase(
+//       [(params) => params.exerciseType === "group", (params) => this.store.select(getWordsByGroupId(params.groupId))],
+//       [(params) => params.exerciseType === "mistakes", () => this.store.select(getWorstWords)],
+//       [(params) => params.exerciseType === "random", () => this.store.select(getRandomWords(Math.random()))],
+//     )
+//   )
