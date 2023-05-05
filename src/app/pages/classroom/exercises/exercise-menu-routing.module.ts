@@ -26,6 +26,10 @@ export default [
     component: ExerciseContainerComponent,
   },
   {
+    path: 'exercises/:exerciseType',
+    component: ExerciseContainerComponent,
+  },
+  {
     path: 'select-group',
     component: SelectGroupComponent,
   }

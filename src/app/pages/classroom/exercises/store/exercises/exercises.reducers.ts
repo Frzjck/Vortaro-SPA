@@ -32,7 +32,7 @@ export interface ExercisesState {
 }
 
 export const initialState: ExercisesState = {
-    exerciseMode: "spell",
+    exerciseMode: "spelling",
     exerciseStatus: "start",
     randomSeed: 0,
 
