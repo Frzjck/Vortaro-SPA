@@ -1,6 +1,6 @@
 import { ComponentStore } from '@ngrx/component-store';
 import { Injectable } from '@angular/core';
-import { getWordsByGroupId } from '@app/pages/classroom/store/words-list';
+import { selectWordsByGroupId } from '@app/pages/classroom/store/words-list';
 import { Group, getGroups } from '@app/pages/classroom/store/groups-list';
 import { Store } from '@ngrx/store';
 import { Observable, map } from 'rxjs';
@@ -45,7 +45,7 @@ export class GlossaryState extends ComponentStore<GlossaryStateModel> {
                 return groups.map((group) => {
                     return {
                         group,
-                        words$: this.store.select(getWordsByGroupId(group.id))
+                        words$: this.store.select(selectWordsByGroupId(group.id))
                     }
                 })
             })
@@ -62,7 +62,7 @@ export class GlossaryState extends ComponentStore<GlossaryStateModel> {
 
     // get only unfoldable group words
     readonly unfoldableGroupWords$ = (groupId) => this.select(
-        this.store.select(getWordsByGroupId(groupId)),
+        this.store.select(selectWordsByGroupId(groupId)),
         (groupWords) => {
             return groupWords.filter((word) => word.additionalTr && word.additionalTr?.length > 0)
         }

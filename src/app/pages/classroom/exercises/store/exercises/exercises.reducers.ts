@@ -3,7 +3,7 @@ import * as userActions from '@app/store/user/user.actions';
 import { Word } from '@app/pages/classroom/store/words-list';
 import { ExerciseContainerPageAPI, ExerciseContainerPageAction } from './exercises.actions';
 import { getParams } from '@app/store/router/router.selector';
-import { getWords, getWordsByGroupId } from '@app/pages/classroom/store/words-list';
+import { selectWords, selectWordsByGroupId } from '@app/pages/classroom/store/words-list';
 import { shuffle } from '../../pages/exercises/utils/shuffleArray';
 
 
@@ -21,7 +21,6 @@ export interface ExercisesState {
     activeWordIndex: number;
     correct: boolean;
     submitButtonAction: "proofread" | "next";
-
 
     // results functionality
     resultScores: boolean[]
@@ -56,22 +55,37 @@ export const exercisesFeature = createFeature({
         on(ExerciseContainerPageAction.enter, (state) => ({ ...state, randomSeed: Math.random() })),
         on(ExerciseContainerPageAPI.storeExerciseWords, (state, { exerciseWords }) => ({ ...state, exerciseWords: exerciseWords })),
     ),
-    extraSelectors: ({ selectRandomSeed }) => ({
+    extraSelectors: ({ selectRandomSeed, selectActiveWordIndex, selectExerciseWords }) => ({
         getCurrentGroupExerciseWords: createSelector(
             getParams,
-            params => getWordsByGroupId(params.groupId)
+            params => {
+                let words = selectWordsByGroupId(params.groupId)
+                console.log("extraSelectors --------      getCurrentGroupExerciseWords", words)
+                return words
+            }
         ),
+
         getWorstWords: createSelector(
-            getWords,
+            selectWords,
             (words) => words
                 .sort((a, b) => (a.proficiency > b.proficiency ? 1 : -1))
                 .slice(0, 15)
         ),
+
         getRandomWords: createSelector(
-            getWords,
+            selectWords,
             selectRandomSeed,
-            (words) => shuffle(words).slice(0, 15)
-        )
+            (words) => {
+                return shuffle(words).slice(0, 15)
+            }
+        ),
+
+
+        getCurrentWord: createSelector(
+            selectActiveWordIndex,
+            selectExerciseWords,
+            (activeWordIndex, exerciseWords) => exerciseWords[activeWordIndex]
+        ),
     }),
 
 });
@@ -93,7 +107,8 @@ export const {
     selectWordWorthPercent,
     getRandomWords,
     getWorstWords,
-    getCurrentGroupExerciseWords
+    getCurrentGroupExerciseWords,
+    getCurrentWord
 } = exercisesFeature;
 
 

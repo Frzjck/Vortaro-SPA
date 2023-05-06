@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { Group, getGroups } from '@app/pages/classroom/store/groups-list';
 import { Observable, map } from 'rxjs';
-import { Word, getWordsByGroupId } from '@app/pages/classroom/store/words-list';
+import { Word, selectWordsByGroupId } from '@app/pages/classroom/store/words-list';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 
@@ -25,7 +25,7 @@ export class SelectGroupComponent {
           return groups.map((group) => {
             return {
               group,
-              words$: this.store.select(getWordsByGroupId(group.id))
+              words$: this.store.select(selectWordsByGroupId(group.id))
             }
           })
         })

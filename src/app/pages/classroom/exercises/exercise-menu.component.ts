@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { Subscription } from 'rxjs';
 import { Store, StoreModule } from '@ngrx/store';
-import { thereAreWords } from '../store/words-list/words.selectors';
+import { selectThereAreWords } from '../store/words-list/words.selectors';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { getParams } from '@app/store/router/router.selector';
@@ -26,7 +26,7 @@ export class ExerciseMenuComponent implements OnInit, OnDestroy {
   exerciseModeSub: Subscription;
   exerciseMode: string;
 
-  thereAreWords = this.store.select(thereAreWords);
+  thereAreWords = this.store.select(selectThereAreWords);
 
   constructor(
     private store: Store,

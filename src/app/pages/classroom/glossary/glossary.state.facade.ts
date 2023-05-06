@@ -6,7 +6,7 @@ import { Observable, take } from 'rxjs';
 import { WordGridStateInterface } from './components/word-grid/word-grid.component';
 import { GlossaryStateInterface } from './glossary.component';
 import { deleteWord } from '../store/words-list/words.actions';
-import { getWordsByGroupId } from '../store/words-list/words.selectors';
+import { selectWordsByGroupId } from '../store/words-list/words.selectors';
 import { deleteGroup, editGroup } from '../store/groups-list/groups.actions';
 
 
@@ -42,7 +42,7 @@ export class GlossaryStateFacade {
     unfoldTranslationsWord = (wordId: string) => this.glossaryState.unfoldTranslationsWord(wordId);
 
     unfoldTranslationsGroup = (groupId: string) =>
-        this.store.select(getWordsByGroupId(groupId)).pipe(take(1)).subscribe((words) => {
+        this.store.select(selectWordsByGroupId(groupId)).pipe(take(1)).subscribe((words) => {
             let wordIds = words.map((word) => word.id);
             this.glossaryState.setUnfoldedTranslationsGroup(wordIds);
         });
