@@ -21,7 +21,11 @@ export const getWords = createSelector(
     (words) => words
 );
 
-export const getLoading = createSelector(
+export const selectWordEntities = createSelector(
+    selectEntities,
+    (entities) => entities
+);
+
     getWordsState,
     (state: WordsState) => state.loading
 );

@@ -17,7 +17,11 @@ export const { selectAll, selectEntities, selectTotal } = adapter.getSelectors(g
 
 
 
-export const getGroups = createSelector(
+export const selectGroupEntities = createSelector(
+    selectEntities,
+    groupEntities => groupEntities)
+
+export const selectGroups = createSelector(
     selectAll,
     (groups) => groups
 );
@@ -34,7 +38,7 @@ export const getIsReady = createSelector(
 );
 
 // Since props in selector are deprecated, we can use a factory function to pass the id. This way we allow for better memoization.
-export const getGroupById = (id: string) => createSelector(
+export const selectGroupById = (id: string) => createSelector(
     selectEntities,
     (entities) => entities[id]
 );
