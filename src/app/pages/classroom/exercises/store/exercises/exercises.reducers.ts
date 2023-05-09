@@ -1,10 +1,11 @@
 import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
 import * as userActions from '@app/store/user/user.actions';
-import { Word } from '@app/pages/classroom/store/words-list';
+import { Word, selectWordEntities, selectWordsByGroupId } from '@app/pages/classroom/store/words-list';
 import { ExerciseContainerPageAPI, ExerciseContainerPageAction } from './exercises.actions';
 import { getParams } from '@app/store/router/router.selector';
-import { selectWords, selectWordsByGroupId } from '@app/pages/classroom/store/words-list';
+import { selectWords } from '@app/pages/classroom/store/words-list';
 import { shuffle } from '../../pages/exercises/utils/shuffleArray';
+import { selectGroupEntities } from '@app/pages/classroom/store/groups-list';
 
 
 export interface ExercisesState {
@@ -53,15 +54,18 @@ export const exercisesFeature = createFeature({
         initialState,
         // On enter GENERATE SEED, GET RIGHT WORDS
         on(ExerciseContainerPageAction.enter, (state) => ({ ...state, randomSeed: Math.random() })),
+        on(ExerciseContainerPageAction.resetExerciseState, () => ({ ...initialState })),
         on(ExerciseContainerPageAPI.storeExerciseWords, (state, { exerciseWords }) => ({ ...state, exerciseWords: exerciseWords })),
+
     ),
     extraSelectors: ({ selectRandomSeed, selectActiveWordIndex, selectExerciseWords }) => ({
-        getCurrentGroupExerciseWords: createSelector(
+        selectCurrentGroupExerciseWords: createSelector(
             getParams,
-            params => {
-                let words = selectWordsByGroupId(params.groupId)
-                console.log("extraSelectors --------      getCurrentGroupExerciseWords", words)
-                return words
+            selectGroupEntities,
+            selectWordEntities,
+            (params, groupEntities, wordEntities) => {
+                let wordIds = groupEntities[params.groupId].wordIds;
+                return wordIds.map(wordId => wordEntities[wordId])
             }
         ),
 
@@ -72,7 +76,7 @@ export const exercisesFeature = createFeature({
                 .slice(0, 15)
         ),
 
-        getRandomWords: createSelector(
+        getRandomWords: (_) => createSelector(
             selectWords,
             selectRandomSeed,
             (words) => {
@@ -107,7 +111,7 @@ export const {
     selectWordWorthPercent,
     getRandomWords,
     getWorstWords,
-    getCurrentGroupExerciseWords,
+    selectCurrentGroupExerciseWords,
     getCurrentWord
 } = exercisesFeature;
 
