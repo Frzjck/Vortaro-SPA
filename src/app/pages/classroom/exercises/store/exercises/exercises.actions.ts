@@ -7,7 +7,16 @@ export const ExerciseContainerPageAction = createActionGroup(
         source: 'Exercise Page',
         events: {
             Enter: emptyProps(),
+            "Reset Exercise State": emptyProps(),
             "Exercise Finished": props<{ score: number }>(),
+        },
+    }
+)
+export const ExercisePageAction = createActionGroup(
+    {
+        source: 'Exercise Page',
+        events: {
+            "Next Word": emptyProps(),
         },
     }
 )
