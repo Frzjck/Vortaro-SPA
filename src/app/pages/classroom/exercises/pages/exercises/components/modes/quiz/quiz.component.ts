@@ -9,7 +9,7 @@ import { ProgressBarService } from '@app/services/progress-bar.service';
 import { ResultsService } from '@app/services/results.service';
 import { SettingsService } from '@app/services/settings.service';
 import { WordService } from '@app/pages/classroom/services/word.service';
-import { Word, selectWordsByGroupId } from '@app/pages/classroom/store/words-list';
+import { Word, selectWordsByIds } from '@app/pages/classroom/store/words-list';
 import { Observable, Subscription } from 'rxjs';
 import { ProgressBarComponent } from '../../../shared/progress-bar/progress-bar.component';
 import { Store } from '@ngrx/store';

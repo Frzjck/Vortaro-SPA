@@ -16,6 +16,7 @@ export const initialState: GroupsState = adapter.getInitialState({
     error: null,
 });
 
+
 export const reducer = createReducer(
     initialState,
     on(readGroups, (state) => ({ ...state, loading: true, error: null })),

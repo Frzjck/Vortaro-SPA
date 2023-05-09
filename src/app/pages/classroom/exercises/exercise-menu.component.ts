@@ -49,7 +49,7 @@ export class ExerciseMenuComponent implements OnInit, OnDestroy {
     // });
 
     //todo: remove this
-    this.store.select(getParams).subscribe(console.log)
+    // this.store.select(getParams).subscribe(console.log)
   }
 
   ngOnDestroy(): void {
