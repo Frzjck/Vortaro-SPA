@@ -14,18 +14,19 @@ import { MatInputModule } from '@angular/material/input';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ProgressBarService } from '@app/services/progress-bar.service';
 import { SettingsService } from '@app/services/settings.service';
-import { Word, getWordsByGroupId } from '@app/pages/classroom/store/words-list';
+import { Word, selectWordsByIds } from '@app/pages/classroom/store/words-list';
 import { Observable, Subscription } from 'rxjs';
 import { ProgressBarComponent } from '../../../shared/progress-bar/progress-bar.component';
 import { Store } from '@ngrx/store';
 import { getParams } from '@app/store/router/router.selector';
 import { switchCase } from '../../../utils/switchCase';
-import { getCurrentGroupExerciseWords, getRandomWords, getWorstWords, selectTranslateDirection } from '@app/pages/classroom/exercises/store/exercises';
+import { selectCurrentGroupExerciseWords, getCurrentWord, getRandomWords, getWorstWords, selectTranslateDirection } from '@app/pages/classroom/exercises/store/exercises';
+import { LetModule } from '@ngrx/component';
 
 @Component({
   selector: 'app-spelling',
   standalone: true,
-  imports: [CommonModule, ProgressBarComponent, MatCardModule, ReactiveFormsModule, FormsModule, MatInputModule],
+  imports: [CommonModule, ProgressBarComponent, MatCardModule, ReactiveFormsModule, FormsModule, MatInputModule, LetModule],
   templateUrl: './spelling.component.html',
   styleUrls: ['./spelling.component.scss'],
 })
@@ -43,28 +44,19 @@ export class SpellingComponent implements OnInit, AfterViewInit {
   wordWorthPercent: number = 20;
 
   // Refactored
-  words$: Observable<Word[]>;
+  currentWord$: Observable<Word>;
   translateDirection$: Observable<boolean>;
 
 
   constructor(
-    private progressService: ProgressBarService,
-    private settings: SettingsService,
-    private router: Router,
-    private route: ActivatedRoute,
     private store: Store
   ) { }
 
   ngOnInit(): void {
     // this.typeOfOS = window.navigator.platform;
+    console.log("SPELLING COMPONENT INIT")
+    this.currentWord$ = this.store.select(getCurrentWord)
 
-    this.words$ = this.store.select(getParams).pipe(
-      switchCase(
-        [(params) => params.exerciseType === "group", () => this.store.select(getCurrentGroupExerciseWords)],
-        [(params) => params.exerciseType === "mistakes", () => this.store.select(getWorstWords)],
-        [(params) => params.exerciseType === "random", () => this.store.select(getRandomWords)],
-      )
-    );
     this.translateDirection$ = this.store.select(selectTranslateDirection);
   }
 
