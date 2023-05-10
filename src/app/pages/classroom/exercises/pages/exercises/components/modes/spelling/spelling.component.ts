@@ -14,8 +14,9 @@ import { Word } from '@app/pages/classroom/store/words-list';
 import { Observable } from 'rxjs';
 import { ProgressBarComponent } from '../../../shared/progress-bar/progress-bar.component';
 import { Store } from '@ngrx/store';
-import { getCurrentWord, getRandomWords, getWorstWords, selectSubmitButtonAction, selectTestingAgainst, SubmitButtonActionType, TestingAgainstType } from '@app/pages/classroom/exercises/store/exercises';
+import { getCurrentWord, getRandomWords, getWorstWords, selectIsLastAnswerCorrect, selectSubmitButtonAction, selectTestingAgainst, SubmitButtonActionType, TestingAgainstType } from '@app/pages/classroom/exercises/store/exercises';
 import { LetDirective } from '@ngrx/component';
+import { ExerciseService } from '../../../exercises.service';
 
 @Component({
   selector: 'app-spelling',
@@ -41,9 +42,9 @@ export class SpellingComponent implements OnInit, AfterViewInit {
   currentWord$: Observable<Word>;
   submitButtonAction$: Observable<SubmitButtonActionType>;
   testingAgainst$: Observable<TestingAgainstType>;
-
+  isLastAnswerCorrect$: Observable<boolean>;
   constructor(
-    private store: Store
+    private store: Store, private exerciseService: ExerciseService
   ) { }
 
   ngOnInit(): void {
@@ -52,6 +53,7 @@ export class SpellingComponent implements OnInit, AfterViewInit {
     this.currentWord$ = this.store.select(getCurrentWord)
     this.submitButtonAction$ = this.store.select(selectSubmitButtonAction);
     this.testingAgainst$ = this.store.select(selectTestingAgainst);
+    this.isLastAnswerCorrect$ = this.store.select(selectIsLastAnswerCorrect);
   }
 
   ngAfterViewInit(): void {
@@ -63,63 +65,12 @@ export class SpellingComponent implements OnInit, AfterViewInit {
     // }
   }
 
-  // Handle correction and next word
-  onSubmit(word) {
+  onSubmit(word): void {
+    this.exerciseService.onSubmitAction(word, this.inputValue);
+    // this.clearInputValue();
+  }
 
-    //   if (this.pendingFstSub) {
-    //     // Changing direction
-    //     let controlWord = [this.activeWord.name.toLowerCase()];
-    //     // here we sum up all the translations in sigle array
-    //     let controlTr = [
-    //       ...this.activeWord.additionalTr.map((x) => x.toLowerCase()),
-    //       this.activeWord.translation.toLowerCase(),
-    //     ];
-    //     let controlArr = this.translateDirection ? controlTr : controlWord;
-    //     // Moving progress bar
-    //     this.progressService.progressEmitter.next(this.wordWorthPercent);
-    //     if (controlArr.includes(this.inputValue.toLowerCase())) {
-    //       // TODO MODIFY WORD SCORE
-    //       this.correct = true;
-    //       this.inputValue = 'Correcto';
-    //     } else {
-    //       // TODO MODIFY WORD SCORE
-    //       this.correct = false;
-    //       this.inputValue = 'Incorrecto';
-    //     }
-    //     // Saving score to be displayed in results page
-    //     this.scoreArr.push(this.correct);
-
-    //     if (this.windowsPlatforms.includes(this.typeOfOS)) {
-    //       // Disabling main input prevent sending events through
-    //       setTimeout(() => this.grayCardinal.nativeElement.focus());
-    //     }
-    //     this.pendingFstSub = false;
-    //   } else {
-    //     // Break functionality when reached end of array
-    //     if (this.activeWordIndex === this.words.length - 1) {
-    //       // // TODO Redirect to RESULTS PAGE and send results
-    //       // this.resultsService
-    //       //   .saveResultsInfo(this.scoreArr, 'spelling')
-    //       //   .subscribe(() => {
-    //       //     this.wordService.getWordsFromServer();
-    //       //     this.groupService.loadGroups();
-    //       //   });
-    //       this.router.navigate(['results'], { relativeTo: this.route });
-    //       return;
-    //     }
-    //     this.activeWordIndex++;
-    //     // Fetching new word from random-array
-    //     this.activeWord = this.words[this.activeWordIndex];
-    //     // Cleaning form after new word is displayed
-    //     this.inputValue = '';
-
-    //     if (this.windowsPlatforms.includes(this.typeOfOS)) {
-    //       // Returning focus after new word is displayed
-    //       // Set timeout is to prevent conflict with disabeling input
-    //       setTimeout(() => this.wordInput.nativeElement.focus());
-    //     }
-
-    //     this.pendingFstSub = true;
-    //   }
+  clearInputValue(): void {
+    this.inputValue = ""
   }
 }
