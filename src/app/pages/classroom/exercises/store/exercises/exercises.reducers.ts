@@ -1,7 +1,7 @@
 import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
 import * as userActions from '@app/store/user/user.actions';
 import { Word, selectWordEntities, selectWordsByGroupId } from '@app/pages/classroom/store/words-list';
-import { ExerciseContainerPageAPI, ExerciseContainerPageAction, ExercisePageAction } from './exercises.actions';
+import { ExerciseContainerPageAPI, ExerciseContainerPageAction, ExercisePageAction, ResultsPageAction } from './exercises.actions';
 import { getParams } from '@app/store/router/router.selector';
 import { selectWords } from '@app/pages/classroom/store/words-list';
 import { shuffle } from '../../pages/exercises/utils/shuffleArray';
@@ -72,10 +72,29 @@ export const exercisesFeature = createFeature({
     reducer: createReducer(
         initialState,
         // On enter GENERATE SEED, GET RIGHT WORDS
+        on(ExerciseContainerPageAction.resetExerciseState, ResultsPageAction.resetExerciseState, () => ({ ...initialState })),
         on(ExerciseContainerPageAction.enter, (state) => ({ ...state, randomSeed: Math.random() })),
-        on(ExerciseContainerPageAction.resetExerciseState, () => ({ ...initialState })),
+
+        on(ExercisePageAction.saveAnswer, (state, { answer }) => ({ ...state, resultScores: [...state.resultScores, answer], isLastAnswerCorrect: answer })),
+        on(ExercisePageAction.nextWord, (state) => {
+            let newState;
+            if (state.exerciseWords.length - 1 === state.activeWordIndex) {
+                newState = { ...state, exerciseStatus: ExerciseStatusType.RESULTS };
+            } else {
+                newState = { ...state, activeWordIndex: state.activeWordIndex + 1 };
+            }
+            return newState;
+        }),
+        on(ExercisePageAction.submitButtonActionToggle, (state) => {
+            if (state.submitButtonAction === SubmitButtonActionType.PROOFREAD) {
+                return { ...state, submitButtonAction: SubmitButtonActionType.NEXT }
+            } else {
+                return { ...state, submitButtonAction: SubmitButtonActionType.PROOFREAD }
+            }
+        }),
+
         on(ExerciseContainerPageAPI.storeExerciseWords, (state, { exerciseWords }) => ({ ...state, exerciseWords: exerciseWords })),
-        on(ExercisePageAction.saveAnswer, (state, { answer }) => ({ ...state, resultScores: [...state.resultScores, answer] }))
+
     ),
 
     extraSelectors: ({ selectRandomSeed, selectActiveWordIndex, selectExerciseWords }) => ({
@@ -125,7 +144,7 @@ export const {
     selectRandomSeed,
     selectExerciseWords,
     selectActiveWordIndex,
-    selectCorrect,
+    selectIsLastAnswerCorrect,
     selectSubmitButtonAction,
     selectResultScores,
     selectWordWorthPercent,
