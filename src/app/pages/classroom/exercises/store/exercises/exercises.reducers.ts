@@ -17,9 +17,19 @@ export enum TestingAgainstType {
     TRANSLATION = "translation"
 };
 
+export enum ExerciseModeType {
+    SPELLING = "spelling",
+    QUIZ = "quiz"
+};
+
+export enum ExerciseStatusType {
+    START = "start",
+    RESULTS = "results"
+};
+
 export interface ExercisesState {
-    exerciseMode: string;
-    exerciseStatus: string;
+    exerciseMode: ExerciseModeType;
+    exerciseStatus: ExerciseStatusType;
     randomSeed: number;
 
     exerciseWords: Word[];
@@ -29,7 +39,7 @@ export interface ExercisesState {
     testingAgainst: TestingAgainstType;
 
     activeWordIndex: number;
-    correct: boolean;
+    isLastAnswerCorrect: boolean;
     submitButtonAction: SubmitButtonActionType;
 
     // results functionality
@@ -41,8 +51,8 @@ export interface ExercisesState {
 }
 
 export const initialState: ExercisesState = {
-    exerciseMode: "spelling",
-    exerciseStatus: "start",
+    exerciseMode: ExerciseModeType.SPELLING,
+    exerciseStatus: ExerciseStatusType.START,
     randomSeed: 0,
 
     exerciseWords: [],
@@ -51,7 +61,7 @@ export const initialState: ExercisesState = {
 
     activeWordIndex: 0,
     resultScores: [],
-    correct: null,
+    isLastAnswerCorrect: null,
     submitButtonAction: SubmitButtonActionType.PROOFREAD,
 
     wordWorthPercent: null,
