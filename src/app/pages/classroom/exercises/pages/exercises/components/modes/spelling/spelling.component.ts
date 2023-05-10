@@ -2,7 +2,6 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
-  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -11,16 +10,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 
-import { Router, ActivatedRoute, Params } from '@angular/router';
-import { ProgressBarService } from '@app/services/progress-bar.service';
-import { SettingsService } from '@app/services/settings.service';
-import { Word, selectWordsByIds } from '@app/pages/classroom/store/words-list';
-import { Observable, Subscription } from 'rxjs';
+import { Word } from '@app/pages/classroom/store/words-list';
+import { Observable } from 'rxjs';
 import { ProgressBarComponent } from '../../../shared/progress-bar/progress-bar.component';
 import { Store } from '@ngrx/store';
-import { getParams } from '@app/store/router/router.selector';
-import { switchCase } from '../../../utils/switchCase';
-import { selectCurrentGroupExerciseWords, getCurrentWord, getRandomWords, getWorstWords, selectTranslateDirection } from '@app/pages/classroom/exercises/store/exercises';
+import { getCurrentWord, getRandomWords, getWorstWords, selectSubmitButtonAction, selectTestingAgainst, SubmitButtonActionType, TestingAgainstType } from '@app/pages/classroom/exercises/store/exercises';
 import { LetModule } from '@ngrx/component';
 
 @Component({
@@ -45,8 +39,8 @@ export class SpellingComponent implements OnInit, AfterViewInit {
 
   // Refactored
   currentWord$: Observable<Word>;
-  translateDirection$: Observable<boolean>;
-
+  submitButtonAction$: Observable<SubmitButtonActionType>;
+  testingAgainst$: Observable<TestingAgainstType>;
 
   constructor(
     private store: Store
@@ -56,8 +50,8 @@ export class SpellingComponent implements OnInit, AfterViewInit {
     // this.typeOfOS = window.navigator.platform;
     console.log("SPELLING COMPONENT INIT")
     this.currentWord$ = this.store.select(getCurrentWord)
-
-    this.translateDirection$ = this.store.select(selectTranslateDirection);
+    this.submitButtonAction$ = this.store.select(selectSubmitButtonAction);
+    this.testingAgainst$ = this.store.select(selectTestingAgainst);
   }
 
   ngAfterViewInit(): void {
@@ -70,7 +64,8 @@ export class SpellingComponent implements OnInit, AfterViewInit {
   }
 
   // Handle correction and next word
-  onSend() {
+  onSubmit(word) {
+
     //   if (this.pendingFstSub) {
     //     // Changing direction
     //     let controlWord = [this.activeWord.name.toLowerCase()];
