@@ -15,12 +15,12 @@ import { Observable } from 'rxjs';
 import { ProgressBarComponent } from '../../../shared/progress-bar/progress-bar.component';
 import { Store } from '@ngrx/store';
 import { getCurrentWord, getRandomWords, getWorstWords, selectSubmitButtonAction, selectTestingAgainst, SubmitButtonActionType, TestingAgainstType } from '@app/pages/classroom/exercises/store/exercises';
-import { LetModule } from '@ngrx/component';
+import { LetDirective } from '@ngrx/component';
 
 @Component({
   selector: 'app-spelling',
   standalone: true,
-  imports: [CommonModule, ProgressBarComponent, MatCardModule, ReactiveFormsModule, FormsModule, MatInputModule, LetModule],
+  imports: [CommonModule, ProgressBarComponent, MatCardModule, ReactiveFormsModule, FormsModule, MatInputModule, LetDirective],
   templateUrl: './spelling.component.html',
   styleUrls: ['./spelling.component.scss'],
 })

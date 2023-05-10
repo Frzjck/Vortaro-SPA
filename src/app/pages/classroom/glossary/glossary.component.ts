@@ -2,13 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
-import { LetModule } from '@ngrx/component';
+import { LetDirective } from '@ngrx/component';
 
 
 import { GlossaryState } from './glossary.state';
-import { WordGridComponent, WordGridInputInterface } from './components/word-grid/word-grid.component';
+import { WordGridComponent } from './components/word-grid/word-grid.component';
 import { GroupActionPanelComponent } from './components/group-action-panel/group-action-panel.component';
-import { WordUiViewInputInterface } from './components/word-grid/components';
 import { GlossaryStateFacade } from './glossary.state.facade';
 import { Group } from '../store/groups-list';
 import { Observable } from 'rxjs/internal/Observable';
@@ -25,7 +24,7 @@ export interface GlossaryStateInterface {
   selector: 'app-glossary',
   standalone: true,
 
-  imports: [CommonModule, MatExpansionModule, WordGridComponent, MatIconModule, GroupActionPanelComponent, LetModule],
+  imports: [CommonModule, MatExpansionModule, WordGridComponent, MatIconModule, GroupActionPanelComponent, LetDirective],
   templateUrl: './glossary.component.html',
   styleUrls: ['./glossary.component.scss'],
   providers: [GlossaryState, GlossaryStateFacade],
