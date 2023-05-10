@@ -3,18 +3,23 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ResultsService } from '@app/services/results.service';
 import { Word } from '@app/pages/classroom/store/words-list';
+import { Store } from '@ngrx/store';
+import { ResultsPageAction, selectExerciseWords, selectResultScores } from '@app/pages/classroom/exercises/store';
+import { Observable } from 'rxjs';
+import { LetDirective } from '@ngrx/component';
 
 @Component({
   selector: 'app-results',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, LetDirective],
   template: `
+  <ng-container *ngrxLet="resultsArr$ as resultsArr">
   <div class="content" *ngIf="true">
   <h1>Results:</h1>
-  <h2>answered correctly {{ countCorrect }} out of {{ countTotal }}</h2>
-  <div class="container">
+  <h2>answered correctly {{ countCorrectAnswers(resultsArr)}} out of {{ resultsArr.length }}</h2>
+  <div class="container" >
     <mat-card
-      *ngFor="let word of currentWordSet; let i = index"
+      *ngFor="let word of currentWordSet$ | async; let i = index"
       class="mat-elevation-z4"
       [ngStyle]="{
         'background-color':
@@ -30,25 +35,26 @@ import { Word } from '@app/pages/classroom/store/words-list';
     </mat-card>
   </div>
 </div>
+</ng-container>
+
 `,
   styleUrls: ['./results.component.scss'],
 })
 export class ResultsComponent implements OnInit {
-  currentWordSet: Word[] = [];
-  resultsArr: Boolean[] = [];
+  currentWordSet$: Observable<Word[]>;
+  resultsArr$: Observable<Boolean[]>;
 
-  resultInfo;
-
-  countCorrect;
-  countTotal;
-
-  constructor(private resultsService: ResultsService) { }
+  constructor(private store: Store) { }
 
   ngOnInit(): void {
-    this.resultInfo = this.resultsService.loadResultsInfo();
-    [this.currentWordSet, this.resultsArr] = this.resultInfo;
-
-    this.countCorrect = this.resultsArr.filter((el) => el === true).length;
-    this.countTotal = this.resultsArr.length;
+    this.currentWordSet$ = this.store.select(selectExerciseWords);
+    this.resultsArr$ = this.store.select(selectResultScores);
   }
+
+  ngOnDestroy(): void {
+    this.store.dispatch(ResultsPageAction.resetExerciseState())
+  }
+
+  countCorrectAnswers = (arr) => arr.filter((x) => x === true).length;
+
 }
