@@ -1,11 +1,11 @@
 <div class="grid-container" *ngIf="currentWord$ | async as word">
   <app-progress-bar></app-progress-bar>
   <mat-card class="mat-elevation-z24">
-    <mat-card-title *ngIf="translateDirection$ | async">{{
-      word.name | titlecase
+    <mat-card-title *ngIf="testingAgainst$ === 'translation' | async">{{
+      word.original | titlecase
     }}</mat-card-title>
 
-    <mat-card-title *ngIf="!translateDirection$ | async">{{
+    <mat-card-title *ngIf="testingAgainst$ === 'original' | async">{{
       word.translation | titlecase
     }}</mat-card-title>
 
@@ -36,7 +36,13 @@
       </mat-form-field>
     </mat-card-content>
     <mat-card-actions
-      ><button class="sbm-btn" mat-button color="primary" (click)="onSend()">
+      ><button
+        class="sbm-btn"
+        mat-button
+        color="primary"
+        (click)="onSubmit(word)"
+      >
+        Submit
         <!-- {{
           pendingFstSub
             ? "Submit"

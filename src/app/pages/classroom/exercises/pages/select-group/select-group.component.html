@@ -11,7 +11,7 @@
         *ngFor="let word of item.words$ | async"
       >
         <div class="group-card__content__word__name">
-          <b>{{ word.name | titlecase }}</b>
+          <b>{{ word.original | titlecase }}</b>
         </div>
         -
         <div class="group-card__content__word__translation">

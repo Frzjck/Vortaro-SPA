@@ -24,7 +24,7 @@ import { Word } from '@app/pages/classroom/store/words-list';
       }"
     >
       <span>
-        <b>{{ word.name | titlecase }} </b>
+        <b>{{ word.original | titlecase }} </b>
         {{ word.translation | titlecase }}
       </span>
     </mat-card>

@@ -24,7 +24,7 @@ export class WordFormComponent implements OnInit {
   ngOnInit(): void {
     if (this.word) {
       this.wordForm = new FormGroup({
-        word: new FormControl(this.word.name, [Validators.required]),
+        word: new FormControl(this.word.original, [Validators.required]),
         translation: new FormControl(this.word.translation, [
           Validators.required,
         ]),
