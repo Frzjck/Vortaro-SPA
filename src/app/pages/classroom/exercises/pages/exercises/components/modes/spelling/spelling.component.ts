@@ -36,6 +36,8 @@ export class SpellingComponent implements OnInit, AfterViewInit {
   submitButtonAction$: Observable<SubmitButtonActionType>;
   testingAgainst$: Observable<TestingAgainstType>;
   isLastAnswerCorrect$: Observable<boolean>;
+  progress$: Observable<number>;
+
   constructor(
     private store: Store, private exerciseService: ExerciseService
   ) { }
