@@ -26,7 +26,6 @@
           [(ngModel)]="inputValue"
           #wordInput
           [disabled]="(submitButtonAction$ | async) === 'next'"
-          (keyup.enter)="onSubmit(word)"
           [style.color]="
             (submitButtonAction$ | async) === 'next' &&
             (isLastAnswerCorrect$ | async)
@@ -37,12 +36,6 @@
               : 'var(--text-primary)'
           "
         />
-        <!-- <input
-          type="text"
-          class="grayCardinal"
-          #grayCardinal
-          (keyup.enter)="onSubmit(word)"
-        /> -->
       </mat-form-field>
     </mat-card-content>
     <mat-card-actions
@@ -56,9 +49,6 @@
         <!-- {{
           pendingFstSub
             ? "Submit"
-            : !pendingFstSub && activeWordIndex === words.length - 1
-            ? "Finish"
-            : !pendingFstSub
             ? "Next"
             : ""
         }} -->

@@ -28,15 +28,8 @@ import { ExerciseService } from '../../../exercises.service';
 export class SpellingComponent implements OnInit, AfterViewInit {
   // Get elem ref so we can focus it
   @ViewChild('wordInput') private wordInput: ElementRef;
-  @ViewChild('grayCardinal') private grayCardinal: ElementRef;
 
   inputValue: string = '';
-  // To prevent seizures run only on desktop
-  windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE'];
-
-  // Array of boolean to display results after finishing
-  correct: boolean;
-  wordWorthPercent: number = 20;
 
   // Refactored
   currentWord$: Observable<Word>;
@@ -54,15 +47,7 @@ export class SpellingComponent implements OnInit, AfterViewInit {
     this.submitButtonAction$ = this.store.select(selectSubmitButtonAction);
     this.testingAgainst$ = this.store.select(selectTestingAgainst);
     this.isLastAnswerCorrect$ = this.store.select(selectIsLastAnswerCorrect);
-  }
-
-  ngAfterViewInit(): void {
-    // if (this.windowsPlatforms.includes(this.typeOfOS)) {
-    //   // Making sure input is focused
-    //   window.setTimeout(() => {
-    //     this.wordInput.nativeElement.focus();
-    //   });
-    // }
+    this.progress$ = this.store.select(selectProgress);
   }
 
   onSubmit(word): void {
