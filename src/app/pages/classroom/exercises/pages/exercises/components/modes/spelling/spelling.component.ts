@@ -14,18 +14,20 @@ import { Word } from '@app/pages/classroom/store/words-list';
 import { Observable } from 'rxjs';
 import { ProgressBarComponent } from '../../../shared/progress-bar/progress-bar.component';
 import { Store } from '@ngrx/store';
-import { getCurrentWord, getRandomWords, getWorstWords, selectIsLastAnswerCorrect, selectSubmitButtonAction, selectTestingAgainst, SubmitButtonActionType, TestingAgainstType } from '@app/pages/classroom/exercises/store/exercises';
+import { getCurrentWord, selectIsLastAnswerCorrect, selectProgress, selectSubmitButtonAction, selectTestingAgainst, SubmitButtonActionType, TestingAgainstType } from '@app/pages/classroom/exercises/store/exercises';
 import { LetDirective } from '@ngrx/component';
 import { ExerciseService } from '../../../exercises.service';
+import { AutoFocus } from '../../../shared/directives/auto-focus.directive';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-spelling',
   standalone: true,
-  imports: [CommonModule, ProgressBarComponent, MatCardModule, ReactiveFormsModule, FormsModule, MatInputModule, LetDirective],
+  imports: [CommonModule, ProgressBarComponent, MatCardModule, ReactiveFormsModule, FormsModule, MatInputModule, LetDirective, AutoFocus, MatButtonModule],
   templateUrl: './spelling.component.html',
   styleUrls: ['./spelling.component.scss'],
 })
-export class SpellingComponent implements OnInit, AfterViewInit {
+export class SpellingComponent implements OnInit {
   // Get elem ref so we can focus it
   @ViewChild('wordInput') private wordInput: ElementRef;
 
@@ -43,8 +45,6 @@ export class SpellingComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
-    // this.typeOfOS = window.navigator.platform;
-    console.log("SPELLING COMPONENT INIT")
     this.currentWord$ = this.store.select(getCurrentWord)
     this.submitButtonAction$ = this.store.select(selectSubmitButtonAction);
     this.testingAgainst$ = this.store.select(selectTestingAgainst);
@@ -54,7 +54,8 @@ export class SpellingComponent implements OnInit, AfterViewInit {
 
   onSubmit(word): void {
     this.exerciseService.onSubmitAction(word, this.inputValue);
-    // this.clearInputValue();
+    setTimeout(() => this.wordInput?.nativeElement.focus());
+    this.clearInputValue();
   }
 
   clearInputValue(): void {
