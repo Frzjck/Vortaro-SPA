@@ -46,8 +46,7 @@ export interface ExercisesState {
     resultScores: boolean[]
 
     // progress bar functionality
-    wordWorthPercent: number;
-
+    wordsCompleted: number;
 }
 
 export const initialState: ExercisesState = {
@@ -63,8 +62,7 @@ export const initialState: ExercisesState = {
     resultScores: [],
     isLastAnswerCorrect: null,
     submitButtonAction: SubmitButtonActionType.PROOFREAD,
-
-    wordWorthPercent: null,
+    wordsCompleted: 0,
 };
 
 export const exercisesFeature = createFeature({
@@ -87,7 +85,7 @@ export const exercisesFeature = createFeature({
         }),
         on(ExercisePageAction.submitButtonActionToggle, (state) => {
             if (state.submitButtonAction === SubmitButtonActionType.PROOFREAD) {
-                return { ...state, submitButtonAction: SubmitButtonActionType.NEXT }
+                return { ...state, submitButtonAction: SubmitButtonActionType.NEXT, wordsCompleted: state.wordsCompleted + 1 }
             } else {
                 return { ...state, submitButtonAction: SubmitButtonActionType.PROOFREAD }
             }
@@ -97,7 +95,7 @@ export const exercisesFeature = createFeature({
 
     ),
 
-    extraSelectors: ({ selectRandomSeed, selectActiveWordIndex, selectExerciseWords }) => ({
+    extraSelectors: ({ selectRandomSeed, selectActiveWordIndex, selectExerciseWords, selectWordsCompleted }) => ({
         selectCurrentGroupExerciseWords: createSelector(
             getParams,
             selectGroupEntities,
@@ -127,7 +125,18 @@ export const exercisesFeature = createFeature({
         getCurrentWord: createSelector(
             selectActiveWordIndex,
             selectExerciseWords,
-            (activeWordIndex, exerciseWords) => exerciseWords[activeWordIndex]
+            (activeWordIndex, exerciseWords) => {
+                if (exerciseWords) return exerciseWords[activeWordIndex]
+            }
+        ),
+
+
+        selectProgress: createSelector(
+            selectExerciseWords,
+            selectWordsCompleted,
+            (exerciseWords, wordsCompleted: number) => {
+                return (100 / exerciseWords.length) * wordsCompleted
+            }
         ),
     }),
 
@@ -135,11 +144,12 @@ export const exercisesFeature = createFeature({
 
 
 export const {
-    name, // feature name
-    reducer, // feature reducer
-    selectExercisesState, // feature selector
+    name,
+    reducer,
+    selectExercisesState,
     selectTestingAgainst,
     selectExerciseMode,
+    selectWordsCompleted,
     selectExerciseStatus,
     selectRandomSeed,
     selectExerciseWords,
@@ -147,11 +157,11 @@ export const {
     selectIsLastAnswerCorrect,
     selectSubmitButtonAction,
     selectResultScores,
-    selectWordWorthPercent,
     getRandomWords,
     getWorstWords,
     selectCurrentGroupExerciseWords,
-    getCurrentWord
+    getCurrentWord,
+    selectProgress
 } = exercisesFeature;
 
 

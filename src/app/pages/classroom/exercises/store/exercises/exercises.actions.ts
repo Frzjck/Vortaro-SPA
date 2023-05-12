@@ -18,6 +18,7 @@ export const ExercisePageAction = createActionGroup(
         events: {
             "Next Word": emptyProps(),
             "Save Answer": props<{ answer: boolean }>(),
+            "Word Completed": emptyProps(),
             "Submit Button Action Toggle": emptyProps(),
         },
     }
@@ -28,7 +29,6 @@ export const ResultsPageAction = createActionGroup(
         source: 'Results Page',
         events: {
             "Reset Exercise State": emptyProps(),
-
         },
     }
 )
