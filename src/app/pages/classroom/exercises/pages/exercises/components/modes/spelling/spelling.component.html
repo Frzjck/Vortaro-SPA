@@ -46,13 +46,13 @@
         color="primary"
         (click)="onSubmit(word)"
       >
-        Submit
-        <!-- {{
-          pendingFstSub
-            ? "Submit"
+        {{
+          (submitButtonAction$ | async) === "proofread"
+            ? "Check"
+            : (submitButtonAction$ | async) === "next"
             ? "Next"
             : ""
-        }} -->
+        }}
       </button>
     </mat-card-actions>
   </mat-card>
