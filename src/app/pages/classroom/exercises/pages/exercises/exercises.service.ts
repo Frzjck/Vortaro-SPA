@@ -26,7 +26,7 @@ export class ExerciseService {
     const isCorrect = await this.isResponseCorrect(word, inputValue);
     //dispatch resultScores update to store result
     //dispatch correct answer to store so it can be highlighted
-    this.store.dispatch(ExercisePageAction.saveAnswer({ answer: isCorrect }));
+    this.store.dispatch(ExercisePageAction.addAnswerBoolToResults({ answerBool: isCorrect }));
 
   }
 

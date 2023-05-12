@@ -47,6 +47,7 @@ export interface ExercisesState {
 
     // progress bar functionality
     wordsCompleted: number;
+    answerInput: string;
 }
 
 export const initialState: ExercisesState = {
@@ -63,6 +64,7 @@ export const initialState: ExercisesState = {
     isLastAnswerCorrect: null,
     submitButtonAction: SubmitButtonActionType.PROOFREAD,
     wordsCompleted: 0,
+    answerInput: "",
 };
 
 export const exercisesFeature = createFeature({
@@ -73,7 +75,7 @@ export const exercisesFeature = createFeature({
         on(ExerciseContainerPageAction.resetExerciseState, ResultsPageAction.resetExerciseState, () => ({ ...initialState })),
         on(ExerciseContainerPageAction.enter, (state) => ({ ...state, randomSeed: Math.random() })),
 
-        on(ExercisePageAction.saveAnswer, (state, { answer }) => ({ ...state, resultScores: [...state.resultScores, answer], isLastAnswerCorrect: answer })),
+        on(ExercisePageAction.addAnswerBoolToResults, (state, { answerBool }) => ({ ...state, resultScores: [...state.resultScores, answerBool], isLastAnswerCorrect: answerBool })),
         on(ExercisePageAction.nextWord, (state) => {
             let newState;
             if (state.exerciseWords.length - 1 === state.activeWordIndex) {
@@ -90,6 +92,8 @@ export const exercisesFeature = createFeature({
                 return { ...state, submitButtonAction: SubmitButtonActionType.PROOFREAD }
             }
         }),
+        on(ExercisePageAction.updateAnswerInput, (state, { answerInput }) => ({ ...state, answerInput })),
+        on(ExercisePageAction.clearAnswerInput, (state) => ({ ...state, answerInput: initialState.answerInput })),
 
         on(ExerciseContainerPageAPI.storeExerciseWords, (state, { exerciseWords }) => ({ ...state, exerciseWords: exerciseWords })),
 
@@ -146,6 +150,7 @@ export const exercisesFeature = createFeature({
 export const {
     name,
     reducer,
+    selectAnswerInput,
     selectExercisesState,
     selectTestingAgainst,
     selectExerciseMode,
