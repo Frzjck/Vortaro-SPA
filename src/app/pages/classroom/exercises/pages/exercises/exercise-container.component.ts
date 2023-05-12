@@ -41,10 +41,7 @@ export class ExerciseContainerComponent {
         [(params) => params.exerciseType === "mistakes", () => this.store.select(getWorstWords)],
         [(params) => params.exerciseType === "random", () => this.store.select(getRandomWords(Math.random()))],
       )
-    ).subscribe((exerciseWords: Word[]) => {
-      this.store.dispatch(ExerciseContainerPageAPI.storeExerciseWords({ exerciseWords }))
-    })
-
+    ).subscribe((exerciseWords: Word[]) => this.store.dispatch(ExerciseContainerPageAPI.storeExerciseWords({ exerciseWords })))
   }
 
   ngOnDestroy() {

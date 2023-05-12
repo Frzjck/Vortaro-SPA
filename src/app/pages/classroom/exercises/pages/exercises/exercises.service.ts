@@ -32,15 +32,12 @@ export class ExerciseService {
 
   async isResponseCorrect(word: Word, response): Promise<boolean> {
     const testingAgainst = await firstValueFrom(this.store.select(selectTestingAgainst));
-
     if (testingAgainst === TestingAgainstType.TRANSLATION) {
       const possibleAnswers = [word.translation.toLowerCase()]
-
       if (word.additionalTr?.length) possibleAnswers.push(...word.additionalTr.map((x) => x.toLocaleLowerCase()))
 
       return possibleAnswers.includes(response.toLowerCase());
     }
     else if (testingAgainst === TestingAgainstType.ORIGINAL) return word.original.toLowerCase() === response.toLowerCase();
   }
-
 }

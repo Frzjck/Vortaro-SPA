@@ -56,7 +56,6 @@ import { CustomSerializer } from './store/router/custom-serializer';
     HomepageComponent,
     StopPropagationDirective,
     SettingsPopupComponent,
-
   ],
   imports: [
     ClassroomModule,

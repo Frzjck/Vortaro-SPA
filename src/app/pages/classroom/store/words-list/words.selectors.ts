@@ -54,8 +54,8 @@ export const selectWordsByGroupId = (groupId: string) => createSelector(
     selectWordEntities,
     selectGroupEntities,
     (wordEntities, groupEntities) => {
-        let wordIds = groupEntities[groupId].wordIds;
-        return wordIds.map(wordId => wordEntities[wordId])
+        let wordIds = groupEntities[groupId]?.wordIds;
+        return wordIds?.map(wordId => wordEntities[wordId])
     }
 );
 
