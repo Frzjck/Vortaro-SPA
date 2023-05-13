@@ -42,6 +42,32 @@ export const selectSpellingViewModel = createSelector(
         isActionProofread,
     })
 );
+export const selectQuizViewModel = createSelector(
+    selectCurrentWord,
+    selectTestingAgainst,
+    selectIsLastAnswerCorrect,
+    selectProgress,
+    selectAnswerInput,
+    selectIsActionNext,
+    selectIsActionProofread,
+    (
+        currentWord,
+        testingAgainst,
+        isLastAnswerCorrect,
+        progress,
+        answerInput,
+        isActionNext,
+        isActionProofread,
+    ) => ({
+        currentWord,
+        testingAgainst,
+        isLastAnswerCorrect,
+        progress,
+        answerInput,
+        isActionNext,
+        isActionProofread,
+    })
+);
 
 
 
