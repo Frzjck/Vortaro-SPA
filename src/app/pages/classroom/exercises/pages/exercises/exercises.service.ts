@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { ExercisePageAction, SubmitButtonActionType, TestingAgainstType, selectIsResponseCorrect, selectSubmitButtonAction, selectTestingAgainst } from '@exercises/store';
+import { ExercisePageAction, SubmitButtonActionType, selectSubmitButtonAction, } from '@exercises/store';
 import { firstValueFrom } from 'rxjs';
-import { Word } from '@app/pages/classroom/store/words-list';
+import { selectIsResponseCorrect } from '../../store/exercises/exercises.selectors';
 @Injectable({
   providedIn: 'root'
 })

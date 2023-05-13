@@ -145,33 +145,25 @@ export const exercisesFeature = createFeature({
                 return (100 / exerciseWords.length) * wordsCompleted
             }
         ),
-
-        selectIsResponseCorrect: createSelector(
-            // inserting a sibling selector causes "Cannot access 'getCurrentWord' before initialization"
-            // duplicating behavior of getCurrentWord until issue is solved
-            selectActiveWordIndex,
-            selectExerciseWords,
-            // getCurrentWord,
-            selectAnswerInput,
-            selectTestingAgainst,
-            (index, words, answer, testingAgainst) => {
-                const currentWord = words[index];
-                return _isResponseCorrect(currentWord, answer, testingAgainst);
-            }
-        ),
+        // selectIsResponseCorrect: createSelector(
+        //     // inserting a sibling selector causes "Cannot access 'getCurrentWord' before initialization"
+        //     // duplicating behavior of getCurrentWord until issue is solved
+        //     selectActiveWordIndex,
+        //     selectExerciseWords,
+        //     // getCurrentWord,
+        //     selectAnswerInput,
+        //     selectTestingAgainst,
+        //     (index, words, answer, testingAgainst) => {
+        //         const currentWord = words[index];
+        //         return _isResponseCorrect(currentWord, answer, testingAgainst);
+        //     }
+        // ),
     }),
 
 });
 
 
-const _isResponseCorrect = (word, answer, testingAgainst) => {
-    if (testingAgainst === TestingAgainstType.TRANSLATION) {
-        const possibleAnswers = [word.translation.toLowerCase()]
-        if (word.additionalTr?.length) possibleAnswers.push(...word.additionalTr.map((x) => x.toLocaleLowerCase()))
-        return possibleAnswers.includes(answer.toLowerCase());
-    }
-    else if (testingAgainst === TestingAgainstType.ORIGINAL) return word.original.toLowerCase() === answer.toLowerCase();
-}
+
 
 
 export const {
@@ -194,5 +186,4 @@ export const {
     selectCurrentGroupExerciseWords,
     getCurrentWord,
     selectProgress,
-    selectIsResponseCorrect
 } = exercisesFeature;

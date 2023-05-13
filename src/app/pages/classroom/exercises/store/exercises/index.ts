@@ -1,4 +1,4 @@
 
 export * from './exercises.actions';
-export * from './exercises.reducers';
+export * from './exercises.reducer';
 export * from './exercises.effects';
