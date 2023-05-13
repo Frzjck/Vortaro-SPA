@@ -155,19 +155,6 @@ export const exercisesFeature = createFeature({
             selectSubmitButtonAction,
             action => action === SubmitButtonActionType.PROOFREAD
         ),
-        // selectIsResponseCorrect: createSelector(
-        //     // inserting a sibling selector causes "Cannot access 'getCurrentWord' before initialization"
-        //     // duplicating behavior of getCurrentWord until issue is solved
-        //     selectActiveWordIndex,
-        //     selectExerciseWords,
-        //     // getCurrentWord,
-        //     selectAnswerInput,
-        //     selectTestingAgainst,
-        //     (index, words, answer, testingAgainst) => {
-        //         const currentWord = words[index];
-        //         return _isResponseCorrect(currentWord, answer, testingAgainst);
-        //     }
-        // ),
     }),
 
 });

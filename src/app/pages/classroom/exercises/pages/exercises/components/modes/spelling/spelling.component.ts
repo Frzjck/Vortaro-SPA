@@ -1,25 +1,22 @@
+import { CommonModule } from '@angular/common';
 import {
-  AfterViewInit,
   Component,
   ElementRef,
   OnInit,
   ViewChild,
 } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
-
-import { Word } from '@app/pages/classroom/store/words-list';
-import { Observable } from 'rxjs';
-import { ProgressBarComponent } from '../../../shared/progress-bar/progress-bar.component';
-import { Store } from '@ngrx/store';
-import { ExercisePageAction, selectCurrentWord, selectAnswerInput, selectIsLastAnswerCorrect, selectProgress, selectSubmitButtonAction, selectTestingAgainst, SubmitButtonActionType, TestingAgainstType } from '@app/pages/classroom/exercises/store/exercises';
-import { LetDirective } from '@ngrx/component';
-import { ExerciseService } from '../../../exercises.service';
-import { AutoFocus } from '../../../shared/directives/auto-focus.directive';
 import { MatButtonModule } from '@angular/material/button';
-import { selectSpellingViewModel } from '@app/pages/classroom/exercises/store/exercises/exercises.selectors';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { Store } from '@ngrx/store';
+import { LetDirective } from '@ngrx/component';
+import { ProgressBarComponent } from '@exercises/pages/exercises/shared/progress-bar/progress-bar.component';
+import { ExercisePageAction } from '@exercises/store/exercises';
+import { ExerciseService } from '@exercises/pages/exercises/exercises.service';
+import { AutoFocus } from '@exercises/pages/exercises/shared/directives/auto-focus.directive';
+import { selectSpellingViewModel } from '@exercises/store/exercises/exercises.selectors';
 
 @Component({
   selector: 'app-spelling',
@@ -29,10 +26,8 @@ import { selectSpellingViewModel } from '@app/pages/classroom/exercises/store/ex
   styleUrls: ['./spelling.component.scss'],
 })
 export class SpellingComponent implements OnInit {
-  // Get elem ref so we can focus it
-  @ViewChild('wordInput') private wordInput: ElementRef;
-
   vm$;
+  @ViewChild('wordInput') private wordInput: ElementRef;
 
   constructor(
     private store: Store, private exerciseService: ExerciseService
