@@ -94,6 +94,8 @@ export const exercisesFeature = createFeature({
         }),
         on(ExercisePageAction.updateAnswerInput, (state, { answerInput }) => ({ ...state, answerInput })),
         on(ExercisePageAction.clearAnswerInput, (state) => ({ ...state, answerInput: initialState.answerInput })),
+        on(ExercisePageAction.displayCorrectInInput, (state) => ({ ...state, answerInput: "Correct" })),
+        on(ExercisePageAction.displayWrongInInput, (state) => ({ ...state, answerInput: "Wrong" })),
 
         on(ExerciseContainerPageAPI.storeExerciseWords, (state, { exerciseWords }) => ({ ...state, exerciseWords: exerciseWords })),
 
