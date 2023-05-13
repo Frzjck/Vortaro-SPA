@@ -97,11 +97,12 @@ export const exercisesFeature = createFeature({
         on(ExercisePageAction.displayCorrectInInput, (state) => ({ ...state, answerInput: "Correct" })),
         on(ExercisePageAction.displayWrongInInput, (state) => ({ ...state, answerInput: "Wrong" })),
 
+
         on(ExerciseContainerPageAPI.storeExerciseWords, (state, { exerciseWords }) => ({ ...state, exerciseWords: exerciseWords })),
 
     ),
 
-    extraSelectors: ({ selectRandomSeed, selectActiveWordIndex, selectExerciseWords, selectWordsCompleted }) => ({
+    extraSelectors: ({ selectRandomSeed, selectActiveWordIndex, selectExerciseWords, selectWordsCompleted, selectTestingAgainst, selectAnswerInput }) => ({
         selectCurrentGroupExerciseWords: createSelector(
             getParams,
             selectGroupEntities,
@@ -131,7 +132,7 @@ export const exercisesFeature = createFeature({
         getCurrentWord: createSelector(
             selectActiveWordIndex,
             selectExerciseWords,
-            (activeWordIndex, exerciseWords) => {
+            (activeWordIndex, exerciseWords): Word => {
                 if (exerciseWords) return exerciseWords[activeWordIndex]
             }
         ),
@@ -144,9 +145,33 @@ export const exercisesFeature = createFeature({
                 return (100 / exerciseWords.length) * wordsCompleted
             }
         ),
+
+        selectIsResponseCorrect: createSelector(
+            // inserting a sibling selector causes "Cannot access 'getCurrentWord' before initialization"
+            // duplicating behavior of getCurrentWord until issue is solved
+            selectActiveWordIndex,
+            selectExerciseWords,
+            // getCurrentWord,
+            selectAnswerInput,
+            selectTestingAgainst,
+            (index, words, answer, testingAgainst) => {
+                const currentWord = words[index];
+                return _isResponseCorrect(currentWord, answer, testingAgainst);
+            }
+        ),
     }),
 
 });
+
+
+const _isResponseCorrect = (word, answer, testingAgainst) => {
+    if (testingAgainst === TestingAgainstType.TRANSLATION) {
+        const possibleAnswers = [word.translation.toLowerCase()]
+        if (word.additionalTr?.length) possibleAnswers.push(...word.additionalTr.map((x) => x.toLocaleLowerCase()))
+        return possibleAnswers.includes(answer.toLowerCase());
+    }
+    else if (testingAgainst === TestingAgainstType.ORIGINAL) return word.original.toLowerCase() === answer.toLowerCase();
+}
 
 
 export const {
@@ -168,13 +193,6 @@ export const {
     getWorstWords,
     selectCurrentGroupExerciseWords,
     getCurrentWord,
-    selectProgress
+    selectProgress,
+    selectIsResponseCorrect
 } = exercisesFeature;
-
-
-// on(, (state) => ({ ...state, exerciseState: "start" })),
-
-// on(, (state) => ({ ...state, exerciseMode: "quiz" })),
-// on(, (state) => ({ ...state, exerciseMode: "spell" })),
-
-// on(, (state) => ({ ...state, translateDirection: !state.translateDirection })),

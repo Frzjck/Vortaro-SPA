@@ -45,17 +45,17 @@ export class SpellingComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.currentWord$ = this.store.select(getCurrentWord)
+    this.currentWord$ = this.store.select(getCurrentWord);
     this.submitButtonAction$ = this.store.select(selectSubmitButtonAction);
     this.testingAgainst$ = this.store.select(selectTestingAgainst);
     this.isLastAnswerCorrect$ = this.store.select(selectIsLastAnswerCorrect);
     this.progress$ = this.store.select(selectProgress);
   }
 
-  onSubmit(word): void {
-    this.exerciseService.onSubmitAction(word, this.inputValue);
+  onSubmit(): void {
+    this.exerciseService.onSubmitAction();
     setTimeout(() => this.wordInput?.nativeElement.focus());
-    this.clearInputValue();
+    // this.clearInputValue();
   }
 
   clearInputValue(): void {
