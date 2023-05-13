@@ -102,7 +102,7 @@ export const exercisesFeature = createFeature({
 
     ),
 
-    extraSelectors: ({ selectRandomSeed, selectActiveWordIndex, selectExerciseWords, selectWordsCompleted, selectTestingAgainst, selectAnswerInput }) => ({
+    extraSelectors: ({ selectRandomSeed, selectActiveWordIndex, selectExerciseWords, selectWordsCompleted, selectSubmitButtonAction }) => ({
         selectCurrentGroupExerciseWords: createSelector(
             getParams,
             selectGroupEntities,
@@ -129,7 +129,7 @@ export const exercisesFeature = createFeature({
         ),
 
 
-        getCurrentWord: createSelector(
+        selectCurrentWord: createSelector(
             selectActiveWordIndex,
             selectExerciseWords,
             (activeWordIndex, exerciseWords): Word => {
@@ -144,6 +144,16 @@ export const exercisesFeature = createFeature({
             (exerciseWords, wordsCompleted: number) => {
                 return (100 / exerciseWords.length) * wordsCompleted
             }
+        ),
+
+        selectIsActionNext: createSelector(
+            selectSubmitButtonAction,
+            action => action === SubmitButtonActionType.NEXT
+        ),
+
+        selectIsActionProofread: createSelector(
+            selectSubmitButtonAction,
+            action => action === SubmitButtonActionType.PROOFREAD
         ),
         // selectIsResponseCorrect: createSelector(
         //     // inserting a sibling selector causes "Cannot access 'getCurrentWord' before initialization"
@@ -184,6 +194,8 @@ export const {
     getRandomWords,
     getWorstWords,
     selectCurrentGroupExerciseWords,
-    getCurrentWord,
+    selectCurrentWord,
     selectProgress,
+    selectIsActionNext,
+    selectIsActionProofread,
 } = exercisesFeature;

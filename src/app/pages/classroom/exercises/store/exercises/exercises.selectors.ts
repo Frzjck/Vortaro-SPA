@@ -1,5 +1,5 @@
 import { createSelector } from "@ngrx/store";
-import { TestingAgainstType, getCurrentWord, selectAnswerInput, selectTestingAgainst } from "./exercises.reducer";
+import { TestingAgainstType, selectCurrentWord, selectAnswerInput, selectIsActionNext, selectIsActionProofread, selectIsLastAnswerCorrect, selectProgress, selectSubmitButtonAction, selectTestingAgainst } from "./exercises.reducer";
 
 
 
@@ -8,7 +8,7 @@ import { TestingAgainstType, getCurrentWord, selectAnswerInput, selectTestingAga
 
 
 export const selectIsResponseCorrect = createSelector(
-    getCurrentWord,
+    selectCurrentWord,
     selectAnswerInput,
     selectTestingAgainst,
     (currentWord, answer, testingAgainst) => {
@@ -16,6 +16,32 @@ export const selectIsResponseCorrect = createSelector(
     }
 );
 
+export const selectSpellingViewModel = createSelector(
+    selectCurrentWord,
+    selectTestingAgainst,
+    selectIsLastAnswerCorrect,
+    selectProgress,
+    selectAnswerInput,
+    selectIsActionNext,
+    selectIsActionProofread,
+    (
+        currentWord,
+        testingAgainst,
+        isLastAnswerCorrect,
+        progress,
+        answerInput,
+        isActionNext,
+        isActionProofread,
+    ) => ({
+        currentWord,
+        testingAgainst,
+        isLastAnswerCorrect,
+        progress,
+        answerInput,
+        isActionNext,
+        isActionProofread,
+    })
+);
 
 
 
