@@ -14,11 +14,12 @@ import { Word } from '@app/pages/classroom/store/words-list';
 import { Observable } from 'rxjs';
 import { ProgressBarComponent } from '../../../shared/progress-bar/progress-bar.component';
 import { Store } from '@ngrx/store';
-import { ExercisePageAction, getCurrentWord, selectAnswerInput, selectIsLastAnswerCorrect, selectProgress, selectSubmitButtonAction, selectTestingAgainst, SubmitButtonActionType, TestingAgainstType } from '@app/pages/classroom/exercises/store/exercises';
+import { ExercisePageAction, selectCurrentWord, selectAnswerInput, selectIsLastAnswerCorrect, selectProgress, selectSubmitButtonAction, selectTestingAgainst, SubmitButtonActionType, TestingAgainstType } from '@app/pages/classroom/exercises/store/exercises';
 import { LetDirective } from '@ngrx/component';
 import { ExerciseService } from '../../../exercises.service';
 import { AutoFocus } from '../../../shared/directives/auto-focus.directive';
 import { MatButtonModule } from '@angular/material/button';
+import { selectSpellingViewModel } from '@app/pages/classroom/exercises/store/exercises/exercises.selectors';
 
 @Component({
   selector: 'app-spelling',
@@ -31,27 +32,14 @@ export class SpellingComponent implements OnInit {
   // Get elem ref so we can focus it
   @ViewChild('wordInput') private wordInput: ElementRef;
 
-
-  // Refactored
-  currentWord$: Observable<Word>;
-  submitButtonAction$: Observable<SubmitButtonActionType>;
-  testingAgainst$: Observable<TestingAgainstType>;
-  isLastAnswerCorrect$: Observable<boolean>;
-  progress$: Observable<number>;
-  inputValue$: Observable<string>;
-
+  vm$;
 
   constructor(
     private store: Store, private exerciseService: ExerciseService
   ) { }
 
   ngOnInit(): void {
-    this.currentWord$ = this.store.select(getCurrentWord);
-    this.submitButtonAction$ = this.store.select(selectSubmitButtonAction);
-    this.testingAgainst$ = this.store.select(selectTestingAgainst);
-    this.isLastAnswerCorrect$ = this.store.select(selectIsLastAnswerCorrect);
-    this.progress$ = this.store.select(selectProgress);
-    this.inputValue$ = this.store.select(selectAnswerInput);
+    this.vm$ = this.store.select(selectSpellingViewModel);
   }
 
   onSubmit(): void {
