@@ -81,7 +81,7 @@ export const exercisesFeature = createFeature({
             if (state.exerciseWords.length - 1 === state.activeWordIndex) {
                 newState = { ...state, exerciseStatus: ExerciseStatusType.RESULTS };
             } else {
-                newState = { ...state, activeWordIndex: state.activeWordIndex + 1 };
+                newState = { ...state, activeWordIndex: state.activeWordIndex + 1, answerInput: initialState.answerInput };
             }
             return newState;
         }),
