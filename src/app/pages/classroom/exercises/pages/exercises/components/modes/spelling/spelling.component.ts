@@ -14,7 +14,7 @@ import { Word } from '@app/pages/classroom/store/words-list';
 import { Observable } from 'rxjs';
 import { ProgressBarComponent } from '../../../shared/progress-bar/progress-bar.component';
 import { Store } from '@ngrx/store';
-import { getCurrentWord, selectIsLastAnswerCorrect, selectProgress, selectSubmitButtonAction, selectTestingAgainst, SubmitButtonActionType, TestingAgainstType } from '@app/pages/classroom/exercises/store/exercises';
+import { ExercisePageAction, getCurrentWord, selectAnswerInput, selectIsLastAnswerCorrect, selectProgress, selectSubmitButtonAction, selectTestingAgainst, SubmitButtonActionType, TestingAgainstType } from '@app/pages/classroom/exercises/store/exercises';
 import { LetDirective } from '@ngrx/component';
 import { ExerciseService } from '../../../exercises.service';
 import { AutoFocus } from '../../../shared/directives/auto-focus.directive';
@@ -31,7 +31,6 @@ export class SpellingComponent implements OnInit {
   // Get elem ref so we can focus it
   @ViewChild('wordInput') private wordInput: ElementRef;
 
-  inputValue: string = '';
 
   // Refactored
   currentWord$: Observable<Word>;
@@ -39,6 +38,8 @@ export class SpellingComponent implements OnInit {
   testingAgainst$: Observable<TestingAgainstType>;
   isLastAnswerCorrect$: Observable<boolean>;
   progress$: Observable<number>;
+  inputValue$: Observable<string>;
+
 
   constructor(
     private store: Store, private exerciseService: ExerciseService
@@ -50,15 +51,16 @@ export class SpellingComponent implements OnInit {
     this.testingAgainst$ = this.store.select(selectTestingAgainst);
     this.isLastAnswerCorrect$ = this.store.select(selectIsLastAnswerCorrect);
     this.progress$ = this.store.select(selectProgress);
+    this.inputValue$ = this.store.select(selectAnswerInput);
   }
 
   onSubmit(): void {
     this.exerciseService.onSubmitAction();
     setTimeout(() => this.wordInput?.nativeElement.focus());
-    // this.clearInputValue();
   }
 
-  clearInputValue(): void {
-    this.inputValue = ""
+  answerInput(event: string): void {
+    this.store.dispatch(ExercisePageAction.updateAnswerInput({ answerInput: event }))
   }
+
 }

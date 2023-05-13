@@ -28,7 +28,8 @@
           matInput
           class="res-input"
           autocomplete="off"
-          [(ngModel)]="inputValue"
+          [ngModel]="inputValue$ | async"
+          (ngModelChange)="answerInput($event)"
           #wordInput
           [disabled]="(submitButtonAction$ | async) === 'next'"
           [style.color]="
