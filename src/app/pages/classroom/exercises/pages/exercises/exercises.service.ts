@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { ExercisePageAction, SubmitButtonActionType, selectSubmitButtonAction, } from '@exercises/store';
+import { ExercisePageAction, selectAnswerLocked, } from '@exercises/store';
 import { firstValueFrom } from 'rxjs';
 import { selectIsResponseCorrect } from '../../store/exercises/exercises.selectors';
 @Injectable({
@@ -11,11 +11,11 @@ export class ExerciseService {
   constructor(private store: Store) { }
 
   async onSubmitAction(): Promise<void> {
-    const submitButtonAction = await firstValueFrom(this.store.select(selectSubmitButtonAction));
+    const isAnswerLocked = await firstValueFrom(this.store.select(selectAnswerLocked));
     //toggle submit action
     this.store.dispatch(ExercisePageAction.submitButtonActionToggle());
 
-    if (submitButtonAction === SubmitButtonActionType.NEXT) {
+    if (isAnswerLocked) {
       //if action is "next" -> dispatch next word(update index) and reset last correct answer. if no more words -> dispatch results (ondestroy results reset store)
       this.store.dispatch(ExercisePageAction.nextWord());
       return;

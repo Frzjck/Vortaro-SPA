@@ -40,7 +40,7 @@ export interface ExercisesState {
 
     activeWordIndex: number;
     isLastAnswerCorrect: boolean;
-    submitButtonAction: SubmitButtonActionType;
+    answerLocked: boolean;
 
     // results functionality
     resultScores: boolean[]
@@ -62,7 +62,7 @@ export const initialState: ExercisesState = {
     activeWordIndex: 0,
     resultScores: [],
     isLastAnswerCorrect: null,
-    submitButtonAction: SubmitButtonActionType.PROOFREAD,
+    answerLocked: false,
     wordsCompleted: 0,
     answerInput: "",
 };
@@ -86,10 +86,10 @@ export const exercisesFeature = createFeature({
             return newState;
         }),
         on(ExercisePageAction.submitButtonActionToggle, (state) => {
-            if (state.submitButtonAction === SubmitButtonActionType.PROOFREAD) {
-                return { ...state, submitButtonAction: SubmitButtonActionType.NEXT, wordsCompleted: state.wordsCompleted + 1 }
+            if (!state.answerLocked) {
+                return { ...state, answerLocked: true, wordsCompleted: state.wordsCompleted + 1 }
             } else {
-                return { ...state, submitButtonAction: SubmitButtonActionType.PROOFREAD }
+                return { ...state, answerLocked: false }
             }
         }),
         on(ExercisePageAction.updateAnswerInput, (state, { answerInput }) => ({ ...state, answerInput })),
@@ -99,10 +99,9 @@ export const exercisesFeature = createFeature({
 
 
         on(ExerciseContainerPageAPI.storeExerciseWords, (state, { exerciseWords }) => ({ ...state, exerciseWords: exerciseWords })),
-
     ),
 
-    extraSelectors: ({ selectRandomSeed, selectActiveWordIndex, selectExerciseWords, selectWordsCompleted, selectSubmitButtonAction }) => ({
+    extraSelectors: ({ selectRandomSeed, selectActiveWordIndex, selectExerciseWords, selectWordsCompleted, selectAnswerLocked }) => ({
         selectCurrentGroupExerciseWords: createSelector(
             getParams,
             selectGroupEntities,
@@ -147,13 +146,13 @@ export const exercisesFeature = createFeature({
         ),
 
         selectIsActionNext: createSelector(
-            selectSubmitButtonAction,
-            action => action === SubmitButtonActionType.NEXT
+            selectAnswerLocked,
+            answerLocked => answerLocked
         ),
 
         selectIsActionProofread: createSelector(
-            selectSubmitButtonAction,
-            action => action === SubmitButtonActionType.PROOFREAD
+            selectAnswerLocked,
+            answerLocked => !answerLocked
         ),
     }),
 
@@ -176,7 +175,7 @@ export const {
     selectExerciseWords,
     selectActiveWordIndex,
     selectIsLastAnswerCorrect,
-    selectSubmitButtonAction,
+    selectAnswerLocked,
     selectResultScores,
     getRandomWords,
     getWorstWords,

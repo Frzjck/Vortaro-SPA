@@ -48,7 +48,7 @@ export const selectQuizViewModel = createSelector(
     selectIsLastAnswerCorrect,
     selectProgress,
     selectAnswerInput,
-    selectIsActionNext,
+    selectAnswerLocked,
     selectIsActionProofread,
     (
         currentWord,
@@ -56,7 +56,7 @@ export const selectQuizViewModel = createSelector(
         isLastAnswerCorrect,
         progress,
         answerInput,
-        isActionNext,
+        isAnswerLocked,
         isActionProofread,
     ) => ({
         currentWord,
@@ -64,7 +64,7 @@ export const selectQuizViewModel = createSelector(
         isLastAnswerCorrect,
         progress,
         answerInput,
-        isActionNext,
+        isAnswerLocked,
         isActionProofread,
     })
 );
