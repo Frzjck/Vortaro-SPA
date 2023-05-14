@@ -2,7 +2,7 @@
 
 
 // Shuffle array and return a reordered one
-export function shuffle(array) {
+export function shuffle<T>(array: Array<T>): Array<T> {
     let currentIndex = array.length,
         randomIndex;
     // While there remain elements to shuffle...
