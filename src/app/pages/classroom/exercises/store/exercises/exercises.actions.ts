@@ -25,6 +25,9 @@ export const ExercisePageAction = createActionGroup(
             "Clear Answer Input": emptyProps(),
             "Display Correct In Input": emptyProps(),
             "Display Wrong In Input": emptyProps(),
+
+            "Load Answer Choices": emptyProps(),
+            "Store Answer Choices": props<{ answerChoices: string[] }>(),
         },
     }
 )
