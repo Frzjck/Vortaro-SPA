@@ -51,7 +51,7 @@ export interface ExercisesState {
 }
 
 export const initialState: ExercisesState = {
-    exerciseMode: ExerciseModeType.SPELLING,
+    exerciseMode: ExerciseModeType.QUIZ,
     exerciseStatus: ExerciseStatusType.START,
     randomSeed: 0,
 

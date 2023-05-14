@@ -1,19 +1,23 @@
-<!-- <div class="grid-container">
-  <app-progress-bar></app-progress-bar>
-  <mat-card class="mat-elevation-z24">
-    <mat-card-title *ngIf="words && translateDirection">{{
-      this.activeWord.name | titlecase
-    }}</mat-card-title>
-    <mat-card-title *ngIf="words && !translateDirection">{{
-      this.activeWord.translation | titlecase
-    }}</mat-card-title>
-    <mat-card-subtitle *ngIf="words"
-      ><i class="far fa-question-circle" *ngIf="this.activeWord.tips"></i>
-      <div class="tooltip">
-        {{ this.activeWord.tips | titlecase }}
-      </div></mat-card-subtitle
-    >
-    <mat-card-content *ngIf="fourAnswers">
+<div class="grid-container" *ngrxLet="vm$ as vm">
+  <ng-container
+    *ngIf="vm.currentWord"
+    (window:keydown.enter)="onSubmit(vm.currentWord)"
+  >
+    <app-progress-bar [progress]="vm.progress"></app-progress-bar>
+    <mat-card class="mat-elevation-z24">
+      <mat-card-title *ngIf="vm.testingAgainst === 'translation'">{{
+        vm.currentWord.original | titlecase
+      }}</mat-card-title>
+      <mat-card-title *ngIf="vm.testingAgainst === 'original'">{{
+        vm.currentWord.translation | titlecase
+      }}</mat-card-title>
+      <mat-card-subtitle *ngIf="vm.currentWord?.tips"
+        ><i class="far fa-question-circle"></i>
+        <div class="tooltip">
+          {{ vm.currentWord.tips | titlecase }}
+        </div></mat-card-subtitle
+      >
+      <!-- <mat-card-content *ngIf="fourAnswers">
       <div
         class="option opt-1"
         [ngClass]="{
@@ -73,8 +77,8 @@
       >
         <span>{{ fourAnswers[3] | titlecase }}</span>
       </div>
-    </mat-card-content>
-    <mat-card-actions
+    </mat-card-content> -->
+      <!-- <mat-card-actions
       ><button class="sbm-btn" mat-button color="primary" (click)="onSubmit()">
         {{
           pendingFstSub
@@ -86,6 +90,7 @@
             : ""
         }}
       </button>
-    </mat-card-actions>
-  </mat-card>
-</div> -->
+    </mat-card-actions> -->
+    </mat-card>
+  </ng-container>
+</div>
