@@ -1,9 +1,5 @@
 import { createSelector } from "@ngrx/store";
-import { TestingAgainstType, selectCurrentWord, selectAnswerInput, selectIsActionNext, selectIsActionProofread, selectIsLastAnswerCorrect, selectProgress, selectSubmitButtonAction, selectTestingAgainst } from "./exercises.reducer";
-
-
-
-
+import { TestingAgainstType, selectCurrentWord, selectAnswerInput, selectIsActionNext, selectIsActionProofread, selectIsLastAnswerCorrect, selectProgress, selectAnswerLocked, selectTestingAgainst, selectExerciseWords } from "./exercises.reducer";
 
 
 
@@ -15,6 +11,16 @@ export const selectIsResponseCorrect = createSelector(
         return _isResponseCorrect(currentWord, answer, testingAgainst);
     }
 );
+
+const _isResponseCorrect = (word, answer, testingAgainst) => {
+    if (testingAgainst === TestingAgainstType.TRANSLATION) {
+        const possibleAnswers = [word.translation.toLowerCase()]
+        if (word.additionalTr?.length) possibleAnswers.push(...word.additionalTr.map((x) => x.toLocaleLowerCase()))
+        return possibleAnswers.includes(answer.toLowerCase());
+    }
+    else if (testingAgainst === TestingAgainstType.ORIGINAL) return word.original.toLowerCase() === answer.toLowerCase();
+}
+
 
 export const selectSpellingViewModel = createSelector(
     selectCurrentWord,
@@ -42,30 +48,32 @@ export const selectSpellingViewModel = createSelector(
         isActionProofread,
     })
 );
+
+
 export const selectQuizViewModel = createSelector(
     selectCurrentWord,
+    selectExerciseWords,
     selectTestingAgainst,
     selectIsLastAnswerCorrect,
     selectProgress,
     selectAnswerInput,
     selectAnswerLocked,
-    selectIsActionProofread,
     (
         currentWord,
+        exerciseWords,
         testingAgainst,
         isLastAnswerCorrect,
         progress,
         answerInput,
         isAnswerLocked,
-        isActionProofread,
     ) => ({
         currentWord,
+        exerciseWords,
         testingAgainst,
         isLastAnswerCorrect,
         progress,
-        answerInput,
+        selectedAnswer: answerInput,
         isAnswerLocked,
-        isActionProofread,
     })
 );
 
@@ -73,11 +81,3 @@ export const selectQuizViewModel = createSelector(
 
 
 
-const _isResponseCorrect = (word, answer, testingAgainst) => {
-    if (testingAgainst === TestingAgainstType.TRANSLATION) {
-        const possibleAnswers = [word.translation.toLowerCase()]
-        if (word.additionalTr?.length) possibleAnswers.push(...word.additionalTr.map((x) => x.toLocaleLowerCase()))
-        return possibleAnswers.includes(answer.toLowerCase());
-    }
-    else if (testingAgainst === TestingAgainstType.ORIGINAL) return word.original.toLowerCase() === answer.toLowerCase();
-}
