@@ -7,10 +7,6 @@ import { selectWords } from '@app/pages/classroom/store/words-list';
 import { shuffle } from '../../pages/exercises/utils/shuffleArray';
 import { selectGroupEntities } from '@app/pages/classroom/store/groups-list';
 
-export enum SubmitButtonActionType {
-    PROOFREAD = "proofread",
-    NEXT = "next"
-};
 
 export enum TestingAgainstType {
     ORIGINAL = "original",
@@ -33,6 +29,7 @@ export interface ExercisesState {
     randomSeed: number;
 
     exerciseWords: Word[];
+    answerChoices: string[];
 
     // This option determines what is being tested, your knowledge of meaning of a foreign word if true,
     // and your knowledge of spelling if false
@@ -56,6 +53,7 @@ export const initialState: ExercisesState = {
     randomSeed: 0,
 
     exerciseWords: [],
+    answerChoices: [],
 
     testingAgainst: TestingAgainstType.TRANSLATION,
 
@@ -96,6 +94,7 @@ export const exercisesFeature = createFeature({
         on(ExercisePageAction.clearAnswerInput, (state) => ({ ...state, answerInput: initialState.answerInput })),
         on(ExercisePageAction.displayCorrectInInput, (state) => ({ ...state, answerInput: "Correct" })),
         on(ExercisePageAction.displayWrongInInput, (state) => ({ ...state, answerInput: "Wrong" })),
+        on(ExercisePageAction.storeAnswerChoices, (state, { answerChoices }) => ({ ...state, answerChoices })),
 
 
         on(ExerciseContainerPageAPI.storeExerciseWords, (state, { exerciseWords }) => ({ ...state, exerciseWords: exerciseWords })),
