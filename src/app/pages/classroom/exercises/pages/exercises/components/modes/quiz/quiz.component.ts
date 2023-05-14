@@ -6,6 +6,10 @@ import { LetDirective } from '@ngrx/component';
 import { ProgressBarComponent } from '../../../shared/progress-bar/progress-bar.component';
 import { Store } from '@ngrx/store';
 import { selectQuizViewModel } from '@app/pages/classroom/exercises/store/exercises/exercises.selectors';
+import { ExercisePageAction, TestingAgainstType } from '@app/pages/classroom/exercises/store';
+import { shuffle } from '../../../utils/shuffleArray';
+import { Word } from '@app/pages/classroom/store/words-list';
+import { transition } from '@angular/animations';
 
 
 @Component({
@@ -19,12 +23,10 @@ export class QuizComponent implements OnInit {
   vm$;
   // Answer config
   selectedOptionValue: string;
-  confirmedResponse: string;
   correctResponse: string;
 
   fourAnswers: string[];
   correctAnswers: string[];
-  randomCorrect: string;
 
 
   constructor(
@@ -33,39 +35,26 @@ export class QuizComponent implements OnInit {
 
   ngOnInit(): void {
     this.vm$ = this.store.select(selectQuizViewModel);
+    this.store.dispatch(ExercisePageAction.loadAnswerChoices());
+    this.vm$.subscribe(console.log)
   }
 
+  getNgClass(optionAnswer: string, correctAnswers: Array<string>, selectedAnswer: string, isAnswerLocked: boolean) {
+    const isSelected = optionAnswer === selectedAnswer;
+    if (!isAnswerLocked) return {
+      selected: isSelected
+    };
 
-  // updateQuizzOptions() {
-  //   if (this.translateDirection) {
-  //     this.fourAnswers = this.words
-  //       .filter((word) => word !== this.activeWord)
-  //       .reduce((acc, cur) => {
-  //         acc.push(cur.translation);
-  //         acc.push(...cur.additionalTr);
-  //         return acc;
-  //       }, []);
-  //     this.fourAnswers = this.wordService.shuffle(this.fourAnswers).slice(0, 3);
-  //     this.correctAnswers = [
-  //       ...this.activeWord.additionalTr.map((x) => x.toLowerCase()),
-  //       this.activeWord.translation.toLowerCase(),
-  //     ];
+    const isCorrect = correctAnswers.includes(optionAnswer);
 
-  //     [this.correctResponse] = this.wordService
-  //       .shuffle(this.correctAnswers)
-  //       .slice(0, 1);
+    return {
+      correct: isCorrect,
+      wrong: !isCorrect && isSelected
+    }
+  }
 
-  //     this.fourAnswers.push(this.correctResponse);
-  //     this.fourAnswers = this.wordService.shuffle(this.fourAnswers);
-  //   }
-  //   if (!this.translateDirection) {
-  //     this.fourAnswers = this.words
-  //       .filter((word) => word !== this.activeWord)
-  //       .map((word) => word.name);
-  //     this.fourAnswers = this.wordService.shuffle(this.fourAnswers).slice(0, 3);
-  //     this.fourAnswers.push(this.activeWord.name);
-  //     this.fourAnswers = this.wordService.shuffle(this.fourAnswers);
-  //   }
-  // }
+  selectAnswer(answer) {
+    this.store.dispatch(ExercisePageAction.updateAnswerInput({ answerInput: answer }))
+  }
 
 }
