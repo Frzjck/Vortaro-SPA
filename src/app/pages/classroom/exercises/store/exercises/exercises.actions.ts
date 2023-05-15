@@ -19,7 +19,7 @@ export const ExercisePageAction = createActionGroup(
             "Next Word": emptyProps(),
             "Add Answer Bool To Results": props<{ answerBool: boolean }>(),
             "Word Completed": emptyProps(),
-            "Submit Button Action Toggle": emptyProps(),
+            "Toggle Answer Lock": emptyProps(),
 
             "Update Answer Input": props<{ answerInput: string }>(),
             "Clear Answer Input": emptyProps(),

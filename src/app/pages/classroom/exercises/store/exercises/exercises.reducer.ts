@@ -83,7 +83,7 @@ export const exercisesFeature = createFeature({
             }
             return newState;
         }),
-        on(ExercisePageAction.submitButtonActionToggle, (state) => {
+        on(ExercisePageAction.toggleAnswerLock, (state) => {
             if (!state.answerLocked) {
                 return { ...state, answerLocked: true, wordsCompleted: state.wordsCompleted + 1 }
             } else {
@@ -168,6 +168,7 @@ export const {
     selectExercisesState,
     selectTestingAgainst,
     selectExerciseMode,
+    selectAnswerChoices,
     selectWordsCompleted,
     selectExerciseStatus,
     selectRandomSeed,
