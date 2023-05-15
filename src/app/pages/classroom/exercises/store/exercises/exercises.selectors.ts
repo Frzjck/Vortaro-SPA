@@ -1,5 +1,5 @@
 import { createSelector } from "@ngrx/store";
-import { TestingAgainstType, selectCurrentWord, selectAnswerInput, selectIsActionNext, selectIsActionProofread, selectIsLastAnswerCorrect, selectProgress, selectAnswerLocked, selectTestingAgainst, selectExerciseWords } from "./exercises.reducer";
+import { TestingAgainstType, selectCurrentWord, selectAnswerInput, selectIsActionNext, selectIsActionProofread, selectIsLastAnswerCorrect, selectProgress, selectAnswerLocked, selectTestingAgainst, selectExerciseWords, selectAnswerChoices } from "./exercises.reducer";
 import { _getAnswers, _isResponseCorrect } from "./store-utils";
 
 
@@ -58,6 +58,8 @@ export const selectQuizViewModel = createSelector(
     selectProgress,
     selectAnswerInput,
     selectAnswerLocked,
+    selectAnswerChoices,
+    selectCorrectAnswers,
     (
         currentWord,
         exerciseWords,
@@ -66,6 +68,8 @@ export const selectQuizViewModel = createSelector(
         progress,
         answerInput,
         isAnswerLocked,
+        answerChoices,
+        correctAnswers,
     ) => ({
         currentWord,
         exerciseWords,
@@ -74,6 +78,8 @@ export const selectQuizViewModel = createSelector(
         progress,
         selectedAnswer: answerInput,
         isAnswerLocked,
+        answerChoices,
+        correctAnswers,
     })
 );
 
