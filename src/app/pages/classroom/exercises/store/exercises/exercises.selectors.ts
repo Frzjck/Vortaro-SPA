@@ -4,6 +4,14 @@ import { _getAnswers, _isResponseCorrect } from "./store-utils";
 
 
 
+export const selectCorrectAnswers = createSelector(
+    selectCurrentWord,
+    selectTestingAgainst,
+    (currentWord, testingAgainst) => {
+        return _getAnswers([currentWord], testingAgainst);
+    }
+);
+
 export const selectIsResponseCorrect = createSelector(
     selectCurrentWord,
     selectAnswerInput,
