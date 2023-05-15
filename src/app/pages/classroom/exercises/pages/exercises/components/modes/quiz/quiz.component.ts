@@ -10,6 +10,7 @@ import { ExercisePageAction, TestingAgainstType } from '@app/pages/classroom/exe
 import { shuffle } from '../../../utils/shuffleArray';
 import { Word } from '@app/pages/classroom/store/words-list';
 import { transition } from '@angular/animations';
+import { ExerciseService } from '../../../exercises.service';
 
 
 @Component({
@@ -30,7 +31,8 @@ export class QuizComponent implements OnInit {
 
 
   constructor(
-    private store: Store
+    private store: Store,
+    private exerciseService: ExerciseService
   ) { }
 
   ngOnInit(): void {
@@ -53,8 +55,13 @@ export class QuizComponent implements OnInit {
     }
   }
 
-  selectAnswer(answer) {
+  selectAnswer(answer, isAnswerLocked) {
+    if (isAnswerLocked) return;
     this.store.dispatch(ExercisePageAction.updateAnswerInput({ answerInput: answer }))
+  }
+
+  onSubmit(): void {
+    this.exerciseService.onSubmitAction();
   }
 
 }

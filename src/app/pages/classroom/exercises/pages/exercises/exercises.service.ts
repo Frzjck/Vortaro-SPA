@@ -24,12 +24,12 @@ export class ExerciseService {
     // else (action is proofread)
     //check if solution is correct
     const isCorrect = await firstValueFrom(this.store.select(selectIsResponseCorrect)) as boolean;
+    this.store.dispatch(ExercisePageAction.addAnswerBoolToResults({ answerBool: isCorrect }));
+    if ((await firstValueFrom(this.store.select(selectExerciseMode))) === "quiz") return;
+
     if (isCorrect) this.store.dispatch(ExercisePageAction.displayCorrectInInput())
     else this.store.dispatch(ExercisePageAction.displayWrongInInput())
     //dispatch resultScores update to store result
     //dispatch correct answer to store so it can be highlighted
-    this.store.dispatch(ExercisePageAction.addAnswerBoolToResults({ answerBool: isCorrect }));
   }
-
-
 }
