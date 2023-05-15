@@ -5,7 +5,7 @@ import { map, of } from "rxjs";
 import { Store } from "@ngrx/store";
 import { getParams } from "@app/store/router/router.selector";
 import { switchMap, catchError, tap, take, mergeMap, debounceTime } from 'rxjs/operators';
-import { switchCase } from "../../pages/exercises/utils/switchCase";
+import { _generateAnswerChoices } from "./store-utils";
 import { selectCurrentGroupExerciseWords, getRandomWords, getWorstWords, selectCurrentWord, selectExerciseWords, selectTestingAgainst, TestingAgainstType } from "./exercises.reducer";
 import { Word } from "@app/pages/classroom/store/words-list";
 import { shuffle } from "../../pages/exercises/utils/shuffleArray";
