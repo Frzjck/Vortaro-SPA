@@ -46,7 +46,7 @@
           color="primary"
           (click)="onSubmit(vm.currentWord)"
         >
-          {{ vm.isActionProofread ? "Check" : vm.isActionNext ? "Next" : "" }}
+          {{ vm.isAnswerLocked ? "Next" : "Check" }}
         </button>
       </mat-card-actions>
     </mat-card>
