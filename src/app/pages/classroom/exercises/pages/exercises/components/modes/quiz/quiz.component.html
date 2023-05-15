@@ -36,22 +36,9 @@
       </mat-card-content>
 
       <mat-card-actions>
-        <!-- <button
-          class="sbm-btn"
-          mat-button
-          color="primary"
-          (click)="onSubmit()"
-        >
-          {{
-            pendingFstSub
-              ? "Submit"
-              : !pendingFstSub && activeWordIndex === words.length - 1
-              ? "Finish"
-              : !pendingFstSub
-              ? "Next"
-              : ""
-          }}
-        </button> -->
+        <button class="sbm-btn" mat-button color="primary" (click)="onSubmit()">
+          {{ vm.isAnswerLocked ? "Next" : "Check" }}
+        </button>
       </mat-card-actions>
     </mat-card>
   </ng-container>
