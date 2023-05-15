@@ -1,8 +1,5 @@
 <div class="grid-container" *ngrxLet="vm$ as vm">
-  <ng-container
-    *ngIf="vm.currentWord"
-    (window:keydown.enter)="onSubmit(vm.currentWord)"
-  >
+  <ng-container *ngIf="vm.currentWord" (window:keydown.enter)="onSubmit()">
     <app-progress-bar [progress]="vm.progress"></app-progress-bar>
     <mat-card class="mat-elevation-z24">
       <mat-card-title *ngIf="vm.testingAgainst === 'translation'">{{
