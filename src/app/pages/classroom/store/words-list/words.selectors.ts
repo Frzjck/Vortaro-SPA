@@ -2,6 +2,7 @@ import { createSelector, createFeatureSelector } from '@ngrx/store';
 import { getLexiconState, LexiconState } from '../index';
 
 import { WordsState, adapter } from './words.reducer';
+import { selectGroupEntities } from '../groups-list';
 
 
 export const getWordsState = createSelector(
@@ -16,30 +17,49 @@ export const getWordsState = createSelector(
 // selectEntity: Returns a single entity from the collection, based on its ID.
 export const { selectAll, selectEntities, selectTotal } = adapter.getSelectors(getWordsState);
 
-export const getWords = createSelector(
+export const selectWords = createSelector(
     selectAll,
     (words) => words
 );
 
-export const getLoading = createSelector(
+export const selectWordEntities = createSelector(
+    selectEntities,
+    (entities) => entities
+);
+
+export const selectIsLoading = createSelector(
     getWordsState,
     (state: WordsState) => state.loading
 );
 
-export const getIsReady = createSelector(
+export const selectIsReady = createSelector(
     selectTotal,
-    getLoading,
+    selectIsLoading,
     (total, loading) => total > 0 && !loading
 );
 
-export const getError = createSelector(
+export const selectError = createSelector(
     getWordsState,
     (state: WordsState) => state.error
 );
 
-export const getWordsByGroupId = (groupId: string) => createSelector(
-    getWords,
-    (words) => {
-        return words?.filter(word => word.groupId === groupId)
+export const selectWordsByIds = (wordIds: string[]) => createSelector(
+    selectWordEntities,
+    (wordEntities) => {
+        return wordIds.map(wordId => wordEntities[wordId])
     }
+);
+
+export const selectWordsByGroupId = (groupId: string) => createSelector(
+    selectWordEntities,
+    selectGroupEntities,
+    (wordEntities, groupEntities) => {
+        let wordIds = groupEntities[groupId]?.wordIds;
+        return wordIds?.map(wordId => wordEntities[wordId])
+    }
+);
+
+export const selectThereAreWords = createSelector(
+    selectWords,
+    (words) => words.length > 0
 );

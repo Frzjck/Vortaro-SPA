@@ -24,13 +24,12 @@ export type Score =
     | 20;
 
 export interface FireWord {
-    name: string;
+    original: string;
     translation: string;
     proficiency: Score;
     tips?: string;
     additionalTr?: string[];
 
-    groupId: string;
     created: firebase.firestore.FieldValue;
     updated?: firebase.firestore.FieldValue;
 }

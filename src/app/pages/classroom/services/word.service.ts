@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { from, Observable, ReplaySubject } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { convertSnaps } from '../shared/utils/db-utils';
+import { convertSnaps } from '../../../shared/utils/db-utils';
 
 
 import firebase from "firebase/compat/app";
-import { UserService } from '../pages/login/user.service';
+import { UserService } from '../../login/user.service';
 import OrderByDirection = firebase.firestore.OrderByDirection;
 import { Word } from '@app/pages/classroom/store/words-list';
 import { getAuth } from 'firebase/auth';
@@ -16,7 +16,7 @@ import { getAuth } from 'firebase/auth';
 })
 export class WordService {
 
-  exerciseType: string;
+  exerciseMode: string;
 
   constructor(private db: AngularFirestore, private userService: UserService) { }
 
@@ -69,8 +69,8 @@ export class WordService {
     return from(this.db.doc(`users/${this.userService.user.uid}/groups/${groupsId}/words/${wordId}`).update(changes));
   }
 
-  // Returning different word sets depending on the exercise type selected
-  // ['translate-exercise', 'random', 'work-on-mistakes'];
+  // // Returning different word sets depending on the exercise type selected
+  // // ['translate-exercise', 'random', 'work-on-mistakes'];
   // getRightWords(typeParam: string, groupIdParam: string) {
   //   // Depending on Type we feed different word arrays
   //   if (typeParam === 'word-group') {

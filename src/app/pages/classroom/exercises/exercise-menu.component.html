@@ -1,0 +1,20 @@
+<div *ngIf="thereAreWords | async; else noData">
+  <div class="container">
+    <div class="hex-cell" routerLink="select-group">
+      <mat-icon>view_list</mat-icon>
+    </div>
+    <div class="hex-cell" routerLink="exercises/mistakes">
+      <mat-icon>sync_problem</mat-icon>
+    </div>
+    <div class="hex-cell" routerLink="exercises/random">
+      <i class="fas fa-dice"></i>
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>
+
+<ng-template #noData>
+  <div class="warning">
+    <p>• Please create a group and add words in order to access exercises •</p>
+  </div>
+</ng-template>

@@ -9,7 +9,7 @@ import { ExtraTrCardComponent } from './components/extra-tr-card/extra-tr-card.c
 import { WordUiComponent, WordUiViewInputInterface } from './components/word-ui/word-ui.component';
 import { Word } from '@app/pages/classroom/store/words-list';
 import { GlossaryStateFacade } from '../../glossary.state.facade';
-import { LetModule } from '@ngrx/component';
+import { LetDirective } from '@ngrx/component';
 
 
 export interface WordGridInputInterface {
@@ -26,7 +26,7 @@ export interface WordGridStateInterface {
 @Component({
   selector: 'app-word-grid',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule, ExtraTrCardComponent, WordUiComponent, MatIconModule, LetModule],
+  imports: [CommonModule, MatCardModule, MatButtonModule, ExtraTrCardComponent, WordUiComponent, MatIconModule, LetDirective],
   templateUrl: './word-grid.component.html',
   styleUrls: ['./word-grid.component.scss'],
   animations: [

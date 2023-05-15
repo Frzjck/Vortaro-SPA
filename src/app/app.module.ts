@@ -46,6 +46,8 @@ import { StoreModule } from '@ngrx/store';
 import { reducers, effects } from './store';
 import { EffectsModule } from '@ngrx/effects';
 import { ClassroomModule } from './pages/classroom/classroom.module';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { CustomSerializer } from './store/router/custom-serializer';
 
 @NgModule({
   declarations: [
@@ -54,7 +56,6 @@ import { ClassroomModule } from './pages/classroom/classroom.module';
     HomepageComponent,
     StopPropagationDirective,
     SettingsPopupComponent,
-
   ],
   imports: [
     ClassroomModule,
@@ -77,6 +78,9 @@ import { ClassroomModule } from './pages/classroom/classroom.module';
     AngularFireStorageModule,
     AngularFireAuthModule,
     AngularFirestoreModule,
+    StoreRouterConnectingModule.forRoot({
+      serializer: CustomSerializer,
+    }),
     // StoreDevtools,
     StoreModule.forRoot(reducers, {
       runtimeChecks: {

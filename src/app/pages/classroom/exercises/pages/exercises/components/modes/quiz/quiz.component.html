@@ -1,0 +1,50 @@
+<div class="grid-container" *ngrxLet="vm$ as vm">
+  <ng-container
+    *ngIf="vm.currentWord && vm.exerciseWords && vm.testingAgainst"
+    (window:keydown.enter)="onSubmit(vm.isAnswerLocked, vm.isAnswerLocked)"
+  >
+    <app-progress-bar [progress]="vm.progress"></app-progress-bar>
+    <mat-card class="mat-elevation-z24">
+      <mat-card-title *ngIf="vm.testingAgainst === 'translation'">{{
+        vm.currentWord.original | titlecase
+      }}</mat-card-title>
+      <mat-card-title *ngIf="vm.testingAgainst === 'original'">{{
+        vm.currentWord.translation | titlecase
+      }}</mat-card-title>
+      <mat-card-subtitle *ngIf="vm.currentWord?.tips"
+        ><i class="far fa-question-circle"></i>
+        <div class="tooltip">
+          {{ vm.currentWord.tips | titlecase }}
+        </div></mat-card-subtitle
+      >
+
+      <mat-card-content *ngFor="let answerOption of vm.answerChoices">
+        <div
+          class="option"
+          [ngClass]="
+            getNgClass(
+              answerOption,
+              vm.correctAnswers,
+              vm.selectedAnswer,
+              vm.isAnswerLocked
+            )
+          "
+          (click)="selectAnswer(answerOption, vm.isAnswerLocked)"
+        >
+          <span>{{ answerOption | titlecase }}</span>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button
+          class="sbm-btn"
+          mat-button
+          color="primary"
+          (click)="onSubmit(vm.isAnswerLocked, vm.selectedAnswer)"
+        >
+          {{ vm.isAnswerLocked ? "Next" : "Check" }}
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </ng-container>
+</div>

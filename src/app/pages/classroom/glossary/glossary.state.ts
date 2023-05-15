@@ -1,7 +1,7 @@
 import { ComponentStore } from '@ngrx/component-store';
 import { Injectable } from '@angular/core';
-import { getWordsByGroupId } from '@app/pages/classroom/store/words-list';
-import { Group, getGroups } from '@app/pages/classroom/store/groups-list';
+import { selectWordsByGroupId, selectWordsByIds } from '@app/pages/classroom/store/words-list';
+import { Group, selectGroups } from '@app/pages/classroom/store/groups-list';
 import { Store } from '@ngrx/store';
 import { Observable, map } from 'rxjs';
 import { WordGridStateInterface } from './components/word-grid/word-grid.component';
@@ -39,13 +39,13 @@ export class GlossaryState extends ComponentStore<GlossaryStateModel> {
     readonly isAddingNewWord$ = this.select(state => state.addNewWordMode);
 
     // ------------- Global state selectors:
-    readonly groupsAndWordsObs$ = this.store.select(getGroups)
+    readonly groupsAndWordsObs$ = this.store.select(selectGroups)
         .pipe(
             map((groups: Group[]) => {
                 return groups.map((group) => {
                     return {
                         group,
-                        words$: this.store.select(getWordsByGroupId(group.id))
+                        words$: this.store.select(selectWordsByIds(group.wordIds))
                     }
                 })
             })
@@ -62,7 +62,7 @@ export class GlossaryState extends ComponentStore<GlossaryStateModel> {
 
     // get only unfoldable group words
     readonly unfoldableGroupWords$ = (groupId) => this.select(
-        this.store.select(getWordsByGroupId(groupId)),
+        this.store.select(selectWordsByGroupId(groupId)),
         (groupWords) => {
             return groupWords.filter((word) => word.additionalTr && word.additionalTr?.length > 0)
         }

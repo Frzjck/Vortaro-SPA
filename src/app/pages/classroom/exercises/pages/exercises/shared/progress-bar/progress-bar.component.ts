@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ProgressBarService } from '@app/services/progress-bar.service';
 import { CommonModule } from '@angular/common';
@@ -10,11 +10,11 @@ import { CommonModule } from '@angular/common';
   template: `
   <div class="content">
   <div class="container">
-    <div class="progressbar-container">
+    <div class="progress-bar-container">
       <div
-        class="progressbar"
+        class="progress-bar"
         [ngStyle]="{
-          transform: 'translateX(' + progress + '%)',
+          transform: 'translateX(' + _progress + '%)',
           transition: '0.2s ease'
         }"
       ></div>
@@ -32,7 +32,7 @@ import { CommonModule } from '@angular/common';
 
   }
 }
-.progressbar-container {
+.progress-bar-container {
   border-radius: 0.5rem;
   background-color: var(--bg-tr-cnt);
   outline: var(--tr-border-sm);
@@ -40,7 +40,7 @@ import { CommonModule } from '@angular/common';
   overflow: hidden;
   transition: all .5s ease-in;
 
-  .progressbar {
+  .progress-bar {
     width: 100%;
     height: 1.4rem;
     background-color: var(--btn-hover);
@@ -55,18 +55,11 @@ import { CommonModule } from '@angular/common';
 }
 `],
 })
-export class ProgressBarComponent implements OnInit, OnDestroy {
-  private progressSub: Subscription;
-  progress: number = -100;
+export class ProgressBarComponent {
+  _progress: number
 
-  constructor(private progressService: ProgressBarService) { }
+  @Input() set progress(value: number) {
+    this._progress = value - 100;
+  };
 
-  ngOnInit(): void {
-    this.progressSub = this.progressService.progressEmitter.subscribe((res) => {
-      this.progress += res;
-    });
-  }
-  ngOnDestroy(): void {
-    this.progressSub.unsubscribe();
-  }
 }

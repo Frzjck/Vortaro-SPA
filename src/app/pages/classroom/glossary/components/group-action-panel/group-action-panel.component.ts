@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { LetModule } from '@ngrx/component';
+import { LetDirective } from '@ngrx/component';
 
 
 export interface GroupActionPanelInputInterface {
@@ -15,7 +15,7 @@ export interface GroupActionPanelInputInterface {
 @Component({
   selector: 'app-group-action-panel',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, LetModule],
+  imports: [CommonModule, MatButtonModule, LetDirective],
   template: `
   <ng-container *ngrxLet="groupActionPanelInput as vm">
     <button

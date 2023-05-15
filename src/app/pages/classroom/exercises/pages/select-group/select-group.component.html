@@ -1,0 +1,156 @@
+<div class="card-container">
+  <div class="group-card" *ngFor="let item of groupsAndWordsObs$ | async">
+    <div class="group-card__title">
+      <span></span>
+      <h2>{{ item.group.name | titlecase }}</h2>
+      <mat-icon>expand_more</mat-icon>
+    </div>
+    <div class="group-card__content">
+      <div
+        class="group-card__content__word"
+        *ngFor="let word of item.words$ | async"
+      >
+        <div class="group-card__content__word__name">
+          <b>{{ word.original | titlecase }}</b>
+        </div>
+        -
+        <div class="group-card__content__word__translation">
+          {{ word.translation | titlecase }}
+        </div>
+      </div>
+    </div>
+    <div class="group-card__footer-actions">
+      <button
+        class="btn btn--primary"
+        [routerLink]="['../exercises', 'group', item.group.id]"
+      >
+        Start
+      </button>
+    </div>
+  </div>
+  <div class="group-card">
+    <div class="group-card__title">
+      <span></span>
+      <h2>Group 1</h2>
+      <button>unfold</button>
+    </div>
+    <div class="group-card__content">
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+    </div>
+    <div class="group-card__footer-actions">
+      <button class="btn btn--primary">Start</button>
+    </div>
+  </div>
+  <div class="group-card">
+    <div class="group-card__title">
+      <span></span>
+      <h2>Group 1</h2>
+      <button>unfold</button>
+    </div>
+    <div class="group-card__content">
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+    </div>
+    <div class="group-card__footer-actions">
+      <button class="btn btn--primary">Start</button>
+    </div>
+  </div>
+  <div class="group-card">
+    <div class="group-card__title">
+      <span></span>
+      <h2>Group 1</h2>
+      <button>unfold</button>
+    </div>
+    <div class="group-card__content">
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+    </div>
+    <div class="group-card__footer-actions">
+      <button class="btn btn--primary">Start</button>
+    </div>
+  </div>
+  <div class="group-card">
+    <div class="group-card__title">
+      <span></span>
+      <h2>Group 1</h2>
+      <button>unfold</button>
+    </div>
+    <div class="group-card__content">
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+    </div>
+    <div class="group-card__footer-actions">
+      <button class="btn btn--primary">Start</button>
+    </div>
+  </div>
+  <div class="group-card">
+    <div class="group-card__title">
+      <span></span>
+      <h2>Group 1</h2>
+      <button>unfold</button>
+    </div>
+    <div class="group-card__content">
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+      <div class="group-card__content__word"></div>
+    </div>
+    <div class="group-card__footer-actions">
+      <button class="btn btn--primary">Start</button>
+    </div>
+  </div>
+</div>
