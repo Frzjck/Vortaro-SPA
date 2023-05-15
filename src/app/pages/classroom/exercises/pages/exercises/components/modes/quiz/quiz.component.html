@@ -1,7 +1,7 @@
 <div class="grid-container" *ngrxLet="vm$ as vm">
   <ng-container
     *ngIf="vm.currentWord && vm.exerciseWords && vm.testingAgainst"
-    (window:keydown.enter)="onSubmit()"
+    (window:keydown.enter)="onSubmit(vm.isAnswerLocked, vm.isAnswerLocked)"
   >
     <app-progress-bar [progress]="vm.progress"></app-progress-bar>
     <mat-card class="mat-elevation-z24">
@@ -36,7 +36,12 @@
       </mat-card-content>
 
       <mat-card-actions>
-        <button class="sbm-btn" mat-button color="primary" (click)="onSubmit()">
+        <button
+          class="sbm-btn"
+          mat-button
+          color="primary"
+          (click)="onSubmit(vm.isAnswerLocked, vm.selectedAnswer)"
+        >
           {{ vm.isAnswerLocked ? "Next" : "Check" }}
         </button>
       </mat-card-actions>

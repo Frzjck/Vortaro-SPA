@@ -1,5 +1,8 @@
 <div class="grid-container" *ngrxLet="vm$ as vm">
-  <ng-container *ngIf="vm.currentWord" (window:keydown.enter)="onSubmit()">
+  <ng-container
+    *ngIf="vm.currentWord"
+    (window:keydown.enter)="onSubmit(vm.isAnswerLocked, vm.isAnswerLocked)"
+  >
     <app-progress-bar [progress]="vm.progress"></app-progress-bar>
     <mat-card class="mat-elevation-z24">
       <mat-card-title *ngIf="vm.testingAgainst === 'translation'">{{
@@ -44,7 +47,7 @@
           class="sbm-btn"
           mat-button
           color="primary"
-          (click)="onSubmit(vm.currentWord)"
+          (click)="onSubmit(vm.isAnswerLocked, vm.answerInput)"
         >
           {{ vm.isAnswerLocked ? "Next" : "Check" }}
         </button>

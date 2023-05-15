@@ -37,7 +37,8 @@ export class SpellingComponent implements OnInit {
     this.vm$ = this.store.select(selectSpellingViewModel);
   }
 
-  onSubmit(): void {
+  onSubmit(isAnswerLocked, selectedAnswer): void {
+    if (!isAnswerLocked && !selectedAnswer.length) return;
     this.exerciseService.onSubmitAction();
     setTimeout(() => this.wordInput?.nativeElement.focus());
   }

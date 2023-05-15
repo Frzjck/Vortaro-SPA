@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 
 import { LetDirective } from '@ngrx/component';
@@ -13,7 +14,7 @@ import { ExerciseService } from '../../../exercises.service';
 @Component({
   selector: 'app-quiz',
   standalone: true,
-  imports: [CommonModule, ProgressBarComponent, LetDirective, MatCardModule],
+  imports: [CommonModule, ProgressBarComponent, LetDirective, MatCardModule, MatButtonModule,],
   templateUrl: './quiz.component.html',
   styleUrls: ['./quiz.component.scss'],
 })
@@ -57,7 +58,8 @@ export class QuizComponent implements OnInit {
     this.store.dispatch(ExercisePageAction.updateAnswerInput({ answerInput: answer }))
   }
 
-  onSubmit(): void {
+  onSubmit(isAnswerLocked, selectedAnswer): void {
+    if (!isAnswerLocked && !selectedAnswer.length) return;
     this.exerciseService.onSubmitAction();
   }
 
