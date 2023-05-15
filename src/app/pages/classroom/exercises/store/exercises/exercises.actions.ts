@@ -1,5 +1,5 @@
 import { Word } from '@app/pages/classroom/store/words-list';
-import { createAction, createActionGroup, emptyProps, props } from '@ngrx/store';
+import { createActionGroup, emptyProps, props } from '@ngrx/store';
 
 
 export const ExerciseContainerPageAction = createActionGroup(

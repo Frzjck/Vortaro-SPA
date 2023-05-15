@@ -1,5 +1,5 @@
 import { createSelector } from "@ngrx/store";
-import { TestingAgainstType, selectCurrentWord, selectAnswerInput, selectIsActionNext, selectIsActionProofread, selectIsLastAnswerCorrect, selectProgress, selectAnswerLocked, selectTestingAgainst, selectExerciseWords, selectAnswerChoices } from "./exercises.reducer";
+import { selectCurrentWord, selectAnswerInput, selectIsActionNext, selectIsActionProofread, selectIsLastAnswerCorrect, selectProgress, selectAnswerLocked, selectTestingAgainst, selectExerciseWords, selectAnswerChoices } from "./exercises.reducer";
 import { _getAnswers, _isResponseCorrect } from "./store-utils";
 
 

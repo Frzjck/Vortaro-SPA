@@ -1,6 +1,5 @@
 import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
-import * as userActions from '@app/store/user/user.actions';
-import { Word, selectWordEntities, selectWordsByGroupId } from '@app/pages/classroom/store/words-list';
+import { Word, selectWordEntities } from '@app/pages/classroom/store/words-list';
 import { ExerciseContainerPageAPI, ExerciseContainerPageAction, ExercisePageAction, ResultsPageAction } from './exercises.actions';
 import { getParams } from '@app/store/router/router.selector';
 import { selectWords } from '@app/pages/classroom/store/words-list';

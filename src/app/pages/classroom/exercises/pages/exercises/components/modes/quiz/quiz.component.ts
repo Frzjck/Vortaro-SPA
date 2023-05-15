@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 
@@ -6,10 +6,7 @@ import { LetDirective } from '@ngrx/component';
 import { ProgressBarComponent } from '../../../shared/progress-bar/progress-bar.component';
 import { Store } from '@ngrx/store';
 import { selectQuizViewModel } from '@app/pages/classroom/exercises/store/exercises/exercises.selectors';
-import { ExercisePageAction, TestingAgainstType } from '@app/pages/classroom/exercises/store';
-import { shuffle } from '../../../utils/shuffleArray';
-import { Word } from '@app/pages/classroom/store/words-list';
-import { transition } from '@angular/animations';
+import { ExercisePageAction } from '@app/pages/classroom/exercises/store';
 import { ExerciseService } from '../../../exercises.service';
 
 
