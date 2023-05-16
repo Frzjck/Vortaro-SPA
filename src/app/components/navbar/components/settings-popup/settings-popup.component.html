@@ -1,15 +1,17 @@
-<!-- <div class="content" appStopPropagation>
+<div class="content" appStopPropagation *ngrxLet="vm$ as vm">
   <mat-card>
     <div>
-      <mat-slide-toggle (click)="onTogglePixie()" [(ngModel)]="pixie"
+      <mat-slide-toggle (click)="onTogglePixie()" [ngModel]="vm.pixie"
         ><span class="pixies-span">Pixies</span>
       </mat-slide-toggle>
     </div>
     <div>
+      <p>vm.testingAgainst</p>
+      <p>{{ vm.testingAgainst }}</p>
       <button
         class="btn btn-lang"
-        *ngIf="!translateDirection"
-        (click)="onChangeTranslateDirection()"
+        *ngIf="vm.testingAgainst === 'translation'"
+        (click)="onChangeTestingAgainst()"
       >
         <span>A</span>
         <mat-icon>swap_horiz</mat-icon>
@@ -17,15 +19,15 @@
       </button>
       <button
         class="btn btn-lang"
-        *ngIf="translateDirection"
-        (click)="onChangeTranslateDirection()"
+        *ngIf="vm.testingAgainst === 'original'"
+        (click)="onChangeTestingAgainst()"
       >
         <span>字</span>
         <mat-icon>swap_horiz</mat-icon>
         <span>A</span>
       </button>
     </div>
-    <div
+    <!-- <div
       class="palette"
       [ngClass]="{ highlight: themeOpen }"
       (click)="onPalette()"
@@ -70,6 +72,6 @@
           </mat-radio-group>
         </div>
       </div>
-    </div>
+    </div> -->
   </mat-card>
-</div> -->
+</div>

@@ -61,6 +61,14 @@ export class SettingsPopupComponent implements OnInit, OnDestroy {
     this.modeOpen = false;
   }
 
+  onTogglePixie() {
+    this.store.dispatch(SettingsPopupAction.togglePixies());
+  }
+
+  onChangeTestingAgainst() {
+    this.store.dispatch(SettingsPopupAction.toggleTestingAgainst());
+  }
+
   onModeChange(exerciseMode) {
     this.store.dispatch(SettingsPopupAction.changeExerciseMode(exerciseMode));
     // todo: Handle if Mode is changed during exercise
@@ -68,14 +76,6 @@ export class SettingsPopupComponent implements OnInit, OnDestroy {
 
   onThemeChange(activeTheme) {
     this.store.dispatch(SettingsPopupAction.changeTheme(activeTheme));
-  }
-
-  onChangeTestingAgainst(testingAgainst) {
-    this.store.dispatch(SettingsPopupAction.changeWhatTestingAgainst(testingAgainst));
-  }
-
-  onTogglePixie() {
-    this.store.dispatch(SettingsPopupAction.togglePixies());
   }
 
   onPalette() {
