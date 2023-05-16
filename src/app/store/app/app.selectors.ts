@@ -3,12 +3,17 @@ import { AppState } from './app.reducer';
 
 export const getAppState = createFeatureSelector<AppState>('app');
 
-export const isPixies = createSelector(
+export const selectIsPixies = createSelector(
     getAppState,
     (app) => app.pixies
 );
 
-export const getTheme = createSelector(
+export const selectActiveTheme = createSelector(
+    getAppState,
+    (app) => app.activeTheme
+);
+
+export const selectAllThemes = createSelector(
     getAppState,
     (app) => app.activeTheme
 );
