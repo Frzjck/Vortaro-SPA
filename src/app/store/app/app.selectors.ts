@@ -15,6 +15,6 @@ export const selectActiveTheme = createSelector(
 
 export const selectAllThemes = createSelector(
     getAppState,
-    (app) => app.activeTheme
+    (app) => app.allThemes
 );
 

@@ -9,7 +9,7 @@ export enum ThemeType {
 
 export interface AppState {
     pixies: boolean;
-    allThemes: Array<ThemeType>
+    allThemes: ThemeType[];
     activeTheme: ThemeType;
     typeOfOS: string;
 }
