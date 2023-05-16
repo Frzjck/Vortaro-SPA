@@ -48,6 +48,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { ClassroomModule } from './pages/classroom/classroom.module';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { CustomSerializer } from './store/router/custom-serializer';
+import { LetDirective } from '@ngrx/component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { CustomSerializer } from './store/router/custom-serializer';
     ClassroomModule,
     BrowserModule,
     AppRoutingModule,
+    LetDirective,
     MatInputModule,
     MatCardModule,
     MatRadioModule,
