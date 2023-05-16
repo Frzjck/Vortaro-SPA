@@ -2,6 +2,10 @@ import { createReducer, on } from '@ngrx/store';
 import { changeTheme, togglePixies } from './app.actions';
 
 
+export enum ThemeType {
+    BLUE = "blue",
+    BROWN = "brown"
+};
 
 export interface AppState {
     pixies: boolean;
