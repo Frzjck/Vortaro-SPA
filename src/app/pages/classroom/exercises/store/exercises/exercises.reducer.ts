@@ -24,6 +24,8 @@ export enum ExerciseStatusType {
 
 export interface ExercisesState {
     exerciseMode: ExerciseModeType;
+    allExerciseModes: Array<ExerciseModeType>
+
     exerciseStatus: ExerciseStatusType;
     randomSeed: number;
 
@@ -48,6 +50,8 @@ export interface ExercisesState {
 
 export const initialState: ExercisesState = {
     exerciseMode: ExerciseModeType.QUIZ,
+    allExerciseModes: [ExerciseModeType.QUIZ, ExerciseModeType.SPELLING],
+
     exerciseStatus: ExerciseStatusType.START,
     randomSeed: 0,
 
@@ -89,14 +93,13 @@ export const exercisesFeature = createFeature({
                 return { ...state, answerLocked: false }
             }
         }),
-        on(ExercisePageAction.updateAnswerInput, (state, { answerInput }) => ({ ...state, answerInput })),
+        on(ExercisePageAction.updateAnswerInput,
+            ExercisePageAction.storeAnswerChoices,
+            ExerciseContainerPageAPI.storeExerciseWords, (state, payload) => ({ ...state, ...payload })),
+
         on(ExercisePageAction.clearAnswerInput, (state) => ({ ...state, answerInput: initialState.answerInput })),
         on(ExercisePageAction.displayCorrectInInput, (state) => ({ ...state, answerInput: "Correct" })),
         on(ExercisePageAction.displayWrongInInput, (state) => ({ ...state, answerInput: "Wrong" })),
-        on(ExercisePageAction.storeAnswerChoices, (state, { answerChoices }) => ({ ...state, answerChoices })),
-
-
-        on(ExerciseContainerPageAPI.storeExerciseWords, (state, { exerciseWords }) => ({ ...state, exerciseWords: exerciseWords })),
     ),
 
     extraSelectors: ({ selectRandomSeed, selectActiveWordIndex, selectExerciseWords, selectWordsCompleted, selectAnswerLocked }) => ({
