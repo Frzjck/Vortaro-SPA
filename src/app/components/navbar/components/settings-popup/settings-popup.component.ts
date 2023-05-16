@@ -4,6 +4,7 @@ import { ExerciseModeType, TestingAgainstType, selectAllExerciseModes, selectExe
 import { ThemeType, selectActiveTheme, selectAllThemes, selectIsPixies } from '@app/store/app';
 import { Store } from '@ngrx/store';
 import { Observable, combineLatest, map } from 'rxjs';
+import { SettingsPopupAction } from './settings-popup.actions';
 
 interface SettingsPopup {
   isPixies: boolean;
@@ -28,6 +29,7 @@ export class SettingsPopupComponent implements OnInit, OnDestroy {
   subDropOpen = false;
   themeOpen = false;
   modeOpen = false;
+
   vm$: Observable<SettingsPopup>;
 
   constructor(private store: Store) { }
@@ -59,12 +61,21 @@ export class SettingsPopupComponent implements OnInit, OnDestroy {
     this.modeOpen = false;
   }
 
-  onModeSelect() {
-
-    // todo: Handle if Mode is changed during practice
+  onModeChange(exerciseMode) {
+    this.store.dispatch(SettingsPopupAction.changeExerciseMode(exerciseMode));
+    // todo: Handle if Mode is changed during exercise
   }
 
-  onThemeSelect() {
+  onThemeChange(activeTheme) {
+    this.store.dispatch(SettingsPopupAction.changeTheme(activeTheme));
+  }
+
+  onChangeTestingAgainst(testingAgainst) {
+    this.store.dispatch(SettingsPopupAction.changeWhatTestingAgainst(testingAgainst));
+  }
+
+  onTogglePixie() {
+    this.store.dispatch(SettingsPopupAction.togglePixies());
   }
 
   onPalette() {
@@ -77,11 +88,5 @@ export class SettingsPopupComponent implements OnInit, OnDestroy {
     this.subDropOpen = true;
     this.themeOpen = false;
     this.modeOpen = true;
-  }
-
-  onChangeTranslateDirection() {
-  }
-
-  onTogglePixie() {
   }
 }
