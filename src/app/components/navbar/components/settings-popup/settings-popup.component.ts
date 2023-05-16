@@ -1,8 +1,5 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { SettingsService } from '../../../../services/settings.service';
-import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-settings-popup',
@@ -18,54 +15,33 @@ export class SettingsPopupComponent implements OnInit, OnDestroy {
   subDropOpen = false;
   themeOpen = false;
   modeOpen = false;
-  translateDirection: boolean;
+
+  // translateDirection: boolean;
   // Theme Select
-  activeTheme: string;
-  themes: string[] = ['blue', 'brown'];
+  // activeTheme: string;
+  // themes: string[] = ['blue', 'brown'];
   // Mode Select
-  modes: string[] = ['quiz', 'spelling'];
-  urlArr = [];
+  // modes: string[] = ['quiz', 'spelling'];
+  // activeMode: string;
+  // pixie: boolean = false;
 
-  activeMode: string;
-  themeSub: Subscription;
-
-  typeOfOS: string;
-
-  pixie: boolean = false;
-
-  constructor(private settings: SettingsService, private router: Router) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.themeSub = this.settings.activeThemeSub.subscribe((theme) => {
-      this.activeTheme = theme;
-    });
-    this.activeMode = this.settings.exerciseMode;
-    this.translateDirection = this.settings.translateDirection;
-
-    this.pixie = this.settings.pixie;
   }
 
   ngOnDestroy(): void {
     this.subDropOpen = false;
     this.themeOpen = false;
     this.modeOpen = false;
-    this.themeSub.unsubscribe();
   }
 
   onModeSelect() {
-    this.settings.changeExerciseMode(this.activeMode);
-    // Reload if Mode is changed during practice
-    this.urlArr = this.router.url.split('/');
-    this.urlArr.includes('quiz');
-    if (this.urlArr.includes('quiz')) {
-      let index = this.urlArr.indexOf('quiz');
-      this.urlArr[index] = this.activeMode;
-      this.urlArr.join('/');
-    }
+
+    // todo: Handle if Mode is changed during practice
   }
 
   onThemeSelect() {
-    this.settings.changeTheme(this.activeTheme);
   }
 
   onPalette() {
@@ -81,11 +57,8 @@ export class SettingsPopupComponent implements OnInit, OnDestroy {
   }
 
   onChangeTranslateDirection() {
-    this.settings.changeTranslateDirection();
-    this.translateDirection = this.settings.getTranslateDirection();
   }
 
   onTogglePixie() {
-    this.settings.togglePixie();
   }
 }
