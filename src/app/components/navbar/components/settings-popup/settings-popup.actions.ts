@@ -8,9 +8,9 @@ export const SettingsPopupAction = createActionGroup(
         source: 'Settings Popup',
         events: {
             "Toggle Pixies": emptyProps(),
-            "Change Exercise Mode": props<{ exerciseMode: ExerciseModeType }>(),
+            "Toggle Testing Against": emptyProps(),
             "Change Theme": props<{ activeTheme: ThemeType }>(),
-            "Change What Testing Against": props<{ testingAgainst: TestingAgainstType }>(),
+            "Change Exercise Mode": props<{ exerciseMode: ExerciseModeType }>(),
         },
     }
 )
