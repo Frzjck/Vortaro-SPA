@@ -1,9 +1,18 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { selectAllExerciseModes, selectExerciseMode, selectTestingAgainst } from '@app/pages/classroom/exercises/store';
-import { selectActiveTheme, selectAllThemes, selectIsPixies } from '@app/store/app';
+import { ExerciseModeType, TestingAgainstType, selectAllExerciseModes, selectExerciseMode, selectTestingAgainst } from '@app/pages/classroom/exercises/store';
+import { ThemeType, selectActiveTheme, selectAllThemes, selectIsPixies } from '@app/store/app';
 import { Store } from '@ngrx/store';
 import { Observable, combineLatest, map } from 'rxjs';
+
+interface SettingsPopup {
+  isPixies: boolean;
+  activeTheme: ThemeType,
+  allThemes: ThemeType[],
+  exerciseMode: ExerciseModeType,
+  allExerciseModes: ExerciseModeType[],
+  testingAgainst: TestingAgainstType,
+}
 
 @Component({
   selector: 'app-settings-popup',
@@ -19,23 +28,29 @@ export class SettingsPopupComponent implements OnInit, OnDestroy {
   subDropOpen = false;
   themeOpen = false;
   modeOpen = false;
-  pixies$: Observable<boolean>;
-  activeTheme$
-  getAllThemes$
-  activeMode$
-  allExerciseModes$
-  testingAgainst$
+  vm$: Observable<SettingsPopup>;
 
   constructor(private store: Store) { }
 
   ngOnInit(): void {
-    this.pixies$ = this.store.select(selectIsPixies);
-    this.activeTheme$ = this.store.select(selectActiveTheme);
-    this.getAllThemes$ = this.store.select(selectAllThemes);
-    this.activeMode$ = this.store.select(selectExerciseMode);
-    this.allExerciseModes$ = this.store.select(selectAllExerciseModes);
-    this.testingAgainst$ = this.store.select(selectTestingAgainst);
 
+    this.vm$ = combineLatest([
+      this.store.select(selectIsPixies),
+      this.store.select(selectActiveTheme),
+      this.store.select(selectAllThemes),
+      this.store.select(selectExerciseMode),
+      this.store.select(selectAllExerciseModes),
+      this.store.select(selectTestingAgainst),
+    ]).pipe(
+      map(([isPixies, activeTheme, allThemes, exerciseMode, allExerciseModes, testingAgainst]) => ({
+        isPixies,
+        activeTheme,
+        allThemes,
+        exerciseMode,
+        allExerciseModes,
+        testingAgainst,
+      })
+      ))
   }
 
   ngOnDestroy(): void {
