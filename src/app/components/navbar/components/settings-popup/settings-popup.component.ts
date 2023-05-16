@@ -1,5 +1,9 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { selectAllExerciseModes, selectExerciseMode, selectTestingAgainst } from '@app/pages/classroom/exercises/store';
+import { selectActiveTheme, selectAllThemes, selectIsPixies } from '@app/store/app';
+import { Store } from '@ngrx/store';
+import { Observable, combineLatest, map } from 'rxjs';
 
 @Component({
   selector: 'app-settings-popup',
@@ -15,19 +19,23 @@ export class SettingsPopupComponent implements OnInit, OnDestroy {
   subDropOpen = false;
   themeOpen = false;
   modeOpen = false;
+  pixies$: Observable<boolean>;
+  activeTheme$
+  getAllThemes$
+  activeMode$
+  allExerciseModes$
+  testingAgainst$
 
-  // translateDirection: boolean;
-  // Theme Select
-  // activeTheme: string;
-  // themes: string[] = ['blue', 'brown'];
-  // Mode Select
-  // modes: string[] = ['quiz', 'spelling'];
-  // activeMode: string;
-  // pixie: boolean = false;
-
-  constructor() { }
+  constructor(private store: Store) { }
 
   ngOnInit(): void {
+    this.pixies$ = this.store.select(selectIsPixies);
+    this.activeTheme$ = this.store.select(selectActiveTheme);
+    this.getAllThemes$ = this.store.select(selectAllThemes);
+    this.activeMode$ = this.store.select(selectExerciseMode);
+    this.allExerciseModes$ = this.store.select(selectAllExerciseModes);
+    this.testingAgainst$ = this.store.select(selectTestingAgainst);
+
   }
 
   ngOnDestroy(): void {

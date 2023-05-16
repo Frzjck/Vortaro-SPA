@@ -170,6 +170,7 @@ export const {
     selectExercisesState,
     selectTestingAgainst,
     selectExerciseMode,
+    selectAllExerciseModes,
     selectAnswerChoices,
     selectWordsCompleted,
     selectExerciseStatus,

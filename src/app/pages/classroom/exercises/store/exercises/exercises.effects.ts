@@ -8,10 +8,6 @@ import { selectCurrentWord, selectExerciseWords, selectTestingAgainst } from "./
 import { _generateAnswerChoices } from "./store-utils";
 
 
-
-
-
-
 @Injectable()
 export class ExercisesEffects {
     constructor(
