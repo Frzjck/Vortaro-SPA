@@ -7,11 +7,19 @@ export enum ThemeType {
     BROWN = "brown"
 };
 
+export enum ExerciseModeType {
+    SPELLING = "spelling",
+    QUIZ = "quiz"
+};
+
 export interface AppState {
     pixies: boolean;
     allThemes: ThemeType[];
     activeTheme: ThemeType;
     typeOfOS: string;
+
+    exerciseMode: ExerciseModeType;
+    allExerciseModes: Array<ExerciseModeType>
 }
 
 export const initialState: AppState = {
@@ -19,6 +27,10 @@ export const initialState: AppState = {
     allThemes: [ThemeType.BLUE, ThemeType.BROWN],
     activeTheme: ThemeType.BLUE,
     typeOfOS: "Windows",
+
+    exerciseMode: ExerciseModeType.QUIZ,
+    allExerciseModes: [ExerciseModeType.QUIZ, ExerciseModeType.SPELLING],
+
 };
 
 export const reducer = createReducer(

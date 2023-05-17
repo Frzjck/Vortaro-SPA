@@ -1,20 +1,17 @@
 import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
-import { Word, selectWordEntities } from '@app/pages/classroom/store/words-list';
+
 import { ExerciseContainerPageAPI, ExerciseContainerPageAction, ExercisePageAction, ResultsPageAction } from './practice.actions';
+import { ExerciseModeType } from '@app/store/app';
 import { getParams } from '@app/store/router/router.selector';
-import { selectWords } from '@app/pages/classroom/store/words-list';
-import { shuffle } from '../../pages/exercises/utils/shuffleArray';
-import { selectGroupEntities } from '@app/pages/classroom/store/groups-list';
+import { shuffle } from '@exercises/utils/shuffleArray';
+import { Word, selectWordEntities } from '@classroom/store/words-list';
+import { selectWords } from '@classroom/store/words-list';
+import { selectGroupEntities } from '@classroom/store/groups-list';
 
 
 export enum TestingAgainstType {
     ORIGINAL = "original",
     TRANSLATION = "translation"
-};
-
-export enum ExerciseModeType {
-    SPELLING = "spelling",
-    QUIZ = "quiz"
 };
 
 export enum ExerciseStatusType {
@@ -24,7 +21,6 @@ export enum ExerciseStatusType {
 
 export interface ExercisesState {
     exerciseMode: ExerciseModeType;
-    allExerciseModes: Array<ExerciseModeType>
 
     exerciseStatus: ExerciseStatusType;
     randomSeed: number;
@@ -50,7 +46,6 @@ export interface ExercisesState {
 
 export const initialState: ExercisesState = {
     exerciseMode: ExerciseModeType.QUIZ,
-    allExerciseModes: [ExerciseModeType.QUIZ, ExerciseModeType.SPELLING],
 
     exerciseStatus: ExerciseStatusType.START,
     randomSeed: 0,
@@ -170,7 +165,6 @@ export const {
     selectExercisesState,
     selectTestingAgainst,
     selectExerciseMode,
-    selectAllExerciseModes,
     selectAnswerChoices,
     selectWordsCompleted,
     selectExerciseStatus,

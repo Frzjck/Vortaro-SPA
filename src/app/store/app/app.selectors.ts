@@ -18,3 +18,7 @@ export const selectAllThemes = createSelector(
     (app) => app.allThemes
 );
 
+export const selectAllExerciseModes = createSelector(
+    getAppState,
+    (app) => app.allExerciseModes
+);
