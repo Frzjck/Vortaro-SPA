@@ -1,5 +1,4 @@
 import { createReducer, on } from '@ngrx/store';
-import { changeTheme, togglePixies } from './app.actions';
 import { SettingsPopupAction } from '@app/components/navbar/components/settings-popup/settings-popup.actions';
 
 
@@ -51,5 +50,6 @@ export const reducer = createReducer(
         else newTestAgainst = TestingAgainstType.TRANSLATION;
         return { ...state, baseTestingAgainst: newTestAgainst };
     }),
-    on(SettingsPopupAction.changeTheme, SettingsPopupAction.changeExerciseMode, (state, payload) => ({ ...state, ...payload })),
+    on(SettingsPopupAction.changeTheme, SettingsPopupAction.changeExerciseMode, (state, payload) => ({ ...state, ...payload })
+    ),
 );

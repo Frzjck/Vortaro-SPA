@@ -75,8 +75,9 @@ export class SettingsPopupComponent implements OnInit, OnDestroy {
   }
 
   onThemeChange(activeTheme) {
-    this.store.dispatch(SettingsPopupAction.changeTheme(activeTheme));
+    this.store.dispatch(SettingsPopupAction.changeTheme({ activeTheme }));
   }
+
 
   onPalette() {
     this.subDropOpen = true;
