@@ -45,4 +45,5 @@ export const reducer = createReducer(
     initialState,
     on(SettingsPopupAction.togglePixies, (state) => ({ ...state, pixies: !state.pixies })),
     on(changeTheme, (state, payload) => ({ ...state, ...payload })),
+    on(SettingsPopupAction.changeTheme, (state, payload) => ({ ...state, ...payload })),
 );
