@@ -24,8 +24,6 @@ export interface ExercisesState {
     exerciseWords: Word[];
     answerChoices: string[];
 
-    // This option determines what is being tested, your knowledge of meaning of a foreign word if true,
-    // and your knowledge of spelling if false
     currentTestingAgainst: TestingAgainstType;
 
     activeWordIndex: number;
