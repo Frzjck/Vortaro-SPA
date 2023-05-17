@@ -4,7 +4,7 @@ import { ExercisePageAction } from "./practice.actions";
 import { of } from "rxjs";
 import { Store } from "@ngrx/store";
 import { switchMap, debounceTime } from 'rxjs/operators';
-import { selectCurrentWord, selectExerciseWords, selectTestingAgainst } from "./practice.reducer";
+import { selectCurrentWord, selectExerciseWords, selectCurrentTestingAgainst } from "./practice.reducer";
 import { _generateAnswerChoices } from "./store-utils";
 
 
@@ -21,7 +21,7 @@ export class ExercisesEffects {
         concatLatestFrom((action) => [
             this.store.select(selectCurrentWord),
             this.store.select(selectExerciseWords),
-            this.store.select(selectTestingAgainst),
+            this.store.select(selectCurrentTestingAgainst),
         ]),
         switchMap(([action, currentWord, exerciseWords, testingAgainst]) => {
             const answerChoices = _generateAnswerChoices(currentWord, exerciseWords, testingAgainst);

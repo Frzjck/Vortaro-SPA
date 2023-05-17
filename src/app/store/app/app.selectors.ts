@@ -27,3 +27,8 @@ export const selectBaseExerciseMode = createSelector(
     getAppState,
     (app) => app.baseExerciseMode
 );
+
+export const selectBaseTestingAgainst = createSelector(
+    getAppState,
+    (app) => app.baseTestingAgainst
+);

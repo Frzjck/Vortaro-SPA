@@ -1,30 +1,30 @@
 import { createSelector } from "@ngrx/store";
-import { selectCurrentWord, selectAnswerInput, selectIsActionNext, selectIsActionProofread, selectIsLastAnswerCorrect, selectProgress, selectAnswerLocked, selectTestingAgainst, selectExerciseWords, selectAnswerChoices } from "./practice.reducer";
+import { selectCurrentWord, selectAnswerInput, selectIsActionNext, selectIsActionProofread, selectIsLastAnswerCorrect, selectProgress, selectAnswerLocked, selectCurrentTestingAgainst, selectExerciseWords, selectAnswerChoices } from "./practice.reducer";
 import { _getAnswers, _isResponseCorrect } from "./store-utils";
 
 
 
 export const selectCorrectAnswers = createSelector(
     selectCurrentWord,
-    selectTestingAgainst,
-    (currentWord, testingAgainst) => {
-        return _getAnswers([currentWord], testingAgainst);
+    selectCurrentTestingAgainst,
+    (currentWord, currentTestingAgainst) => {
+        return _getAnswers([currentWord], currentTestingAgainst);
     }
 );
 
 export const selectIsResponseCorrect = createSelector(
     selectCurrentWord,
     selectAnswerInput,
-    selectTestingAgainst,
-    (currentWord, answer, testingAgainst) => {
-        return _isResponseCorrect(currentWord, answer, testingAgainst);
+    selectCurrentTestingAgainst,
+    (currentWord, answer, currentTestingAgainst) => {
+        return _isResponseCorrect(currentWord, answer, currentTestingAgainst);
     }
 );
 
 
 export const selectSpellingViewModel = createSelector(
     selectCurrentWord,
-    selectTestingAgainst,
+    selectCurrentTestingAgainst,
     selectIsLastAnswerCorrect,
     selectProgress,
     selectAnswerInput,
@@ -53,7 +53,7 @@ export const selectSpellingViewModel = createSelector(
 export const selectQuizViewModel = createSelector(
     selectCurrentWord,
     selectExerciseWords,
-    selectTestingAgainst,
+    selectCurrentTestingAgainst,
     selectIsLastAnswerCorrect,
     selectProgress,
     selectAnswerInput,

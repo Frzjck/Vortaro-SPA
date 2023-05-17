@@ -1,18 +1,14 @@
 import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
 
 import { ExerciseContainerPageAPI, ExerciseContainerPageAction, ExercisePageAction, ResultsPageAction } from './practice.actions';
-import { ExerciseModeType } from '@app/store/app';
+import { ExerciseModeType, TestingAgainstType } from '@app/store/app';
 import { getParams } from '@app/store/router/router.selector';
 import { shuffle } from '@exercises/utils/shuffleArray';
-import { Word, selectWordEntities } from '@classroom/store/words-list';
-import { selectWords } from '@classroom/store/words-list';
+import { Word, selectWordEntities, selectWords } from '@classroom/store/words-list';
 import { selectGroupEntities } from '@classroom/store/groups-list';
 
+export { ExerciseModeType, TestingAgainstType } from '@app/store/app';
 
-export enum TestingAgainstType {
-    ORIGINAL = "original",
-    TRANSLATION = "translation"
-};
 
 export enum ExerciseStatusType {
     START = "start",
@@ -30,7 +26,7 @@ export interface ExercisesState {
 
     // This option determines what is being tested, your knowledge of meaning of a foreign word if true,
     // and your knowledge of spelling if false
-    testingAgainst: TestingAgainstType;
+    currentTestingAgainst: TestingAgainstType;
 
     activeWordIndex: number;
     isLastAnswerCorrect: boolean;
@@ -53,7 +49,7 @@ export const initialState: ExercisesState = {
     exerciseWords: [],
     answerChoices: [],
 
-    testingAgainst: TestingAgainstType.TRANSLATION,
+    currentTestingAgainst: TestingAgainstType.TRANSLATION,
 
     activeWordIndex: 0,
     resultScores: [],
@@ -163,7 +159,7 @@ export const {
     reducer,
     selectAnswerInput,
     selectExercisesState,
-    selectTestingAgainst,
+    selectCurrentTestingAgainst,
     selectCurrentExerciseMode,
     selectAnswerChoices,
     selectWordsCompleted,

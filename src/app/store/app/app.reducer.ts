@@ -12,6 +12,11 @@ export enum ExerciseModeType {
     QUIZ = "quiz"
 };
 
+export enum TestingAgainstType {
+    ORIGINAL = "original",
+    TRANSLATION = "translation"
+};
+
 export interface AppState {
     pixies: boolean;
     allThemes: ThemeType[];
@@ -20,6 +25,8 @@ export interface AppState {
 
     baseExerciseMode: ExerciseModeType;
     allExerciseModes: Array<ExerciseModeType>
+
+    baseTestingAgainst: TestingAgainstType;
 }
 
 export const initialState: AppState = {
@@ -31,6 +38,7 @@ export const initialState: AppState = {
     baseExerciseMode: ExerciseModeType.QUIZ,
     allExerciseModes: [ExerciseModeType.QUIZ, ExerciseModeType.SPELLING],
 
+    baseTestingAgainst: TestingAgainstType.TRANSLATION,
 };
 
 export const reducer = createReducer(
