@@ -35,7 +35,6 @@ export class QuizComponent implements OnInit {
   ngOnInit(): void {
     this.vm$ = this.store.select(selectQuizViewModel);
     this.store.dispatch(ExercisePageAction.loadAnswerChoices());
-    this.vm$.subscribe(console.log)
   }
 
   getNgClass(optionAnswer: string, correctAnswers: Array<string>, selectedAnswer: string, isAnswerLocked: boolean) {

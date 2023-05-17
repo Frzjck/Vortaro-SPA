@@ -21,7 +21,6 @@ export const _generateAnswerChoices = (currentWord: Word, currentWordSet: Word[]
 
     const presentedAnswers = [...wrongAnswersSlice, ...correctAnswersSlice];
     const shuffledPossibleAnswers = shuffle(presentedAnswers);
-    console.log("----->>>>>> shuffledPossibleAnswers", shuffledPossibleAnswers)
     return shuffledPossibleAnswers;
 }
 
