@@ -34,6 +34,7 @@ export class ExerciseContainerComponent {
   public exerciseStatus$ = this.store.select(selectExerciseStatus)
 
   ngOnInit() {
+    this.store.dispatch(ExerciseContainerPageAction.enter());
     // once solved, ↓↓↓ can be replaced with a selector and the commented effect located in exercises.effects.ts (?) https://stackoverflow.com/questions/76201795/ngrx-operation-duplicity
     this.store.select(getParams).pipe(
       take(1),

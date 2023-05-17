@@ -32,7 +32,7 @@ export class ExercisesEffects {
     ))
 
     loadCurrentSettings$ = createEffect(() => this.actions$.pipe(
-        ofType(ExerciseContainerPageAction.loadCurrentSettings),
+        ofType(ExerciseContainerPageAction.enter),
         concatLatestFrom((action) => [
             this.store.select(selectBaseExerciseMode),
             this.store.select(selectBaseTestingAgainst),
