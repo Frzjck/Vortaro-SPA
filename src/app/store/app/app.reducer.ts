@@ -1,5 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { changeTheme, togglePixies } from './app.actions';
+import { SettingsPopupAction } from '@app/components/navbar/components/settings-popup/settings-popup.actions';
 
 
 export enum ThemeType {
@@ -44,6 +45,11 @@ export const initialState: AppState = {
 export const reducer = createReducer(
     initialState,
     on(SettingsPopupAction.togglePixies, (state) => ({ ...state, pixies: !state.pixies })),
-    on(changeTheme, (state, payload) => ({ ...state, ...payload })),
+    on(SettingsPopupAction.toggleTestingAgainst, (state) => {
+        let newTestAgainst;
+        if (state.baseTestingAgainst === TestingAgainstType.TRANSLATION) newTestAgainst = TestingAgainstType.ORIGINAL;
+        else newTestAgainst = TestingAgainstType.TRANSLATION;
+        return { ...state, baseTestingAgainst: newTestAgainst };
+    }),
     on(SettingsPopupAction.changeTheme, (state, payload) => ({ ...state, ...payload })),
 );
