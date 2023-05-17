@@ -43,6 +43,6 @@ export const initialState: AppState = {
 
 export const reducer = createReducer(
     initialState,
-    on(togglePixies, (state) => ({ ...state, pixies: !state.pixies })),
+    on(SettingsPopupAction.togglePixies, (state) => ({ ...state, pixies: !state.pixies })),
     on(changeTheme, (state, payload) => ({ ...state, ...payload })),
 );
