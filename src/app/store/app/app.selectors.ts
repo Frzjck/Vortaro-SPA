@@ -22,3 +22,8 @@ export const selectAllExerciseModes = createSelector(
     getAppState,
     (app) => app.allExerciseModes
 );
+
+export const selectBaseExerciseMode = createSelector(
+    getAppState,
+    (app) => app.baseExerciseMode
+);

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { firstValueFrom } from 'rxjs';
 
-import { ExercisePageAction, selectAnswerLocked, selectExerciseMode, } from '@practice/store';
+import { ExercisePageAction, selectAnswerLocked, selectCurrentExerciseMode, } from '@practice/store';
 import { selectIsResponseCorrect } from '../../store/practice/practice.selectors';
 
 @Injectable({
@@ -27,7 +27,7 @@ export class ExerciseService {
     //check if solution is correct
     const isCorrect = await firstValueFrom(this.store.select(selectIsResponseCorrect)) as boolean;
     this.store.dispatch(ExercisePageAction.addAnswerBoolToResults({ answerBool: isCorrect }));
-    if ((await firstValueFrom(this.store.select(selectExerciseMode))) === "quiz") return;
+    if ((await firstValueFrom(this.store.select(selectCurrentExerciseMode))) === "quiz") return;
 
     if (isCorrect) this.store.dispatch(ExercisePageAction.displayCorrectInInput())
     else this.store.dispatch(ExercisePageAction.displayWrongInInput())

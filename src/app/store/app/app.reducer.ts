@@ -18,7 +18,7 @@ export interface AppState {
     activeTheme: ThemeType;
     typeOfOS: string;
 
-    exerciseMode: ExerciseModeType;
+    baseExerciseMode: ExerciseModeType;
     allExerciseModes: Array<ExerciseModeType>
 }
 
@@ -28,7 +28,7 @@ export const initialState: AppState = {
     activeTheme: ThemeType.BLUE,
     typeOfOS: "Windows",
 
-    exerciseMode: ExerciseModeType.QUIZ,
+    baseExerciseMode: ExerciseModeType.QUIZ,
     allExerciseModes: [ExerciseModeType.QUIZ, ExerciseModeType.SPELLING],
 
 };

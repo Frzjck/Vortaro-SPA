@@ -4,8 +4,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, combineLatest, map } from 'rxjs';
 
 import { SettingsPopupAction } from './settings-popup.actions';
-import { ExerciseModeType, ThemeType, selectActiveTheme, selectAllExerciseModes, selectAllThemes, selectIsPixies } from '@app/store/app';
-import { TestingAgainstType, selectExerciseMode, selectTestingAgainst } from '@practice/store';
+import { ExerciseModeType, ThemeType, selectActiveTheme, selectAllExerciseModes, selectAllThemes, selectBaseExerciseMode, selectIsPixies } from '@app/store/app';
+import { TestingAgainstType, selectTestingAgainst } from '@practice/store';
 
 interface SettingsPopup {
   isPixies: boolean;
@@ -41,7 +41,7 @@ export class SettingsPopupComponent implements OnInit, OnDestroy {
       this.store.select(selectIsPixies),
       this.store.select(selectActiveTheme),
       this.store.select(selectAllThemes),
-      this.store.select(selectExerciseMode),
+      this.store.select(selectBaseExerciseMode),
       this.store.select(selectAllExerciseModes),
       this.store.select(selectTestingAgainst),
     ]).pipe(
