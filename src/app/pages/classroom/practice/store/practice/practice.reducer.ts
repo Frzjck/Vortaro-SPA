@@ -1,6 +1,6 @@
 import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
 import { Word, selectWordEntities } from '@app/pages/classroom/store/words-list';
-import { ExerciseContainerPageAPI, ExerciseContainerPageAction, ExercisePageAction, ResultsPageAction } from './exercises.actions';
+import { ExerciseContainerPageAPI, ExerciseContainerPageAction, ExercisePageAction, ResultsPageAction } from './practice.actions';
 import { getParams } from '@app/store/router/router.selector';
 import { selectWords } from '@app/pages/classroom/store/words-list';
 import { shuffle } from '../../pages/exercises/utils/shuffleArray';

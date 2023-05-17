@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
 import { createEffect, Actions, ofType, concatLatestFrom } from '@ngrx/effects';
-import { ExercisePageAction } from "./exercises.actions";
+import { ExercisePageAction } from "./practice.actions";
 import { of } from "rxjs";
 import { Store } from "@ngrx/store";
 import { switchMap, debounceTime } from 'rxjs/operators';
-import { selectCurrentWord, selectExerciseWords, selectTestingAgainst } from "./exercises.reducer";
+import { selectCurrentWord, selectExerciseWords, selectTestingAgainst } from "./practice.reducer";
 import { _generateAnswerChoices } from "./store-utils";
 
 

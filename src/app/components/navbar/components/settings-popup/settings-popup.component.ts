@@ -1,10 +1,11 @@
+import { Store } from '@ngrx/store';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ExerciseModeType, TestingAgainstType, selectAllExerciseModes, selectExerciseMode, selectTestingAgainst } from '@app/pages/classroom/exercises/store';
-import { ThemeType, selectActiveTheme, selectAllThemes, selectIsPixies } from '@app/store/app';
-import { Store } from '@ngrx/store';
 import { Observable, combineLatest, map } from 'rxjs';
+
 import { SettingsPopupAction } from './settings-popup.actions';
+import { ThemeType, selectActiveTheme, selectAllThemes, selectIsPixies } from '@app/store/app';
+import { ExerciseModeType, TestingAgainstType, selectAllExerciseModes, selectExerciseMode, selectTestingAgainst } from '@practice/store';
 
 interface SettingsPopup {
   isPixies: boolean;

@@ -12,11 +12,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { Store } from '@ngrx/store';
 import { LetDirective } from '@ngrx/component';
-import { ProgressBarComponent } from '@exercises/pages/exercises/shared/progress-bar/progress-bar.component';
-import { ExercisePageAction } from '@exercises/store/exercises';
-import { ExerciseService } from '@exercises/pages/exercises/exercises.service';
-import { AutoFocus } from '@exercises/pages/exercises/shared/directives/auto-focus.directive';
-import { selectSpellingViewModel } from '@exercises/store/exercises/exercises.selectors';
+import { ProgressBarComponent } from '@exercises/shared/progress-bar/progress-bar.component';
+import { ExercisePageAction, selectSpellingViewModel } from '@practice/store/practice';
+import { ExerciseService } from '@exercises/exercise.service';
+import { AutoFocus } from '@exercises/shared/directives/auto-focus.directive';
 
 @Component({
   selector: 'app-spelling',

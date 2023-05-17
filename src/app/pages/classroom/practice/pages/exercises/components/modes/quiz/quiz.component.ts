@@ -4,11 +4,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 
 import { LetDirective } from '@ngrx/component';
-import { ProgressBarComponent } from '../../../shared/progress-bar/progress-bar.component';
+import { ProgressBarComponent } from '@exercises/shared/progress-bar/progress-bar.component';
 import { Store } from '@ngrx/store';
-import { selectQuizViewModel } from '@app/pages/classroom/exercises/store/exercises/exercises.selectors';
-import { ExercisePageAction } from '@app/pages/classroom/exercises/store';
-import { ExerciseService } from '../../../exercises.service';
+import { ExercisePageAction, selectQuizViewModel } from '@practice/store';
+import { ExerciseService } from '@exercises/exercise.service';
 
 
 @Component({

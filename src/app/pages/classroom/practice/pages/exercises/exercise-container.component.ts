@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { QuizComponent } from './components/modes/quiz/quiz.component';
-import { SpellingComponent } from './components/modes/spelling/spelling.component';
-import { RouterModule } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { ResultsComponent } from './components/results/results.component';
-import { ExerciseContainerPageAPI, ExerciseContainerPageAction, getRandomWords, getWorstWords, selectExerciseMode, selectExerciseStatus } from '@exercises/store/exercises';
-import { getParams } from '@app/store/router/router.selector';
-import { switchCase } from './utils/switchCase';
 import { take } from 'rxjs';
-import { Word, selectWordsByGroupId } from '@app/pages/classroom/store/words-list';
+import { Store } from '@ngrx/store';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+
+import { switchCase } from './utils/switchCase';
+import { getParams } from '@app/store/router/router.selector';
+import { Word, selectWordsByGroupId } from '@classroom/store/words-list';
+import { QuizComponent } from './components/modes/quiz/quiz.component';
+import { ResultsComponent } from './components/results/results.component';
+import { SpellingComponent } from './components/modes/spelling/spelling.component';
+import { ExerciseContainerPageAPI, ExerciseContainerPageAction, getRandomWords, getWorstWords, selectExerciseMode, selectExerciseStatus } from '@practice/store/practice';
 
 @Component({
   selector: 'app-exercises',

@@ -9,15 +9,15 @@ import { RouterModule } from '@angular/router';
 import { getParams } from '@app/store/router/router.selector';
 
 @Component({
-  selector: 'app-exercises',
+  selector: 'app-practice',
   standalone: true,
   imports: [
     CommonModule,
     MatIconModule,
     RouterModule,
   ],
-  templateUrl: './exercise-menu.component.html',
-  styleUrls: ['./exercise-menu.component.scss'],
+  templateUrl: './practice-menu.component.html',
+  styleUrls: ['./practice-menu.component.scss'],
 })
 export class ExerciseMenuComponent implements OnInit, OnDestroy {
   // private wordSub: Subscription;

@@ -1,12 +1,11 @@
 import { CommonModule } from '@angular/common';
-
-import { Component, OnInit } from '@angular/core';
-import { ResultsService } from '@app/services/results.service';
-import { Word } from '@app/pages/classroom/store/words-list';
-import { Store } from '@ngrx/store';
-import { ResultsPageAction, selectExerciseWords, selectResultScores } from '@app/pages/classroom/exercises/store';
 import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { Component, OnInit } from '@angular/core';
 import { LetDirective } from '@ngrx/component';
+
+import { Word } from '@app/pages/classroom/store/words-list';
+import { ResultsPageAction, selectExerciseWords, selectResultScores } from '@practice/store';
 
 @Component({
   selector: 'app-results',
