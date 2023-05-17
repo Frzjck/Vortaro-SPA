@@ -28,6 +28,20 @@ export class ExercisesEffects {
             return of(ExercisePageAction.storeAnswerChoices({ answerChoices }));
         })
     ))
+
+    loadBaseSettings$ = createEffect(() => this.actions$.pipe(
+        ofType(ExercisePageAction.loadAnswerChoices, ExercisePageAction.nextWord),
+        debounceTime(1000),
+        concatLatestFrom((action) => [
+            this.store.select(selectCurrentWord),
+            this.store.select(selectExerciseWords),
+            this.store.select(selectCurrentTestingAgainst),
+        ]),
+        switchMap(([action, currentWord, exerciseWords, testingAgainst]) => {
+            const answerChoices = _generateAnswerChoices(currentWord, exerciseWords, testingAgainst);
+            return of(ExercisePageAction.storeAnswerChoices({ answerChoices }));
+        })
+    ))
 }
 
 

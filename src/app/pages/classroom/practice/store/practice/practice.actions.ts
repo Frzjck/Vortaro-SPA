@@ -1,5 +1,6 @@
 import { Word } from '@app/pages/classroom/store/words-list';
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
+import { ExerciseModeType, TestingAgainstType } from './practice.reducer';
 
 
 export const ExerciseContainerPageAction = createActionGroup(
@@ -9,6 +10,11 @@ export const ExerciseContainerPageAction = createActionGroup(
             Enter: emptyProps(),
             "Reset Exercise State": emptyProps(),
             "Exercise Finished": props<{ score: number }>(),
+            "Load Current Settings": emptyProps(),
+            "Store Current Settings": props<{
+                currentExerciseMode: ExerciseModeType,
+                currentTestingAgainst: TestingAgainstType
+            }>(),
         },
     }
 )
