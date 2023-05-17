@@ -10,7 +10,7 @@ import { Word, selectWordsByGroupId } from '@classroom/store/words-list';
 import { QuizComponent } from './components/modes/quiz/quiz.component';
 import { ResultsComponent } from './components/results/results.component';
 import { SpellingComponent } from './components/modes/spelling/spelling.component';
-import { ExerciseContainerPageAPI, ExerciseContainerPageAction, getRandomWords, getWorstWords, selectExerciseMode, selectExerciseStatus } from '@practice/store/practice';
+import { ExerciseContainerPageAPI, ExerciseContainerPageAction, getRandomWords, getWorstWords, selectCurrentExerciseMode, selectExerciseStatus } from '@practice/store/practice';
 
 @Component({
   selector: 'app-exercises',
@@ -30,7 +30,7 @@ export class ExerciseContainerComponent {
 
   constructor(private store: Store) { }
 
-  public exerciseMode$ = this.store.select(selectExerciseMode);
+  public exerciseMode$ = this.store.select(selectCurrentExerciseMode);
   public exerciseStatus$ = this.store.select(selectExerciseStatus)
 
   ngOnInit() {

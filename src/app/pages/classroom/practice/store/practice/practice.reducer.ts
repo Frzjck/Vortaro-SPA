@@ -20,7 +20,7 @@ export enum ExerciseStatusType {
 };
 
 export interface ExercisesState {
-    exerciseMode: ExerciseModeType;
+    currentExerciseMode: ExerciseModeType;
 
     exerciseStatus: ExerciseStatusType;
     randomSeed: number;
@@ -45,7 +45,7 @@ export interface ExercisesState {
 }
 
 export const initialState: ExercisesState = {
-    exerciseMode: ExerciseModeType.QUIZ,
+    currentExerciseMode: ExerciseModeType.QUIZ,
 
     exerciseStatus: ExerciseStatusType.START,
     randomSeed: 0,
@@ -164,7 +164,7 @@ export const {
     selectAnswerInput,
     selectExercisesState,
     selectTestingAgainst,
-    selectExerciseMode,
+    selectCurrentExerciseMode,
     selectAnswerChoices,
     selectWordsCompleted,
     selectExerciseStatus,
