@@ -1,9 +1,8 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { SettingsService } from './services/settings.service';
-import { Subscription } from 'rxjs';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { ThemeService } from './theme/theme.service';
+import { Store } from '@ngrx/store';
+import { selectIsPixies } from './store/app';
 
 
 @Component({
@@ -24,7 +23,7 @@ import { ThemeService } from './theme/theme.service';
 
   <app-navbar></app-navbar>
   <router-outlet></router-outlet>
-  <div class="blobs-box" *ngIf="pixie" @fadeIn>
+  <div class="blobs-box" *ngIf="pixies$ | async" @fadeIn>
     <div class="blob"></div>
     <div class="blob"></div>
     <div class="blob"></div>
@@ -51,63 +50,26 @@ import { ThemeService } from './theme/theme.service';
     ]),
   ],
 })
-export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
-  title = 'vocabulary-spa';
-  themeSub: Subscription;
-  activeTheme: string;
+export class AppComponent implements OnInit {
   windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE'];
   extraPixies: boolean = false;
   typeOfOS: string;
 
-  pixie: boolean;
-  pixieSub: Subscription;
-  constructor(
-    private settings: SettingsService,
-    private afs: AngularFirestore,
-    private themeService: ThemeService
 
+  activeTheme: string;
+  pixies$;
+  constructor(
+    private themeService: ThemeService,
+    private store: Store
   ) { }
 
   ngOnInit() {
-
-    this.afs.collection("test").snapshotChanges().subscribe(items => {
-      console.log(items.map(x => x.payload.doc.data()))
-    })
-    //Theme conf
-    this.settings.getTheme();
-    this.themeSub = this.settings.activeThemeSub.subscribe((theme) => {
-      this.activeTheme = theme;
-    });
-    //Pixie
-
-    // Fetching app settings from local storage
-    this.settings.getTranslateDirection();
-    this.settings.getExerciseMode();
-
     this.typeOfOS = window.navigator.platform;
     if (this.windowsPlatforms.includes(this.typeOfOS)) {
       this.extraPixies = true;
     }
-    this.settings.getPixieStatus();
-    this.pixieSub = this.settings.pixieSub.subscribe((status) => {
-      this.pixie = status;
-    });
-  }
 
-  ngAfterViewInit() { }
-
-  ngOnDestroy(): void {
-    this.themeSub.unsubscribe();
-    this.pixieSub.unsubscribe();
-  }
-
-  returnThemeClass() {
-    if (this.activeTheme === 'blue') {
-      return 'tracing-paper-blue';
-    }
-    if (this.activeTheme === 'brown') {
-      return 'tracing-paper-brown';
-    }
+    this.pixies$ = this.store.select(selectIsPixies);
   }
 
   toggle() {

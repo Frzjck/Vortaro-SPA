@@ -30,7 +30,7 @@ export interface AppState {
 }
 
 export const initialState: AppState = {
-    pixies: false,
+    pixies: true,
     allThemes: [ThemeType.BLUE, ThemeType.BROWN],
     activeTheme: ThemeType.BLUE,
     typeOfOS: "Windows",
