@@ -1,5 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { SettingsPopupAction } from '@app/components/navbar/components/settings-popup/settings-popup.actions';
+import { ThemeActions } from './app.actions';
+import { Theme } from '@app/theme/symbols';
 
 
 export enum ThemeType {
@@ -18,9 +20,12 @@ export enum TestingAgainstType {
 };
 
 export interface AppState {
-    pixies: boolean;
     allThemes: ThemeType[];
-    activeTheme: ThemeType;
+    themes: Theme[];
+    activeTheme: string;
+
+    pixies: boolean;
+
     typeOfOS: string;
 
     baseExerciseMode: ExerciseModeType;
@@ -31,8 +36,11 @@ export interface AppState {
 
 export const initialState: AppState = {
     pixies: true,
+
     allThemes: [ThemeType.BLUE, ThemeType.BROWN],
-    activeTheme: ThemeType.BLUE,
+    activeTheme: null,
+    themes: [],
+
     typeOfOS: "Windows",
 
     baseExerciseMode: ExerciseModeType.QUIZ,
@@ -51,4 +59,18 @@ export const reducer = createReducer(
         return { ...state, baseTestingAgainst: newTestAgainst };
     }),
     on(SettingsPopupAction.changeTheme, SettingsPopupAction.changeExerciseMode, (state, payload) => ({ ...state, ...payload })),
+
+
+
+    on(ThemeActions.setTheme, (state, { name }) => ({ ...state, activeTheme: name })),
+    on(ThemeActions.registerTheme, (state, { theme }) => ({ ...state, themes: [...state.themes, theme] })),
+    on(ThemeActions.updateTheme, (state, { name, properties }) => ({
+        ...state,
+        themes: state.themes.map(theme => {
+            if (theme.name === name) {
+                return { ...theme, properties: { ...theme.properties, ...properties } };
+            }
+            return theme;
+        })
+    }))
 );
