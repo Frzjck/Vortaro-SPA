@@ -35,7 +35,7 @@ export interface AppState {
 export const initialState: AppState = {
     pixies: true,
 
-    activeTheme: "tracingPaperBlue",
+    activeTheme: "Nautical Twilight",
     themes: [tracingPaperBlue, tracingPaperBrown],
 
     typeOfOS: "Windows",
@@ -60,14 +60,4 @@ export const reducer = createReducer(
 
 
     on(ThemeActions.setTheme, (state, { name }) => ({ ...state, activeTheme: name })),
-    on(ThemeActions.registerTheme, (state, { theme }) => ({ ...state, themes: [...state.themes, theme] })),
-    on(ThemeActions.updateTheme, (state, { name, properties }) => ({
-        ...state,
-        themes: state.themes.map(theme => {
-            if (theme.name === name) {
-                return { ...theme, properties: { ...theme.properties, ...properties } };
-            }
-            return theme;
-        })
-    }))
 );
