@@ -82,10 +82,7 @@ import { ThemeModule, tracingPaperBlue, tracingPaperBrown } from './theme';
     AngularFireStorageModule,
     AngularFireAuthModule,
     AngularFirestoreModule,
-    ThemeModule.forRoot({
-      themes: [tracingPaperBlue, tracingPaperBrown],
-      active: 'tracingPaperBlue'
-    }),
+    ThemeModule,
     StoreRouterConnectingModule.forRoot({
       serializer: CustomSerializer,
     }),
