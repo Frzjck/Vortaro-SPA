@@ -1,12 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { SettingsPopupAction } from '@app/components/navbar/components/settings-popup/settings-popup.actions';
 import { ThemeActions } from './app.actions';
-
-
-export enum ThemeType {
-    BLUE = "blue",
-    BROWN = "brown"
-};
+import { tracingPaperBlue, tracingPaperBrown } from '@app/theme';
 
 export interface Theme {
     name: string;
@@ -24,7 +19,7 @@ export enum TestingAgainstType {
 };
 
 export interface AppState {
-    allThemes: ThemeType[];
+    pixies: boolean;
     themes: Theme[];
     activeTheme: string;
 
@@ -41,7 +36,7 @@ export interface AppState {
 export const initialState: AppState = {
     pixies: true,
 
-    allThemes: [ThemeType.BLUE, ThemeType.BROWN],
+    activeTheme: "tracingPaperBlue",
     activeTheme: null,
     themes: [],
 
