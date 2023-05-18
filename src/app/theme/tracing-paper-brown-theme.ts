@@ -1,4 +1,4 @@
-import { Theme } from './symbols';
+import { Theme } from "@app/store/app";
 
 export const tracingPaperBrown: Theme = {
   name: 'tracingPaperBrown',

@@ -1,5 +1,5 @@
-import { Theme } from '@app/theme/symbols';
 import { createActionGroup, props } from '@ngrx/store';
+import { Theme } from './app.reducer';
 
 
 export const ThemeActions = createActionGroup(

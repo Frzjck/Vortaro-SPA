@@ -1,13 +1,17 @@
 import { createReducer, on } from '@ngrx/store';
 import { SettingsPopupAction } from '@app/components/navbar/components/settings-popup/settings-popup.actions';
 import { ThemeActions } from './app.actions';
-import { Theme } from '@app/theme/symbols';
 
 
 export enum ThemeType {
     BLUE = "blue",
     BROWN = "brown"
 };
+
+export interface Theme {
+    name: string;
+    properties: any;
+}
 
 export enum ExerciseModeType {
     SPELLING = "spelling",
