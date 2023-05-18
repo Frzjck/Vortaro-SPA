@@ -47,9 +47,9 @@
             (change)="onThemeChange($event.value)"
           >
             <mat-radio-button
-              *ngFor="let theme of vm.allThemes"
+              *ngFor="let theme of vm.allThemeNames"
               [value]="theme"
-              [checked]="theme === vm.activeTheme ? true : false"
+              [checked]="theme === vm.activeThemeName ? true : false"
               >{{ theme | titlecase }}</mat-radio-button
             >
           </mat-radio-group>

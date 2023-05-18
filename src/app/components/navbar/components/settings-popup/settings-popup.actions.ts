@@ -1,6 +1,6 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
 
-import { ExerciseModeType, ThemeType } from '@app/store/app';
+import { ExerciseModeType } from '@app/store/app';
 
 
 export const SettingsPopupAction = createActionGroup(
@@ -9,7 +9,7 @@ export const SettingsPopupAction = createActionGroup(
         events: {
             "Toggle Pixies": emptyProps(),
             "Toggle Testing Against": emptyProps(),
-            "Change Theme": props<{ activeTheme: ThemeType }>(),
+            "Change Theme": props<{ activeTheme: string }>(),
             "Change Exercise Mode": props<{ baseExerciseMode: ExerciseModeType }>(),
         },
     }

@@ -4,12 +4,12 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, combineLatest, map } from 'rxjs';
 
 import { SettingsPopupAction } from './settings-popup.actions';
-import { ExerciseModeType, TestingAgainstType, ThemeType, selectActiveTheme, selectAllExerciseModes, selectAllThemes, selectBaseExerciseMode, selectBaseTestingAgainst, selectIsPixies } from '@app/store/app';
+import { ExerciseModeType, TestingAgainstType, selectActiveThemeName, selectAllExerciseModes, selectAllThemeNames, selectBaseExerciseMode, selectBaseTestingAgainst, selectIsPixies } from '@app/store/app';
 
 interface SettingsPopup {
   isPixies: boolean;
-  activeTheme: ThemeType,
-  allThemes: ThemeType[],
+  activeThemeName: string,
+  allThemeNames: string[],
   exerciseMode: ExerciseModeType,
   allExerciseModes: ExerciseModeType[],
   testingAgainst: TestingAgainstType,
@@ -38,16 +38,16 @@ export class SettingsPopupComponent implements OnInit, OnDestroy {
 
     this.vm$ = combineLatest([
       this.store.select(selectIsPixies),
-      this.store.select(selectActiveTheme),
-      this.store.select(selectAllThemes),
+      this.store.select(selectActiveThemeName),
+      this.store.select(selectAllThemeNames),
       this.store.select(selectBaseExerciseMode),
       this.store.select(selectAllExerciseModes),
       this.store.select(selectBaseTestingAgainst),
     ]).pipe(
-      map(([isPixies, activeTheme, allThemes, exerciseMode, allExerciseModes, testingAgainst]) => ({
+      map(([isPixies, activeThemeName, allThemeNames, exerciseMode, allExerciseModes, testingAgainst]) => ({
         isPixies,
-        activeTheme,
-        allThemes,
+        activeThemeName,
+        allThemeNames,
         exerciseMode,
         allExerciseModes,
         testingAgainst,
