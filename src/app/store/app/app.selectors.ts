@@ -8,15 +8,7 @@ export const selectIsPixies = createSelector(
     (app) => app.pixies
 );
 
-export const selectActiveTheme = createSelector(
-    getAppState,
-    (app) => app.activeTheme
-);
 
-export const selectAllThemes = createSelector(
-    getAppState,
-    (app) => app.allThemes
-);
 
 export const selectAllExerciseModes = createSelector(
     getAppState,
@@ -31,4 +23,33 @@ export const selectBaseExerciseMode = createSelector(
 export const selectBaseTestingAgainst = createSelector(
     getAppState,
     (app) => app.baseTestingAgainst
+);
+
+
+
+
+export const selectAllThemes = createSelector(
+    getAppState,
+    (app) => app.allThemes
+);
+
+export const selectThemes = createSelector(
+    getAppState,
+    (state) => state.themes
+);
+
+export const selectActiveThemeName = createSelector(
+    getAppState,
+    (state) => state.activeTheme
+);
+
+export const selectActiveTheme = createSelector(
+    selectThemes,
+    selectActiveThemeName,
+    (themes, activeThemeName) => themes.find(theme => theme.name === activeThemeName)
+);
+
+export const selectThemeProperty = (propsName: string) => createSelector(
+    selectActiveTheme,
+    (activeTheme) => activeTheme ? activeTheme.properties[propsName] : null
 );
