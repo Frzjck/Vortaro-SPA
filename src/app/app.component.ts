@@ -16,7 +16,7 @@ import { ThemeService } from './theme/theme.service';
     <img
       class="img-container"
       draggable="false"
-      src=".\assets\imgs\streetlight.webp"
+      src="assets/imgs/streetlight.webp"
       alt="streetlight"
     />
     <div class="light-blob"></div>
