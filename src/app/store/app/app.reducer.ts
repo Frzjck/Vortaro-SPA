@@ -20,10 +20,9 @@ export enum TestingAgainstType {
 
 export interface AppState {
     pixies: boolean;
-    themes: Theme[];
-    activeTheme: string;
 
-    pixies: boolean;
+    activeTheme: string;
+    themes: Theme[];
 
     typeOfOS: string;
 
@@ -37,8 +36,7 @@ export const initialState: AppState = {
     pixies: true,
 
     activeTheme: "tracingPaperBlue",
-    activeTheme: null,
-    themes: [],
+    themes: [tracingPaperBlue, tracingPaperBrown],
 
     typeOfOS: "Windows",
 
