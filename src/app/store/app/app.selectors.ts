@@ -38,6 +38,11 @@ export const selectActiveThemeName = createSelector(
     (state) => state.activeTheme
 );
 
+export const selectAllThemeNames = createSelector(
+    selectThemes,
+    (themes) => themes.map(x => x.name)
+);
+
 export const selectActiveTheme = createSelector(
     selectThemes,
     selectActiveThemeName,
@@ -47,9 +52,4 @@ export const selectActiveTheme = createSelector(
 export const selectThemeProperty = (propsName: string) => createSelector(
     selectActiveTheme,
     (activeTheme) => activeTheme ? activeTheme.properties[propsName] : null
-);
-
-export const selectAllThemeNames = createSelector(
-    selectThemes,
-    (themes) => themes.map(x => x.name)
 );

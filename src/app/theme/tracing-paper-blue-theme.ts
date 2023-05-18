@@ -1,7 +1,7 @@
 import { Theme } from "@app/store/app";
 
 export const tracingPaperBlue: Theme = {
-  name: 'tracingPaperBlue',
+  name: 'Nautical Twilight',
   properties: {
     "--gr-0": "#50505a",
     "--tr-0": "rgba(125, 153, 185, 0.096)",

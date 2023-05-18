@@ -1,7 +1,7 @@
 import { Theme } from "@app/store/app";
 
 export const tracingPaperBrown: Theme = {
-  name: 'tracingPaperBrown',
+  name: 'Calm Night',
   properties: {
     '--gr-0': '#50505a',
     '--tr-0': 'rgba(75, 52, 31, 0.196)',
