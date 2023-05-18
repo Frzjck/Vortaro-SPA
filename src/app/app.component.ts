@@ -1,6 +1,5 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { ThemeService } from './theme/theme.service';
 import { Store } from '@ngrx/store';
 import { selectIsPixies } from './store/app';
 
@@ -10,7 +9,6 @@ import { selectIsPixies } from './store/app';
   template: `
 
 <main theme class="globalVars">
-  <button class="app-a " (click)="toggle()">FAT UGLY BTN</button>
   <div class="streetlight">
     <img
       class="img-container"
@@ -59,7 +57,6 @@ export class AppComponent implements OnInit {
   activeTheme: string;
   pixies$;
   constructor(
-    private themeService: ThemeService,
     private store: Store
   ) { }
 
@@ -70,14 +67,5 @@ export class AppComponent implements OnInit {
     }
 
     this.pixies$ = this.store.select(selectIsPixies);
-  }
-
-  toggle() {
-    const active = this.themeService.getActiveTheme();
-    if (active.name === 'tracingPaperBlue') {
-      this.themeService.setTheme('tracingPaperBrown');
-    } else {
-      this.themeService.setTheme('tracingPaperBlue');
-    }
   }
 }
