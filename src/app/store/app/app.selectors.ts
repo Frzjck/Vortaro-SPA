@@ -28,11 +28,6 @@ export const selectBaseTestingAgainst = createSelector(
 
 
 
-export const selectAllThemes = createSelector(
-    getAppState,
-    (app) => app.allThemes
-);
-
 export const selectThemes = createSelector(
     getAppState,
     (state) => state.themes
@@ -52,4 +47,9 @@ export const selectActiveTheme = createSelector(
 export const selectThemeProperty = (propsName: string) => createSelector(
     selectActiveTheme,
     (activeTheme) => activeTheme ? activeTheme.properties[propsName] : null
+);
+
+export const selectAllThemeNames = createSelector(
+    selectThemes,
+    (themes) => themes.map(x => x.name)
 );
