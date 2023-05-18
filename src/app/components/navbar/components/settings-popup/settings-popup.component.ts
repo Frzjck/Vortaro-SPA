@@ -69,9 +69,8 @@ export class SettingsPopupComponent implements OnInit, OnDestroy {
     this.store.dispatch(SettingsPopupAction.toggleTestingAgainst());
   }
 
-  onModeChange(exerciseMode) {
-    this.store.dispatch(SettingsPopupAction.changeExerciseMode(exerciseMode));
-    // todo: Handle if Mode is changed during exercise
+  onModeChange(baseExerciseMode) {
+    this.store.dispatch(SettingsPopupAction.changeExerciseMode({ baseExerciseMode }));
   }
 
   onThemeChange(activeTheme) {

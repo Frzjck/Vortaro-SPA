@@ -54,20 +54,20 @@
             >
           </mat-radio-group>
         </div>
-        <!-- <div class="mode-select" *ngIf="modeOpen">
+
+        <div class="mode-select" *ngIf="modeOpen">
           <mat-radio-group
             aria-label="Select an option"
-            [(ngModel)]="activeMode"
-            (change)="onModeSelect()"
+            (change)="onModeChange($event.value)"
           >
             <mat-radio-button
-              *ngFor="let mode of modes"
+              *ngFor="let mode of vm.allExerciseModes"
               [value]="mode"
-              [checked]="mode === activeMode ? true : false"
+              [checked]="mode === vm.exerciseMode ? true : false"
               >{{ mode | titlecase }}</mat-radio-button
             >
           </mat-radio-group>
-        </div> -->
+        </div>
       </div>
     </div>
   </mat-card>

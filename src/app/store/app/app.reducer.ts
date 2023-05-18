@@ -50,6 +50,5 @@ export const reducer = createReducer(
         else newTestAgainst = TestingAgainstType.TRANSLATION;
         return { ...state, baseTestingAgainst: newTestAgainst };
     }),
-    on(SettingsPopupAction.changeTheme, SettingsPopupAction.changeExerciseMode, (state, payload) => ({ ...state, ...payload })
-    ),
+    on(SettingsPopupAction.changeTheme, SettingsPopupAction.changeExerciseMode, (state, payload) => ({ ...state, ...payload })),
 );
