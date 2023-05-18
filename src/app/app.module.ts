@@ -48,6 +48,9 @@ import { EffectsModule } from '@ngrx/effects';
 import { ClassroomModule } from './pages/classroom/classroom.module';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { CustomSerializer } from './store/router/custom-serializer';
+import { LetDirective } from '@ngrx/component';
+import { ThemeModule, tracingPaperBlue, tracingPaperBrown } from './theme';
+
 
 @NgModule({
   declarations: [
@@ -61,6 +64,7 @@ import { CustomSerializer } from './store/router/custom-serializer';
     ClassroomModule,
     BrowserModule,
     AppRoutingModule,
+    LetDirective,
     MatInputModule,
     MatCardModule,
     MatRadioModule,
@@ -78,6 +82,7 @@ import { CustomSerializer } from './store/router/custom-serializer';
     AngularFireStorageModule,
     AngularFireAuthModule,
     AngularFirestoreModule,
+    ThemeModule,
     StoreRouterConnectingModule.forRoot({
       serializer: CustomSerializer,
     }),

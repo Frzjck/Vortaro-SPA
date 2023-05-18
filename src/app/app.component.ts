@@ -1,11 +1,45 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { SettingsService } from './services/settings.service';
-import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { selectIsPixies } from './store/app';
+
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
+  template: `
+
+<main theme class="globalVars">
+  <div class="streetlight">
+    <img
+      class="img-container"
+      draggable="false"
+      src="assets/imgs/streetlight.webp"
+      alt="streetlight"
+    />
+    <div class="light-blob"></div>
+  </div>
+
+  <app-navbar></app-navbar>
+  <router-outlet></router-outlet>
+  <div class="blobs-box" *ngIf="pixies$ | async" @fadeIn>
+    <div class="blob"></div>
+    <div class="blob"></div>
+    <div class="blob"></div>
+    <div class="blob" *ngIf="extraPixies"></div>
+    <div class="blob" *ngIf="extraPixies"></div>
+
+    <div class="blob" *ngIf="extraPixies"></div>
+    <div class="blob" *ngIf="extraPixies"></div>
+    <div class="blob" *ngIf="extraPixies"></div>
+    <div class="blob" *ngIf="extraPixies"></div>
+    <div class="blob" *ngIf="extraPixies"></div>
+    <div class="blob" *ngIf="extraPixies"></div>
+    <div class="blob" *ngIf="extraPixies"></div>
+    <div class="blob" *ngIf="extraPixies"></div>
+    <div class="blob" *ngIf="extraPixies"></div>
+    <div class="blob" *ngIf="extraPixies"></div>
+  </div>
+</main>`,
   styleUrls: ['./app.component.scss'],
   animations: [
     trigger('fadeIn', [
@@ -14,56 +48,24 @@ import { Subscription } from 'rxjs';
     ]),
   ],
 })
-export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
-  title = 'vocabulary-spa';
-  themeSub: Subscription;
-  activeTheme: string;
+export class AppComponent implements OnInit {
   windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE'];
   extraPixies: boolean = false;
   typeOfOS: string;
 
-  pixie: boolean;
-  pixieSub: Subscription;
+
+  activeTheme: string;
+  pixies$;
   constructor(
-    private settings: SettingsService,
-  ) {
-  }
+    private store: Store
+  ) { }
 
   ngOnInit() {
-    //Theme conf
-    this.settings.getTheme();
-    this.themeSub = this.settings.activeThemeSub.subscribe((theme) => {
-      this.activeTheme = theme;
-    });
-    //Pixie
-
-    // Fetching app setings from local storage
-    this.settings.getTranslateDirection();
-    this.settings.getExerciseMode();
-
     this.typeOfOS = window.navigator.platform;
     if (this.windowsPlatforms.includes(this.typeOfOS)) {
       this.extraPixies = true;
     }
-    this.settings.getPixieStatus();
-    this.pixieSub = this.settings.pixieSub.subscribe((status) => {
-      this.pixie = status;
-    });
-  }
 
-  ngAfterViewInit() { }
-
-  ngOnDestroy(): void {
-    this.themeSub.unsubscribe();
-    this.pixieSub.unsubscribe();
-  }
-
-  returnThemeClass() {
-    if (this.activeTheme === 'blue') {
-      return 'tracing-paper-blue';
-    }
-    if (this.activeTheme === 'brown') {
-      return 'tracing-paper-brown';
-    }
+    this.pixies$ = this.store.select(selectIsPixies);
   }
 }

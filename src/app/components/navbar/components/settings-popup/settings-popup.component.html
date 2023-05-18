@@ -1,15 +1,15 @@
-<div class="content" appStopPropagation>
+<div class="content" appStopPropagation *ngrxLet="vm$ as vm">
   <mat-card>
     <div>
-      <mat-slide-toggle (click)="onTogglePixie()" [(ngModel)]="pixie"
+      <mat-slide-toggle (click)="onTogglePixie()" [ngModel]="vm.isPixies"
         ><span class="pixies-span">Pixies</span>
       </mat-slide-toggle>
     </div>
     <div>
       <button
         class="btn btn-lang"
-        *ngIf="!translateDirection"
-        (click)="onChangeTranslateDirection()"
+        *ngIf="vm.testingAgainst === 'translation'"
+        (click)="onChangeTestingAgainst()"
       >
         <span>A</span>
         <mat-icon>swap_horiz</mat-icon>
@@ -17,8 +17,8 @@
       </button>
       <button
         class="btn btn-lang"
-        *ngIf="translateDirection"
-        (click)="onChangeTranslateDirection()"
+        *ngIf="vm.testingAgainst === 'original'"
+        (click)="onChangeTestingAgainst()"
       >
         <span>字</span>
         <mat-icon>swap_horiz</mat-icon>
@@ -44,27 +44,26 @@
         <div class="theme-select" *ngIf="themeOpen">
           <mat-radio-group
             aria-label="Select an option"
-            [(ngModel)]="activeTheme"
-            (change)="onThemeSelect()"
+            (change)="onThemeChange($event.value)"
           >
             <mat-radio-button
-              *ngFor="let theme of themes"
+              *ngFor="let theme of vm.allThemeNames"
               [value]="theme"
-              [checked]="theme === activeTheme ? true : false"
+              [checked]="theme === vm.activeThemeName ? true : false"
               >{{ theme | titlecase }}</mat-radio-button
             >
           </mat-radio-group>
         </div>
+
         <div class="mode-select" *ngIf="modeOpen">
           <mat-radio-group
             aria-label="Select an option"
-            [(ngModel)]="activeMode"
-            (change)="onModeSelect()"
+            (change)="onModeChange($event.value)"
           >
             <mat-radio-button
-              *ngFor="let mode of modes"
+              *ngFor="let mode of vm.allExerciseModes"
               [value]="mode"
-              [checked]="mode === activeMode ? true : false"
+              [checked]="mode === vm.exerciseMode ? true : false"
               >{{ mode | titlecase }}</mat-radio-button
             >
           </mat-radio-group>

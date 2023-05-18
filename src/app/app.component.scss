@@ -1,5 +1,3 @@
-@use "../assets/scss/scss-themes/tracing-paper-brown.scss"as *;
-@use "../assets/scss/scss-themes/tracing-paper-blue.scss"as *;
 @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500&display=swap');
 
@@ -17,15 +15,6 @@ main {
 .globalVars {
   --title-font: 'Cinzel', serif;
   --btn-font: 'Chakra Petch', sans-serif;
-}
-
-// Theming Palettes
-.tracing-paper-brown {
-  @include tracing-paper-brown;
-}
-
-.tracing-paper-blue {
-  @include tracing-paper-blue;
 }
 
 

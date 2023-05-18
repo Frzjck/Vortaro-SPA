@@ -36,7 +36,6 @@ export class NavbarComponent implements OnInit {
   constructor(
     private breakPointObs: BreakpointObserver,
     public store: Store,
-    private afAuth: AngularFireAuth,
 
   ) { }
 

@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { GlossaryComponent } from './glossary/glossary.component';
-import { SpellingComponent } from './exercises/pages/exercises/components/modes/spelling/spelling.component';
-import { ResultsComponent } from './exercises/pages/exercises/components/results/results.component';
-import { QuizComponent } from './exercises/pages/exercises/components/modes/quiz/quiz.component';
-import { ExerciseMenuComponent } from './exercises/exercise-menu.component';
+import { SpellingComponent } from '@exercises/components/modes/spelling/spelling.component';
+import { ResultsComponent } from '@exercises/components/results/results.component';
+import { QuizComponent } from '@exercises/components/modes/quiz/quiz.component';
+import { ExerciseMenuComponent } from '@practice/practice-menu.component';
 
 const routes: Routes = [{
   path: 'my-vocabulary',
@@ -14,7 +14,7 @@ const routes: Routes = [{
 // If we add here ↓ component property, it will be able to render inside its <router-outlet> components located in loadChildren routes
 {
   path: 'exercise-menu',
-  loadChildren: () => import('./exercises/exercise-menu-routing.module')
+  loadChildren: () => import('@practice/practice-menu-routing.module')
 },
 {
   path: 'exercises/vocabulary-select',

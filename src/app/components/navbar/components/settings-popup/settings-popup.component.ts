@@ -1,8 +1,19 @@
+import { Store } from '@ngrx/store';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { SettingsService } from '../../../../services/settings.service';
-import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Observable, combineLatest, map } from 'rxjs';
+
+import { SettingsPopupAction } from './settings-popup.actions';
+import { ExerciseModeType, TestingAgainstType, selectActiveThemeName, selectAllExerciseModes, selectAllThemeNames, selectBaseExerciseMode, selectBaseTestingAgainst, selectIsPixies } from '@app/store/app';
+
+interface SettingsPopup {
+  isPixies: boolean;
+  activeThemeName: string,
+  allThemeNames: string[],
+  exerciseMode: ExerciseModeType,
+  allExerciseModes: ExerciseModeType[],
+  testingAgainst: TestingAgainstType,
+}
 
 @Component({
   selector: 'app-settings-popup',
@@ -18,55 +29,54 @@ export class SettingsPopupComponent implements OnInit, OnDestroy {
   subDropOpen = false;
   themeOpen = false;
   modeOpen = false;
-  translateDirection: boolean;
-  // Theme Select
-  activeTheme: string;
-  themes: string[] = ['blue', 'brown'];
-  // Mode Select
-  modes: string[] = ['quiz', 'spelling'];
-  urlArr = [];
 
-  activeMode: string;
-  themeSub: Subscription;
+  vm$: Observable<SettingsPopup>;
 
-  typeOfOS: string;
-
-  pixie: boolean = false;
-
-  constructor(private settings: SettingsService, private router: Router) { }
+  constructor(private store: Store) { }
 
   ngOnInit(): void {
-    this.themeSub = this.settings.activeThemeSub.subscribe((theme) => {
-      this.activeTheme = theme;
-    });
-    this.activeMode = this.settings.exerciseMode;
-    this.translateDirection = this.settings.translateDirection;
 
-    this.pixie = this.settings.pixie;
+    this.vm$ = combineLatest([
+      this.store.select(selectIsPixies),
+      this.store.select(selectActiveThemeName),
+      this.store.select(selectAllThemeNames),
+      this.store.select(selectBaseExerciseMode),
+      this.store.select(selectAllExerciseModes),
+      this.store.select(selectBaseTestingAgainst),
+    ]).pipe(
+      map(([isPixies, activeThemeName, allThemeNames, exerciseMode, allExerciseModes, testingAgainst]) => ({
+        isPixies,
+        activeThemeName,
+        allThemeNames,
+        exerciseMode,
+        allExerciseModes,
+        testingAgainst,
+      })
+      ))
   }
 
   ngOnDestroy(): void {
     this.subDropOpen = false;
     this.themeOpen = false;
     this.modeOpen = false;
-    this.themeSub.unsubscribe();
   }
 
-  onModeSelect() {
-    this.settings.changeExerciseMode(this.activeMode);
-    // Reload if Mode is changed during practice
-    this.urlArr = this.router.url.split('/');
-    this.urlArr.includes('quiz');
-    if (this.urlArr.includes('quiz')) {
-      let index = this.urlArr.indexOf('quiz');
-      this.urlArr[index] = this.activeMode;
-      this.urlArr.join('/');
-    }
+  onTogglePixie() {
+    this.store.dispatch(SettingsPopupAction.togglePixies());
   }
 
-  onThemeSelect() {
-    this.settings.changeTheme(this.activeTheme);
+  onChangeTestingAgainst() {
+    this.store.dispatch(SettingsPopupAction.toggleTestingAgainst());
   }
+
+  onModeChange(baseExerciseMode) {
+    this.store.dispatch(SettingsPopupAction.changeExerciseMode({ baseExerciseMode }));
+  }
+
+  onThemeChange(activeTheme) {
+    this.store.dispatch(SettingsPopupAction.changeTheme({ activeTheme }));
+  }
+
 
   onPalette() {
     this.subDropOpen = true;
@@ -78,14 +88,5 @@ export class SettingsPopupComponent implements OnInit, OnDestroy {
     this.subDropOpen = true;
     this.themeOpen = false;
     this.modeOpen = true;
-  }
-
-  onChangeTranslateDirection() {
-    this.settings.changeTranslateDirection();
-    this.translateDirection = this.settings.getTranslateDirection();
-  }
-
-  onTogglePixie() {
-    this.settings.togglePixie();
   }
 }
