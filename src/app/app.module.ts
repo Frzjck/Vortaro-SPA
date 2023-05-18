@@ -49,7 +49,6 @@ import { ClassroomModule } from './pages/classroom/classroom.module';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { CustomSerializer } from './store/router/custom-serializer';
 import { LetDirective } from '@ngrx/component';
-import { ThemeModule, lightTheme, darkTheme } from './theme';
 import { ThemeModule, tracingPaperBlue, tracingPaperBrown } from './theme';
 
 
@@ -86,7 +85,7 @@ import { ThemeModule, tracingPaperBlue, tracingPaperBrown } from './theme';
     ThemeModule.forRoot({
       themes: [tracingPaperBlue, tracingPaperBrown],
       active: 'tracingPaperBlue'
-    })
+    }),
     StoreRouterConnectingModule.forRoot({
       serializer: CustomSerializer,
     }),

@@ -62,8 +62,6 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   pixie: boolean;
   pixieSub: Subscription;
   constructor(
-    private groupService: GroupService,
-    private wordService: WordManageService,
     private settings: SettingsService,
     private afs: AngularFirestore,
     private themeService: ThemeService
