@@ -1,8 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Word } from '@app/pages/classroom/store/words-list';
-import { GroupService } from '@app/services/group.service';
-import { WordService } from '@app/pages/classroom/services/word.service';
 
 @Component({
   selector: 'app-word-form',
@@ -15,8 +13,6 @@ export class WordFormComponent implements OnInit {
   wordForm: FormGroup;
   // @Output() onFinishSubmit = new EventEmitter();
   constructor(
-    private wordService: WordService,
-    private groupService: GroupService
   ) { }
 
   additionalTrArray: string[];
