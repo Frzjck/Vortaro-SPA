@@ -3,18 +3,12 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-
-
-// import { SpinnerComponent } from '@app/shared/indicators/spinner/spinner.component';
-// import { PasswordComponent } from '@app/shared/controls/password/password.component';
-// import { ControlsModule } from '@app/shared/controls/controls.module';
-// import { regex, regexErrors } from '@app/shared/utils/regex';
 import { ControlsModule, PasswordComponent, SpinnerComponent, regex, regexErrors } from '@app/shared';
 
 @Component({
   selector: 'app-shared',
-  // standalone: true,
-  // imports: [CommonModule, ReactiveFormsModule, ControlsModule, PasswordComponent, SpinnerComponent],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, ControlsModule, PasswordComponent, SpinnerComponent],
   templateUrl: './shared.component.html',
   styleUrls: ['./shared.component.scss']
 })
