@@ -7,8 +7,12 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   standalone: true,
   imports: [CommonModule],
   template: `
-  <input type="text" class="app-input" [value]="value" [placeholder]="placeholder || ''"
-    [attr.disabled]="isDisabled ? true : null" (keyup)="onKeyup($event.target.value)" (blur)="onBlur()">
+  <input type="text" class="app-input" 
+    [value]="value" 
+    [placeholder]="placeholder || ''"
+    [attr.disabled]="isDisabled ? true : null"
+    (keyup)="onKeyup($event.target.value)" 
+    (blur)="onBlur()">
   `,
   styleUrls: ['./input.component.scss'],
   providers: [
