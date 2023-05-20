@@ -34,7 +34,7 @@ import { take } from 'rxjs';
 })
 export class LoginComponent {
 
-  constructor(private afAuth: AngularFireAuth, private router: Router, private store: Store) {
+  constructor(private store: Store) {
   }
 
   ngOnInit() {

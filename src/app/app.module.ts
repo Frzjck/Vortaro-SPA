@@ -1,18 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatRadioModule } from '@angular/material/radio';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TextFieldModule } from '@angular/cdk/text-field';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 // At App
 import { AppRoutingModule } from '@app/app-routing.module';
@@ -21,6 +16,8 @@ import { HomepageComponent } from '@app/pages/static/homepage/homepage.component
 import { StopPropagationDirective } from '@app/shared/directives/stop-propagation.directive';
 import { SettingsPopupComponent } from '@app/components/navbar/components/settings-popup/settings-popup.component';
 import { NavbarComponent } from './components';
+import { ClassroomModule } from './pages/classroom/classroom.module';
+import { ThemeModule } from './theme';
 
 // Environment
 import { environment } from "@env/environment";
@@ -45,39 +42,32 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreModule } from '@ngrx/store';
 import { reducers, effects } from './store';
 import { EffectsModule } from '@ngrx/effects';
-import { ClassroomModule } from './pages/classroom/classroom.module';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { CustomSerializer } from './store/router/custom-serializer';
 import { LetDirective } from '@ngrx/component';
-import { ThemeModule, tracingPaperBlue, tracingPaperBrown } from './theme';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
+    SettingsPopupComponent,
     HomepageComponent,
     StopPropagationDirective,
-    SettingsPopupComponent,
   ],
   imports: [
     ClassroomModule,
     BrowserModule,
     AppRoutingModule,
     LetDirective,
-    MatInputModule,
     MatCardModule,
     MatRadioModule,
     MatButtonModule,
     MatToolbarModule,
-    MatProgressSpinnerModule,
     MatSlideToggleModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule,
-    FormsModule,
     MatIconModule,
-    TextFieldModule,
     AngularFireModule.initializeApp(environment.firebase.config),
     AngularFireStorageModule,
     AngularFireAuthModule,
@@ -86,7 +76,6 @@ import { ThemeModule, tracingPaperBlue, tracingPaperBrown } from './theme';
     StoreRouterConnectingModule.forRoot({
       serializer: CustomSerializer,
     }),
-    // StoreDevtools,
     StoreModule.forRoot(reducers, {
       runtimeChecks: {
         strictStateImmutability: true,
@@ -99,7 +88,6 @@ import { ThemeModule, tracingPaperBlue, tracingPaperBrown } from './theme';
     }),
   ],
   providers: [
-    { provide: LocationStrategy, useClass: HashLocationStrategy },
     {
       provide: USE_AUTH_EMULATOR,
       useValue: environment.useEmulators

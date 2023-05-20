@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { UserService } from '@app/pages/login/user.service';
 import { Store, select } from '@ngrx/store';
-import { User, getEmail, getUser, userSignOut } from "@app/store/user";
-import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { User, getUser, userSignOut } from "@app/store/user";
 import { Observable } from 'rxjs';
 
 @Component({

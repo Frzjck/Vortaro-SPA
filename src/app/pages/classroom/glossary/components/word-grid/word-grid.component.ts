@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -6,7 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { animate, style, transition, trigger } from '@angular/animations';
 import { ExtraTrCardComponent } from './components/extra-tr-card/extra-tr-card.component';
-import { WordUiComponent, WordUiViewInputInterface } from './components/word-ui/word-ui.component';
+import { WordUiComponent } from './components/word-ui/word-ui.component';
 import { Word } from '@app/pages/classroom/store/words-list';
 import { GlossaryStateFacade } from '../../glossary.state.facade';
 import { LetDirective } from '@ngrx/component';
@@ -73,24 +73,6 @@ export class WordGridComponent {
   hasAddTranslations(word) {
     return word?.additionalTr?.length > 0
   }
-
-
-  // if (params.option === "unfoldTranslations") {
-  //   console.log("piu piu piu")
-  //   // this.toggleTranslations(params.id)
-  // }
-  // else if (params.option === "onEditWord") {
-  //   console.log("not piu piu piu")
-
-  //   // this.onEditWord(params.id)
-  // }
-  // else if (params.option === "foldTranslations") {
-  //   // this.onDeleteWord(params.id)
-  // }
-  // else if (params.option === "onDeleteWord") {
-  //   // this.onDeleteWord(params.id)
-  // }
-
   onAddNewWord() { }
 
 

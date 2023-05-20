@@ -5,7 +5,6 @@ import { GlossaryComponent } from './glossary/glossary.component';
 import { SpellingComponent } from '@exercises/components/modes/spelling/spelling.component';
 import { ResultsComponent } from '@exercises/components/results/results.component';
 import { QuizComponent } from '@exercises/components/modes/quiz/quiz.component';
-import { ExerciseMenuComponent } from '@practice/practice-menu.component';
 
 const routes: Routes = [{
   path: 'my-vocabulary',
