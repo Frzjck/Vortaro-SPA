@@ -4,15 +4,14 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomepageComponent } from './pages/static/homepage/homepage.component';
 
 import { LoginComponent } from "./pages/login/login.component";
-// import { SharedComponent } from './pages/demo/shared/shared.component';
 
 
 const routes: Routes = [
   { path: '', component: HomepageComponent },
-  // {
-  //   path: 'shared',
-  //   component: SharedComponent,
-  // },
+  {
+    path: 'demo',
+    loadChildren: () => import("./pages/demo/demo-routing")
+  },
   {
     path: "login",
     component: LoginComponent,
