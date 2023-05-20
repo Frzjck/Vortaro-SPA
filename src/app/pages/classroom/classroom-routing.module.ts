@@ -2,9 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { GlossaryComponent } from './glossary/glossary.component';
-import { SpellingComponent } from '@exercises/components/modes/spelling/spelling.component';
-import { ResultsComponent } from '@exercises/components/results/results.component';
-import { QuizComponent } from '@exercises/components/modes/quiz/quiz.component';
 
 const routes: Routes = [{
   path: 'my-vocabulary',
