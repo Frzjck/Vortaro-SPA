@@ -12,7 +12,6 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatRadioModule } from '@angular/material/radio';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TextFieldModule } from '@angular/cdk/text-field';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 // At App
 import { AppRoutingModule } from '@app/app-routing.module';
@@ -49,7 +48,7 @@ import { ClassroomModule } from './pages/classroom/classroom.module';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { CustomSerializer } from './store/router/custom-serializer';
 import { LetDirective } from '@ngrx/component';
-import { ThemeModule, tracingPaperBlue, tracingPaperBrown } from './theme';
+import { ThemeModule } from './theme';
 
 
 @NgModule({
@@ -99,7 +98,6 @@ import { ThemeModule, tracingPaperBlue, tracingPaperBrown } from './theme';
     }),
   ],
   providers: [
-    { provide: LocationStrategy, useClass: HashLocationStrategy },
     {
       provide: USE_AUTH_EMULATOR,
       useValue: environment.useEmulators
