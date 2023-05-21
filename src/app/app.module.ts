@@ -47,6 +47,9 @@ import { CustomSerializer } from './store/router/custom-serializer';
 import { LetDirective } from '@ngrx/component';
 
 
+import { NotificationModule } from './services';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,6 +59,7 @@ import { LetDirective } from '@ngrx/component';
     StopPropagationDirective,
   ],
   imports: [
+    NotificationModule.forRoot(),
     ClassroomModule,
     BrowserModule,
     AppRoutingModule,

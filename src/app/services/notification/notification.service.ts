@@ -9,7 +9,7 @@ export class NotificationService {
 
     error(message: string): void {
         this.snackBar.openFromComponent(NotificationComponent, {
-            duration: 3000,
+            duration: 113000,
             data: { message },
             panelClass: ['mat-snackbar_error']
         });
@@ -17,7 +17,7 @@ export class NotificationService {
 
     success(message: string): void {
         this.snackBar.openFromComponent(NotificationComponent, {
-            duration: 3000,
+            duration: 113000,
             data: { message },
             panelClass: ['mat-snackbar_success']
         });
