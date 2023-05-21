@@ -4,11 +4,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { ControlsModule, PasswordComponent, SpinnerComponent, regex, regexErrors } from '@app/shared';
+import { NotificationModule, NotificationService } from '@app/services';
+import { ButtonComponent } from '@app/shared/buttons';
 
 @Component({
   selector: 'app-shared',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, ControlsModule, PasswordComponent, SpinnerComponent],
+  imports: [CommonModule, ReactiveFormsModule, ControlsModule, PasswordComponent, SpinnerComponent, NotificationModule, ButtonComponent],
   templateUrl: './shared.component.html',
   styleUrls: ['./shared.component.scss']
 })
@@ -19,7 +21,7 @@ export class SharedComponent {
 
   showSpinner = false;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private notification: NotificationService) { }
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
@@ -41,11 +43,11 @@ export class SharedComponent {
   }
 
   onSuccess(): void {
-    // this.notification.success('Everything is fine!');
+    this.notification.success('Everything is fine!');
   }
 
   onError(): void {
-    // this.notification.error('Oops! Something is wrong');
+    this.notification.error('Oops! Something is wrong');
   }
 
   onPatchValue(): void {

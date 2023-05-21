@@ -1,15 +1,19 @@
 <h2>Actions</h2>
 
-<button (click)="onToggleSpinner()">Toggle Spinner</button>
-<button (click)="onError()">Error</button>
-<button (click)="onSuccess()">Success</button>
+<app-button (click)="onToggleSpinner()">Toggle Spinner</app-button>
+<app-button (click)="onError()">Error</app-button>
+<app-button (click)="onSuccess()">Success</app-button>
 
 <h2>Form</h2>
 <div class="wrapper">
   <app-spinner *ngIf="showSpinner"></app-spinner>
   <form [formGroup]="form" novalidate autocomplete="off">
-    <button (click)="onPatchValue()">Patch Value</button>
-    <button (click)="onToggleInline()">Toggle Inline</button>
+    <app-button class="app-app-button" (click)="onPatchValue()"
+      >Patch Value</app-button
+    >
+    <app-button class="app-app-button" (click)="onToggleInline()"
+      >Toggle Inline</app-button
+    >
 
     <br /><br /><br />
 
