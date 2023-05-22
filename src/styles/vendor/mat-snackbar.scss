@@ -1,42 +1,40 @@
-// @use "@material/snackbar/_index" as snackbar;
-// @use '@material/theme/color-palette' as material-color;
-
-// .mat-snackbar {
-//   &_error {
-//     // @include snackbar.fill-color(red);Z
-//     @include snackbar.fill-color(material-color.$red-500);
-//   }
-
-//   &_success {
-//     background: $success;
-//     color: $on-success;
-//   }
-// }
-// .mat-snackbar {
-//   &_error {
-//     background: $error;
-//     color: $on-error;
-//   }
-
-//   &_success {
-//     background: $success;
-//     color: $on-success;
-//   }
-// }
-
 .mat-mdc-snack-bar-container {
   &.mat-snackbar {
     &_error {
-      --mdc-snackbar-container-color: $error;
-      // --mdc-snackbar-container-color: red;
-
-      --mdc-snackbar-supporting-text-color: $on-error;
-      //   --mat-mdc-snack-bar-button-color: red;
+      .mdc-snackbar__surface {
+        background-color: $error !important;
+        .mat-mdc-snack-bar-label {
+          color: $on-error !important;
+        }
+      }
     }
 
     &_success {
-      --mdc-snackbar-container-color: $success;
-      --mdc-snackbar-supporting-text-color: $on-success;
+      .mdc-snackbar__surface {
+        background-color: $success !important;
+        .mat-mdc-snack-bar-label {
+          color: $on-success !important;
+        }
+      }
     }
   }
 }
+
+// .mat-mdc-snack-bar-container {
+//   &.mat-snackbar {
+//     &_error {
+//       --mdc-snackbar-container-color: red;
+//       --mdc-snackbar-supporting-text-color: white;
+//     }
+
+//     &_success {
+//       --mdc-snackbar-container-color: green;
+//       --mdc-snackbar-supporting-text-color: white;
+//     }
+//   }
+// }
+
+// .mdc-snackbar__surface::before {
+//   background-color: red !important;
+//   z-index: -1;
+// }
