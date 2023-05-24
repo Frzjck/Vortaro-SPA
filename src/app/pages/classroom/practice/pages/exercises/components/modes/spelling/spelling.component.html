@@ -31,11 +31,11 @@
             [ngModel]="vm.answerInput"
             (ngModelChange)="answerInput($event)"
             #wordInput
-            [disabled]="vm.isActionNext"
+            [disabled]="vm.isAnswerLocked"
             [style.color]="
-              vm.isActionNext && vm.isLastAnswerCorrect
+              vm.isAnswerLocked && vm.isLastAnswerCorrect
                 ? 'var(--answer-correct)'
-                : vm.isActionNext && !vm.isLastAnswerCorrect
+                : vm.isAnswerLocked && !vm.isLastAnswerCorrect
                 ? 'var(--answer-wrong)'
                 : 'var(--text-primary)'
             "
