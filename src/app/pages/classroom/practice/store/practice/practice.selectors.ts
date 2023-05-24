@@ -28,24 +28,21 @@ export const selectSpellingViewModel = createSelector(
     selectIsLastAnswerCorrect,
     selectProgress,
     selectAnswerInput,
-    selectIsActionNext,
-    selectIsActionProofread,
+    selectAnswerLocked,
     (
         currentWord,
         testingAgainst,
         isLastAnswerCorrect,
         progress,
         answerInput,
-        isActionNext,
-        isActionProofread,
+        isAnswerLocked
     ) => ({
         currentWord,
         testingAgainst,
         isLastAnswerCorrect,
         progress,
         answerInput,
-        isActionNext,
-        isActionProofread,
+        isAnswerLocked
     })
 );
 
