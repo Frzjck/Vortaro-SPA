@@ -6,10 +6,21 @@ import { CommonModule } from '@angular/common';
 import { LetDirective } from '@ngrx/component';
 import { ProgressBarComponent } from '@exercises/shared/progress-bar/progress-bar.component';
 import { Store } from '@ngrx/store';
-import { ExercisePageAction, selectQuizViewModel } from '@practice/store';
+import { ExercisePageAction, TestingAgainstType, selectQuizViewModel } from '@practice/store';
 import { ExerciseService } from '@exercises/exercise.service';
+import { Observable } from 'rxjs';
+import { Word } from '@app/pages/classroom/store/words-list';
 
-
+interface quizInterface {
+  currentWord: Word;
+  exerciseWords: Word[];
+  testingAgainst: TestingAgainstType;
+  progress: number;
+  selectedAnswer: string;
+  isAnswerLocked: boolean;
+  answerChoices: string[];
+  correctAnswers: string[];
+}
 @Component({
   selector: 'app-quiz',
   standalone: true,
@@ -18,7 +29,7 @@ import { ExerciseService } from '@exercises/exercise.service';
   styleUrls: ['./quiz.component.scss'],
 })
 export class QuizComponent implements OnInit {
-  vm$;
+  vm$: Observable<quizInterface>;
   // Answer config
   selectedOptionValue: string;
   correctResponse: string;
