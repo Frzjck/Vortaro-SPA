@@ -30,13 +30,6 @@ interface quizInterface {
 })
 export class QuizComponent implements OnInit {
   vm$: Observable<quizInterface>;
-  // Answer config
-  selectedOptionValue: string;
-  correctResponse: string;
-
-  fourAnswers: string[];
-  correctAnswers: string[];
-
 
   constructor(
     private store: Store,
