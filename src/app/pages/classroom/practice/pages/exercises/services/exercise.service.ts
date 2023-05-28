@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { firstValueFrom } from 'rxjs';
 
 import { ExercisePageAction, selectAnswerLocked, selectCurrentExerciseMode, } from '@practice/store';
-import { selectIsResponseCorrect } from '../../store/practice/practice.selectors';
+import { selectIsResponseCorrect } from '../../../store/practice/practice.selectors';
 
 @Injectable({
   providedIn: 'root'

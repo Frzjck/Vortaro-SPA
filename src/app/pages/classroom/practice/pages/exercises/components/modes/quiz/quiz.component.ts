@@ -7,7 +7,7 @@ import { LetDirective } from '@ngrx/component';
 import { ProgressBarComponent } from '@exercises/shared/progress-bar/progress-bar.component';
 import { Store } from '@ngrx/store';
 import { ExercisePageAction, TestingAgainstType, selectQuizViewModel } from '@practice/store';
-import { ExerciseService } from '@exercises/exercise.service';
+import { ExerciseService } from '@app/pages/classroom/practice/pages/exercises/services/exercise.service';
 import { Observable } from 'rxjs';
 import { Word } from '@app/pages/classroom/store/words-list';
 

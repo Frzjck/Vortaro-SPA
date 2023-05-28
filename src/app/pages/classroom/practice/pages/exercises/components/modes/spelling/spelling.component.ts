@@ -14,7 +14,7 @@ import { Store } from '@ngrx/store';
 import { LetDirective } from '@ngrx/component';
 import { ProgressBarComponent } from '@exercises/shared/progress-bar/progress-bar.component';
 import { ExercisePageAction, TestingAgainstType, selectSpellingViewModel } from '@practice/store/practice';
-import { ExerciseService } from '@exercises/exercise.service';
+import { ExerciseService } from '@app/pages/classroom/practice/pages/exercises/services/exercise.service';
 import { AutoFocus } from '@exercises/shared/directives/auto-focus.directive';
 import { Word } from '@app/pages/classroom/store/words-list';
 import { Observable } from 'rxjs';
