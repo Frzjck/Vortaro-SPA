@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { Observable, map } from 'rxjs';
 import { WordGridStateInterface } from './components/word-grid/word-grid.component';
 import { GlossaryStateInterface as GlossaryStateInterface } from './glossary.component';
-
+// So far, it seems like the primary function of component store is to store state for a replicable component, so each copy would have its own state
 export interface GlossaryStateModel {
     unfoldedWords: string[];
 
