@@ -1,0 +1,18 @@
+<form [formGroup]="parent">
+  <div [formArrayName]="name" *ngIf="parent.controls[name]">
+    <div
+      class="experience"
+      *ngFor="
+        let experience of parent.controls[name]['controls'];
+        let i = index;
+        let first = first
+      "
+    >
+      <div [formGroupName]="i">
+        <app-form-field label="test label">
+          <app-input formControlName="translation"></app-input>
+        </app-form-field>
+      </div>
+    </div>
+  </div>
+</form>
