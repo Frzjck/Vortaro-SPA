@@ -6,11 +6,12 @@ import { Word } from '@app/pages/classroom/store/words-list';
 import { FormFieldComponent } from '@app/shared/controls/form-field/form-field.component';
 import { InputComponent } from '@app/shared/controls/input/input.component';
 import { AdditionalTranslationsComponent } from './additional-translations/additional-translations.component';
+import { FormFooterComponent } from './form-footer/form-footer.component';
 
 @Component({
   selector: 'app-word-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormFieldComponent, InputComponent, AdditionalTranslationsComponent],
+  imports: [CommonModule, ReactiveFormsModule, FormFieldComponent, InputComponent, AdditionalTranslationsComponent, FormFooterComponent,],
   templateUrl: './word-form.component.html',
   styleUrls: ['./word-form.component.scss'],
 })
