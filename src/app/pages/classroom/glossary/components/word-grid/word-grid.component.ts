@@ -10,6 +10,7 @@ import { WordUiComponent } from './components/word-ui/word-ui.component';
 import { Word } from '@app/pages/classroom/store/words-list';
 import { GlossaryStateFacade } from '../../glossary.state.facade';
 import { LetDirective } from '@ngrx/component';
+import { WordFormComponent } from './components/word-form/word-form.component';
 
 
 export interface WordGridInputInterface {
@@ -26,7 +27,7 @@ export interface WordGridStateInterface {
 @Component({
   selector: 'app-word-grid',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule, ExtraTrCardComponent, WordUiComponent, MatIconModule, LetDirective],
+  imports: [CommonModule, MatCardModule, MatButtonModule, ExtraTrCardComponent, WordUiComponent, MatIconModule, LetDirective, WordFormComponent],
   templateUrl: './word-grid.component.html',
   styleUrls: ['./word-grid.component.scss'],
   animations: [
