@@ -12,5 +12,9 @@ import { InputComponent } from '@app/shared/controls/input/input.component';
   styleUrls: ['./additional-translations.component.scss']
 })
 export class AdditionalTranslationsComponent {
+  @Input() public name: string;
+  @Input() public parent: FormGroup;
+
+  @Input() public values;
 
 }
