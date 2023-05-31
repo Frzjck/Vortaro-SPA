@@ -10,4 +10,16 @@ import { CommonModule } from '@angular/common';
 })
 export class FormFooterComponent {
 
+  onCancel() {
+    console.log("onCancel");
+  }
+  onSave() {
+    console.log("onSave");
+  }
+  onAddTips() {
+    console.log("onAddTips");
+  }
+  onAddTranslation() {
+    console.log("onAddTranslation");
+  }
 }
