@@ -29,20 +29,13 @@
             maxlength="40"
           />
         </app-form-field>
-        <!-- <app-form-field class="additionalTr-field" appearance="fill">
-          <mat-label
-            >Additional translations (use comma as separator)</mat-label
-          >
-          <textarea
-            formControlName="additionalTr"
-            style="overflow: hidden"
-            matInput
-            cdkTextareaAutosize
-            cdkAutosizeMinRows="1"
-            cdkAutosizeMaxRows="5"
-            maxlength="200"
-          ></textarea>
-        </app-form-field> -->
+
+        <app-additional-translations
+          [parent]="coreForm"
+          name="additionalTranslations"
+          [values]="storeFormObservable$ToBeCreated.additionalTranslations"
+        ></app-additional-translations>
+
         <div class="btn-div">
           <button class="btn-submit" type="submit" [disabled]="!coreForm.valid">
             <i class="fas fa-check-square"></i>

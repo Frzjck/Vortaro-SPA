@@ -5,17 +5,19 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Word } from '@app/pages/classroom/store/words-list';
 import { FormFieldComponent } from '@app/shared/controls/form-field/form-field.component';
 import { InputComponent } from '@app/shared/controls/input/input.component';
+import { AdditionalTranslationsComponent } from './additional-translations/additional-translations.component';
 
 @Component({
   selector: 'app-word-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormFieldComponent, InputComponent],
+  imports: [CommonModule, ReactiveFormsModule, FormFieldComponent, InputComponent, AdditionalTranslationsComponent],
   templateUrl: './word-form.component.html',
   styleUrls: ['./word-form.component.scss'],
 })
 export class WordFormComponent implements OnInit {
   @Input() word: Word;
   coreForm: FormGroup;
+  storeFormObservable$ToBeCreated = { "additionalTranslations": "storeFormObservable$ToBeCreated.additionalTranslations" };
   // @Output() onFinishSubmit = new EventEmitter();
   constructor(
   ) { }
