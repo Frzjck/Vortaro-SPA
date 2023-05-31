@@ -18,6 +18,7 @@ import { FormFooterComponent } from './form-footer/form-footer.component';
 export class WordFormComponent implements OnInit {
   @Input() word: Word;
   coreForm: FormGroup;
+  isTips = false;
   storeFormObservable$ToBeCreated = { "additionalTranslations": "storeFormObservable$ToBeCreated.additionalTranslations" };
   // @Output() onFinishSubmit = new EventEmitter();
   constructor(
