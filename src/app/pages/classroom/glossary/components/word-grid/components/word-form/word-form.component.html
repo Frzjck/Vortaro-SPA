@@ -1,44 +1,35 @@
-<!-- <div class="content">
+<div class="content">
   <div class="container">
-    <form [formGroup]="wordForm" (submit)="onSubmit()">
+    <form [formGroup]="coreForm" (submit)="onSubmit()">
       <div class="grid-container">
-        <mat-form-field class="word-field">
-          <input
+        <app-form-field class="word-field">
+          <app-input
             class="wordInput"
             formControlName="word"
             matInput
-            type="search"
             placeholder="Word"
-            autocomplete="off"
-            data-lpignore="true"
             maxlength="21"
           />
-        </mat-form-field>
-        <mat-form-field class="translation-field">
-          <input
+        </app-form-field>
+        <app-form-field class="translation-field">
+          <app-input
             class="translationInput"
             formControlName="translation"
             matInput
-            type="search"
             placeholder="Translation"
-            autocomplete="off"
-            data-lpignore="true"
             maxlength="21"
           />
-        </mat-form-field>
-        <mat-form-field class="tips-field">
-          <input
+        </app-form-field>
+        <app-form-field class="tips-field">
+          <app-input
             class="tipsInput"
             formControlName="tips"
             matInput
-            type="search"
             placeholder="Tips"
-            autocomplete="off"
-            data-lpignore="true"
             maxlength="40"
           />
-        </mat-form-field>
-        <mat-form-field class="additionalTr-field" appearance="fill">
+        </app-form-field>
+        <!-- <app-form-field class="additionalTr-field" appearance="fill">
           <mat-label
             >Additional translations (use comma as separator)</mat-label
           >
@@ -51,9 +42,9 @@
             cdkAutosizeMaxRows="5"
             maxlength="200"
           ></textarea>
-        </mat-form-field>
+        </app-form-field> -->
         <div class="btn-div">
-          <button class="btn-submit" type="submit" [disabled]="!wordForm.valid">
+          <button class="btn-submit" type="submit" [disabled]="!coreForm.valid">
             <i class="fas fa-check-square"></i>
           </button>
           <button class="btn btn-close" (click)="onClose()">
@@ -63,4 +54,4 @@
       </div>
     </form>
   </div>
-</div> -->
+</div>

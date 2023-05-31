@@ -1,16 +1,21 @@
+import { CommonModule } from '@angular/common';
+
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Word } from '@app/pages/classroom/store/words-list';
+import { FormFieldComponent } from '@app/shared/controls/form-field/form-field.component';
+import { InputComponent } from '@app/shared/controls/input/input.component';
 
 @Component({
   selector: 'app-word-form',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, FormFieldComponent, InputComponent],
   templateUrl: './word-form.component.html',
   styleUrls: ['./word-form.component.scss'],
 })
 export class WordFormComponent implements OnInit {
   @Input() word: Word;
-  @Input() group: Word;//tododelete
-  wordForm: FormGroup;
+  coreForm: FormGroup;
   // @Output() onFinishSubmit = new EventEmitter();
   constructor(
   ) { }
@@ -19,7 +24,7 @@ export class WordFormComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.word) {
-      this.wordForm = new FormGroup({
+      this.coreForm = new FormGroup({
         word: new FormControl(this.word.original, [Validators.required]),
         translation: new FormControl(this.word.translation, [
           Validators.required,
@@ -28,7 +33,7 @@ export class WordFormComponent implements OnInit {
         additionalTr: new FormControl(this.additionalTrToString()),
       });
     } else {
-      this.wordForm = new FormGroup({
+      this.coreForm = new FormGroup({
         word: new FormControl(null, [Validators.required]),
         translation: new FormControl(null, [Validators.required]),
         tips: new FormControl(),
@@ -41,9 +46,9 @@ export class WordFormComponent implements OnInit {
     // if (this.word) {
     //   this.wordService
     //     .editOrCreate(
-    //       this.wordForm.value.word,
-    //       this.wordForm.value.translation,
-    //       this.wordForm.value.tips,
+    //       this.coreForm.value.word,
+    //       this.coreForm.value.translation,
+    //       this.coreForm.value.tips,
     //       undefined,
     //       this.word.id,
     //       this.formatAdditionalTr()
@@ -55,9 +60,9 @@ export class WordFormComponent implements OnInit {
     // } else {
     //   this.wordService
     //     .editOrCreate(
-    //       this.wordForm.value.word,
-    //       this.wordForm.value.translation,
-    //       this.wordForm.value.tips,
+    //       this.coreForm.value.word,
+    //       this.coreForm.value.translation,
+    //       this.coreForm.value.tips,
     //       this.group.id,
     //       undefined,
     //       this.formatAdditionalTr()
@@ -76,9 +81,9 @@ export class WordFormComponent implements OnInit {
   }
 
   formatAdditionalTr() {
-    if (this.wordForm.value.additionalTr) {
+    if (this.coreForm.value.additionalTr) {
       this.additionalTrArray = [];
-      this.additionalTrArray = this.wordForm.value.additionalTr
+      this.additionalTrArray = this.coreForm.value.additionalTr
         .split(',')
         .map((tr) => {
           return tr.trim();
