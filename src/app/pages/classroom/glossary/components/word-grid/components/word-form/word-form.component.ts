@@ -7,11 +7,14 @@ import { FormFieldComponent } from '@app/shared/controls/form-field/form-field.c
 import { InputComponent } from '@app/shared/controls/input/input.component';
 import { AdditionalTranslationsComponent } from './additional-translations/additional-translations.component';
 import { FormFooterComponent } from './form-footer/form-footer.component';
+import { WordFormService } from './services/word-form.service';
+import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-word-form',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormFieldComponent, InputComponent, AdditionalTranslationsComponent, FormFooterComponent,],
+  providers: [WordFormService],
   templateUrl: './word-form.component.html',
   styleUrls: ['./word-form.component.scss'],
 })
@@ -19,7 +22,7 @@ export class WordFormComponent implements OnInit {
   @Input() word: Word;
   coreForm: FormGroup;
   isTips = false;
-  storeFormObservable$ToBeCreated = { "additionalTranslations": "storeFormObservable$ToBeCreated.additionalTranslations" };
+  storeFormObservable$ToBeCreated = { "additionalTranslations": [] };
   // @Output() onFinishSubmit = new EventEmitter();
   constructor(
   ) { }
@@ -44,6 +47,9 @@ export class WordFormComponent implements OnInit {
         additionalTr: new FormControl(),
       });
     }
+    interval(4000).subscribe(() => {
+      console.log(this.coreForm)
+    })
   }
 
   onSubmit() {
