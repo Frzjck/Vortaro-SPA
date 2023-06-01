@@ -52,7 +52,7 @@ export class AdditionalTranslationsComponent {
 
   private getFormGroupArray(values): FormGroup[] {
     if (!this.values.length) {
-      return [this.getFormGroup()];
+      return [];
     } else {
       return values.map(value => this.getFormGroup(value));
     }
