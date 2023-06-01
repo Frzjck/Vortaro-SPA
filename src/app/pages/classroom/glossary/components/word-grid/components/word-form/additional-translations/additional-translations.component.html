@@ -9,10 +9,16 @@
       "
     >
       <div [formGroupName]="i">
-        <app-form-field label="test label">
-          <app-input formControlName="translation"></app-input>
+        <app-form-field label="test label" [isInline]="false">
+          <app-input
+            formControlName="translation"
+            placeholder="add translation"
+          ></app-input>
         </app-form-field>
       </div>
+      <app-button class="app-button" (click)="deleteTranslation(i)"
+        >Delete</app-button
+      >
     </div>
   </div>
 </form>
