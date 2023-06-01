@@ -16,6 +16,12 @@ export class WordFormService {
   private submitWordForm = new Subject<void>();
   submitWordForm$ = this.submitWordForm.asObservable();
 
+  constructor() { }
 
+  onAddTranslation = () => this.addTranslation.next();
+  onAddTips = () => this.addTips.next();
+
+  onCloseForm = () => this.closeForm.next();
+  onSubmitForm = () => this.submitWordForm.next();
 
 }
