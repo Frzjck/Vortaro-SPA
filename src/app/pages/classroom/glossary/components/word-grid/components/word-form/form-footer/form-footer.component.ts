@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { WordFormService } from '../services/word-form.service';
 
 @Component({
   selector: 'app-form-footer',
@@ -10,16 +11,12 @@ import { CommonModule } from '@angular/common';
 })
 export class FormFooterComponent {
 
-  onCancel() {
-    console.log("onCancel");
-  }
-  onSave() {
-    console.log("onSave");
-  }
-  onAddTips() {
-    console.log("onAddTips");
-  }
-  onAddTranslation() {
-    console.log("onAddTranslation");
-  }
+
+  constructor(private footer: WordFormService) { }
+
+  onAddTranslation = () => this.footer.onAddTranslation();
+  onAddTips = () => this.footer.onAddTips();
+
+  onCancel = () => this.footer.onCloseForm();
+  onSave = () => this.footer.onSubmitForm();
 }
