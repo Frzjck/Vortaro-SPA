@@ -37,14 +37,12 @@ export class WordFormComponent implements OnInit {
           Validators.required,
         ]),
         tips: new FormControl(this.word.tips),
-        additionalTr: new FormControl(this.additionalTrToString()),
       });
     } else {
       this.coreForm = new FormGroup({
         word: new FormControl(null, [Validators.required]),
         translation: new FormControl(null, [Validators.required]),
         tips: new FormControl(),
-        additionalTr: new FormControl(),
       });
     }
     interval(4000).subscribe(() => {
@@ -84,27 +82,5 @@ export class WordFormComponent implements OnInit {
     // }
     // this.additionalTrArray = undefined;
     // this.onFinishSubmit.emit();
-  }
-
-  onClose() {
-    // this.onFinishSubmit.emit();
-  }
-
-  formatAdditionalTr() {
-    if (this.coreForm.value.additionalTr) {
-      this.additionalTrArray = [];
-      this.additionalTrArray = this.coreForm.value.additionalTr
-        .split(',')
-        .map((tr) => {
-          return tr.trim();
-        });
-      return this.additionalTrArray;
-    } else {
-      return [];
-    }
-  }
-  additionalTrToString() {
-    let string = this.word.additionalTr.join(', ');
-    return string;
   }
 }
