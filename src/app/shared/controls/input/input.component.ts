@@ -11,8 +11,9 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     [placeholder]="placeholder || ''"
     [attr.disabled]="isDisabled ? true : null"
     (keyup)="onKeyup($event.target.value)" 
-    (blur)="onBlur()">
+    (blur)="onBlur()"
     #inputRef
+    >
   `,
   styleUrls: ['./input.component.scss'],
   providers: [
