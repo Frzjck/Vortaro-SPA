@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, forwardRef } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, forwardRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -8,11 +8,11 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   imports: [CommonModule],
   template: `
   <input type="text" class="app-input" 
-    [value]="value" 
     [placeholder]="placeholder || ''"
     [attr.disabled]="isDisabled ? true : null"
     (keyup)="onKeyup($event.target.value)" 
     (blur)="onBlur()">
+    #inputRef
   `,
   styleUrls: ['./input.component.scss'],
   providers: [
@@ -28,7 +28,8 @@ export class InputComponent implements OnInit, ControlValueAccessor {
   @Input() placeholder: string;
   @Output() changed = new EventEmitter<string>();
 
-  value: string;
+  inputRef: ElementRef<HTMLInputElement>;
+
   isDisabled: boolean;
 
   constructor() {
@@ -41,8 +42,9 @@ export class InputComponent implements OnInit, ControlValueAccessor {
   private propagateChange: any = () => { };
   private propagateTouched: any = () => { };
 
+  // https://stackoverflow.com/questions/76389471/angular-retaining-input-value-after-form-reset
   writeValue(value: string): void {
-    this.value = value;
+    if (this.inputRef) this.inputRef.nativeElement.value = value;
   }
 
   registerOnChange(fn: any): void {
@@ -58,7 +60,7 @@ export class InputComponent implements OnInit, ControlValueAccessor {
   }
 
   onKeyup(value: string): void {
-    this.value = value;
+    this.inputRef.nativeElement.value = value;
     this.propagateChange(value);
     this.changed.emit(value);
   }
