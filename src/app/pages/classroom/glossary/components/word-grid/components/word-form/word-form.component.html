@@ -2,7 +2,7 @@
   <div class="container">
     <form [formGroup]="coreForm" (submit)="onSubmit()">
       <div class="grid-container">
-        <app-form-field class="word-field">
+        <app-form-field class="word-field" [control]="coreForm.controls.word">
           <app-input
             class="wordInput"
             formControlName="word"
@@ -11,7 +11,11 @@
             maxlength="21"
           />
         </app-form-field>
-        <app-form-field class="translation-field">
+
+        <app-form-field
+          class="translation-field"
+          [control]="coreForm.controls.translation"
+        >
           <app-input
             class="translationInput"
             formControlName="translation"
@@ -20,7 +24,12 @@
             maxlength="21"
           />
         </app-form-field>
-        <app-form-field class="tips-field" *ngIf="isTips">
+
+        <app-form-field
+          class="tips-field"
+          *ngIf="false"
+          [control]="coreForm.controls.tips"
+        >
           <app-input
             class="tipsInput"
             formControlName="tips"
