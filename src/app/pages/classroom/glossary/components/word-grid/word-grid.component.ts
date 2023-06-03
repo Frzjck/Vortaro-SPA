@@ -21,6 +21,7 @@ export interface WordGridInputInterface {
 
 export interface WordGridStateInterface {
   editingGroupId: string;
+  editingWordId: string;
   isEditingGroup: boolean;
   isAddingNewWord: boolean;
 }
@@ -48,7 +49,7 @@ export interface WordGridStateInterface {
 })
 export class WordGridComponent {
   @Input() wordGridInput: WordGridInputInterface;
-  // wordGridState$: Observable<WordGridStateInterface> = this.state.wordGridState$;
+  wordGridStateVM$: Observable<WordGridStateInterface> = this.stateFacade.wordGridStateVM$;
 
   constructor(public stateFacade: GlossaryStateFacade) {
   }

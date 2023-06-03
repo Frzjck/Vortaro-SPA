@@ -2,25 +2,33 @@
   <div class="wordCardDiv" *ngFor="let word of wordGridInput.words">
     <ng-container
       *ngrxLet="{
-        isUnfolded: state.isWordUnfolded$(word.id),
-        isEditingGroup: state.isEditingGroupId$(wordGridInput.groupId)
+        isUnfolded: stateFacade.isWordUnfolded$(word.id),
+        isEditingGroup: stateFacade.isEditingGroupId$(wordGridInput.groupId),
+        wordGridStateVM: wordGridStateVM$
       } as vm"
     >
-      <mat-card class="mat-elevation-z4">
-        <span>
-          <b>{{ word.original | titlecase }}</b> -
-          {{ word.translation | titlecase }}
-        </span>
-        <app-word-ui
-          [wordUiViewInput]="{
+      <ng-container [ngSwitch]="vm.wordGridStateVM.editingWordId">
+        <p>ID {{ word.id }} -- {{ vm.wordGridStateVM.editingWordId }}</p>
+        <mat-card *ngSwitchDefault class="mat-elevation-z4">
+          <span>
+            <b>{{ word.original | titlecase }}</b> -
+            {{ word.translation | titlecase }}
+          </span>
+          <app-word-ui
+            [wordUiViewInput]="{
             eye: !vm.isUnfolded && hasAddTranslations(word),
             eyeSlash: vm.isUnfolded && hasAddTranslations(word),
             editingMode: vm.isEditingGroup,
             word: word,
           }"
-          (iconPressed)="wordAction($event)"
-        ></app-word-ui>
-      </mat-card>
+            (iconPressed)="wordAction($event)"
+          ></app-word-ui>
+        </mat-card>
+        <mat-card>
+          <app-word-form *ngSwitchCase="word.id"></app-word-form>
+        </mat-card>
+      </ng-container>
+
       <div
         class="extraTranslations"
         *ngIf="vm.isUnfolded && hasAddTranslations(word)"
@@ -33,7 +41,7 @@
   <div
     class="mat-elevation-z4 add-word-div"
     (click)="onAddNewWord()"
-    *ngIf="state.isEditingGroupId$(wordGridInput.groupId) | async"
+    *ngIf="stateFacade.isEditingGroupId$(wordGridInput.groupId) | async"
   >
     <button mat-button class="btn btn-new-word">
       Add New Word <mat-icon>add_box</mat-icon>
