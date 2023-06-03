@@ -8,41 +8,38 @@ import { InputComponent } from '@app/shared/controls/input/input.component';
 import { AdditionalTranslationsComponent } from './additional-translations/additional-translations.component';
 import { FormFooterComponent } from './form-footer/form-footer.component';
 import { WordFormService } from './services/word-form.service';
-import { interval } from 'rxjs';
+import { WordFormState } from './word-form.state';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-word-form',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormFieldComponent, InputComponent, AdditionalTranslationsComponent, FormFooterComponent,],
-  providers: [WordFormService],
+  providers: [WordFormService, WordFormState],
   templateUrl: './word-form.component.html',
   styleUrls: ['./word-form.component.scss'],
 })
 export class WordFormComponent implements OnInit {
   @Input() word: Word;
   coreForm: FormGroup;
-  storeFormObservable$ToBeCreated = { "additionalTranslations": [] };
 
-  constructor(
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
-
     this.coreForm = new FormGroup({
       word: new FormControl(null, [Validators.required]),
       translation: new FormControl(null, [Validators.required]),
+      tips: new FormControl(null),
     });
-    // If tips exist create form control with value
-
     // CHECK WITH STORE IF EDITING A WORD. IF TRUE MAP WORD TO FORM AND PATCH
-    interval(4000).subscribe(() => {
-      console.log(this.coreForm)
-    })
 
+    // If tips exist create form control with value
   }
-  createTipsControl() {
-    this.coreForm.addControl("tips", new FormControl(null));
+
+
+  onFormChanged() {
   }
+
   onSubmit() {
   }
 }

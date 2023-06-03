@@ -26,8 +26,8 @@
         </app-form-field>
 
         <app-form-field
-          class="tips-field"
           *ngIf="false"
+          class="tips-field"
           [control]="coreForm.controls.tips"
         >
           <app-input
@@ -42,7 +42,7 @@
         <app-additional-translations
           [parent]="coreForm"
           name="additionalTranslations"
-          [values]="storeFormObservable$ToBeCreated.additionalTranslations"
+          [values]=""
         ></app-additional-translations>
         <app-form-footer></app-form-footer>
       </div>
