@@ -58,15 +58,14 @@ export class AdditionalTranslationsComponent {
     }
   }
 
-  private getFormGroup(value?): FormGroup {
+  private getFormGroup(value?: string): FormGroup {
     const group = this.fb.group({
-      translation: [null, {
+      translation: ["", {
         updateOn: 'change'
       }]
     });
-
     if (value) {
-      group.patchValue(value);
+      group.patchValue({ translation: value });
     }
 
     return group;
