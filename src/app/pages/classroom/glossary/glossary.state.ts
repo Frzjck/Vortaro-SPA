@@ -96,12 +96,14 @@ export class GlossaryState extends ComponentStore<GlossaryStateModel> {
     )
 
     // ------------- ViewModels and Interfaces:
-    readonly wordGridState$: Observable<WordGridStateInterface> = this.select(
+    readonly wordGridStateVM$: Observable<WordGridStateInterface> = this.select(
         this.editingGroupId$,
+        this.editingWordId$,
         this.isEditingGroup$,
         this.isAddingNewWord$,
-        (editingGroupId, isEditingGroup, isAddingNewWord) => ({
+        (editingGroupId, editingWordId, isEditingGroup, isAddingNewWord) => ({
             isEditingGroup,
+            editingWordId,
             editingGroupId,
             isAddingNewWord,
         })
@@ -145,5 +147,11 @@ export class GlossaryState extends ComponentStore<GlossaryStateModel> {
     readonly stopEditingGroup = this.updater(state => ({
         ...state,
         editingGroupId: initialState.editingGroupId,
+    }));
+
+    // Editing word
+    readonly editWord = this.updater((state, wordId: string) => ({
+        ...state,
+        editingWordId: wordId,
     }));
 }
