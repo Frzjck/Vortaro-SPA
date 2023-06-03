@@ -16,7 +16,7 @@ export class GlossaryStateFacade {
     constructor(private store: Store, private glossaryState: GlossaryState) { }
 
     // ViewModels and Interfaces:
-    wordGridState$: Observable<WordGridStateInterface> = this.glossaryState.wordGridState$;
+    wordGridStateVM$: Observable<WordGridStateInterface> = this.glossaryState.wordGridStateVM$;
     glossaryState$: Observable<GlossaryStateInterface> = this.glossaryState.glossaryState$;
 
     // CRUD operations:
@@ -29,7 +29,8 @@ export class GlossaryStateFacade {
     isEditingGroup$ = () => this.glossaryState.isEditingGroup$;
     isEditingGroupId$ = (groupId: string) => this.glossaryState.isEditingGroupId$(groupId);
 
-
+    selectEditingWordId$ = () => this.glossaryState.editingWordId$;
+    editWord = (wordId: string) => { this.glossaryState.editWord(wordId) };
     // Addition translations fold/unfold
     isWordUnfolded$ = (wordId: string) => this.glossaryState.isWordUnfolded$(wordId);
 
