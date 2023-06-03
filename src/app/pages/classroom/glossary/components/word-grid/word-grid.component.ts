@@ -11,6 +11,7 @@ import { Word } from '@app/pages/classroom/store/words-list';
 import { GlossaryStateFacade } from '../../glossary.state.facade';
 import { LetDirective } from '@ngrx/component';
 import { WordFormComponent } from './components/word-form/word-form.component';
+import { Observable } from 'rxjs';
 
 
 export interface WordGridInputInterface {
@@ -49,23 +50,23 @@ export class WordGridComponent {
   @Input() wordGridInput: WordGridInputInterface;
   // wordGridState$: Observable<WordGridStateInterface> = this.state.wordGridState$;
 
-  constructor(public state: GlossaryStateFacade) {
+  constructor(public stateFacade: GlossaryStateFacade) {
   }
 
   wordAction(params) {
     switch (params.option) {
       case "unfoldTranslations":
-        this.state.unfoldTranslationsWord(params.id)
+        this.stateFacade.unfoldTranslationsWord(params.id)
         break;
       case "foldTranslations":
-        this.state.foldTranslationsWord(params.id)
+        this.stateFacade.foldTranslationsWord(params.id)
         break;
       case "edit":
-        // this.onEditWord(params.id)
+        this.stateFacade.editWord(params.id)
         break;
       case "delete":
         if (confirm('Are you sure you want to delete ')) {
-          this.state.deleteWord(params.id)
+          this.stateFacade.deleteWord(params.id)
         }
         break;
     }
