@@ -8,7 +8,6 @@
       } as vm"
     >
       <ng-container [ngSwitch]="vm.wordGridStateVM.editingWordId">
-        <p>ID {{ word.id }} -- {{ vm.wordGridStateVM.editingWordId }}</p>
         <mat-card *ngSwitchDefault class="mat-elevation-z4">
           <span>
             <b>{{ word.original | titlecase }}</b> -
@@ -24,8 +23,8 @@
             (iconPressed)="wordAction($event)"
           ></app-word-ui>
         </mat-card>
-        <mat-card>
-          <app-word-form *ngSwitchCase="word.id"></app-word-form>
+        <mat-card *ngIf="word">
+          <app-word-form *ngSwitchCase="word.id" [word]="word"></app-word-form>
         </mat-card>
       </ng-container>
 
