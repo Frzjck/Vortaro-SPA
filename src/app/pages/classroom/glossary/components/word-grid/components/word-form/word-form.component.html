@@ -26,7 +26,7 @@
         </app-form-field>
 
         <app-form-field
-          *ngIf="false"
+          *ngIf="coreForm.controls.tips"
           class="tips-field"
           [control]="coreForm.controls.tips"
         >
@@ -38,14 +38,14 @@
             maxlength="40"
           />
         </app-form-field>
-
         <app-additional-translations
           [parent]="coreForm"
           name="additionalTranslations"
-          [values]=""
+          [values]="word?.additionalTr"
         ></app-additional-translations>
         <app-form-footer></app-form-footer>
       </div>
     </form>
   </div>
 </div>
+<pre>{{ coreForm?.value | json }}</pre>
