@@ -1,18 +1,19 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, forwardRef } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, forwardRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-input',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   template: `
   <input type="text" class="app-input" 
     [placeholder]="placeholder || ''"
     [attr.disabled]="isDisabled ? true : null"
     (keyup)="onKeyup($event.target.value)" 
     (blur)="onBlur()"
-    #inputRef
+    [(ngModel)]="value"
     >
   `,
   styleUrls: ['./input.component.scss'],
@@ -25,18 +26,14 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ],
 })
 
-export class InputComponent implements OnInit, ControlValueAccessor {
+export class InputComponent implements ControlValueAccessor {
   @Input() placeholder: string;
   @Output() changed = new EventEmitter<string>();
 
-  inputRef: ElementRef<HTMLInputElement>;
-
   isDisabled: boolean;
+  value: string;
 
   constructor() {
-
-  }
-  ngOnInit(): void {
 
   }
 
@@ -45,7 +42,7 @@ export class InputComponent implements OnInit, ControlValueAccessor {
 
   // https://stackoverflow.com/questions/76389471/angular-retaining-input-value-after-form-reset
   writeValue(value: string): void {
-    if (this.inputRef) this.inputRef.nativeElement.value = value;
+    this.value = value;
   }
 
   registerOnChange(fn: any): void {
@@ -61,7 +58,7 @@ export class InputComponent implements OnInit, ControlValueAccessor {
   }
 
   onKeyup(value: string): void {
-    this.inputRef.nativeElement.value = value;
+    this.value = value;
     this.propagateChange(value);
     this.changed.emit(value);
   }
