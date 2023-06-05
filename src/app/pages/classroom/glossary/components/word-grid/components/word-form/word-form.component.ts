@@ -23,7 +23,8 @@ export class WordFormComponent implements OnInit {
   @Input() word: Word;
   coreForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+
+  constructor(private fb: FormBuilder, private footer: WordFormService) {
 
   }
 
@@ -32,8 +33,10 @@ export class WordFormComponent implements OnInit {
       word: new FormControl(null, [Validators.required]),
       translation: new FormControl(null, [Validators.required]),
     });
-
-    if (this.word?.tips) this.createTipsControl()
+    this.footer.addTips$.subscribe(() => {
+      if (!this.coreForm.contains("tips")) this.coreForm.addControl("tips", new FormControl());
+    })
+    if (this.word?.tips) this.createTipsControl(this.word.tips)
     // CHECK WITH STORE IF EDITING A WORD. IF TRUE MAP WORD TO FORM AND PATCH
     if (this.word) this.coreForm.patchValue({
       word: this.word.original,
@@ -44,8 +47,8 @@ export class WordFormComponent implements OnInit {
   }
 
 
-  createTipsControl() {
-    this.coreForm.addControl("tips", new FormControl(this.word.tips));
+  createTipsControl(value?: string) {
+    this.coreForm.addControl("tips", new FormControl(value));
   }
 
   onFormChanged() {
