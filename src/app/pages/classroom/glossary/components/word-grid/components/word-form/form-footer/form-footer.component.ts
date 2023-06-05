@@ -12,11 +12,11 @@ import { WordFormService } from '../services/word-form.service';
 export class FormFooterComponent {
 
 
-  constructor(private footer: WordFormService) { }
+  constructor(private wordForm: WordFormService) { }
 
-  onAddTranslation = () => this.footer.onAddTranslation();
-  onAddTips = () => this.footer.onAddTips();
+  onAddTranslation = () => this.wordForm.onAddTranslation();
+  onAddTips = () => this.wordForm.onAddTips();
 
-  onCancel = () => this.footer.onCloseForm();
-  onSave = () => this.footer.onSubmitForm();
+  onCancel = () => this.wordForm.onCloseForm();
+  onSave = () => this.wordForm.onSubmitForm();
 }
