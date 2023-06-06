@@ -32,18 +32,16 @@ export class WordFormComponent implements OnInit {
     this.coreForm = this.fb.group({
       word: new FormControl(null, [Validators.required]),
       translation: new FormControl(null, [Validators.required]),
-    });
-    this.footer.addTips$.subscribe(() => {
-      if (!this.coreForm.contains("tips")) this.coreForm.addControl("tips", new FormControl());
-    })
-    if (this.word?.tips) this.createTipsControl(this.word.tips)
-    // CHECK WITH STORE IF EDITING A WORD. IF TRUE MAP WORD TO FORM AND PATCH
-    if (this.word) this.coreForm.patchValue({
-      word: this.word.original,
-      translation: this.word.translation,
     })
 
-    // If tips exist create form control with value
+    this.footer.addTips$.subscribe(() => {
+      this.coreForm.addControl("tips", new FormControl());
+    })
+
+    if (this.word) {
+      this.coreForm.patchValue({ word: this.word.original, translation: this.word.translation, });
+      if (this.word.tips) this.createTipsControl(this.word.tips)
+    }
   }
 
 
