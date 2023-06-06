@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { WordFormService } from '../services/word-form.service';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-form-footer',
@@ -10,7 +11,7 @@ import { WordFormService } from '../services/word-form.service';
   styleUrls: ['./form-footer.component.scss']
 })
 export class FormFooterComponent {
-
+  @Input() parent: FormGroup;
 
   constructor(private wordForm: WordFormService) { }
 
