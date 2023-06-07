@@ -48,7 +48,9 @@ export class WordsEffects {
             )
         )
     ));
-
+    //TODO add word ID to group wordId List (create group effect for this purpose)
+    //TODO generate proficiency field on server side
+    //TODO place word inside group on firebase
     create$ = createEffect(() => this.actions$.pipe(
         ofType(wordsActions.createWord),
         map((action) => action.word),
