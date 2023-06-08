@@ -7,7 +7,7 @@ import firebase from "firebase/compat/app";
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 import { from, of } from 'rxjs';
-import { map, switchMap, catchError, take } from 'rxjs/operators';
+import { map, switchMap, catchError, take, tap } from 'rxjs/operators';
 
 import * as userActions from '../../../../store/user/user.actions';
 import * as wordsActions from './words.actions';
@@ -41,21 +41,15 @@ export class WordsEffects {
 
     readInit$ = createEffect(() => this.actions$.pipe(
         ofType(userActions.userInitAuthorized),
-        switchMap((action) => {
-            console.log("readInit action effect", action.uid)
-            return this.wordService.getWordsFromServer(action.uid).pipe(
-                take(1),
-                // map(changes => changes.map(x => extractDocumentChangeActionData(x))),
-                map((words: Word[]) => wordsActions.readWordsSuccess({ words })),
-                catchError(err => of(wordsActions.readWordsError(err.message)))
-            )
-        }
+        switchMap((action) => this.wordService.getWordsFromServer(action.uid).pipe(
+            take(1),
+            map((words: Word[]) => wordsActions.readWordsSuccess({ words })),
+            catchError(err => of(wordsActions.readWordsError(err.message)))
+        )
         )
     ));
 
-    //TODO add word ID to group wordId List (create group effect for this purpose)
-    //TODO generate proficiency field on server side
-    //TODO place word inside group on firebase
+    //TODO generate proficiency field on server side after exercise results
     //TODO on success store new word, with server side generated id, to local store
     create$ = createEffect(() => this.actions$.pipe(
         ofType(wordsActions.createWord),
