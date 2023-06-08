@@ -27,29 +27,32 @@ export class WordsEffects {
         private store: Store,
     ) { }
 
-    read$ = createEffect(() => this.actions$.pipe(
-        ofType(wordsActions.readWords),
-        switchMap(() =>
-            this.wordService.getWordsFromServer().pipe(
-                take(1),
-                map(changes => changes.map(x => extractDocumentChangeActionData(x))),
-                map((words: Word[]) => wordsActions.readWordsSuccess({ words })),
-                catchError(err => of(wordsActions.readWordsError(err.message)))
-            )
-        )
-    ));
+    // read$ = createEffect(() => this.actions$.pipe(
+    //     ofType(wordsActions.readWords),
+    //     switchMap((action) =>
+    //         this.wordService.getWordsFromServer(action.uid).pipe(
+    //             take(1),
+    //             map(changes => changes.map(x => extractDocumentChangeActionData(x))),
+    //             map((words: Word[]) => wordsActions.readWordsSuccess({ words })),
+    //             catchError(err => of(wordsActions.readWordsError(err.message)))
+    //         )
+    //     )
+    // ));
 
     readInit$ = createEffect(() => this.actions$.pipe(
         ofType(userActions.userInitAuthorized),
-        switchMap(() =>
-            this.wordService.getWordsFromServer().pipe(
+        switchMap((action) => {
+            console.log("readInit action effect", action.uid)
+            return this.wordService.getWordsFromServer(action.uid).pipe(
                 take(1),
                 // map(changes => changes.map(x => extractDocumentChangeActionData(x))),
                 map((words: Word[]) => wordsActions.readWordsSuccess({ words })),
                 catchError(err => of(wordsActions.readWordsError(err.message)))
             )
+        }
         )
     ));
+
     //TODO add word ID to group wordId List (create group effect for this purpose)
     //TODO generate proficiency field on server side
     //TODO place word inside group on firebase
