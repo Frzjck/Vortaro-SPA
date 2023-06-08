@@ -13,7 +13,7 @@ import * as fromActions from './user.actions';
 
 import firebase from 'firebase/compat/app';
 import { Store, select } from '@ngrx/store';
-import { getUserId } from './user.selectors';
+import { selectUserId } from './user.selectors';
 
 
 

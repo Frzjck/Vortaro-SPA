@@ -2,30 +2,30 @@ import { createSelector, createFeatureSelector } from '@ngrx/store';
 
 import { UserState } from './user.reducer';
 
-export const getUserState = createFeatureSelector<UserState>('user');
+export const selectUserState = createFeatureSelector<UserState>('user');
 
-export const getUser = createSelector(
-    getUserState,
+export const selectUser = createSelector(
+    selectUserState,
     (state) => state.user
 );
 
-export const getLoading = createSelector(
-    getUserState,
+export const selectLoading = createSelector(
+    selectUserState,
     (state) => state.loading
 );
 
-export const getIsAuthorized = createSelector(
-    getUserState,
+export const selectIsAuthorized = createSelector(
+    selectUserState,
     (state) => !!state.uid
 );
 
-export const getEmail = createSelector(
-    getUserState,
+export const selectEmail = createSelector(
+    selectUserState,
     (state) => state.user.email
 );
 
-export const getUserId = createSelector(
-    getUser,
+export const selectUserId = createSelector(
+    selectUser,
     (state) => state.uid
 );
 

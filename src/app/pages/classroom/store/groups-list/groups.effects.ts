@@ -11,7 +11,7 @@ import { map, switchMap, catchError, take, tap } from 'rxjs/operators';
 import * as groupsActions from './groups.actions';
 import * as userActions from '../../../../store/user/user.actions';
 
-import { getUserId } from '../../../../store/user/user.selectors';
+import { selectUserId } from '../../../../store/user/user.selectors';
 
 
 import { extractDocumentChangeActionData } from '@app/shared/utils/db-utils';
@@ -30,7 +30,7 @@ export class GroupsEffects {
 
     read$ = createEffect(() => this.actions$.pipe(
         ofType(groupsActions.readGroups),
-        switchMap(() => this.store.pipe(select(getUserId))),
+        switchMap(() => this.store.pipe(select(selectUserId))),
         switchMap((userId) => {
             return this.afs.collection(`/users/${userId}/groups`).snapshotChanges().pipe(
                 take(1),
