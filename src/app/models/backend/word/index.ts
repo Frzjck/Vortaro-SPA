@@ -28,7 +28,7 @@ export interface FireWord {
     translation: string;
     proficiency: Score;
     tips?: string;
-    additionalTr?: string[];
+    additionalTranslations?: string[];
 
     created: firebase.firestore.FieldValue;
     updated?: firebase.firestore.FieldValue;

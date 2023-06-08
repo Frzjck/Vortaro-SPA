@@ -32,7 +32,7 @@ export const _getAnswers = (words: Word[], testingAgainst: TestingAgainstType): 
     }
     if (testingAgainst === TestingAgainstType.TRANSLATION) {
         return words.map(word => {
-            if (word?.additionalTr?.length) return [word.translation, ...word?.additionalTr]
+            if (word?.additionalTranslations?.length) return [word.translation, ...word?.additionalTranslations]
             return [word.translation]
 
         }).flat();
@@ -43,7 +43,7 @@ export const _getAnswers = (words: Word[], testingAgainst: TestingAgainstType): 
 export const _isResponseCorrect = (word: Word, answer: string, testingAgainst: TestingAgainstType): boolean => {
     if (testingAgainst === TestingAgainstType.TRANSLATION) {
         const possibleAnswers = [word.translation.toLowerCase()]
-        if (word.additionalTr?.length) possibleAnswers.push(...word.additionalTr.map((x) => x.toLocaleLowerCase()))
+        if (word.additionalTranslations?.length) possibleAnswers.push(...word.additionalTranslations.map((x) => x.toLocaleLowerCase()))
         return possibleAnswers.includes(answer.toLowerCase());
     }
     else if (testingAgainst === TestingAgainstType.ORIGINAL) return word.original.toLowerCase() === answer.toLowerCase();

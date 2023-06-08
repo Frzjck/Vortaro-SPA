@@ -64,7 +64,7 @@ export class GlossaryState extends ComponentStore<GlossaryStateModel> {
     readonly unfoldableGroupWords$ = (groupId) => this.select(
         this.store.select(selectWordsByGroupId(groupId)),
         (groupWords) => {
-            return groupWords.filter((word) => word.additionalTr && word.additionalTr?.length > 0)
+            return groupWords.filter((word) => word.additionalTranslations && word.additionalTranslations?.length > 0)
         }
     )
 

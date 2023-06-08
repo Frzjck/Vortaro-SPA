@@ -74,7 +74,7 @@ export class WordGridComponent {
   }
 
   hasAddTranslations(word) {
-    return word?.additionalTr?.length > 0
+    return word?.additionalTranslations?.length > 0
   }
   onAddNewWord() { }
 

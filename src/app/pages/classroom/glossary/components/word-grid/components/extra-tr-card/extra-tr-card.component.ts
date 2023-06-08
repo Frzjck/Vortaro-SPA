@@ -9,7 +9,7 @@ import { Word } from '@app/pages/classroom/store/words-list';
   imports: [CommonModule, MatCardModule],
   template: `
   <mat-card class="extra-tr-card">
-    <span class="translation" *ngFor="let translation of word.additionalTr">
+    <span class="translation" *ngFor="let translation of word.additionalTranslations">
       {{ translation }}
     </span>
   </mat-card>
