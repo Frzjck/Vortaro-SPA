@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { createEffect, Actions, ofType } from '@ngrx/effects';
+import { createEffect, Actions, ofType, concatLatestFrom } from '@ngrx/effects';
 
 // import * as firestore from "@google-cloud/firestore";
 import firebase from "firebase/compat/app";
@@ -14,15 +14,17 @@ import * as wordsActions from './words.actions';
 import { extractDocumentChangeActionData } from '@app/shared/utils/db-utils';
 import { FireWord, Word } from './words.models';
 import { WordService } from '@app/pages/classroom/services/word.service';
+import { Store } from '@ngrx/store';
+import { selectUserId } from '@app/store/user';
 
 
 @Injectable()
 export class WordsEffects {
-
     constructor(
         private actions$: Actions,
         private afs: AngularFirestore,
-        private wordService: WordService
+        private wordService: WordService,
+        private store: Store,
     ) { }
 
     read$ = createEffect(() => this.actions$.pipe(
@@ -51,16 +53,21 @@ export class WordsEffects {
     //TODO add word ID to group wordId List (create group effect for this purpose)
     //TODO generate proficiency field on server side
     //TODO place word inside group on firebase
+    //TODO on success store new word, with server side generated id, to local store
     create$ = createEffect(() => this.actions$.pipe(
         ofType(wordsActions.createWord),
-        map((action) => action.word),
-        map((word: FireWord) => ({
-            ...word,
-            created: firebase.firestore.FieldValue.serverTimestamp()
-        })),
-        switchMap((request: FireWord) =>
-            from(this.afs.collection('words').add(request)).pipe(
-                map(res => ({ ...request, id: res.id })),
+        concatLatestFrom((action) => [
+            this.store.select(selectUserId),
+        ]),
+        switchMap(([action, userId]) =>
+            from(this.afs.collection(`/users/${userId}/groups/${action.groupId}/words`).add({
+                ...action.word,
+                created: firebase.firestore.FieldValue.serverTimestamp(),
+            })).pipe(
+                map(res => ({
+                    ...action.word,
+                    id: res.id
+                })),
                 map((word: Word) => wordsActions.createWordSuccess({ word })),
                 catchError(err => of(wordsActions.createWordError(err.message)))
             )
