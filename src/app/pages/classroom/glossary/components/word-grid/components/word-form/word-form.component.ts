@@ -31,7 +31,7 @@ export class WordFormComponent implements OnInit {
     this.footer.addTips$.subscribe(() => this.createTipsControl())
 
     this.coreForm = this.fb.group({
-      word: new FormControl(null, [Validators.required]),
+      original: new FormControl(null, [Validators.required]),
       translation: new FormControl(null, [Validators.required]),
     })
 

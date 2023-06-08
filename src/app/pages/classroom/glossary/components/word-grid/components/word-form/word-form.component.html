@@ -2,10 +2,13 @@
   <div class="container">
     <form [formGroup]="coreForm" (submit)="onSubmit()">
       <div class="grid-container">
-        <app-form-field class="word-field" [control]="coreForm.controls.word">
+        <app-form-field
+          class="original-field"
+          [control]="coreForm.controls.original"
+        >
           <app-input
             class="wordInput"
-            formControlName="word"
+            formControlName="original"
             matInput
             placeholder="Word"
             maxlength="21"
