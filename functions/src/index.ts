@@ -7,7 +7,14 @@ import { db } from "./init";
 
 export const onAddWordUpdateGroupWordIdArray = functions.firestore.document("users/{userId}/groups/{groupId}/words/{wordId}").onCreate(async (snap, context) => {
     functions.logger.debug(`Running add course trigger for word id: ${context.params.wordId}`);
-    response.send("Hello from Firebase!");
+
+    return db.runTransaction(async (transaction) => {
+        const groupRef = db.doc(`users/${context.params.userId}/groups/${context.params.groupId}`);
+        const groupSnap = await transaction.get(groupRef);
+        const group = groupSnap.data();
+        group.wordIds.push(context.params.wordId);
+        transaction.set(groupRef, group);
+    });
 
 })
 
