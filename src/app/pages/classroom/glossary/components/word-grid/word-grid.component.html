@@ -24,7 +24,11 @@
           ></app-word-ui>
         </mat-card>
         <mat-card *ngIf="word">
-          <app-word-form *ngSwitchCase="word.id" [word]="word"></app-word-form>
+          <app-word-form
+            *ngSwitchCase="word.id"
+            [word]="word"
+            [groupId]="wordGridInput.groupId"
+          ></app-word-form>
         </mat-card>
       </ng-container>
 
@@ -48,7 +52,7 @@
   </div>
   <div class="wordCardDiv">
     <mat-card>
-      <app-word-form></app-word-form>
+      <app-word-form [groupId]="wordGridInput.groupId"></app-word-form>
     </mat-card>
   </div>
 </div>

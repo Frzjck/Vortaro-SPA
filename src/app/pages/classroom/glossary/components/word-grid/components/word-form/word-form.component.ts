@@ -22,6 +22,7 @@ import { Store } from '@ngrx/store';
 })
 export class WordFormComponent implements OnInit {
   @Input() word: Word;
+  @Input() groupId: string;
   coreForm: FormGroup;
 
   constructor(private store: Store, private fb: FormBuilder, private footer: WordFormService) { }
@@ -46,6 +47,6 @@ export class WordFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.store.dispatch(createWord(this.coreForm.value));
+    this.store.dispatch(createWord({ word: this.coreForm.value, groupId: this.groupId }));
   }
 }
