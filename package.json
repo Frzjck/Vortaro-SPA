@@ -9,7 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "start:dev": "ng serve --c=dev",
-    "emulator": "firebase emulators:start --import minData --only firestore,auth",
+    "emulator": "firebase emulators:start --only firestore,auth,functions --import minData",
     "build:dev": "ng build --c=dev",
     "start:prod": "ng build --c=prod",
     "build:prod": "ng build --c=prod"
