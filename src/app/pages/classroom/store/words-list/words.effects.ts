@@ -52,7 +52,7 @@ export class WordsEffects {
     //TODO generate proficiency field on server side after exercise results
     //TODO on success store new word, with server side generated id, to local store
     create$ = createEffect(() => this.actions$.pipe(
-        ofType(wordsActions.createWord),
+        ofType(wordsActions.createFormWord),
         concatLatestFrom((action) => [
             this.store.select(selectUserId),
         ]),
