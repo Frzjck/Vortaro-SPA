@@ -5,7 +5,7 @@ import { Observable, take } from 'rxjs';
 import { WordGridStateInterface } from './components/word-grid/word-grid.component';
 import { GlossaryStateInterface } from './glossary.component';
 import { deleteWord } from '../store/words-list/words.actions';
-import { deleteGroup, editGroup } from '../store/groups-list/groups.actions';
+import { GlossaryPageAction } from '../store/groups-list/groups.actions';
 import { selectGroupById } from '../store/groups-list';
 
 
@@ -22,7 +22,7 @@ export class GlossaryStateFacade {
     // CRUD operations:
     toggleEditGroup = (groupId: string) => this.glossaryState.toggleEditGroup(groupId);
     deleteWord = (wordId: string) => this.store.dispatch(deleteWord({ id: wordId }));
-    deleteGroup = (groupId: string) => this.store.dispatch(deleteGroup({ id: groupId }));
+    deleteGroup = (groupId: string) => this.store.dispatch(GlossaryPageAction.deleteGroup({ id: groupId }));
 
 
     // Editing:
