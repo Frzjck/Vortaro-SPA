@@ -10,9 +10,8 @@ import { from, of } from 'rxjs';
 import { map, switchMap, catchError, take, tap } from 'rxjs/operators';
 
 import * as userActions from '../../../../store/user/user.actions';
-import * as wordsActions from './words.actions';
-import { extractDocumentChangeActionData } from '@app/shared/utils/db-utils';
-import { FireWord, Word } from './words.models';
+import { GlossaryPageWordAction } from './words.actions';
+import { Word } from './words.models';
 import { WordService } from '@app/pages/classroom/services/word.service';
 import { Store } from '@ngrx/store';
 import { selectUserId } from '@app/store/user';
@@ -28,31 +27,19 @@ export class WordsEffects {
         private store: Store,
     ) { }
 
-    // read$ = createEffect(() => this.actions$.pipe(
-    //     ofType(wordsActions.readWords),
-    //     switchMap((action) =>
-    //         this.wordService.getWordsFromServer(action.uid).pipe(
-    //             take(1),
-    //             map(changes => changes.map(x => extractDocumentChangeActionData(x))),
-    //             map((words: Word[]) => wordsActions.readWordsSuccess({ words })),
-    //             catchError(err => of(wordsActions.readWordsError(err.message)))
-    //         )
-    //     )
-    // ));
-
     readInit$ = createEffect(() => this.actions$.pipe(
         ofType(userActions.userInitAuthorized),
         switchMap((action) => this.wordService.getWordsFromServer(action.uid).pipe(
             take(1),
-            map((words: Word[]) => wordsActions.readWordsSuccess({ words })),
-            catchError(err => of(wordsActions.readWordsError(err.message)))
+            map((words: Word[]) => GlossaryPageWordAction.readWordsSuccess({ words })),
+            catchError(err => of(GlossaryPageWordAction.readWordsError(err.message)))
         )
         )
     ));
 
     //TODO on success store new word, with server side generated id, to local store
     create$ = createEffect(() => this.actions$.pipe(
-        ofType(wordsActions.createFormWord),
+        ofType(GlossaryPageWordAction.createFormWord),
         concatLatestFrom((action) => [
             of(formWordToNewFireWord(action.word)),
             of(action.groupId),
@@ -61,14 +48,14 @@ export class WordsEffects {
         switchMap(([action, word, groupId, userId]) =>
             this.wordService.addWordRequest(word, groupId, userId).pipe(
                 map(res => (formWordToNewWord(action.word, res.id))),
-                map((word: Word) => wordsActions.createWordSuccess({ word })),
-                catchError(err => of(wordsActions.createWordError(err.message)))
+                map((word: Word) => GlossaryPageWordAction.createWordSuccess({ word })),
+                catchError(err => of(GlossaryPageWordAction.createWordError(err.message)))
             )
         )
     ));
 
     update$ = createEffect(() => this.actions$.pipe(
-        ofType(wordsActions.updateWord),
+        ofType(GlossaryPageWordAction.updateWord),
         map((action) => action.word),
         map((word: Word) => ({
             ...word,
@@ -76,19 +63,19 @@ export class WordsEffects {
         })),
         switchMap((word) =>
             from(this.afs.collection('words').doc(word.id).set(word)).pipe(
-                map(() => wordsActions.updateWordSuccess({ id: word.id, changes: word })),
-                catchError(err => of(wordsActions.updateWordError(err.message)))
+                map(() => GlossaryPageWordAction.updateWordSuccess({ id: word.id, changes: word })),
+                catchError(err => of(GlossaryPageWordAction.updateWordError(err.message)))
             )
         )
     ));
 
     delete$ = createEffect(() => this.actions$.pipe(
-        ofType(wordsActions.deleteWord),
+        ofType(GlossaryPageWordAction.deleteWord),
         map((action) => action.id),
         switchMap(id =>
             from(this.afs.collection('words').doc(id).delete()).pipe(
-                map(() => wordsActions.deleteWordSuccess({ id })),
-                catchError(err => of(wordsActions.deleteWordError(err.message)))
+                map(() => GlossaryPageWordAction.deleteWordSuccess({ id })),
+                catchError(err => of(GlossaryPageWordAction.deleteWordError(err.message)))
             )
         )
     ));
