@@ -9,7 +9,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { from, of } from 'rxjs';
 import { map, switchMap, catchError, take, tap } from 'rxjs/operators';
 
-import * as userActions from '../../../../store/user/user.actions';
+import { UnknownPageUserAction } from '@app/store/user';
 import { GlossaryPageWordAction } from './words.actions';
 import { Word } from './words.models';
 import { WordService } from '@app/pages/classroom/services/word.service';
@@ -28,7 +28,7 @@ export class WordsEffects {
     ) { }
 
     readInit$ = createEffect(() => this.actions$.pipe(
-        ofType(userActions.userInitAuthorized),
+        ofType(UnknownPageUserAction.userInitAuthorized),
         switchMap((action) => this.wordService.getWordsFromServer(action.uid).pipe(
             take(1),
             map((words: Word[]) => GlossaryPageWordAction.readWordsSuccess({ words })),

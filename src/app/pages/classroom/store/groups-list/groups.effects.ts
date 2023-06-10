@@ -9,7 +9,7 @@ import { map, switchMap, catchError, take, tap } from 'rxjs/operators';
 
 
 import { GlossaryPageGroupAction } from './groups.actions';
-import * as userActions from '../../../../store/user/user.actions';
+import { UnknownPageUserAction } from '@app/store/user';
 
 import { selectUserId } from '../../../../store/user/user.selectors';
 
@@ -43,7 +43,7 @@ export class GroupsEffects {
     ));
 
     readInit$ = createEffect(() => this.actions$.pipe(
-        ofType(userActions.userInitAuthorized),
+        ofType(UnknownPageUserAction.userInitAuthorized),
         switchMap((res) => {
             return this.afs.collection(`/users/${res.uid}/groups`).snapshotChanges().pipe(
                 take(1),

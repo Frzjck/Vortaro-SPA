@@ -1,13 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, NgZone, OnDestroy, OnInit } from "@angular/core";
-import * as firebaseui from "firebaseui";
 
-import { AngularFireAuth } from "@angular/fire/compat/auth";
-import { Router } from "@angular/router";
-import firebase from "firebase/compat/app";
 import { Store } from '@ngrx/store';
-import { userSignInWithGoogle } from '@app/store/user';
-import { take } from 'rxjs';
+import { UnknownPageUserAction } from '@app/store/user';
 
 @Component({
   selector: 'app-login',
@@ -47,7 +42,7 @@ export class LoginComponent {
     // this.afAuth.authState.pipe(take(1)).subscribe((authState) => {
     //   console.log(JSON.parse(JSON.stringify(authState)));
     // });
-    this.store.dispatch(userSignInWithGoogle());
+    this.store.dispatch(UnknownPageUserAction.userSignInWithGoogle());
   }
 
 

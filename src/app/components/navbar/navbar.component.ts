@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Store, select } from '@ngrx/store';
-import { User, selectUser, userSignOut } from "@app/store/user";
+import { User, selectUser, UnknownPageUserAction } from "@app/store/user";
 import { Observable } from 'rxjs';
 
 @Component({
@@ -74,7 +74,7 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
-    this.store.dispatch(userSignOut());
+    this.store.dispatch(UnknownPageUserAction.userSignOut());
   }
 
   onFocusoutSettings() { }
