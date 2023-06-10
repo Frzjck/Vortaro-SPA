@@ -16,6 +16,7 @@ import { FireWord, Word } from './words.models';
 import { WordService } from '@app/pages/classroom/services/word.service';
 import { Store } from '@ngrx/store';
 import { selectUserId } from '@app/store/user';
+import { formWordToNewFireWord, formWordToNewWord } from '../../utils/words.mapper';
 
 
 @Injectable()
@@ -49,22 +50,17 @@ export class WordsEffects {
         )
     ));
 
-    //TODO generate proficiency field on server side after exercise results
     //TODO on success store new word, with server side generated id, to local store
     create$ = createEffect(() => this.actions$.pipe(
         ofType(wordsActions.createFormWord),
         concatLatestFrom((action) => [
+            of(formWordToNewFireWord(action.word)),
+            of(action.groupId),
             this.store.select(selectUserId),
         ]),
-        switchMap(([action, userId]) =>
-            from(this.afs.collection(`/users/${userId}/groups/${action.groupId}/words`).add({
-                ...action.word,
-                created: firebase.firestore.FieldValue.serverTimestamp(),
-            })).pipe(
-                map(res => ({
-                    ...action.word,
-                    id: res.id
-                })),
+        switchMap(([action, word, groupId, userId]) =>
+            this.wordService.addWordRequest(word, groupId, userId).pipe(
+                map(res => (formWordToNewWord(action.word, res.id))),
                 map((word: Word) => wordsActions.createWordSuccess({ word })),
                 catchError(err => of(wordsActions.createWordError(err.message)))
             )
