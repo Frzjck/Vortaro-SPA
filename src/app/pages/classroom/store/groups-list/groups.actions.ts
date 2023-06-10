@@ -1,9 +1,9 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { Group, FireGroup } from './groups.models';
 
-export const GlossaryPageGroupAction = createActionGroup(
+export const UnknownPageGroupAction = createActionGroup(
     {
-        source: 'Glossary Page',
+        source: 'Unknown Page',
         events: {
             "Read Groups": emptyProps(),
             "Read Groups Success": props<{ groups: Group[] }>(),
@@ -12,6 +12,8 @@ export const GlossaryPageGroupAction = createActionGroup(
             "Create Group": props<{ group: FireGroup }>(),
             "Create Group Success": props<{ group: Group }>(),
             "Create Group Error": props<{ error: string }>(),
+
+            "Add Word To Group": props<{ wordId: string }>(),
 
             "Update Group": props<{ group: Group }>(),
             "Update Group Success": props<{

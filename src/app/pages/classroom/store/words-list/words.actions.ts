@@ -1,9 +1,9 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { Word, FireWord } from './words.models';
 
-export const GlossaryPageWordAction = createActionGroup(
+export const UnknownPageWordAction = createActionGroup(
     {
-        source: 'Glossary Page',
+        source: 'Unknown Page',
         events: {
             "Read Words": emptyProps(),
             "Read Words Success": props<{ words: Word[] }>(),

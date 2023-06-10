@@ -1,7 +1,7 @@
 import { EntityState, createEntityAdapter } from '@ngrx/entity';
 import { createReducer, on } from '@ngrx/store';
 import { Word } from './words.models';
-import { GlossaryPageWordAction } from './words.actions';
+import { UnknownPageWordAction } from './words.actions';
 
 
 export const adapter = createEntityAdapter<Word>();
@@ -18,22 +18,22 @@ export const initialState: WordsState = adapter.getInitialState({
 
 export const reducer = createReducer(
     initialState,
-    on(GlossaryPageWordAction.readWords, (state) => ({ ...state, loading: true, error: null })),
-    on(GlossaryPageWordAction.readWordsSuccess, (state, { words }) => adapter.setAll(words, { ...state, loading: false })),
-    on(GlossaryPageWordAction.readWordsError, (state, { error }) => ({ ...state, loading: false, error: error })),
+    on(UnknownPageWordAction.readWords, (state) => ({ ...state, loading: true, error: null })),
+    on(UnknownPageWordAction.readWordsSuccess, (state, { words }) => adapter.setAll(words, { ...state, loading: false })),
+    on(UnknownPageWordAction.readWordsError, (state, { error }) => ({ ...state, loading: false, error: error })),
 
-    on(GlossaryPageWordAction.createFormWord, (state) => ({ ...state, loading: true, error: null })),
-    on(GlossaryPageWordAction.createWordSuccess, (state, { word }) => adapter.addOne(word, { ...state, loading: false })),
-    on(GlossaryPageWordAction.createWordError, (state, { error }) => ({ ...state, loading: false, error: error })),
+    on(UnknownPageWordAction.createFormWord, (state) => ({ ...state, loading: true, error: null })),
+    on(UnknownPageWordAction.createWordSuccess, (state, { word }) => adapter.addOne(word, { ...state, loading: false })),
+    on(UnknownPageWordAction.createWordError, (state, { error }) => ({ ...state, loading: false, error: error })),
 
-    on(GlossaryPageWordAction.updateWord, (state) => ({ ...state, loading: true, error: null })),
-    on(GlossaryPageWordAction.updateWordSuccess, (state, { id, changes }) => (adapter.updateOne({
+    on(UnknownPageWordAction.updateWord, (state) => ({ ...state, loading: true, error: null })),
+    on(UnknownPageWordAction.updateWordSuccess, (state, { id, changes }) => (adapter.updateOne({
         id: id,
         changes: changes
     }, state))),
-    on(GlossaryPageWordAction.updateWordError, (state, { error }) => ({ ...state, loading: false, error: error })),
+    on(UnknownPageWordAction.updateWordError, (state, { error }) => ({ ...state, loading: false, error: error })),
 
-    on(GlossaryPageWordAction.deleteWord, (state) => ({ ...state, loading: true, error: null })),
-    on(GlossaryPageWordAction.deleteWordSuccess, (state, { id }) => adapter.removeOne(id, state)),
-    on(GlossaryPageWordAction.deleteWordError, (state, { error }) => ({ ...state, loading: false, error: error })),
+    on(UnknownPageWordAction.deleteWord, (state) => ({ ...state, loading: true, error: null })),
+    on(UnknownPageWordAction.deleteWordSuccess, (state, { id }) => adapter.removeOne(id, state)),
+    on(UnknownPageWordAction.deleteWordError, (state, { error }) => ({ ...state, loading: false, error: error })),
 );

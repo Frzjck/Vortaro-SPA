@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Word, GlossaryPageWordAction } from '@app/pages/classroom/store/words-list';
+import { Word, UnknownPageWordAction } from '@app/pages/classroom/store/words-list';
 import { FormFieldComponent } from '@app/shared/controls/form-field/form-field.component';
 import { InputComponent } from '@app/shared/controls/input/input.component';
 import { AdditionalTranslationsComponent } from './additional-translations/additional-translations.component';
@@ -47,6 +47,6 @@ export class WordFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.store.dispatch(GlossaryPageWordAction.createFormWord({ word: this.coreForm.value, groupId: this.groupId }));
+    this.store.dispatch(UnknownPageWordAction.createFormWord({ word: this.coreForm.value, groupId: this.groupId }));
   }
 }

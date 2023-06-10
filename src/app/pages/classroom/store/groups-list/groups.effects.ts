@@ -8,7 +8,7 @@ import { Observable, from, of } from 'rxjs';
 import { map, switchMap, catchError, take, tap } from 'rxjs/operators';
 
 
-import { GlossaryPageGroupAction } from './groups.actions';
+import { UnknownPageGroupAction } from './groups.actions';
 import { UnknownPageUserAction } from '@app/store/user';
 
 import { selectUserId } from '../../../../store/user/user.selectors';
@@ -29,14 +29,14 @@ export class GroupsEffects {
     ) { }
 
     read$ = createEffect(() => this.actions$.pipe(
-        ofType(GlossaryPageGroupAction.readGroups),
+        ofType(UnknownPageGroupAction.readGroups),
         switchMap(() => this.store.pipe(select(selectUserId))),
         switchMap((userId) => {
             return this.afs.collection(`/users/${userId}/groups`).snapshotChanges().pipe(
                 take(1),
                 map(changes => changes.map(x => extractDocumentChangeActionData(x))),
-                map((groups: Group[]) => GlossaryPageGroupAction.readGroupsSuccess({ groups })),
-                catchError(err => of(GlossaryPageGroupAction.readGroupsError(err.message)))
+                map((groups: Group[]) => UnknownPageGroupAction.readGroupsSuccess({ groups })),
+                catchError(err => of(UnknownPageGroupAction.readGroupsError(err.message)))
             )
         }
         )
@@ -48,15 +48,15 @@ export class GroupsEffects {
             return this.afs.collection(`/users/${res.uid}/groups`).snapshotChanges().pipe(
                 take(1),
                 map(changes => changes.map(x => extractDocumentChangeActionData(x))),
-                map((groups: Group[]) => GlossaryPageGroupAction.readGroupsSuccess({ groups })),
-                catchError(err => of(GlossaryPageGroupAction.readGroupsError(err.message)))
+                map((groups: Group[]) => UnknownPageGroupAction.readGroupsSuccess({ groups })),
+                catchError(err => of(UnknownPageGroupAction.readGroupsError(err.message)))
             )
         }
         )
     ));
 
     create$ = createEffect(() => this.actions$.pipe(
-        ofType(GlossaryPageGroupAction.createGroup),
+        ofType(UnknownPageGroupAction.createGroup),
         map((action) => action.group),
         map((group: FireGroup) => ({
             ...group,
@@ -65,14 +65,14 @@ export class GroupsEffects {
         switchMap((request: FireGroup) =>
             from(this.afs.collection('groups').add(request)).pipe(
                 map(res => ({ ...request, id: res.id })),
-                map((group: Group) => GlossaryPageGroupAction.createGroupSuccess({ group })),
-                catchError(err => of(GlossaryPageGroupAction.createGroupError(err.message)))
+                map((group: Group) => UnknownPageGroupAction.createGroupSuccess({ group })),
+                catchError(err => of(UnknownPageGroupAction.createGroupError(err.message)))
             )
         )
     ));
 
     update$ = createEffect(() => this.actions$.pipe(
-        ofType(GlossaryPageGroupAction.updateGroup),
+        ofType(UnknownPageGroupAction.updateGroup),
         map((action) => action.group),
         map((group: Group) => ({
             ...group,
@@ -80,19 +80,19 @@ export class GroupsEffects {
         })),
         switchMap((group) =>
             from(this.afs.collection('groups').doc(group.id).set(group)).pipe(
-                map(() => GlossaryPageGroupAction.updateGroupSuccess({ id: group.id, changes: group })),
-                catchError(err => of(GlossaryPageGroupAction.updateGroupError(err.message)))
+                map(() => UnknownPageGroupAction.updateGroupSuccess({ id: group.id, changes: group })),
+                catchError(err => of(UnknownPageGroupAction.updateGroupError(err.message)))
             )
         )
     ));
 
     delete$ = createEffect(() => this.actions$.pipe(
-        ofType(GlossaryPageGroupAction.deleteGroup),
+        ofType(UnknownPageGroupAction.deleteGroup),
         map((action) => action.id),
         switchMap(id =>
             from(this.afs.collection('groups').doc(id).delete()).pipe(
-                map(() => GlossaryPageGroupAction.deleteGroupSuccess({ id })),
-                catchError(err => of(GlossaryPageGroupAction.deleteGroupError(err.message)))
+                map(() => UnknownPageGroupAction.deleteGroupSuccess({ id })),
+                catchError(err => of(UnknownPageGroupAction.deleteGroupError(err.message)))
             )
         )
     ));
