@@ -8,3 +8,9 @@ export const formWordToNewFireWord = (word: FormWord): FireWordCreateRequest => 
     ...word,
     created: firebase.firestore.FieldValue.serverTimestamp(),
 });
+
+export const formWordToUpdateWord = (word: FormWord): FireWordUpdateRequest => ({
+    ...word,
+    updated: firebase.firestore.FieldValue.serverTimestamp(),
+});
+
