@@ -29,7 +29,10 @@ export interface FireWord {
     proficiency: Score;
     tips?: string;
     additionalTranslations?: string[];
-
+}
+export interface FireWordCreateRequest extends Omit<FireWord, "proficiency"> {
     created: firebase.firestore.FieldValue;
-    updated?: firebase.firestore.FieldValue;
+}
+export interface FireWordUpdateRequest extends Omit<FireWord, "proficiency"> {
+    updated: firebase.firestore.FieldValue;
 }
