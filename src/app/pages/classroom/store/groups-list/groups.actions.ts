@@ -13,8 +13,6 @@ export const UnknownPageGroupAction = createActionGroup(
             "Create Group Success": props<{ group: Group }>(),
             "Create Group Error": props<{ error: string }>(),
 
-            "Add Word To Group": props<{ wordId: string }>(),
-
             "Update Group": props<{ group: Group }>(),
             "Update Group Success": props<{
                 id: string,

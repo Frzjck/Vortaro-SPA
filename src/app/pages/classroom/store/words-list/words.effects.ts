@@ -37,7 +37,6 @@ export class WordsEffects {
         )
     ));
 
-    //TODO on success store new word, with server side generated id, to local store
     create$ = createEffect(() => this.actions$.pipe(
         ofType(UnknownPageWordAction.createFormWord),
         concatLatestFrom((action) => [
@@ -48,7 +47,7 @@ export class WordsEffects {
         switchMap(([action, word, groupId, userId]) =>
             this.wordService.addWordRequest(word, groupId, userId).pipe(
                 map(res => (formWordToNewWord(action.word, res.id))),
-                map((word: Word) => UnknownPageWordAction.createWordSuccess({ word })),
+                map((word: Word) => UnknownPageWordAction.createWordSuccess({ groupId, word })),
                 catchError(err => of(UnknownPageWordAction.createWordError(err.message)))
             )
         )

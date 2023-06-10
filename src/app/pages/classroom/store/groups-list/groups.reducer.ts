@@ -2,6 +2,7 @@ import { EntityState, createEntityAdapter } from '@ngrx/entity';
 import { createReducer, on } from '@ngrx/store';
 import { Group } from './groups.models';
 import { UnknownPageGroupAction } from './groups.actions';
+import { UnknownPageWordAction } from '../words-list';
 
 
 export const adapter = createEntityAdapter<Group>();
@@ -33,6 +34,16 @@ export const reducer = createReducer(
         changes: changes
     }, state))),
     on(UnknownPageGroupAction.updateGroupError, (state, { error }) => ({ ...state, loading: false, error: error })),
+
+    on(UnknownPageWordAction.createWordSuccess, (state, { groupId, word }) => {
+        const fireGroup = state.entities[groupId];
+        const updatedFireGroup = {
+            ...fireGroup,
+            wordIds: [...fireGroup.wordIds, word.id],
+        };
+        return adapter.updateOne({ id: groupId, changes: updatedFireGroup }, state);
+    }
+    ),
 
     on(UnknownPageGroupAction.deleteGroup, (state) => ({ ...state, loading: true, error: null })),
     on(UnknownPageGroupAction.deleteGroupSuccess, (state, { id }) => adapter.removeOne(id, state)),
