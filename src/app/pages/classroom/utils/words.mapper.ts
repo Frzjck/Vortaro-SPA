@@ -14,3 +14,8 @@ export const formWordToUpdateWord = (word: FormWord): FireWordUpdateRequest => (
     updated: firebase.firestore.FieldValue.serverTimestamp(),
 });
 
+export const formWordToNewWord = (word: FormWord, id: string): Word => ({
+    ...word,
+    id,
+    proficiency: 10
+})
