@@ -1,7 +1,7 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { Group, FireGroup } from './groups.models';
 
-export const GlossaryPageAction = createActionGroup(
+export const GlossaryPageGroupAction = createActionGroup(
     {
         source: 'Glossary Page',
         events: {
