@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Word, UnknownPageWordAction } from '@app/pages/classroom/store/words-list';
 import { FormFieldComponent } from '@app/shared/controls/form-field/form-field.component';
@@ -10,6 +10,7 @@ import { FormFooterComponent } from './form-footer/form-footer.component';
 import { WordFormService } from './services/word-form.service';
 import { WordFormState } from './word-form.state';
 import { Store } from '@ngrx/store';
+import { markFormGroupTouched } from '@app/shared/utils/form';
 
 @Component({
   selector: 'app-word-form',
@@ -25,10 +26,12 @@ export class WordFormComponent implements OnInit {
   @Input() groupId: string;
   coreForm: FormGroup;
 
-  constructor(private store: Store, private fb: FormBuilder, private footer: WordFormService) { }
+  constructor(private store: Store, private fb: FormBuilder, private footer: WordFormService, private cdr: ChangeDetectorRef,) { }
 
   ngOnInit(): void {
-    this.footer.addTips$.subscribe(() => this.createTipsControl())
+    this.footer.addTips$.subscribe(() => this.createTipsControl());
+
+    this.footer.submitWordForm$.subscribe(() => this.onSubmit());
 
     this.coreForm = this.fb.group({
       original: new FormControl(null, [Validators.required]),
@@ -47,6 +50,12 @@ export class WordFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.store.dispatch(UnknownPageWordAction.createFormWord({ word: this.coreForm.value, groupId: this.groupId }));
+    if (!this.coreForm.valid) {
+      markFormGroupTouched(this.coreForm);
+      this.coreForm.updateValueAndValidity();
+      this.cdr.detectChanges();
+    } else {
+      this.store.dispatch(UnknownPageWordAction.createFormWord({ word: this.coreForm.value, groupId: this.groupId }));
+    }
   }
 }
