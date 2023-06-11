@@ -39,6 +39,13 @@ export class GlossaryState extends ComponentStore<GlossaryStateModel> {
     readonly isAddingNewWord$ = this.select(state => state.addNewWordMode);
 
     // ------------- Global state selectors:
+    // get only unfoldable group words
+    readonly unfoldableGroupWords$ = (groupId) => this.select(
+        this.store.select(selectWordsByGroupId(groupId)),
+        (groupWords) => {
+            return groupWords.filter((word) => word.additionalTranslations && word.additionalTranslations?.length > 0)
+        }
+    )
     readonly groupsAndWordsObs$ = this.store.select(selectGroups)
         .pipe(
             map((groups: Group[]) => {
@@ -60,13 +67,7 @@ export class GlossaryState extends ComponentStore<GlossaryStateModel> {
     readonly isEditingGroupId$ = (groupId) => this.select(state => state.editingGroupId === groupId);
     readonly isEditingGroupName$ = this.select(state => !!state.editingGroupNameId);
 
-    // get only unfoldable group words
-    readonly unfoldableGroupWords$ = (groupId) => this.select(
-        this.store.select(selectWordsByGroupId(groupId)),
-        (groupWords) => {
-            return groupWords.filter((word) => word.additionalTranslations && word.additionalTranslations?.length > 0)
-        }
-    )
+
 
     readonly isWordUnfolded$ = (wordId: string) => this.select(state => state.unfoldedWords.includes(wordId));
 
