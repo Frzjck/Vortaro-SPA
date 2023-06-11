@@ -1,7 +1,7 @@
 import { createFeature, createReducer, createSelector, on } from "@ngrx/store";
 import { UnknownPageGlossaryAction } from "./glossary.actions";
-import { Observable } from "rxjs";
-import { WordGridStateInterface } from "../../components/word-grid/word-grid.component";
+import { selectGroups } from "@app/pages/classroom/store/groups-list";
+import { selectWordsByGroupId, selectWordsByIds } from "@app/pages/classroom/store/words-list";
 
 export interface GlossaryStateModel {
     unfoldedWords: string[];
@@ -23,7 +23,7 @@ const initialState = {
 
 
 
-export const exercisesFeature = createFeature({
+export const glossaryFeature = createFeature({
     name: "glossary",
     reducer: createReducer(
         initialState,
@@ -92,34 +92,40 @@ export const exercisesFeature = createFeature({
             (unfoldedWords) => unfoldedWords.includes(wordId)
         );
 
-        // ------------- Combined selectors & Global:
+        // ------------- Containing Global Selectors:
 
-        //  groupsAndWordsObs$ = this.store.select(selectGroups)
-        // .pipe(
-        //     map((groups: Group[]) => {
-        //         return groups.map((group) => {
-        //             return {
-        //                 group,
-        //                 words$: this.store.select(selectWordsByIds(group.wordIds))
-        //             }
-        //         })
-        //     })
-        // )
-        // readonly groupHasUnfoldedTranslations$ = (groupId: string) => this.select(
-        //     this.unfoldableGroupWords$(groupId),
-        //     this.unfoldedWords$,
-        //     (groupWords, unfoldedWords) => {
-        //         return unfoldedWords.some((wordId) => groupWords.some((word) => word.id === wordId));
-        //     }
-        // )
+        const groupsAndWordsObs = createSelector(
+            selectGroups,
+            (groups) => groups.map((group) => ({
+                group,
+                words$: selectWordsByIds(group.wordIds)
+            }))
+        );
 
-        // readonly isAllGroupTranslationsUnfolded$ = (groupId: string) => this.select(
-        //     this.unfoldableGroupWords$(groupId),
-        //     this.unfoldedWords$,
-        //     (groupWords, unfoldedWords) => {
-        //         return groupWords.every((word) => unfoldedWords.some((wordId) => word.id === wordId));
-        //     }
-        // )
+        const unfoldableGroupWords = (groupId) => createSelector(
+            selectWordsByGroupId(groupId),
+            (groupWords) => groupWords.filter(
+                (word) => word.additionalTranslations && word.additionalTranslations?.length > 0
+            )
+        );
+
+        const groupHasUnfoldedTranslations = (groupId: string) => createSelector(
+            unfoldableGroupWords(groupId),
+            selectUnfoldedWords,
+            (groupWords, unfoldedWords) => {
+                return unfoldedWords.some((wordId) => groupWords.some((word) => word.id === wordId));
+            }
+        );
+
+        const isAllGroupTranslationsUnfolded$ = (groupId: string) => createSelector(
+            unfoldableGroupWords(groupId),
+            selectUnfoldedWords,
+            (groupWords, unfoldedWords) => {
+                return groupWords.every((word) => unfoldedWords.some((wordId) => word.id === wordId));
+            }
+        )
+
+        // ------------- View Models:
 
         const selectWordGridStateVM = createSelector(
             selectEditingGroupId,
@@ -133,7 +139,6 @@ export const exercisesFeature = createFeature({
                 isAddingNewWord,
             })
         );
-
 
         return {
             selectWordGridStateVM
@@ -150,4 +155,4 @@ export const {
     name,
     reducer,
 
-} = exercisesFeature;
+} = glossaryFeature;
