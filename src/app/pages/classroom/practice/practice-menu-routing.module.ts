@@ -3,7 +3,7 @@ import { Route } from '@angular/router';
 import { ExerciseContainerComponent } from './pages/exercises/exercise-container.component';
 import { ExerciseMenuComponent } from './practice-menu.component';
 import { SelectGroupComponent } from './pages/select-group/select-group.component';
-import { StoreModule, provideState, provideStore } from '@ngrx/store';
+import { StoreModule } from '@ngrx/store';
 import { exercisesFeature } from './store/practice/practice.reducer';
 import { importProvidersFrom } from '@angular/core';
 import { EffectsModule } from '@ngrx/effects';
