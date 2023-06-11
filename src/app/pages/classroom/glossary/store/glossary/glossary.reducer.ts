@@ -1,5 +1,7 @@
-import { createFeature, createReducer, on } from "@ngrx/store";
+import { createFeature, createReducer, createSelector, on } from "@ngrx/store";
 import { UnknownPageGlossaryAction } from "./glossary.actions";
+import { Observable } from "rxjs";
+import { WordGridStateInterface } from "../../components/word-grid/word-grid.component";
 
 export interface GlossaryStateModel {
     unfoldedWords: string[];
@@ -62,32 +64,81 @@ export const exercisesFeature = createFeature({
 
     ),
 
-    // extraSelectors: ({ selectRandomSeed, selectActiveWordIndex, selectExerciseWords, selectWordsCompleted, selectAnswerLocked }) => ({
-    //     selectCurrentGroupExerciseWords: createSelector(
-    //         getParams,
-    //         selectGroupEntities,
-    //         selectWordEntities,
-    //         (params, groupEntities, wordEntities) => {
-    //             let wordIds = groupEntities[params.groupId].wordIds;
-    //             return wordIds.map(wordId => wordEntities[wordId])
-    //         }
-    //     ),
+    extraSelectors: ({ selectUnfoldedWords, selectEditingGroupId, selectEditingGroupNameId, selectEditingWordId, selectAddNewWordMode }) => {
 
-    //     getWorstWords: createSelector(
-    //         selectWords,
-    //         (words) => words
-    //             .sort((a, b) => (a.proficiency > b.proficiency ? 1 : -1))
-    //             .slice(0, 15)
-    //     ),
 
-    //     getRandomWords: (_) => createSelector(
-    //         selectWords,
-    //         selectRandomSeed,
-    //         (words) => {
-    //             return shuffle(words).slice(0, 15)
-    //         }
-    //     ),
-    // }),
+        const selectIsAllFolded = createSelector(
+            selectUnfoldedWords,
+            (unfoldedWords) => unfoldedWords.length === 0
+        );
+
+        const selectIsEditingWord = createSelector(
+            selectEditingWordId,
+            (editingWordId) => !!editingWordId
+        );
+
+        const selectIsEditingGroup = createSelector(
+            selectEditingGroupId,
+            (editingGroupId) => !!editingGroupId
+        );
+
+        const selectIsEditingGroupName = createSelector(
+            selectEditingGroupNameId,
+            (editingGroupNameId) => !!editingGroupNameId
+        );
+
+        const selectIsWordUnfolded = (wordId: string) => createSelector(
+            selectUnfoldedWords,
+            (unfoldedWords) => unfoldedWords.includes(wordId)
+        );
+
+        // ------------- Combined selectors & Global:
+
+        //  groupsAndWordsObs$ = this.store.select(selectGroups)
+        // .pipe(
+        //     map((groups: Group[]) => {
+        //         return groups.map((group) => {
+        //             return {
+        //                 group,
+        //                 words$: this.store.select(selectWordsByIds(group.wordIds))
+        //             }
+        //         })
+        //     })
+        // )
+        // readonly groupHasUnfoldedTranslations$ = (groupId: string) => this.select(
+        //     this.unfoldableGroupWords$(groupId),
+        //     this.unfoldedWords$,
+        //     (groupWords, unfoldedWords) => {
+        //         return unfoldedWords.some((wordId) => groupWords.some((word) => word.id === wordId));
+        //     }
+        // )
+
+        // readonly isAllGroupTranslationsUnfolded$ = (groupId: string) => this.select(
+        //     this.unfoldableGroupWords$(groupId),
+        //     this.unfoldedWords$,
+        //     (groupWords, unfoldedWords) => {
+        //         return groupWords.every((word) => unfoldedWords.some((wordId) => word.id === wordId));
+        //     }
+        // )
+
+        const selectWordGridStateVM = createSelector(
+            selectEditingGroupId,
+            selectEditingWordId,
+            selectIsEditingGroup,
+            selectAddNewWordMode,
+            (editingGroupId, editingWordId, isEditingGroup, isAddingNewWord) => ({
+                editingGroupId,
+                editingWordId,
+                isEditingGroup,
+                isAddingNewWord,
+            })
+        );
+
+
+        return {
+            selectWordGridStateVM
+        }
+    },
 
 });
 
@@ -95,27 +146,8 @@ export const exercisesFeature = createFeature({
 
 
 
-// export const {
-//     name,
-//     reducer,
-//     selectAnswerInput,
-//     selectExercisesState,
-//     selectCurrentTestingAgainst,
-//     selectCurrentExerciseMode,
-//     selectAnswerChoices,
-//     selectWordsCompleted,
-//     selectExerciseStatus,
-//     selectRandomSeed,
-//     selectExerciseWords,
-//     selectActiveWordIndex,
-//     selectIsLastAnswerCorrect,
-//     selectAnswerLocked,
-//     selectResultScores,
-//     getRandomWords,
-//     getWorstWords,
-//     selectCurrentGroupExerciseWords,
-//     selectCurrentWord,
-//     selectProgress,
-//     selectIsActionNext,
-//     selectIsActionProofread,
-// } = exercisesFeature;
+export const {
+    name,
+    reducer,
+
+} = exercisesFeature;
