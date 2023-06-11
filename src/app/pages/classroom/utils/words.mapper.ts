@@ -4,18 +4,30 @@ import { FormWord } from "../glossary/components/word-grid/components/word-form/
 import { FireWordCreateRequest, FireWordUpdateRequest } from "@app/models/backend/word";
 
 
-export const formWordToNewFireWord = (word: FormWord): FireWordCreateRequest => ({
-    ...word,
-    created: firebase.firestore.FieldValue.serverTimestamp(),
-});
+export const formWordToNewFireWord = (word: FormWord): FireWordCreateRequest => {
+    const additionalTranslations = word.additionalTranslations.map((item) => item.translation);
+    return {
+        ...word,
+        additionalTranslations,
+        created: firebase.firestore.FieldValue.serverTimestamp(),
+    };
+};
 
-export const formWordToUpdateWord = (word: FormWord): FireWordUpdateRequest => ({
-    ...word,
-    updated: firebase.firestore.FieldValue.serverTimestamp(),
-});
+export const formWordToUpdateWord = (word: FormWord): FireWordUpdateRequest => {
+    const additionalTranslations = word.additionalTranslations.map((item) => item.translation);
+    return {
+        ...word,
+        additionalTranslations,
+        updated: firebase.firestore.FieldValue.serverTimestamp(),
+    };
+};
 
-export const formWordToNewWord = (word: FormWord, id: string): Word => ({
-    ...word,
-    id,
-    proficiency: 10
-})
+export const formWordToNewWord = (word: FormWord, id: string): Word => {
+    const additionalTranslations = word.additionalTranslations.map((item) => item.translation);
+    return {
+        ...word,
+        id,
+        additionalTranslations,
+        proficiency: 10
+    }
+};
