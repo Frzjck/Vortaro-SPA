@@ -1,5 +1,6 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import { Word, FireWord } from './words.models';
+import { Word } from './words.models';
+import { FormWord } from '../../glossary/components/word-grid/components/word-form/models';
 
 export const UnknownPageWordAction = createActionGroup(
     {
@@ -9,7 +10,7 @@ export const UnknownPageWordAction = createActionGroup(
             "Read Words Success": props<{ words: Word[] }>(),
             "Read Words Error": props<{ error: string }>(),
 
-            "Create Form Word": props<{ word: FireWord, groupId: string }>(),
+            "Create Form Word": props<{ word: FormWord, groupId: string }>(),
             "Create Word Success": props<{ groupId: string, word: Word }>(),
             "Create Word Error": props<{ error: string }>(),
 
