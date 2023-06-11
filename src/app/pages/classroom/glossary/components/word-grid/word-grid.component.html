@@ -50,7 +50,10 @@
       Add New Word <mat-icon>add_box</mat-icon>
     </button>
   </div>
-  <div class="wordCardDiv">
+  <div
+    class="wordCardDiv"
+    *ngIf="stateFacade.isEditingGroupId$(wordGridInput.groupId) | async"
+  >
     <mat-card>
       <app-word-form [groupId]="wordGridInput.groupId"></app-word-form>
     </mat-card>
