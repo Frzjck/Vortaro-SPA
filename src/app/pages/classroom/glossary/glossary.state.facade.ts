@@ -26,7 +26,6 @@ export class GlossaryStateFacade {
 
 
     // Editing:
-    isEditingGroup$ = () => this.glossaryState.isEditingGroup$;
     isEditingGroupId$ = (groupId: string) => this.glossaryState.isEditingGroupId$(groupId);
 
     selectEditingWordId$ = () => this.glossaryState.editingWordId$;

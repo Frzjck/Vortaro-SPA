@@ -9,10 +9,12 @@ import { GlossaryState } from './glossary.state';
 import { WordGridComponent } from './components/word-grid/word-grid.component';
 import { GroupActionPanelComponent } from './components/group-action-panel/group-action-panel.component';
 import { GlossaryStateFacade } from './glossary.state.facade';
-import { Group } from '../store/groups-list';
+import { Group, selectGroups } from '../store/groups-list';
 import { Observable } from 'rxjs/internal/Observable';
 import { Word } from '../store/words-list/words.models';
 import { combineLatest, map, of } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { selectGroupsAndWords } from './store/glossary/glossary.reducer';
 
 
 
@@ -32,22 +34,9 @@ export interface GlossaryStateInterface {
 
 export class GlossaryComponent {
 
-  // [groupId]="groupsAndWords.group.id"
-  // [groupEditId]="groupEditId"
-  // [editMode]="editMode"
-  // [newWordMode]="newWordMode"
-  // [words]="groupsAndWords.words$ | async"
-  // [score]="groupsAndWords.group.averageProficiency"
-  // [expanded]="preventCollapse(groupsAndWords.group.id)"
+  groupsAndWords$ = this.store.select(selectGroupsAndWords)
 
-  constructor(
-    public state: GlossaryStateFacade,
-  ) {
-
-  }
-  // wordGridInterface: WordGridComponentInterface = this.GlossaryState.wordGridInterface;
-  // wordUiInterface: WordUiComponentInterface = this.GlossaryState.wordUiInterface;
-
+  constructor(public state: GlossaryStateFacade, public store: Store) { }
 
   getGroupActionInput(groupId) {
     return combineLatest([

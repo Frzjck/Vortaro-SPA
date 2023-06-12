@@ -3,19 +3,17 @@
   <div class="container">
     <mat-accordion>
       <mat-expansion-panel
-        *ngFor="
-          let groupAndWords of (state.glossaryState$ | async)?.groupsAndWords
-        "
+        *ngFor="let group of groupsAndWords$ | async"
         class="mat-elevation-z6"
-        [expanded]="state.isEditingGroupId$(groupAndWords.group.id) | async"
+        [expanded]="state.isEditingGroupId$(group.id) | async"
       >
         <mat-expansion-panel-header>
           <div class="flex-title">
             <span>
-              {{ groupAndWords.group.name | titlecase }}
+              {{ group.name | titlecase }}
               <i
                 class="far fa-edit"
-                *ngIf="state.isEditingGroupId$(groupAndWords.group.id) | async"
+                *ngIf="state.isEditingGroupId$(group.id) | async"
                 appStopPropagation
               ></i>
             </span>
@@ -23,22 +21,20 @@
             <div class="bars-wrap">
               <app-rating-ui
                 uiType="bars"
-                [score]="groupAndWords.group.averageProficiency"
+                [score]="group.averageProficiency"
               ></app-rating-ui>
             </div>
           </div>
         </mat-expansion-panel-header>
         <app-word-grid
           [wordGridInput]="{
-              groupId: groupAndWords.group.id,
-              words: groupAndWords.words$ | async,
+              groupId: group.id,
+              words: store.select(group.selectWords) | async,
             }"
         ></app-word-grid>
         <mat-action-row>
           <app-group-action-panel
-            [groupActionPanelInput]="
-              getGroupActionInput(groupAndWords.group.id) | async
-            "
+            [groupActionPanelInput]="getGroupActionInput(group.id) | async"
             (buttonPressed)="groupAction($event)"
           ></app-group-action-panel>
         </mat-action-row>
