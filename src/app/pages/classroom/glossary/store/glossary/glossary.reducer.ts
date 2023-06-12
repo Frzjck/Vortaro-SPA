@@ -94,31 +94,33 @@ export const glossaryFeature = createFeature({
 
         // ------------- Containing Global Selectors:
 
-        const groupsAndWordsObs = createSelector(
+        const selectGroupsAndWords = createSelector(
             selectGroups,
-            (groups) => groups.map((group) => ({
-                group,
-                words$: selectWordsByIds(group.wordIds)
-            }))
+            (groups) => {
+                return groups.map((group) => ({
+                    ...group,
+                    selectWords: selectWordsByIds(group.wordIds)
+                }))
+            }
         );
 
-        const unfoldableGroupWords = (groupId) => createSelector(
+        const selectUnfoldableGroupWords = (groupId) => createSelector(
             selectWordsByGroupId(groupId),
             (groupWords) => groupWords.filter(
                 (word) => word.additionalTranslations && word.additionalTranslations?.length > 0
             )
         );
 
-        const groupHasUnfoldedTranslations = (groupId: string) => createSelector(
-            unfoldableGroupWords(groupId),
+        const selectGroupHasUnfoldedTranslations = (groupId: string) => createSelector(
+            selectUnfoldableGroupWords(groupId),
             selectUnfoldedWords,
             (groupWords, unfoldedWords) => {
                 return unfoldedWords.some((wordId) => groupWords.some((word) => word.id === wordId));
             }
         );
 
-        const isAllGroupTranslationsUnfolded$ = (groupId: string) => createSelector(
-            unfoldableGroupWords(groupId),
+        const selectIsAllGroupTranslationsUnfolded$ = (groupId: string) => createSelector(
+            selectUnfoldableGroupWords(groupId),
             selectUnfoldedWords,
             (groupWords, unfoldedWords) => {
                 return groupWords.every((word) => unfoldedWords.some((wordId) => word.id === wordId));
@@ -141,7 +143,8 @@ export const glossaryFeature = createFeature({
         );
 
         return {
-            selectWordGridStateVM
+            selectWordGridStateVM,
+            selectGroupsAndWords
         }
     },
 
@@ -154,5 +157,6 @@ export const glossaryFeature = createFeature({
 export const {
     name,
     reducer,
+    selectGroupsAndWords
 
 } = glossaryFeature;
