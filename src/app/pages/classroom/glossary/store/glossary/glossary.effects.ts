@@ -5,7 +5,7 @@ import { catchError, map, of, switchMap } from "rxjs";
 import { GlossaryGroupPanelAction } from "./glossary.actions";
 import { selectGroupById } from "@app/pages/classroom/store/groups-list";
 
-Injectable()
+@Injectable()
 export class GlossaryEffects {
     constructor(
         private actions$: Actions,
