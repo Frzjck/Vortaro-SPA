@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { createEffect, Actions, ofType, ROOT_EFFECTS_INIT } from '@ngrx/effects';
+import { createEffect, Actions, ofType, ROOT_EFFECTS_INIT, concatLatestFrom } from '@ngrx/effects';
 
 import firebase from "firebase/compat/app";
 import { AngularFirestore } from '@angular/fire/compat/firestore';
@@ -16,7 +16,7 @@ import { selectUserId } from '../../../../store/user/user.selectors';
 
 import { extractDocumentChangeActionData } from '@app/shared/utils/db-utils';
 import { FireGroup, Group } from './groups.models';
-import { Store, select } from '@ngrx/store';
+import { Action, Store, select } from '@ngrx/store';
 
 
 @Injectable()
@@ -30,9 +30,11 @@ export class GroupsEffects {
 
     read$ = createEffect(() => this.actions$.pipe(
         ofType(UnknownPageGroupAction.readGroups),
-        switchMap(() => this.store.pipe(select(selectUserId))),
-        switchMap((userId) => {
-            return this.afs.collection(`/users/${userId}/groups`).snapshotChanges().pipe(
+        concatLatestFrom((action) => [
+            this.store.select(selectUserId),
+        ]),
+        switchMap(([action, uid]) => {
+            return this.afs.collection(`/users/${uid}/groups`).snapshotChanges().pipe(
                 take(1),
                 map(changes => changes.map(x => extractDocumentChangeActionData(x))),
                 map((groups: Group[]) => UnknownPageGroupAction.readGroupsSuccess({ groups })),
