@@ -15,6 +15,7 @@ import { Word } from '../store/words-list/words.models';
 import { combineLatest, map, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { selectGroupsAndWords } from './store/glossary/glossary.reducer';
+import { GlossaryGroupPanelAction } from './store/glossary/glossary.actions';
 
 
 
@@ -62,7 +63,8 @@ export class GlossaryComponent {
   groupAction(params) {
     switch (params.option) {
       case "unfoldTranslations":
-        this.state.unfoldTranslationsGroup(params.id)
+        // this.state.unfoldTranslationsGroup(params.id)
+        this.store.dispatch(GlossaryGroupPanelAction.unfoldAdditionalTranslationsGroup({ groupId: params.id }))
         break;
       case "foldTranslations":
         this.state.foldTranslationsGroup()
