@@ -16,7 +16,6 @@ import { HomepageComponent } from '@app/pages/static/homepage/homepage.component
 import { StopPropagationDirective } from '@app/shared/directives/stop-propagation.directive';
 import { SettingsPopupComponent } from '@app/components/navbar/components/settings-popup/settings-popup.component';
 import { NavbarComponent } from './components';
-import { ClassroomModule } from './pages/classroom/classroom.module';
 import { ThemeModule } from './theme';
 
 // Environment
@@ -60,7 +59,6 @@ import { NotificationModule } from './services';
   ],
   imports: [
     NotificationModule.forRoot(),
-    ClassroomModule,
     BrowserModule,
     AppRoutingModule,
     LetDirective,
