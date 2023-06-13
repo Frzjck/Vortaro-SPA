@@ -45,8 +45,10 @@ export class GlossaryComponent {
     //Add 'implements OnInit' to the class.
     setTimeout(() => {
       this.store.dispatch(UnknownPageGroupAction.readGroups());
+    }, 1200);
+    setTimeout(() => {
       this.store.dispatch(UnknownPageWordAction.readWords());
-    }, 1500);
+    }, 800);
   }
 
   getGroupActionInput(groupId) {
