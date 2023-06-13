@@ -9,13 +9,14 @@ import { GlossaryState } from './glossary.state';
 import { WordGridComponent } from './components/word-grid/word-grid.component';
 import { GroupActionPanelComponent } from './components/group-action-panel/group-action-panel.component';
 import { GlossaryStateFacade } from './glossary.state.facade';
-import { Group, selectGroups } from '../store/groups-list';
+import { Group, UnknownPageGroupAction, selectGroups } from '../store/groups-list';
 import { Observable } from 'rxjs/internal/Observable';
 import { Word } from '../store/words-list/words.models';
 import { combineLatest, map, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { selectGroupsAndWords } from './store/glossary/glossary.reducer';
 import { GlossaryGroupPanelAction } from './store/glossary/glossary.actions';
+import { UnknownPageWordAction } from '../store/words-list';
 
 
 
@@ -38,6 +39,15 @@ export class GlossaryComponent {
   groupsAndWords$ = this.store.select(selectGroupsAndWords)
 
   constructor(public state: GlossaryStateFacade, public store: Store) { }
+
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    setTimeout(() => {
+      this.store.dispatch(UnknownPageGroupAction.readGroups());
+      this.store.dispatch(UnknownPageWordAction.readWords());
+    }, 1500);
+  }
 
   getGroupActionInput(groupId) {
     return combineLatest([
