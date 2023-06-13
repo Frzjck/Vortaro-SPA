@@ -1,5 +1,5 @@
 import { createFeature, createReducer, createSelector, on } from "@ngrx/store";
-import { UnknownPageGlossaryAction } from "./glossary.actions";
+import { GlossaryGroupPanelAction, UnknownPageGlossaryAction } from "./glossary.actions";
 import { selectGroups } from "@app/pages/classroom/store/groups-list";
 import { selectWordsByGroupId, selectWordsByIds } from "@app/pages/classroom/store/words-list";
 
@@ -37,7 +37,7 @@ export const glossaryFeature = createFeature({
             unfoldedWords: state.unfoldedWords.filter((id) => id !== wordId),
         })),
 
-        on(UnknownPageGlossaryAction.unfoldAdditionalTranslationsGroup, (state, { wordIds }) => ({
+        on(GlossaryGroupPanelAction.unfoldAdditionalTranslationsWords, (state, { wordIds }) => ({
             ...state,
             unfoldedWords: wordIds,
         })),
