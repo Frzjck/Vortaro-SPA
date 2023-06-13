@@ -27,7 +27,7 @@ export class WordsEffects {
     ) { }
 
     readInit$ = createEffect(() => this.actions$.pipe(
-        ofType(UnknownPageUserAction.userInitAuthorized, UnknownPageWordAction.readWords),
+        ofType(UnknownPageWordAction.readWords),
         concatLatestFrom((action) => [
             this.store.select(selectUserId),
         ]),

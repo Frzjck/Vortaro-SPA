@@ -44,18 +44,18 @@ export class GroupsEffects {
         )
     ));
 
-    readInit$ = createEffect(() => this.actions$.pipe(
-        ofType(UnknownPageUserAction.userInitAuthorized),
-        switchMap((res) => {
-            return this.afs.collection(`/users/${res.uid}/groups`).snapshotChanges().pipe(
-                take(1),
-                map(changes => changes.map(x => extractDocumentChangeActionData(x))),
-                map((groups: Group[]) => UnknownPageGroupAction.readGroupsSuccess({ groups })),
-                catchError(err => of(UnknownPageGroupAction.readGroupsError(err.message)))
-            )
-        }
-        )
-    ));
+    // readInit$ = createEffect(() => this.actions$.pipe(
+    //     ofType(UnknownPageUserAction.userInitAuthorized),
+    //     switchMap((res) => {
+    //         return this.afs.collection(`/users/${res.uid}/groups`).snapshotChanges().pipe(
+    //             take(1),
+    //             map(changes => changes.map(x => extractDocumentChangeActionData(x))),
+    //             map((groups: Group[]) => UnknownPageGroupAction.readGroupsSuccess({ groups })),
+    //             catchError(err => of(UnknownPageGroupAction.readGroupsError(err.message)))
+    //         )
+    //     }
+    //     )
+    // ));
 
     create$ = createEffect(() => this.actions$.pipe(
         ofType(UnknownPageGroupAction.createGroup),
