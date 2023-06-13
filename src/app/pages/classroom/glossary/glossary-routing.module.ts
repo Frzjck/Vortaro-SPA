@@ -12,7 +12,6 @@ export default [
         path: '',
         component: GlossaryComponent,
         providers: [
-            // provideState(exercisesFeature),
             importProvidersFrom(
                 StoreModule.forFeature(glossaryFeature),
                 EffectsModule.forFeature([GlossaryEffects]),
