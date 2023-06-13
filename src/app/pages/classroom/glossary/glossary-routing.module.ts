@@ -4,6 +4,8 @@ import { StoreModule } from '@ngrx/store';
 import { importProvidersFrom } from '@angular/core';
 import { glossaryFeature } from './store/glossary/glossary.reducer';
 import { GlossaryComponent } from './glossary.component';
+import { EffectsModule } from '@ngrx/effects';
+import { GlossaryEffects } from './store/glossary/glossary.effects';
 
 export default [
     {
@@ -13,7 +15,7 @@ export default [
             // provideState(exercisesFeature),
             importProvidersFrom(
                 StoreModule.forFeature(glossaryFeature),
-                // EffectsModule.forFeature([ExercisesEffects]),
+                EffectsModule.forFeature([GlossaryEffects]),
             ),
         ],
     },
