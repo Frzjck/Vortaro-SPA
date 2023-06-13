@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RatingUIComponent } from '@glossary/shared';
-import { Word } from '@app/pages/classroom/store/words-list';
+import { Word } from '@classroom/store/words-list/words.models';
 
 export interface WordUiViewInputInterface {
   eye: boolean;

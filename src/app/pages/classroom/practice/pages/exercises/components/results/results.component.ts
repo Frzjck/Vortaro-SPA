@@ -3,9 +3,10 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { Component, OnInit } from '@angular/core';
 import { LetDirective } from '@ngrx/component';
+import { Word } from '@classroom/store/words-list/words.models';
+import { selectExerciseWords, selectResultScores } from '@practice/store/practice/practice.reducer';
+import { ResultsPageAction } from '@practice/store/practice/practice.actions';
 
-import { Word } from '@app/pages/classroom/store/words-list';
-import { ResultsPageAction, selectExerciseWords, selectResultScores } from '@practice/store';
 
 @Component({
   selector: 'app-results',

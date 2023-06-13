@@ -1,7 +1,7 @@
 import { createFeature, createReducer, createSelector, on } from "@ngrx/store";
 import { GlossaryGroupPanelAction, UnknownPageGlossaryAction } from "./glossary.actions";
-import { selectGroups } from "@app/pages/classroom/store/groups-list";
-import { selectWordsByGroupId, selectWordsByIds } from "@app/pages/classroom/store/words-list";
+import { selectGroups } from "@classroom/store/groups-list/groups.selectors";
+import { selectWordsByGroupId, selectWordsByIds } from "@classroom/store/words-list/words.selectors";
 
 export interface GlossaryStateModel {
     unfoldedWords: string[];

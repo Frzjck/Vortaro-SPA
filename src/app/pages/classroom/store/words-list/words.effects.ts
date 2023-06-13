@@ -9,12 +9,12 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { from, of } from 'rxjs';
 import { map, switchMap, catchError, take, tap } from 'rxjs/operators';
 
-import { UnknownPageUserAction, selectUserId } from '@app/store/user';
 import { UnknownPageWordAction } from './words.actions';
 import { Word } from './words.models';
 import { WordService } from '@app/pages/classroom/services/word.service';
 import { Action, Store } from '@ngrx/store';
 import { formWordToNewFireWord, formWordToNewWord } from '../../utils/words.mapper';
+import { selectUserId } from '@app/store/user/user.selectors';
 
 
 @Injectable()

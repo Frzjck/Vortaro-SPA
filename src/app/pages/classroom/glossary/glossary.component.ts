@@ -9,14 +9,15 @@ import { GlossaryState } from './glossary.state';
 import { WordGridComponent } from './components/word-grid/word-grid.component';
 import { GroupActionPanelComponent } from './components/group-action-panel/group-action-panel.component';
 import { GlossaryStateFacade } from './glossary.state.facade';
-import { Group, UnknownPageGroupAction, selectGroups } from '../store/groups-list';
 import { Observable } from 'rxjs/internal/Observable';
 import { Word } from '../store/words-list/words.models';
 import { combineLatest, map, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { selectGroupsAndWords } from './store/glossary/glossary.reducer';
 import { GlossaryGroupPanelAction } from './store/glossary/glossary.actions';
-import { UnknownPageWordAction } from '../store/words-list';
+import { Group } from '@classroom/store/groups-list/groups.models';
+import { UnknownPageGroupAction } from '@classroom/store/groups-list/groups.actions';
+import { UnknownPageWordAction } from '@classroom/store/words-list/words.actions';
 
 
 

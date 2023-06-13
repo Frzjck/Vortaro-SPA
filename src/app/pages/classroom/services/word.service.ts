@@ -4,9 +4,9 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { convertSnaps } from '../../../shared/utils/db-utils';
 
 
-import { Word } from '@app/pages/classroom/store/words-list';
 import { from } from 'rxjs';
 import { FireWordCreateRequest } from '@app/models/backend/word';
+import { Word } from '../store/words-list/words.models';
 
 @Injectable({
   providedIn: 'root',

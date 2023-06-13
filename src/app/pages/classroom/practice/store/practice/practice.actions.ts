@@ -1,6 +1,6 @@
-import { Word } from '@app/pages/classroom/store/words-list';
+import { Word } from '@app/pages/classroom/store/words-list/words.models';
+import { ExerciseModeType, TestingAgainstType } from '@app/store/app/app.reducer';
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import { ExerciseModeType, TestingAgainstType } from './practice.reducer';
 
 
 export const ExerciseContainerPageAction = createActionGroup(

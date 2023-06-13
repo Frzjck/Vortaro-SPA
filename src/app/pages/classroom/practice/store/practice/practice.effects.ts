@@ -4,10 +4,10 @@ import { of } from "rxjs";
 import { Store } from "@ngrx/store";
 import { switchMap, debounceTime } from 'rxjs/operators';
 
-import { selectBaseExerciseMode, selectBaseTestingAgainst } from "@app/store/app";
 import { ExerciseContainerPageAction, ExercisePageAction } from "./practice.actions";
 import { selectCurrentWord, selectExerciseWords, selectCurrentTestingAgainst } from "./practice.reducer";
 import { _generateAnswerChoices } from "./store-utils";
+import { selectBaseExerciseMode, selectBaseTestingAgainst } from "@app/store/app/app.selectors";
 
 
 @Injectable()

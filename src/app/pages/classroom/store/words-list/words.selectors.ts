@@ -2,7 +2,7 @@ import { createSelector, createFeatureSelector } from '@ngrx/store';
 import { getLexiconState, LexiconState } from '../index';
 
 import { WordsState, adapter } from './words.reducer';
-import { selectGroupEntities } from '../groups-list';
+import { selectGroupEntities } from '../groups-list/groups.selectors';
 
 
 export const getWordsState = createSelector(

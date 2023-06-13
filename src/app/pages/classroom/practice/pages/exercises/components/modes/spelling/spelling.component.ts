@@ -13,11 +13,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { LetDirective } from '@ngrx/component';
 import { ProgressBarComponent } from '@exercises/shared/progress-bar/progress-bar.component';
-import { ExercisePageAction, TestingAgainstType, selectSpellingViewModel } from '@practice/store/practice';
-import { ExerciseService } from '@app/pages/classroom/practice/pages/exercises/services/exercise.service';
+import { ExerciseService } from '@exercises/services/exercise.service';
 import { AutoFocus } from '@exercises/shared/directives/auto-focus.directive';
-import { Word } from '@app/pages/classroom/store/words-list';
 import { Observable } from 'rxjs';
+import { Word } from '@classroom/store/words-list/words.models';
+import { TestingAgainstType } from '@app/store/app/app.reducer';
+import { selectSpellingViewModel } from '@practice/store/practice/practice.selectors';
+import { ExercisePageAction } from '@practice/store/practice/practice.actions';
 
 interface spellingVMInterface {
   currentWord: Word;

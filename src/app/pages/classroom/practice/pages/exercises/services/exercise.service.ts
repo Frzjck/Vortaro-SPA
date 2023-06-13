@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { firstValueFrom } from 'rxjs';
 
-import { ExercisePageAction, selectAnswerLocked, selectCurrentExerciseMode, } from '@practice/store';
-import { selectIsResponseCorrect } from '../../../store/practice/practice.selectors';
+import { selectIsResponseCorrect } from '@practice/store/practice/practice.selectors';
+import { ExercisePageAction } from '@practice/store/practice/practice.actions';
+import { selectAnswerLocked, selectCurrentExerciseMode } from '@practice/store/practice/practice.reducer';
 
 @Injectable({
   providedIn: 'root'

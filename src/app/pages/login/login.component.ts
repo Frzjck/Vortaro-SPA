@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, NgZone, OnDestroy, OnInit } from "@angular/core";
+import { UnknownPageUserAction } from '@app/store/user/user.actions';
 
 import { Store } from '@ngrx/store';
-import { UnknownPageUserAction } from '@app/store/user';
 
 @Component({
   selector: 'app-login',

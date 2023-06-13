@@ -1,13 +1,13 @@
 import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
 
 import { ExerciseContainerPageAPI, ExerciseContainerPageAction, ExercisePageAction, ResultsPageAction } from './practice.actions';
-import { ExerciseModeType, TestingAgainstType } from '@app/store/app';
 import { getParams } from '@app/store/router/router.selector';
 import { shuffle } from '@exercises/utils/shuffleArray';
-import { Word, selectWordEntities, selectWords } from '@classroom/store/words-list';
-import { selectGroupEntities } from '@classroom/store/groups-list';
+import { ExerciseModeType, TestingAgainstType } from '@app/store/app/app.reducer';
+import { Word } from '@app/pages/classroom/store/words-list/words.models';
+import { selectGroupEntities } from '@app/pages/classroom/store/groups-list/groups.selectors';
+import { selectWordEntities, selectWords } from '@app/pages/classroom/store/words-list/words.selectors';
 
-export { ExerciseModeType, TestingAgainstType } from '@app/store/app';
 
 
 export enum ExerciseStatusType {

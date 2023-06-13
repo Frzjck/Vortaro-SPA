@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Word, UnknownPageWordAction } from '@app/pages/classroom/store/words-list';
 import { FormFieldComponent } from '@app/shared/controls/form-field/form-field.component';
 import { InputComponent } from '@app/shared/controls/input/input.component';
 import { AdditionalTranslationsComponent } from './additional-translations/additional-translations.component';
@@ -11,6 +10,8 @@ import { WordFormService } from './services/word-form.service';
 import { WordFormState } from './word-form.state';
 import { Store } from '@ngrx/store';
 import { markFormGroupTouched } from '@app/shared/utils/form';
+import { Word } from '@classroom/store/words-list/words.models';
+import { UnknownPageWordAction } from '@classroom/store/words-list/words.actions';
 
 @Component({
   selector: 'app-word-form',

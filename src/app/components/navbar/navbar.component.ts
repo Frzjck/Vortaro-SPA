@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Store, select } from '@ngrx/store';
-import { User, selectUser, UnknownPageUserAction } from "@app/store/user";
 import { Observable } from 'rxjs';
+import { User } from '@app/store/user/user.models';
+import { selectUser } from '@app/store/user/user.selectors';
+import { UnknownPageUserAction } from '@app/store/user/user.actions';
 
 @Component({
   selector: 'app-navbar',

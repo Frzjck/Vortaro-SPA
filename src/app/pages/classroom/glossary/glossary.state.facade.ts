@@ -6,7 +6,7 @@ import { WordGridStateInterface } from './components/word-grid/word-grid.compone
 import { GlossaryStateInterface } from './glossary.component';
 import { UnknownPageWordAction } from '../store/words-list/words.actions';
 import { UnknownPageGroupAction } from '../store/groups-list/groups.actions';
-import { selectGroupById } from '../store/groups-list';
+import { selectGroupById } from '../store/groups-list/groups.selectors';
 
 
 

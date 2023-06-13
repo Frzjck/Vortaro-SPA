@@ -1,11 +1,12 @@
 import { ComponentStore } from '@ngrx/component-store';
 import { Injectable } from '@angular/core';
-import { selectWordsByGroupId, selectWordsByIds } from '@app/pages/classroom/store/words-list';
-import { Group, selectGroups } from '@app/pages/classroom/store/groups-list';
 import { Store } from '@ngrx/store';
 import { Observable, map } from 'rxjs';
 import { WordGridStateInterface } from './components/word-grid/word-grid.component';
 import { GlossaryStateInterface as GlossaryStateInterface } from './glossary.component';
+import { selectWordsByGroupId, selectWordsByIds } from '../store/words-list/words.selectors';
+import { Group } from '../store/groups-list/groups.models';
+import { selectGroups } from '../store/groups-list/groups.selectors';
 // So far, it seems like the primary function of component store is to store state for a replicable component, so each copy would have its own state
 export interface GlossaryStateModel {
     unfoldedWords: string[];

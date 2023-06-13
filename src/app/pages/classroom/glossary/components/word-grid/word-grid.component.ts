@@ -7,11 +7,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { ExtraTrCardComponent } from './components/extra-tr-card/extra-tr-card.component';
 import { WordUiComponent } from './components/word-ui/word-ui.component';
-import { Word } from '@app/pages/classroom/store/words-list';
 import { GlossaryStateFacade } from '../../glossary.state.facade';
 import { LetDirective } from '@ngrx/component';
 import { WordFormComponent } from './components/word-form/word-form.component';
 import { Observable } from 'rxjs';
+import { Word } from '@classroom/store/words-list/words.models';
 
 
 export interface WordGridInputInterface {

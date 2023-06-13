@@ -2,7 +2,7 @@ import { EntityState, createEntityAdapter } from '@ngrx/entity';
 import { createReducer, on } from '@ngrx/store';
 import { Group } from './groups.models';
 import { UnknownPageGroupAction } from './groups.actions';
-import { UnknownPageWordAction } from '../words-list';
+import { UnknownPageWordAction } from '../words-list/words.actions';
 
 
 export const adapter = createEntityAdapter<Group>();

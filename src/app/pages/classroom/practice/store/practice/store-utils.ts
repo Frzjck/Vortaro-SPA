@@ -1,6 +1,6 @@
-import { Word } from "@app/pages/classroom/store/words-list";
-import { TestingAgainstType } from "..";
+import { Word } from "@classroom/store/words-list/words.models";
 import { shuffle } from "../../pages/exercises/utils/shuffleArray";
+import { TestingAgainstType } from "@app/store/app/app.reducer";
 
 
 

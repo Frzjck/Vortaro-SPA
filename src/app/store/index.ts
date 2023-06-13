@@ -3,8 +3,8 @@ import { ActionReducerMap } from '@ngrx/store';
 import * as fromUser from './user/user.reducer';
 import * as fromApp from './app/app.reducer';
 
-import { UserEffects } from './user';
 import { RouterReducerState, routerReducer } from '@ngrx/router-store';
+import { UserEffects } from './user/user.effects';
 
 
 export interface State {

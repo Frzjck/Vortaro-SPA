@@ -9,7 +9,6 @@ import { map, switchMap, catchError, take, tap } from 'rxjs/operators';
 
 
 import { UnknownPageGroupAction } from './groups.actions';
-import { UnknownPageUserAction } from '@app/store/user';
 
 import { selectUserId } from '../../../../store/user/user.selectors';
 

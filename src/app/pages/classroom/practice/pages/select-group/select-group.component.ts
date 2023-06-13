@@ -1,11 +1,13 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { Group, selectGroups } from '@app/pages/classroom/store/groups-list';
 import { Observable, map } from 'rxjs';
-import { Word, selectWordsByIds } from '@app/pages/classroom/store/words-list';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
+import { selectGroups } from '@classroom/store/groups-list/groups.selectors';
+import { Word } from '@classroom/store/words-list/words.models';
+import { Group } from '@classroom/store/groups-list/groups.models';
+import { selectWordsByIds } from '@classroom/store/words-list/words.selectors';
 
 @Component({
   selector: 'app-select-group',
