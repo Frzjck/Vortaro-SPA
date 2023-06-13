@@ -18,7 +18,7 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./practice-menu.component.scss'],
 })
 export class ExerciseMenuComponent {
-  thereAreWords = this.store.select(selectThereAreWords);
+  thereAreWords$ = this.store.select(selectThereAreWords);
 
   constructor(
     private store: Store,

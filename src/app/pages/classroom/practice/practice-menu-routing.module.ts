@@ -14,7 +14,6 @@ export default [
     path: '',
     component: ExerciseMenuComponent,
     providers: [
-      // provideState(exercisesFeature),
       importProvidersFrom(
         StoreModule.forFeature(exercisesFeature),
         EffectsModule.forFeature([ExercisesEffects]),
