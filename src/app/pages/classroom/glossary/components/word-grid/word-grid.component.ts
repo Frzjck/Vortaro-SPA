@@ -12,6 +12,8 @@ import { LetDirective } from '@ngrx/component';
 import { WordFormComponent } from './components/word-form/word-form.component';
 import { Observable } from 'rxjs';
 import { Word } from '@classroom/store/words-list/words.models';
+import { Store } from '@ngrx/store';
+import { GlossaryWordUIAction } from '@glossary/store/glossary/glossary.actions';
 
 
 export interface WordGridInputInterface {
@@ -51,23 +53,27 @@ export class WordGridComponent {
   @Input() wordGridInput: WordGridInputInterface;
   wordGridStateVM$: Observable<WordGridStateInterface> = this.stateFacade.wordGridStateVM$;
 
-  constructor(public stateFacade: GlossaryStateFacade) {
+  constructor(public stateFacade: GlossaryStateFacade, public store: Store) {
   }
 
   wordAction(params) {
     switch (params.option) {
       case "unfoldTranslations":
-        this.stateFacade.unfoldTranslationsWord(params.id)
+        this.store.dispatch(GlossaryWordUIAction.unfoldAdditionalTranslationsWord({ wordId: params.id }));
+
         break;
       case "foldTranslations":
-        this.stateFacade.foldTranslationsWord(params.id)
+        this.store.dispatch(GlossaryWordUIAction.foldAdditionalTranslationsWord({ wordId: params.id }));
+
         break;
       case "edit":
-        this.stateFacade.editWord(params.id)
+        this.store.dispatch(GlossaryWordUIAction.editWord({ wordId: params.id }))
+
         break;
       case "delete":
         if (confirm('Are you sure you want to delete ')) {
-          this.stateFacade.deleteWord(params.id)
+          this.store.dispatch(GlossaryWordUIAction.deleteWord({ wordId: params.id }))
+
         }
         break;
     }
