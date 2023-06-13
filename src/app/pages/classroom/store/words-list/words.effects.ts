@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { createEffect, Actions, ofType, concatLatestFrom } from '@ngrx/effects';
+import { createEffect, Actions, ofType, concatLatestFrom, OnInitEffects } from '@ngrx/effects';
 
 // import * as firestore from "@google-cloud/firestore";
 import firebase from "firebase/compat/app";
@@ -9,12 +9,11 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { from, of } from 'rxjs';
 import { map, switchMap, catchError, take, tap } from 'rxjs/operators';
 
-import { UnknownPageUserAction } from '@app/store/user';
+import { UnknownPageUserAction, selectUserId } from '@app/store/user';
 import { UnknownPageWordAction } from './words.actions';
 import { Word } from './words.models';
 import { WordService } from '@app/pages/classroom/services/word.service';
-import { Store } from '@ngrx/store';
-import { selectUserId } from '@app/store/user';
+import { Action, Store } from '@ngrx/store';
 import { formWordToNewFireWord, formWordToNewWord } from '../../utils/words.mapper';
 
 
@@ -28,12 +27,17 @@ export class WordsEffects {
     ) { }
 
     readInit$ = createEffect(() => this.actions$.pipe(
-        ofType(UnknownPageUserAction.userInitAuthorized),
-        switchMap((action) => this.wordService.getWordsFromServer(action.uid).pipe(
-            take(1),
-            map((words: Word[]) => UnknownPageWordAction.readWordsSuccess({ words })),
-            catchError(err => of(UnknownPageWordAction.readWordsError(err.message)))
-        )
+        ofType(UnknownPageUserAction.userInitAuthorized, UnknownPageWordAction.readWords),
+        concatLatestFrom((action) => [
+            this.store.select(selectUserId),
+        ]),
+        switchMap(([action, uid]) => {
+            return this.wordService.getWordsFromServer(uid).pipe(
+                take(1),
+                map((words: Word[]) => UnknownPageWordAction.readWordsSuccess({ words })),
+                catchError(err => of(UnknownPageWordAction.readWordsError(err.message)))
+            )
+        }
         )
     ));
 
