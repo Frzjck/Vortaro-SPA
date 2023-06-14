@@ -82,7 +82,7 @@ export class WordGridComponent {
     return word?.additionalTranslations?.length > 0
   }
   onActivateNewWordMode() {
-    this.store.dispatch(GlossaryWordGridAction.toggleAddNewWordMode())
+    this.store.dispatch(GlossaryWordGridAction.activateNewWordMode())
   }
 
 

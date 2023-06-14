@@ -11,6 +11,7 @@ import { Store } from '@ngrx/store';
 import { markFormGroupTouched } from '@app/shared/utils/form';
 import { Word } from '@classroom/store/words-list/words.models';
 import { UnknownPageWordAction } from '@classroom/store/words-list/words.actions';
+import { WordFormAction } from '@app/pages/classroom/glossary/store/glossary/glossary.actions';
 
 @Component({
   selector: 'app-word-form',
@@ -32,6 +33,7 @@ export class WordFormComponent implements OnInit {
     this.footer.addTips$.subscribe(() => this.createTipsControl());
 
     this.footer.submitWordForm$.subscribe(() => this.onSubmit());
+    this.footer.closeForm$.subscribe(() => this.store.dispatch(WordFormAction.cancelNewWordMode()));
 
     this.coreForm = this.fb.group({
       original: new FormControl(null, [Validators.required]),
