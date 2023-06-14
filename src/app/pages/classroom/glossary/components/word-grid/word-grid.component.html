@@ -1,11 +1,11 @@
 <div
   class="grid-container"
-  *ngrxLet="isEditingGroup(wordGridInput.groupId) as isEditingGroup"
+  *ngrxLet="isEditingGroup$(wordGridInput.groupId) as isEditingGroup"
 >
   <div class="wordCardDiv" *ngFor="let word of wordGridInput.words">
     <ng-container
       *ngrxLet="{
-        isUnfolded: isWordUnfolded(word.id),
+        isUnfolded: isWordUnfolded$(word.id),
         wordGridStateVM: wordGridStateVM$
       } as vm"
     >

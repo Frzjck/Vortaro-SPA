@@ -7,7 +7,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { ExtraTrCardComponent } from './components/extra-tr-card/extra-tr-card.component';
 import { WordUiComponent } from './components/word-ui/word-ui.component';
-import { GlossaryStateFacade } from '../../glossary.state.facade';
 import { LetDirective } from '@ngrx/component';
 import { WordFormComponent } from './components/word-form/word-form.component';
 import { Observable } from 'rxjs';
@@ -52,10 +51,13 @@ export interface WordGridStateInterface {
 })
 export class WordGridComponent {
   @Input() wordGridInput: WordGridInputInterface;
+
   wordGridStateVM$: Observable<WordGridStateInterface> = this.store.select(selectWordGridStateVM);
 
-  constructor(public stateFacade: GlossaryStateFacade, public store: Store) {
-  }
+  isWordUnfolded$ = (wordId) => this.store.select(selectIsWordUnfolded(wordId));
+  isEditingGroup$ = (groupId) => this.store.select(selectIsEditingGroupWithId(groupId));
+
+  constructor(public store: Store) { }
 
   wordAction(params) {
     switch (params.option) {
@@ -76,13 +78,7 @@ export class WordGridComponent {
     }
   }
 
-  isWordUnfolded(wordId) {
-    return this.store.select(selectIsWordUnfolded(wordId));
-  }
 
-  isEditingGroup(groupId) {
-    return this.store.select(selectIsEditingGroupWithId(groupId));
-  }
 
   hasAddTranslations(word) {
     return word?.additionalTranslations?.length > 0
