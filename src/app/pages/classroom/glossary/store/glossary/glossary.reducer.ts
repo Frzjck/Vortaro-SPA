@@ -52,12 +52,7 @@ export const glossaryFeature = createFeature({
             editingGroupId: state.editingGroupId === groupId ? null : groupId,
         })),
 
-        on(UnknownPageGlossaryAction.finishEditGroup, (state) => ({
-            ...state,
-            editingGroupId: initialState.editingGroupId,
-        })),
-
-        on(UnknownPageGlossaryAction.editWord, (state, { wordId }) => ({
+        on(GlossaryWordUIAction.editWord, (state, { wordId }) => ({
             ...state,
             editingWordId: wordId,
         })),
