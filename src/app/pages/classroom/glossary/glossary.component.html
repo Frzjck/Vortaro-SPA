@@ -5,7 +5,6 @@
       <mat-expansion-panel
         *ngFor="let group of groupsAndWords$ | async"
         class="mat-elevation-z6"
-        [expanded]="isEditingCurrentGroup$(group.id) | async"
       >
         <mat-expansion-panel-header>
           <div class="flex-title">
