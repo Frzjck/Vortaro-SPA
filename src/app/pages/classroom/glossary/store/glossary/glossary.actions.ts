@@ -43,3 +43,12 @@ export const GlossaryWordUIAction = createActionGroup(
         },
     }
 )
+
+export const GlossaryWordGridAction = createActionGroup(
+    {
+        source: 'Glossary Word Grid',
+        events: {
+            "Toggle Add New Word Mode": emptyProps(),
+        },
+    }
+)
