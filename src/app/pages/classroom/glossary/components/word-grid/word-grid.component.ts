@@ -12,7 +12,7 @@ import { WordFormComponent } from './components/word-form/word-form.component';
 import { Observable } from 'rxjs';
 import { Word } from '@classroom/store/words-list/words.models';
 import { Store } from '@ngrx/store';
-import { GlossaryWordUIAction } from '@glossary/store/glossary/glossary.actions';
+import { GlossaryWordGridAction, GlossaryWordUIAction } from '@glossary/store/glossary/glossary.actions';
 import { selectWordGridStateVM, selectIsWordUnfolded, selectIsEditingGroupWithId } from '@glossary/store/glossary/glossary.reducer';
 
 
@@ -83,7 +83,9 @@ export class WordGridComponent {
   hasAddTranslations(word) {
     return word?.additionalTranslations?.length > 0
   }
-  onAddNewWord() { }
+  onActivateNewWordMode() {
+    this.store.dispatch(GlossaryWordGridAction.toggleAddNewWordMode())
+  }
 
 
   onDeleteWord(id) {
