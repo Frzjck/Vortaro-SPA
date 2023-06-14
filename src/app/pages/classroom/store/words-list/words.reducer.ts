@@ -2,6 +2,7 @@ import { EntityState, createEntityAdapter } from '@ngrx/entity';
 import { createReducer, on } from '@ngrx/store';
 import { Word } from './words.models';
 import { UnknownPageWordAction } from './words.actions';
+import { WordFormAPIAction, WordFormAction } from '@glossary/components/word-grid/components/word-form/word-form.actions';
 
 
 export const adapter = createEntityAdapter<Word>();
@@ -22,9 +23,9 @@ export const reducer = createReducer(
     on(UnknownPageWordAction.readWordsSuccess, (state, { words }) => adapter.setAll(words, { ...state, loading: false })),
     on(UnknownPageWordAction.readWordsError, (state, { error }) => ({ ...state, loading: false, error: error })),
 
-    on(UnknownPageWordAction.createFormWord, (state) => ({ ...state, loading: true, error: null })),
-    on(UnknownPageWordAction.createWordSuccess, (state, { word }) => adapter.addOne(word, { ...state, loading: false })),
-    on(UnknownPageWordAction.createWordError, (state, { error }) => ({ ...state, loading: false, error: error })),
+    on(WordFormAction.submitWordForm, (state) => ({ ...state, loading: true, error: null })),
+    on(WordFormAPIAction.createWordSuccess, (state, { word }) => adapter.addOne(word, { ...state, loading: false })),
+    on(WordFormAPIAction.createWordError, (state, { error }) => ({ ...state, loading: false, error: error })),
 
     on(UnknownPageWordAction.updateWord, (state) => ({ ...state, loading: true, error: null })),
     on(UnknownPageWordAction.updateWordSuccess, (state, { id, changes }) => (adapter.updateOne({

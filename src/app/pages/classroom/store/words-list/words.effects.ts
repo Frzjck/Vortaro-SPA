@@ -15,7 +15,7 @@ import { WordService } from '@app/pages/classroom/services/word.service';
 import { Store } from '@ngrx/store';
 import { formWordToNewFireWord, formWordToNewWord } from '../../utils/words.mapper';
 import { selectUserId } from '@app/store/user/user.selectors';
-import { WordFormAction } from '../../glossary/components/word-grid/components/word-form/word-form.actions';
+import { WordFormAPIAction, WordFormAction } from '@glossary/components/word-grid/components/word-form/word-form.actions';
 
 
 @Injectable()
@@ -29,10 +29,10 @@ export class WordsEffects {
 
     readInit$ = createEffect(() => this.actions$.pipe(
         ofType(UnknownPageWordAction.readWords),
-        concatLatestFrom((action) => [
+        concatLatestFrom(() => [
             this.store.select(selectUserId),
         ]),
-        switchMap(([action, uid]) => {
+        switchMap(([, uid]) => {
             return this.wordService.getWordsFromServer(uid).pipe(
                 take(1),
                 map((words: Word[]) => UnknownPageWordAction.readWordsSuccess({ words })),
@@ -52,8 +52,8 @@ export class WordsEffects {
         switchMap(([action, word, groupId, userId]) =>
             this.wordService.addWordRequest(word, groupId, userId).pipe(
                 map(res => (formWordToNewWord(action.word, res.id))),
-                map((word: Word) => UnknownPageWordAction.createWordSuccess({ groupId, word })),
-                catchError(err => of(UnknownPageWordAction.createWordError(err.message)))
+                map((word: Word) => WordFormAPIAction.createWordSuccess({ groupId, word })),
+                catchError(err => of(WordFormAPIAction.createWordError(err.message)))
             )
         )
     ));
