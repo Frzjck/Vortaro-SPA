@@ -13,7 +13,7 @@ import { Observable } from 'rxjs';
 import { Word } from '@classroom/store/words-list/words.models';
 import { Store } from '@ngrx/store';
 import { GlossaryWordGridAction, GlossaryWordUIAction } from '@glossary/store/glossary/glossary.actions';
-import { selectWordGridStateVM, selectIsWordUnfolded, selectIsEditingGroupWithId } from '@glossary/store/glossary/glossary.reducer';
+import { selectWordGridStateVM, selectIsWordUnfolded, selectIsEditingCurrentGroup } from '@glossary/store/glossary/glossary.reducer';
 
 
 export interface WordGridInputInterface {
@@ -22,9 +22,8 @@ export interface WordGridInputInterface {
 }
 
 export interface WordGridStateInterface {
-  editingGroupId: string;
+  isEditingCurrentGroup: boolean;
   editingWordId: string;
-  isEditingGroup: boolean;
   isAddingNewWord: boolean;
 }
 
@@ -52,10 +51,9 @@ export interface WordGridStateInterface {
 export class WordGridComponent {
   @Input() wordGridInput: WordGridInputInterface;
 
-  wordGridStateVM$: Observable<WordGridStateInterface> = this.store.select(selectWordGridStateVM);
+  wordGridStateVM$ = (groupId: string): Observable<WordGridStateInterface> => this.store.select(selectWordGridStateVM(groupId));
 
   isWordUnfolded$ = (wordId) => this.store.select(selectIsWordUnfolded(wordId));
-  isEditingGroup$ = (groupId) => this.store.select(selectIsEditingGroupWithId(groupId));
 
   constructor(public store: Store) { }
 
