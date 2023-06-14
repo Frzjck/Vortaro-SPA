@@ -14,6 +14,7 @@ import { Observable } from 'rxjs';
 import { Word } from '@classroom/store/words-list/words.models';
 import { Store } from '@ngrx/store';
 import { GlossaryWordUIAction } from '@glossary/store/glossary/glossary.actions';
+import { selectWordGridStateVM, selectIsWordUnfolded, selectIsEditingGroupWithId } from '@glossary/store/glossary/glossary.reducer';
 
 
 export interface WordGridInputInterface {
@@ -51,7 +52,7 @@ export interface WordGridStateInterface {
 })
 export class WordGridComponent {
   @Input() wordGridInput: WordGridInputInterface;
-  wordGridStateVM$: Observable<WordGridStateInterface> = this.stateFacade.wordGridStateVM$;
+  wordGridStateVM$: Observable<WordGridStateInterface> = this.store.select(selectWordGridStateVM);
 
   constructor(public stateFacade: GlossaryStateFacade, public store: Store) {
   }
@@ -60,23 +61,27 @@ export class WordGridComponent {
     switch (params.option) {
       case "unfoldTranslations":
         this.store.dispatch(GlossaryWordUIAction.unfoldAdditionalTranslationsWord({ wordId: params.id }));
-
         break;
       case "foldTranslations":
         this.store.dispatch(GlossaryWordUIAction.foldAdditionalTranslationsWord({ wordId: params.id }));
-
         break;
       case "edit":
         this.store.dispatch(GlossaryWordUIAction.editWord({ wordId: params.id }))
-
         break;
       case "delete":
         if (confirm('Are you sure you want to delete ')) {
           this.store.dispatch(GlossaryWordUIAction.deleteWord({ wordId: params.id }))
-
         }
         break;
     }
+  }
+
+  isWordUnfolded(wordId) {
+    return this.store.select(selectIsWordUnfolded(wordId));
+  }
+
+  isEditingGroup(groupId) {
+    return this.store.select(selectIsEditingGroupWithId(groupId));
   }
 
   hasAddTranslations(word) {
