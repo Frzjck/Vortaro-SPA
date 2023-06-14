@@ -5,7 +5,7 @@
       <mat-expansion-panel
         *ngFor="let group of groupsAndWords$ | async"
         class="mat-elevation-z6"
-        [expanded]="isEditingGroupWithId$(group.id) | async"
+        [expanded]="isEditingCurrentGroup$(group.id) | async"
       >
         <mat-expansion-panel-header>
           <div class="flex-title">
@@ -13,7 +13,7 @@
               {{ group.name | titlecase }}
               <i
                 class="far fa-edit"
-                *ngIf="isEditingGroupWithId$(group.id) | async"
+                *ngIf="isEditingCurrentGroup$(group.id) | async"
                 appStopPropagation
               ></i>
             </span>

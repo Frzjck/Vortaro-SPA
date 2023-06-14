@@ -10,7 +10,7 @@ import { GroupActionPanelComponent } from './components/group-action-panel/group
 import { Observable } from 'rxjs/internal/Observable';
 import { Word } from '../store/words-list/words.models';
 import { Store } from '@ngrx/store';
-import { selectGroupActionPanelVM, selectGroupsAndWords, selectIsEditingGroupWithId } from './store/glossary/glossary.reducer';
+import { selectGroupActionPanelVM, selectGroupsAndWords, selectIsEditingCurrentGroup } from './store/glossary/glossary.reducer';
 import { GlossaryGroupPanelAction } from './store/glossary/glossary.actions';
 import { Group } from '@classroom/store/groups-list/groups.models';
 import { UnknownPageGroupAction } from '@classroom/store/groups-list/groups.actions';
@@ -36,7 +36,7 @@ export class GlossaryComponent {
   groupsAndWords$ = this.store.select(selectGroupsAndWords)
 
   groupActionPanelVM$ = (groupId) => this.store.select(selectGroupActionPanelVM(groupId));
-  isEditingGroupWithId$ = (groupId) => this.store.select(selectIsEditingGroupWithId(groupId));
+  isEditingCurrentGroup$ = (groupId) => this.store.select(selectIsEditingCurrentGroup(groupId));
 
   constructor(public store: Store) { }
 

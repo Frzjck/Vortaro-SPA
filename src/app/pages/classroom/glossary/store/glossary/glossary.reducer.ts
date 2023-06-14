@@ -82,7 +82,7 @@ export const glossaryFeature = createFeature({
             (editingWordId) => !!editingWordId
         );
 
-        const selectIsEditingAGroup = createSelector(
+        const selectIsEditingCurrentGroup = (groupId) => createSelector(
             selectEditingGroupId,
             (editingGroupId) => !!editingGroupId
         );
