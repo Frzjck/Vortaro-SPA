@@ -7,7 +7,6 @@ import { InputComponent } from '@app/shared/controls/input/input.component';
 import { AdditionalTranslationsComponent } from './additional-translations/additional-translations.component';
 import { FormFooterComponent } from './form-footer/form-footer.component';
 import { WordFormService } from './services/word-form.service';
-import { WordFormState } from './word-form.state';
 import { Store } from '@ngrx/store';
 import { markFormGroupTouched } from '@app/shared/utils/form';
 import { Word } from '@classroom/store/words-list/words.models';
@@ -17,7 +16,7 @@ import { UnknownPageWordAction } from '@classroom/store/words-list/words.actions
   selector: 'app-word-form',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormFieldComponent, InputComponent, AdditionalTranslationsComponent, FormFooterComponent,],
-  providers: [WordFormService, WordFormState],
+  providers: [WordFormService],
   // changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './word-form.component.html',
   styleUrls: ['./word-form.component.scss'],
