@@ -13,7 +13,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { Word } from '../store/words-list/words.models';
 import { combineLatest, map, of } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { selectGroupsAndWords } from './store/glossary/glossary.reducer';
+import { selectGroupHasUnfoldedTranslations, selectGroupsAndWords, selectIsAllGroupTranslationsUnfolded, selectIsEditingGroupWithId } from './store/glossary/glossary.reducer';
 import { GlossaryGroupPanelAction } from './store/glossary/glossary.actions';
 import { Group } from '@classroom/store/groups-list/groups.models';
 import { UnknownPageGroupAction } from '@classroom/store/groups-list/groups.actions';
@@ -55,9 +55,9 @@ export class GlossaryComponent {
   getGroupActionInput(groupId) {
     return combineLatest([
       of(groupId),
-      this.state.isAllGroupTranslationsUnfolded$(groupId),
-      this.state.groupHasUnfoldedTranslations$(groupId),
-      this.state.isEditingGroupId$(groupId)
+      this.store.select(selectIsAllGroupTranslationsUnfolded(groupId)),
+      this.store.select(selectGroupHasUnfoldedTranslations(groupId)),
+      this.store.select(selectIsEditingGroupWithId(groupId)),
     ]).pipe(
       map(([groupId, isAllOpen, isAnyOpen, isBeingEdited]) => {
         return {
@@ -80,18 +80,27 @@ export class GlossaryComponent {
         this.store.dispatch(GlossaryGroupPanelAction.unfoldAdditionalTranslationsGroup({ groupId: params.id }))
         break;
       case "foldTranslations":
-        this.state.foldTranslationsGroup()
+        // this.state.foldTranslationsGroup()
+        this.store.dispatch(GlossaryGroupPanelAction.foldAdditionalTranslationsGroup())
+
         break;
       case "edit":
-        this.state.foldTranslationsGroup()
-        this.state.toggleEditGroup(params.id)
+        // this.state.foldTranslationsGroup()
+        // this.state.toggleEditGroup(params.id)
+
+        this.store.dispatch(GlossaryGroupPanelAction.foldAdditionalTranslationsGroup())
+        this.store.dispatch(GlossaryGroupPanelAction.toggleEditGroup({ groupId: params.id }))
+
         break;
       case "done":
-        this.state.toggleEditGroup(params.id)
+        // this.state.toggleEditGroup(params.id)
+        this.store.dispatch(GlossaryGroupPanelAction.toggleEditGroup({ groupId: params.id }))
+
         break;
       case "delete":
         if (confirm('Are you sure you want to delete ')) {
-          this.state.deleteGroup(params.id);
+          // this.state.deleteGroup(params.id);
+          this.store.dispatch(GlossaryGroupPanelAction.deleteGroup({ groupId: params.id }))
         }
         break;
     }
