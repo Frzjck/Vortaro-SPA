@@ -44,7 +44,7 @@ export class WordFormComponent implements OnInit {
     })
 
     if (this.word) {
-      this.coreForm.patchValue({ word: this.word.original, translation: this.word.translation });
+      this.coreForm.patchValue({ original: this.word.original, translation: this.word.translation });
       if (this.word.tips) this.createTipsControl(this.word.tips)
     }
   }
