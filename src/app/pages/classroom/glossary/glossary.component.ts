@@ -61,7 +61,6 @@ export class GlossaryComponent {
         this.store.dispatch(GlossaryGroupPanelAction.foldAdditionalTranslationsGroup())
         break;
       case "edit":
-        this.store.dispatch(GlossaryGroupPanelAction.foldAdditionalTranslationsGroup())
         this.store.dispatch(GlossaryGroupPanelAction.toggleEditGroup({ groupId: params.id }))
         break;
       case "done":
