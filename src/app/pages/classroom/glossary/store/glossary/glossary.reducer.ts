@@ -146,16 +146,26 @@ export const glossaryFeature = createFeature({
             })
         );
 
+        const selectGroupActionPanelVM = (groupId) => createSelector(
+            selectIsAllGroupTranslationsUnfolded(groupId),
+            selectGroupHasUnfoldedTranslations(groupId),
+            selectIsEditingGroupWithId(groupId),
+            (isAllOpen, isAnyOpen, isBeingEdited) => ({
+                groupId,
+                seeAll: !isAllOpen && !isBeingEdited,
+                collapseAll: isAnyOpen && !isBeingEdited,
+                done: isBeingEdited,
+                delete: isBeingEdited,
+            })
+        );
+
         return {
             selectWordGridStateVM,
+            selectGroupActionPanelVM,
+
             selectGroupsAndWords,
             selectIsWordUnfolded,
             selectIsEditingGroupWithId,
-
-            //todo refactor into vm:
-            selectIsAllGroupTranslationsUnfolded,
-            selectGroupHasUnfoldedTranslations,
-            // ++++++++ selectIsEditingGroupWithId,
 
         }
     },
@@ -169,13 +179,12 @@ export const glossaryFeature = createFeature({
 export const {
     name,
     reducer,
-    selectGroupsAndWords,
     selectWordGridStateVM,
+    selectGroupActionPanelVM,
+
+    selectGroupsAndWords,
     selectIsWordUnfolded,
     selectIsEditingGroupWithId,
 
-    //todo refactor into vm:
-    selectIsAllGroupTranslationsUnfolded,
-    selectGroupHasUnfoldedTranslations,
-    // ++++++++ selectIsEditingGroupWithId,
+
 } = glossaryFeature;
