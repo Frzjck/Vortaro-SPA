@@ -27,12 +27,12 @@ export const glossaryFeature = createFeature({
     name: "glossary",
     reducer: createReducer(
         initialState,
-        on(UnknownPageGlossaryAction.foldAdditionalTranslationsGroup, (state) => ({
+        on(GlossaryGroupPanelAction.foldAdditionalTranslationsGroup, (state) => ({
             ...state,
             unfoldedWords: initialState.unfoldedWords,
         })),
 
-        on(UnknownPageGlossaryAction.foldAdditionalTranslationsWord, (state, { wordId }) => ({
+        on(GlossaryWordUIAction.foldAdditionalTranslationsWord, (state, { wordId }) => ({
             ...state,
             unfoldedWords: state.unfoldedWords.filter((id) => id !== wordId),
         })),
@@ -47,7 +47,7 @@ export const glossaryFeature = createFeature({
             unfoldedWords: state.unfoldedWords.concat(wordId),
         })),
 
-        on(UnknownPageGlossaryAction.toggleEditGroup, (state, { groupId }) => ({
+        on(GlossaryGroupPanelAction.toggleEditGroup, (state, { groupId }) => ({
             ...state,
             editingGroupId: state.editingGroupId === groupId ? null : groupId,
         })),
@@ -77,9 +77,13 @@ export const glossaryFeature = createFeature({
             (editingWordId) => !!editingWordId
         );
 
-        const selectIsEditingGroup = createSelector(
+        const selectIsEditingAGroup = createSelector(
             selectEditingGroupId,
             (editingGroupId) => !!editingGroupId
+        );
+        const selectIsEditingGroupWithId = (groupId) => createSelector(
+            selectEditingGroupId,
+            (editingGroupId) => editingGroupId === groupId
         );
 
         const selectIsEditingGroupName = createSelector(
@@ -119,7 +123,7 @@ export const glossaryFeature = createFeature({
             }
         );
 
-        const selectIsAllGroupTranslationsUnfolded$ = (groupId: string) => createSelector(
+        const selectIsAllGroupTranslationsUnfolded = (groupId: string) => createSelector(
             selectUnfoldableGroupWords(groupId),
             selectUnfoldedWords,
             (groupWords, unfoldedWords) => {
@@ -132,7 +136,7 @@ export const glossaryFeature = createFeature({
         const selectWordGridStateVM = createSelector(
             selectEditingGroupId,
             selectEditingWordId,
-            selectIsEditingGroup,
+            selectIsEditingAGroup,
             selectAddNewWordMode,
             (editingGroupId, editingWordId, isEditingGroup, isAddingNewWord) => ({
                 editingGroupId,
@@ -144,7 +148,15 @@ export const glossaryFeature = createFeature({
 
         return {
             selectWordGridStateVM,
-            selectGroupsAndWords
+            selectGroupsAndWords,
+            selectIsWordUnfolded,
+            selectIsEditingGroupWithId,
+
+            //todo refactor into vm:
+            selectIsAllGroupTranslationsUnfolded,
+            selectGroupHasUnfoldedTranslations,
+            // ++++++++ selectIsEditingGroupWithId,
+
         }
     },
 
@@ -157,6 +169,13 @@ export const glossaryFeature = createFeature({
 export const {
     name,
     reducer,
-    selectGroupsAndWords
+    selectGroupsAndWords,
+    selectWordGridStateVM,
+    selectIsWordUnfolded,
+    selectIsEditingGroupWithId,
 
+    //todo refactor into vm:
+    selectIsAllGroupTranslationsUnfolded,
+    selectGroupHasUnfoldedTranslations,
+    // ++++++++ selectIsEditingGroupWithId,
 } = glossaryFeature;
