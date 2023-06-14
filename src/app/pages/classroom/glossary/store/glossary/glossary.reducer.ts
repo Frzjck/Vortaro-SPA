@@ -48,7 +48,7 @@ export const glossaryFeature = createFeature({
         })),
 
         on(GlossaryGroupPanelAction.toggleEditGroup, (state, { groupId }) => ({
-            ...state,
+            ...initialState,
             editingGroupId: state.editingGroupId === groupId ? null : groupId,
         })),
 
