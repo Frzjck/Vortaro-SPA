@@ -1,7 +1,10 @@
 import { createFeature, createReducer, createSelector, on } from "@ngrx/store";
-import { GlossaryGroupPanelAction, GlossaryWordGridAction, GlossaryWordUIAction, UnknownPageGlossaryAction, WordFormAction } from "./glossary.actions";
 import { selectGroups } from "@classroom/store/groups-list/groups.selectors";
 import { selectWordsByGroupId, selectWordsByIds } from "@classroom/store/words-list/words.selectors";
+import { GlossaryGroupPanelAction } from "../../components/group-action-panel/group-action-panel.actions";
+import { GlossaryWordUIAction } from "../../components/word-grid/components/word-ui/word-ui.actions";
+import { WordFormAction } from "../../components/word-grid/components/word-form/word-form.actions";
+import { GlossaryWordGridAction } from "../../components/word-grid/word-grid.actions";
 
 export interface GlossaryStateModel {
     unfoldedWords: string[];

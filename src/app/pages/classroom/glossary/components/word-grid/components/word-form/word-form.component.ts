@@ -10,8 +10,7 @@ import { WordFormService } from './services/word-form.service';
 import { Store } from '@ngrx/store';
 import { markFormGroupTouched } from '@app/shared/utils/form';
 import { Word } from '@classroom/store/words-list/words.models';
-import { UnknownPageWordAction } from '@classroom/store/words-list/words.actions';
-import { WordFormAction } from '@app/pages/classroom/glossary/store/glossary/glossary.actions';
+import { WordFormAction } from './word-form.actions';
 
 @Component({
   selector: 'app-word-form',
@@ -31,12 +30,8 @@ export class WordFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.footer.addTips$.subscribe(() => this.createTipsControl());
-
     this.footer.submitWordForm$.subscribe(() => this.onSubmit());
-    this.footer.closeForm$.subscribe(() => {
-      if (this.word) this.store.dispatch(WordFormAction.cancelEditWord())
-      else this.store.dispatch(WordFormAction.cancelNewWordMode())
-    });
+    this.footer.closeForm$.subscribe(() => this.onClose());
 
     this.coreForm = this.fb.group({
       original: new FormControl(null, [Validators.required]),
@@ -60,7 +55,12 @@ export class WordFormComponent implements OnInit {
       this.coreForm.updateValueAndValidity();
       this.cdr.detectChanges();
     } else {
-      this.store.dispatch(UnknownPageWordAction.createFormWord({ word: this.coreForm.value, groupId: this.groupId }));
+      this.store.dispatch(WordFormAction.submitWordForm({ word: this.coreForm.value, groupId: this.groupId }));
     }
+  }
+
+  onClose() {
+    if (this.word) this.store.dispatch(WordFormAction.cancelEditWord())
+    else this.store.dispatch(WordFormAction.cancelNewWordMode())
   }
 }

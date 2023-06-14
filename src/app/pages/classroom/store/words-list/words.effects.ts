@@ -12,9 +12,10 @@ import { map, switchMap, catchError, take, tap } from 'rxjs/operators';
 import { UnknownPageWordAction } from './words.actions';
 import { Word } from './words.models';
 import { WordService } from '@app/pages/classroom/services/word.service';
-import { Action, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { formWordToNewFireWord, formWordToNewWord } from '../../utils/words.mapper';
 import { selectUserId } from '@app/store/user/user.selectors';
+import { WordFormAction } from '../../glossary/components/word-grid/components/word-form/word-form.actions';
 
 
 @Injectable()
@@ -42,7 +43,7 @@ export class WordsEffects {
     ));
 
     create$ = createEffect(() => this.actions$.pipe(
-        ofType(UnknownPageWordAction.createFormWord),
+        ofType(WordFormAction.submitWordForm),
         concatLatestFrom((action) => [
             of(formWordToNewFireWord(action.word)),
             of(action.groupId),

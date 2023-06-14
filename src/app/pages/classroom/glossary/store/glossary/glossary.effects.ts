@@ -2,8 +2,8 @@ import { Injectable } from "@angular/core";
 import { Actions, concatLatestFrom, createEffect, ofType } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
 import { switchMap, tap } from "rxjs";
-import { GlossaryGroupPanelAction } from "./glossary.actions";
 import { selectGroupById } from "@classroom/store/groups-list/groups.selectors";
+import { GlossaryGroupPanelAction } from "../../components/group-action-panel/group-action-panel.actions";
 
 @Injectable()
 export class GlossaryEffects {

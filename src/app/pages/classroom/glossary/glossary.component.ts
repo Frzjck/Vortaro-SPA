@@ -11,10 +11,10 @@ import { Observable } from 'rxjs/internal/Observable';
 import { Word } from '../store/words-list/words.models';
 import { Store } from '@ngrx/store';
 import { selectGroupActionPanelVM, selectGroupsAndWords, selectIsEditingCurrentGroup } from './store/glossary/glossary.reducer';
-import { GlossaryGroupPanelAction } from './store/glossary/glossary.actions';
 import { Group } from '@classroom/store/groups-list/groups.models';
 import { UnknownPageGroupAction } from '@classroom/store/groups-list/groups.actions';
 import { UnknownPageWordAction } from '@classroom/store/words-list/words.actions';
+import { GlossaryGroupPanelAction } from './components/group-action-panel/group-action-panel.actions';
 
 
 
