@@ -33,7 +33,10 @@ export class WordFormComponent implements OnInit {
     this.footer.addTips$.subscribe(() => this.createTipsControl());
 
     this.footer.submitWordForm$.subscribe(() => this.onSubmit());
-    this.footer.closeForm$.subscribe(() => this.store.dispatch(WordFormAction.cancelNewWordMode()));
+    this.footer.closeForm$.subscribe(() => {
+      if (this.word) this.store.dispatch(WordFormAction.cancelEditWord())
+      else this.store.dispatch(WordFormAction.cancelNewWordMode())
+    });
 
     this.coreForm = this.fb.group({
       original: new FormControl(null, [Validators.required]),

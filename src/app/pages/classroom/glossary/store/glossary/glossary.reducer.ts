@@ -57,6 +57,11 @@ export const glossaryFeature = createFeature({
             editingWordId: wordId,
         })),
 
+        on(WordFormAction.cancelEditWord, (state) => ({
+            ...state,
+            editingWordId: initialState.editingWordId,
+        })),
+
         on(GlossaryWordGridAction.activateNewWordMode, (state) => ({
             ...state,
             addNewWordMode: true,

@@ -58,6 +58,7 @@ export const WordFormAction = createActionGroup(
         source: 'Word Form',
         events: {
             "Cancel New Word Mode": emptyProps(),
+            "Cancel Edit Word": emptyProps(),
         },
     }
 )
