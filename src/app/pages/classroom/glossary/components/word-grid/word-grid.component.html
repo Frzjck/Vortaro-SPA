@@ -46,13 +46,16 @@
   <div
     class="mat-elevation-z4 add-word-div"
     (click)="onActivateNewWordMode()"
-    *ngIf="isEditingGroup"
+    *ngIf="isEditingGroup && !(wordGridStateVM$ | async).isAddingNewWord"
   >
     <button mat-button class="btn btn-new-word">
       Add New Word <mat-icon>add_box</mat-icon>
     </button>
   </div>
-  <div class="wordCardDiv" *ngIf="isEditingGroup">
+  <div
+    class="wordCardDiv"
+    *ngIf="isEditingGroup && (wordGridStateVM$ | async).isAddingNewWord"
+  >
     <mat-card>
       <app-word-form [groupId]="wordGridInput.groupId"></app-word-form>
     </mat-card>
