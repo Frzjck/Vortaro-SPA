@@ -84,10 +84,6 @@ export const glossaryFeature = createFeature({
 
         const selectIsEditingCurrentGroup = (groupId) => createSelector(
             selectEditingGroupId,
-            (editingGroupId) => !!editingGroupId
-        );
-        const selectIsEditingGroupWithId = (groupId) => createSelector(
-            selectEditingGroupId,
             (editingGroupId) => editingGroupId === groupId
         );
 
