@@ -34,9 +34,7 @@
         ></app-word-grid>
         <mat-action-row>
           <app-group-action-panel
-            [groupActionPanelInput]="
-              selectGroupActionPanelVM$(group.id) | async
-            "
+            [groupActionPanelInput]="groupActionPanelVM$(group.id) | async"
             (buttonPressed)="groupAction($event)"
           ></app-group-action-panel>
         </mat-action-row>
