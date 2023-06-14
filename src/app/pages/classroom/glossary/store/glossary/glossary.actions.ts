@@ -48,7 +48,16 @@ export const GlossaryWordGridAction = createActionGroup(
     {
         source: 'Glossary Word Grid',
         events: {
-            "Toggle Add New Word Mode": emptyProps(),
+            "Activate New Word Mode": emptyProps(),
+        },
+    }
+)
+
+export const WordFormAction = createActionGroup(
+    {
+        source: 'Word Form',
+        events: {
+            "Cancel New Word Mode": emptyProps(),
         },
     }
 )

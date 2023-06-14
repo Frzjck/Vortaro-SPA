@@ -1,5 +1,5 @@
 import { createFeature, createReducer, createSelector, on } from "@ngrx/store";
-import { GlossaryGroupPanelAction, GlossaryWordGridAction, GlossaryWordUIAction, UnknownPageGlossaryAction } from "./glossary.actions";
+import { GlossaryGroupPanelAction, GlossaryWordGridAction, GlossaryWordUIAction, UnknownPageGlossaryAction, WordFormAction } from "./glossary.actions";
 import { selectGroups } from "@classroom/store/groups-list/groups.selectors";
 import { selectWordsByGroupId, selectWordsByIds } from "@classroom/store/words-list/words.selectors";
 
@@ -62,9 +62,14 @@ export const glossaryFeature = createFeature({
             editingWordId: wordId,
         })),
 
-        on(GlossaryWordGridAction.toggleAddNewWordMode, (state) => ({
+        on(GlossaryWordGridAction.activateNewWordMode, (state) => ({
             ...state,
-            addNewWordMode: !state.addNewWordMode,
+            addNewWordMode: true,
+        })),
+
+        on(WordFormAction.cancelNewWordMode, (state) => ({
+            ...state,
+            addNewWordMode: false,
         })),
 
     ),
