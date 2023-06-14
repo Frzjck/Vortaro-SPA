@@ -134,15 +134,13 @@ export const glossaryFeature = createFeature({
 
         // ------------- View Models:
 
-        const selectWordGridStateVM = createSelector(
-            selectEditingGroupId,
+        const selectWordGridStateVM = (groupId: string) => createSelector(
+            selectIsEditingCurrentGroup(groupId),
             selectEditingWordId,
-            selectIsEditingAGroup,
             selectAddNewWordMode,
-            (editingGroupId, editingWordId, isEditingGroup, isAddingNewWord) => ({
-                editingGroupId,
+            (isEditingCurrentGroup, editingWordId, isAddingNewWord) => ({
+                isEditingCurrentGroup,
                 editingWordId,
-                isEditingGroup,
                 isAddingNewWord,
             })
         );
@@ -150,7 +148,7 @@ export const glossaryFeature = createFeature({
         const selectGroupActionPanelVM = (groupId) => createSelector(
             selectIsAllGroupTranslationsUnfolded(groupId),
             selectGroupHasUnfoldedTranslations(groupId),
-            selectIsEditingGroupWithId(groupId),
+            selectIsEditingCurrentGroup(groupId),
             (isAllOpen, isAnyOpen, isBeingEdited) => ({
                 groupId,
                 seeAll: !isAllOpen && !isBeingEdited,
@@ -166,7 +164,7 @@ export const glossaryFeature = createFeature({
 
             selectGroupsAndWords,
             selectIsWordUnfolded,
-            selectIsEditingGroupWithId,
+            selectIsEditingCurrentGroup,
 
         }
     },
@@ -185,7 +183,7 @@ export const {
 
     selectGroupsAndWords,
     selectIsWordUnfolded,
-    selectIsEditingGroupWithId,
+    selectIsEditingCurrentGroup,
 
 
 } = glossaryFeature;
