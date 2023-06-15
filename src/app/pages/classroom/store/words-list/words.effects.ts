@@ -13,7 +13,7 @@ import { UnknownPageWordAction } from './words.actions';
 import { Word } from './words.models';
 import { WordService } from '@app/pages/classroom/services/word.service';
 import { Store } from '@ngrx/store';
-import { formWordToNewFireWord, formWordToNewWord } from '../../utils/words.mapper';
+import { formWordToNewFireWord, formWordToNewWord, formWordToUpdatedFireWord } from '../../utils/words.mapper';
 import { selectUserId } from '@app/store/user/user.selectors';
 import { WordFormAPIAction, WordFormAction } from '@glossary/components/word-grid/components/word-form/word-form.actions';
 
@@ -43,7 +43,7 @@ export class WordsEffects {
     ));
 
     create$ = createEffect(() => this.actions$.pipe(
-        ofType(WordFormAction.submitWordForm),
+        ofType(WordFormAction.createWord),
         concatLatestFrom((action) => [
             of(formWordToNewFireWord(action.word)),
             of(action.groupId),
@@ -59,15 +59,16 @@ export class WordsEffects {
     ));
 
     update$ = createEffect(() => this.actions$.pipe(
-        ofType(UnknownPageWordAction.updateWord),
-        map((action) => action.word),
-        map((word: Word) => ({
-            ...word,
-            updated: firebase.firestore.FieldValue.serverTimestamp()
-        })),
-        switchMap((word) =>
-            from(this.afs.collection('words').doc(word.id).set(word)).pipe(
-                map(() => UnknownPageWordAction.updateWordSuccess({ id: word.id, changes: word })),
+        ofType(WordFormAction.updateWord),
+        concatLatestFrom((action) => [
+            of(formWordToUpdatedFireWord(action.word)),
+            of(action.groupId),
+            this.store.select(selectUserId),
+            of(action.wordId),
+        ]),
+        switchMap(([action, word, groupId, userId, wordId]) =>
+            this.wordService.updateWordRequest(word, groupId, userId, wordId).pipe(
+                map(() => UnknownPageWordAction.updateWordSuccess({ id: wordId, changes: word })),
                 catchError(err => of(UnknownPageWordAction.updateWordError(err.message)))
             )
         )
