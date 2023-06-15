@@ -15,7 +15,7 @@ export interface WordUiViewInputInterface {
   standalone: true,
   imports: [CommonModule, RatingUIComponent],
   template: `
-  <ng-container *ngIf="wordUiViewInput as view">
+  <ng-container *ngIf="wordUiViewInput as vm">
     <div class="ui-wrap">
       <ng-template #editSet>
         <i
@@ -27,14 +27,14 @@ export interface WordUiViewInputInterface {
           (click)="_iconPressed('delete')"
         ></i>
       </ng-template>
-      <ng-container *ngIf="!view.editingMode; else editSet">
+      <ng-container *ngIf="!vm.editingMode; else editSet">
         <i
-          *ngIf="view.eye"
+          *ngIf="vm.eye"
           class="far fa-eye"
           (click)="_iconPressed('unfoldTranslations')"
         ></i>
         <i
-          *ngIf="view.eyeSlash"
+          *ngIf="vm.eyeSlash"
           class="far fa-eye-slash"
           (click)="_iconPressed('foldTranslations')"
         ></i>
@@ -43,10 +43,10 @@ export interface WordUiViewInputInterface {
         ></i>
         <app-rating-ui
           uiType="stars"
-          [score]="view.word.proficiency"
+          [score]="vm.word.proficiency"
           ></app-rating-ui>
         <div class="tooltip">
-          <span>{{ view.word.tips | titlecase }} </span>
+          <span>{{ vm.word.tips | titlecase }} </span>
         </div>
       </ng-container>
     </div>
