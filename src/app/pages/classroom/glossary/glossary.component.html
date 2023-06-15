@@ -3,7 +3,7 @@
   <div class="container">
     <mat-accordion>
       <mat-expansion-panel
-        *ngFor="let group of groupsAndWords$ | async"
+        *ngFor="let group of groupsAndWords$ | async; trackBy: trackByFn"
         class="mat-elevation-z6"
       >
         <mat-expansion-panel-header>

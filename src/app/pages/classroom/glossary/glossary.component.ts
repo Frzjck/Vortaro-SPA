@@ -74,5 +74,6 @@ export class GlossaryComponent {
     }
   }
 
+  trackByFn = (index: number, group: any): any => group.id;
 
 }
