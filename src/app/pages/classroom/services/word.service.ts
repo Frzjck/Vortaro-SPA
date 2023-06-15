@@ -5,7 +5,7 @@ import { convertSnaps } from '../../../shared/utils/db-utils';
 
 
 import { from } from 'rxjs';
-import { FireWordCreateRequest } from '@app/models/backend/word';
+import { FireWordCreateRequest, FireWordUpdateRequest } from '@app/models/backend/word';
 import { Word } from '../store/words-list/words.models';
 
 @Injectable({
@@ -26,5 +26,8 @@ export class WordService {
 
   addWordRequest(word: FireWordCreateRequest, groupId: string, userId: string) {
     return from(this.db.collection(`/users/${userId}/groups/${groupId}/words`).add(word))
+  }
+  updateWordRequest(word: FireWordUpdateRequest, groupId: string, userId: string, wordId: string) {
+    return from(this.db.collection(`/users/${userId}/groups/${groupId}/words`).doc(wordId).set(word))
   }
 }
