@@ -13,6 +13,16 @@ export const formWordToNewFireWord = (word: FormWord): FireWordCreateRequest => 
     };
 };
 
+export const formWordToNewWord = (word: FormWord, id: string): Word => {
+    const additionalTranslations = word.additionalTranslations.map((item) => item.translation);
+    return {
+        ...word,
+        id,
+        additionalTranslations,
+        proficiency: 10
+    }
+};
+
 export const formWordToUpdateWord = (word: FormWord): FireWordUpdateRequest => {
     const additionalTranslations = word.additionalTranslations.map((item) => item.translation);
     return {
@@ -22,12 +32,11 @@ export const formWordToUpdateWord = (word: FormWord): FireWordUpdateRequest => {
     };
 };
 
-export const formWordToNewWord = (word: FormWord, id: string): Word => {
+export const formWordToUpdatedFireWord = (word: FormWord): FireWordUpdateRequest => {
     const additionalTranslations = word.additionalTranslations.map((item) => item.translation);
     return {
         ...word,
-        id,
         additionalTranslations,
-        proficiency: 10
-    }
+        updated: firebase.firestore.FieldValue.serverTimestamp()
+    };
 };
