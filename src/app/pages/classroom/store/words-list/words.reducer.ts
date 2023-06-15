@@ -23,7 +23,7 @@ export const reducer = createReducer(
     on(UnknownPageWordAction.readWordsSuccess, (state, { words }) => adapter.setAll(words, { ...state, loading: false })),
     on(UnknownPageWordAction.readWordsError, (state, { error }) => ({ ...state, loading: false, error: error })),
 
-    on(WordFormAction.submitWordForm, (state) => ({ ...state, loading: true, error: null })),
+    on(WordFormAction.createWord, (state) => ({ ...state, loading: true, error: null })),
     on(WordFormAPIAction.createWordSuccess, (state, { word }) => adapter.addOne(word, { ...state, loading: false })),
     on(WordFormAPIAction.createWordError, (state, { error }) => ({ ...state, loading: false, error: error })),
 

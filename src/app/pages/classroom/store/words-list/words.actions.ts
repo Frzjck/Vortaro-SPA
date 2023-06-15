@@ -10,7 +10,7 @@ export const UnknownPageWordAction = createActionGroup(
             "Read Words Success": props<{ words: Word[] }>(),
             "Read Words Error": props<{ error: string }>(),
 
-            "Create Form Word": props<{ word: FormWord, groupId: string }>(),
+            "Create Word": props<{ word: FormWord, groupId: string }>(),
             "Create Word Success": props<{ groupId: string, word: Word }>(),
             "Create Word Error": props<{ error: string }>(),
 
