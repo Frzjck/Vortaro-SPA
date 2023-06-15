@@ -5,7 +5,7 @@ import { Word } from "../store/words-list/words.models";
 
 // --------------------- Creation
 export const formWordToNewFireWord = (word: FormWord): FireWordCreateRequest => {
-    const additionalTranslations = word.additionalTranslations.map((item) => item.translation);
+    const additionalTranslations = _formatFormAdditionalTranslations(word.additionalTranslations);
     return {
         ...word,
         additionalTranslations,
@@ -14,7 +14,7 @@ export const formWordToNewFireWord = (word: FormWord): FireWordCreateRequest => 
 };
 
 export const formWordToNewWord = (word: FormWord, id: string): Word => {
-    const additionalTranslations = word.additionalTranslations.map((item) => item.translation);
+    const additionalTranslations = _formatFormAdditionalTranslations(word.additionalTranslations);
     return {
         ...word,
         id,
@@ -25,7 +25,7 @@ export const formWordToNewWord = (word: FormWord, id: string): Word => {
 
 // --------------------- Updates
 export const formWordToUpdatedWord = (word: FormWord): Partial<Word> => {
-    const additionalTranslations = word.additionalTranslations.map((item) => item.translation);
+    const additionalTranslations = _formatFormAdditionalTranslations(word.additionalTranslations);
     return {
         ...word,
         additionalTranslations,
@@ -33,10 +33,13 @@ export const formWordToUpdatedWord = (word: FormWord): Partial<Word> => {
 };
 
 export const formWordToUpdatedFireWord = (word: FormWord): FireWordUpdateRequest => {
-    const additionalTranslations = word.additionalTranslations.map((item) => item.translation);
+    const additionalTranslations = _formatFormAdditionalTranslations(word.additionalTranslations);
     return {
         ...word,
         additionalTranslations,
         updated: firebase.firestore.FieldValue.serverTimestamp()
     };
 };
+
+
+const _formatFormAdditionalTranslations = (additionalTranslations) => additionalTranslations.filter(item => item.translation).map((item) => item.translation);
