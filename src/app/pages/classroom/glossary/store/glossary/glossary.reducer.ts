@@ -3,7 +3,7 @@ import { selectGroups } from "@classroom/store/groups-list/groups.selectors";
 import { selectWordsByGroupId, selectWordsByIds } from "@classroom/store/words-list/words.selectors";
 import { GlossaryGroupPanelAction } from "../../components/group-action-panel/group-action-panel.actions";
 import { GlossaryWordUIAction } from "../../components/word-grid/components/word-ui/word-ui.actions";
-import { WordFormAction } from "../../components/word-grid/components/word-form/word-form.actions";
+import { WordFormAPIAction, WordFormAction } from "../../components/word-grid/components/word-form/word-form.actions";
 import { GlossaryWordGridAction } from "../../components/word-grid/word-grid.actions";
 
 export interface GlossaryStateModel {
@@ -70,7 +70,7 @@ export const glossaryFeature = createFeature({
             addNewWordMode: true,
         })),
 
-        on(WordFormAction.cancelNewWordMode, (state) => ({
+        on(WordFormAction.cancelNewWordMode, WordFormAPIAction.createWordSuccess, (state) => ({
             ...state,
             addNewWordMode: false,
         })),
