@@ -39,6 +39,7 @@ export interface WordUiViewInputInterface {
           (click)="_iconPressed('foldTranslations')"
         ></i>
         <i
+        *ngIf="vm.word.tips"
           class="far fa-question-circle"
         ></i>
         <app-rating-ui
