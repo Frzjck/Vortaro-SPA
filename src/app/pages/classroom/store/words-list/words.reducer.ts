@@ -28,7 +28,7 @@ export const reducer = createReducer(
     on(WordFormAPIAction.createWordError, (state, { error }) => ({ ...state, loading: false, error: error })),
 
     on(UnknownPageWordAction.updateWord, (state) => ({ ...state, loading: true, error: null })),
-    on(UnknownPageWordAction.updateWordSuccess, (state, { id, changes }) => (adapter.updateOne({
+    on(WordFormAPIAction.updateWordSuccess, (state, { id, changes }) => (adapter.updateOne({
         id: id,
         changes: changes
     }, state))),

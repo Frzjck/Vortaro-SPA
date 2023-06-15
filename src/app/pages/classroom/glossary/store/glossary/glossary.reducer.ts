@@ -60,7 +60,7 @@ export const glossaryFeature = createFeature({
             editingWordId: wordId,
         })),
 
-        on(WordFormAction.cancelEditWord, (state) => ({
+        on(WordFormAction.cancelEditWord, WordFormAPIAction.updateWordSuccess, (state) => ({
             ...state,
             editingWordId: initialState.editingWordId,
         })),
