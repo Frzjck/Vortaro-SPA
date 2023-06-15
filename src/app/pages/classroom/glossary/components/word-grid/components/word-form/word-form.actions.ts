@@ -9,8 +9,8 @@ export const WordFormAction = createActionGroup(
     {
         source: 'Word Form',
         events: {
-            "Create Word": props<{ word: FormWord, groupId: string }>(),
-            "Update Word": props<{ word: FormWord, groupId: string, wordId: string }>(),
+            "Create Word": props<{ formWord: FormWord, groupId: string }>(),
+            "Update Word": props<{ formWord: FormWord, groupId: string, wordId: string }>(),
 
             "Cancel New Word Mode": emptyProps(),
             "Cancel Edit Word": emptyProps(),

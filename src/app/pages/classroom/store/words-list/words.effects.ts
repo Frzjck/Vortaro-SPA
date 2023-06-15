@@ -13,7 +13,7 @@ import { UnknownPageWordAction } from './words.actions';
 import { Word } from './words.models';
 import { WordService } from '@app/pages/classroom/services/word.service';
 import { Store } from '@ngrx/store';
-import { formWordToNewFireWord, formWordToNewWord, formWordToUpdatedFireWord } from '../../utils/words.mapper';
+import { formWordToNewFireWord, formWordToNewWord, formWordToUpdatedFireWord, formWordToUpdatedWord } from '../../utils/words.mapper';
 import { selectUserId } from '@app/store/user/user.selectors';
 import { WordFormAPIAction, WordFormAction } from '@glossary/components/word-grid/components/word-form/word-form.actions';
 
@@ -45,13 +45,12 @@ export class WordsEffects {
     create$ = createEffect(() => this.actions$.pipe(
         ofType(WordFormAction.createWord),
         concatLatestFrom((action) => [
-            of(formWordToNewFireWord(action.word)),
-            of(action.groupId),
+            of(formWordToNewFireWord(action.formWord)),
             this.store.select(selectUserId),
         ]),
-        switchMap(([action, word, groupId, userId]) =>
-            this.wordService.addWordRequest(word, groupId, userId).pipe(
-                map(res => (formWordToNewWord(action.word, res.id))),
+        switchMap(([{ formWord, groupId }, fireWord, userId]) =>
+            this.wordService.addWordRequest(fireWord, groupId, userId).pipe(
+                map(res => (formWordToNewWord(formWord, res.id))),
                 map((word: Word) => WordFormAPIAction.createWordSuccess({ groupId, word })),
                 catchError(err => of(WordFormAPIAction.createWordError(err.message)))
             )
@@ -61,14 +60,13 @@ export class WordsEffects {
     update$ = createEffect(() => this.actions$.pipe(
         ofType(WordFormAction.updateWord),
         concatLatestFrom((action) => [
-            of(formWordToUpdatedFireWord(action.word)),
-            of(action.groupId),
+            of(formWordToUpdatedFireWord(action.formWord)),
             this.store.select(selectUserId),
-            of(action.wordId),
         ]),
-        switchMap(([action, word, groupId, userId, wordId]) =>
-            this.wordService.updateWordRequest(word, groupId, userId, wordId).pipe(
-                map(() => UnknownPageWordAction.updateWordSuccess({ id: wordId, changes: word })),
+        switchMap(([{ formWord, groupId, wordId }, fireWord, userId]) =>
+            this.wordService.updateWordRequest(fireWord, groupId, userId, wordId).pipe(
+                map(() => WordFormAPIAction.updateWordSuccess({ id: wordId, changes: formWordToUpdatedWord(formWord) })
+                ),
                 catchError(err => of(UnknownPageWordAction.updateWordError(err.message)))
             )
         )

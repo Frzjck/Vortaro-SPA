@@ -55,8 +55,8 @@ export class WordFormComponent implements OnInit {
       this.coreForm.updateValueAndValidity();
       this.cdr.detectChanges();
     } else {
-      if (this.word) this.store.dispatch(WordFormAction.updateWord({ word: this.coreForm.value, wordId: this.word.id, groupId: this.groupId }));
-      else this.store.dispatch(WordFormAction.createWord({ word: this.coreForm.value, groupId: this.groupId }));
+      if (this.word) this.store.dispatch(WordFormAction.updateWord({ formWord: this.coreForm.value, wordId: this.word.id, groupId: this.groupId }));
+      else this.store.dispatch(WordFormAction.createWord({ formWord: this.coreForm.value, groupId: this.groupId }));
     }
   }
 

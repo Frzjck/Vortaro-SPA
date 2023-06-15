@@ -3,7 +3,7 @@ import { FormWord } from "../glossary/components/word-grid/components/word-form/
 import { FireWordCreateRequest, FireWordUpdateRequest } from "@app/models/backend/word";
 import { Word } from "../store/words-list/words.models";
 
-
+// --------------------- Creation
 export const formWordToNewFireWord = (word: FormWord): FireWordCreateRequest => {
     const additionalTranslations = word.additionalTranslations.map((item) => item.translation);
     return {
@@ -23,12 +23,12 @@ export const formWordToNewWord = (word: FormWord, id: string): Word => {
     }
 };
 
-export const formWordToUpdateWord = (word: FormWord): FireWordUpdateRequest => {
+// --------------------- Updates
+export const formWordToUpdatedWord = (word: FormWord): Partial<Word> => {
     const additionalTranslations = word.additionalTranslations.map((item) => item.translation);
     return {
         ...word,
         additionalTranslations,
-        updated: firebase.firestore.FieldValue.serverTimestamp(),
     };
 };
 
