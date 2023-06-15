@@ -38,6 +38,8 @@ export class GlossaryComponent {
   groupActionPanelVM$ = (groupId) => this.store.select(selectGroupActionPanelVM(groupId));
   isEditingCurrentGroup$ = (groupId) => this.store.select(selectIsEditingCurrentGroup(groupId));
 
+
+
   constructor(public store: Store) { }
 
   ngOnInit(): void {
@@ -77,3 +79,9 @@ export class GlossaryComponent {
   trackByFn = (index: number, group: any): any => group.id;
 
 }
+
+// expandedStates: Map<any, boolean> = new Map();
+// isPanelExpanded = (groupId: any): boolean => this.expandedStates.get(groupId) || false;
+// [expanded]="isPanelExpanded(group.id)"
+// (opened)="expandedStates.set(group.id, true)"
+// (closed)="expandedStates.set(group.id, false)"
