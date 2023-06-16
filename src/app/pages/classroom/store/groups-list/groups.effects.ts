@@ -8,7 +8,7 @@ import { from, of } from 'rxjs';
 import { map, switchMap, catchError, take, tap } from 'rxjs/operators';
 
 
-import { UnknownPageGroupAction } from './groups.actions';
+import { GroupAPIResponseAction, UnknownPageGroupAction } from './groups.actions';
 
 import { selectUserId } from '../../../../store/user/user.selectors';
 
@@ -40,8 +40,8 @@ export class GroupsEffects {
             return this.afs.collection(`/users/${uid}/groups`).snapshotChanges().pipe(
                 take(1),
                 map(changes => changes.map(x => extractDocumentChangeActionData(x))),
-                map((groups: Group[]) => UnknownPageGroupAction.readGroupsSuccess({ groups })),
-                catchError(err => of(UnknownPageGroupAction.readGroupsError(err.message)))
+                map((groups: Group[]) => GroupAPIResponseAction.readGroupsSuccess({ groups })),
+                catchError(err => of(GroupAPIResponseAction.readGroupsError(err.message)))
             )
         }
         )
@@ -57,8 +57,8 @@ export class GroupsEffects {
         switchMap(([{ formGroup }, fireGroup, userId]) =>
             this.groupService.addGroupRequest(fireGroup, userId).pipe(
                 map(res => (formGroupToNewGroup(formGroup, res.id))),
-                map((group: Group) => UnknownPageGroupAction.createGroupSuccess({ group })),
-                catchError(err => of(UnknownPageGroupAction.createGroupError(err.message)))
+                map((group: Group) => GroupAPIResponseAction.createGroupSuccess({ group })),
+                catchError(err => of(GroupAPIResponseAction.createGroupError(err.message)))
             )
         )
     ));
@@ -71,22 +71,22 @@ export class GroupsEffects {
         ]),
         switchMap(([{ formGroup, groupId }, fireGroup, userId]) =>
             this.groupService.updateGroupRequest(fireGroup, userId, groupId).pipe(
-                map(() => UnknownPageGroupAction.updateGroupSuccess({ id: groupId, changes: formGroup })),
-                catchError(err => of(UnknownPageGroupAction.updateGroupError(err.message)))
+                map(() => GroupAPIResponseAction.updateGroupSuccess({ id: groupId, changes: formGroup })),
+                catchError(err => of(GroupAPIResponseAction.updateGroupError(err.message)))
             )
         )
     ));
 
-//     delete$ = createEffect(() => this.actions$.pipe(
-//         ofType(UnknownPageGroupAction.deleteGroup),
-//         concatLatestFrom((action) => [
-//             this.store.select(selectUserId),
-//         ]),
-//         switchMap(([{ groupId }, userId]) =>
-//             this.groupService.deleteGroupRequest(userId, groupId).pipe(
-//                 map(() => UnknownPageGroupAction.deleteGroupSuccess({ id })),
-//                 catchError(err => of(UnknownPageGroupAction.deleteGroupError(err.message)))
-//             )
-//         )
-//     ));
-// }
+    //     delete$ = createEffect(() => this.actions$.pipe(
+    //         ofType(UnknownPageGroupAction.deleteGroup),
+    //         concatLatestFrom((action) => [
+    //             this.store.select(selectUserId),
+    //         ]),
+    //         switchMap(([{ groupId }, userId]) =>
+    //             this.groupService.deleteGroupRequest(userId, groupId).pipe(
+    //                 map(() => GroupAPIResponseAction.deleteGroupSuccess({ id })),
+    //                 catchError(err => of(GroupAPIResponseAction.deleteGroupError(err.message)))
+    //             )
+    //         )
+    //     ));
+}
