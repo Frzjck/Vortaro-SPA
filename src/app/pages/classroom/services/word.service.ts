@@ -24,10 +24,15 @@ export class WordService {
     return this.db.collectionGroup('words', (ref) => ref.orderBy("__name__").startAt(userRef.path).endAt(userRef.path + "\uf8ff")).get().pipe(map((results) => convertSnaps<Word>(results)));
   }
 
-  addWordRequest(word: FireWordCreateRequest, groupId: string, userId: string) {
+  addWordRequest(word: FireWordCreateRequest, userId: string, groupId: string) {
     return from(this.db.collection(`/users/${userId}/groups/${groupId}/words`).add(word))
   }
-  updateWordRequest(word: FireWordUpdateRequest, groupId: string, userId: string, wordId: string) {
+
+  updateWordRequest(word: FireWordUpdateRequest, userId: string, groupId: string, wordId: string) {
     return from(this.db.collection(`/users/${userId}/groups/${groupId}/words`).doc(wordId).set(word))
+  }
+
+  deleteWordRequest(userId: string, groupId: string, wordId: string) {
+    return from(this.db.collection(`/users/${userId}/groups/${groupId}/words`).doc(wordId).delete())
   }
 }
