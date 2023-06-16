@@ -13,8 +13,8 @@ import { Store } from '@ngrx/store';
 import { selectGroupActionPanelVM, selectGroupsAndWords, selectIsEditingCurrentGroup } from './store/glossary/glossary.reducer';
 import { Group } from '@classroom/store/groups-list/groups.models';
 import { UnknownPageGroupAction } from '@classroom/store/groups-list/groups.actions';
-import { UnknownPageWordAction } from '@classroom/store/words-list/words.actions';
 import { GlossaryGroupPanelAction } from './components/group-action-panel/group-action-panel.actions';
+import { UnknownPageWordAction } from '../store/words-list/words.actions';
 
 
 
