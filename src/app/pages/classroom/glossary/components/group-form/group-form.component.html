@@ -1,0 +1,14 @@
+<form [formGroup]="coreForm" novalidate autocomplete="off">
+  <app-form-field
+    class="translation-field"
+    [control]="coreForm.controls.translation"
+  >
+    <app-input
+      class="translationInput"
+      formControlName="translation"
+      matInput
+      placeholder="Translation"
+      maxlength="21"
+    />
+  </app-form-field>
+</form>
