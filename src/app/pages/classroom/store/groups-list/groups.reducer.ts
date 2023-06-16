@@ -3,6 +3,7 @@ import { createReducer, on } from '@ngrx/store';
 import { Group } from './groups.models';
 import { UnknownPageGroupAction } from './groups.actions';
 import { WordAPIResponseAction } from '../words-list/words.actions';
+import { GroupFormAction } from '../../glossary/components/group-form/group-form.actions';
 
 
 export const adapter = createEntityAdapter<Group>();
@@ -24,11 +25,11 @@ export const reducer = createReducer(
     on(UnknownPageGroupAction.readGroupsSuccess, (state, { groups }) => adapter.setAll(groups, { ...state, loading: false })),
     on(UnknownPageGroupAction.readGroupsError, (state, { error }) => ({ ...state, loading: false, error: error })),
 
-    on(UnknownPageGroupAction.createGroup, (state) => ({ ...state, loading: true, error: null })),
+    on(GroupFormAction.createGroup, (state) => ({ ...state, loading: true, error: null })),
     on(UnknownPageGroupAction.createGroupSuccess, (state, { group }) => adapter.addOne(group, { ...state, loading: false })),
     on(UnknownPageGroupAction.createGroupError, (state, { error }) => ({ ...state, loading: false, error: error })),
 
-    on(UnknownPageGroupAction.updateGroup, (state) => ({ ...state, loading: true, error: null })),
+    on(GroupFormAction.updateGroup, (state) => ({ ...state, loading: true, error: null })),
     on(UnknownPageGroupAction.updateGroupSuccess, (state, { id, changes }) => (adapter.updateOne({
         id: id,
         changes: changes
