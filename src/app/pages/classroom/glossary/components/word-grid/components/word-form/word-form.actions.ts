@@ -1,6 +1,5 @@
 import { createActionGroup, emptyProps, props } from "@ngrx/store";
 import { FormWord } from "./models";
-import { Word } from "@classroom/store/words-list/words.models";
 
 
 

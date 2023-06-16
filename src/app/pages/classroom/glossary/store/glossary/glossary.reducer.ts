@@ -3,8 +3,9 @@ import { selectGroups } from "@classroom/store/groups-list/groups.selectors";
 import { selectWordsByGroupId, selectWordsByIds } from "@classroom/store/words-list/words.selectors";
 import { GlossaryGroupPanelAction } from "../../components/group-action-panel/group-action-panel.actions";
 import { GlossaryWordUIAction } from "../../components/word-grid/components/word-ui/word-ui.actions";
-import { WordFormAPIAction, WordFormAction } from "../../components/word-grid/components/word-form/word-form.actions";
+import { WordFormAction } from "../../components/word-grid/components/word-form/word-form.actions";
 import { GlossaryWordGridAction } from "../../components/word-grid/word-grid.actions";
+import { WordAPIResponseAction } from "@app/pages/classroom/store/words-list/words.actions";
 
 export interface GlossaryStateModel {
     unfoldedWords: string[];
@@ -60,7 +61,7 @@ export const glossaryFeature = createFeature({
             editingWordId: wordId,
         })),
 
-        on(WordFormAction.cancelEditWord, WordFormAPIAction.updateWordSuccess, (state) => ({
+        on(WordFormAction.cancelEditWord, WordAPIResponseAction.updateWordSuccess, (state) => ({
             ...state,
             editingWordId: initialState.editingWordId,
         })),
@@ -70,7 +71,7 @@ export const glossaryFeature = createFeature({
             addNewWordMode: true,
         })),
 
-        on(WordFormAction.cancelNewWordMode, WordFormAPIAction.createWordSuccess, (state) => ({
+        on(WordFormAction.cancelNewWordMode, WordAPIResponseAction.createWordSuccess, (state) => ({
             ...state,
             addNewWordMode: false,
         })),

@@ -2,7 +2,7 @@ import { EntityState, createEntityAdapter } from '@ngrx/entity';
 import { createReducer, on } from '@ngrx/store';
 import { Group } from './groups.models';
 import { UnknownPageGroupAction } from './groups.actions';
-import { WordFormAPIAction } from '@glossary/components/word-grid/components/word-form/word-form.actions';
+import { WordAPIResponseAction } from '../words-list/words.actions';
 
 
 export const adapter = createEntityAdapter<Group>();
@@ -35,7 +35,7 @@ export const reducer = createReducer(
     }, state))),
     on(UnknownPageGroupAction.updateGroupError, (state, { error }) => ({ ...state, loading: false, error: error })),
 
-    on(WordFormAPIAction.createWordSuccess, (state, { groupId, word }) => {
+    on(WordAPIResponseAction.createWordSuccess, (state, { groupId, word }) => {
         const fireGroup = state.entities[groupId];
         const updatedFireGroup = {
             ...fireGroup,

@@ -12,7 +12,7 @@ import { WordFormComponent } from './components/word-form/word-form.component';
 import { Observable } from 'rxjs';
 import { Word } from '@classroom/store/words-list/words.models';
 import { Store } from '@ngrx/store';
-import { selectWordGridStateVM, selectIsWordUnfolded, selectIsEditingCurrentGroup } from '@glossary/store/glossary/glossary.reducer';
+import { selectWordGridStateVM, selectIsWordUnfolded } from '@glossary/store/glossary/glossary.reducer';
 import { GlossaryWordUIAction } from './components/word-ui/word-ui.actions';
 import { GlossaryWordGridAction } from './word-grid.actions';
 
@@ -71,7 +71,7 @@ export class WordGridComponent {
         break;
       case "delete":
         if (confirm('Are you sure you want to delete ')) {
-          this.store.dispatch(GlossaryWordUIAction.deleteWord({ wordId: params.id }))
+          this.store.dispatch(GlossaryWordUIAction.deleteWord({ wordId: params.id, groupId: this.wordGridInput.groupId }))
         }
         break;
     }
