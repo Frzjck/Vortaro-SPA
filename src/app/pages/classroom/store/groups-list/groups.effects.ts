@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { createEffect, Actions, ofType, ROOT_EFFECTS_INIT, concatLatestFrom } from '@ngrx/effects';
+import { createEffect, Actions, ofType, concatLatestFrom } from '@ngrx/effects';
 
 import firebase from "firebase/compat/app";
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 
-import { Observable, from, of } from 'rxjs';
+import { from, of } from 'rxjs';
 import { map, switchMap, catchError, take, tap } from 'rxjs/operators';
 
 
@@ -14,8 +14,11 @@ import { selectUserId } from '../../../../store/user/user.selectors';
 
 
 import { extractDocumentChangeActionData } from '@app/shared/utils/db-utils';
-import { FireGroup, Group } from './groups.models';
-import { Action, Store, select } from '@ngrx/store';
+import { Group } from './groups.models';
+import { Store } from '@ngrx/store';
+import { GroupFormAction } from '../../glossary/components/group-form/group-form.actions';
+import { formGroupToNewFireGroup, formGroupToNewGroup, formGroupToUpdatedFireGroup } from '../../utils/groups.mapper';
+import { GroupService } from '../../services/group.service';
 
 
 @Injectable()
@@ -24,7 +27,8 @@ export class GroupsEffects {
     constructor(
         private actions$: Actions,
         private afs: AngularFirestore,
-        private store: Store
+        private store: Store,
+        private groupService: GroupService
     ) { }
 
     read$ = createEffect(() => this.actions$.pipe(
@@ -43,29 +47,16 @@ export class GroupsEffects {
         )
     ));
 
-    // readInit$ = createEffect(() => this.actions$.pipe(
-    //     ofType(UnknownPageUserAction.userInitAuthorized),
-    //     switchMap((res) => {
-    //         return this.afs.collection(`/users/${res.uid}/groups`).snapshotChanges().pipe(
-    //             take(1),
-    //             map(changes => changes.map(x => extractDocumentChangeActionData(x))),
-    //             map((groups: Group[]) => UnknownPageGroupAction.readGroupsSuccess({ groups })),
-    //             catchError(err => of(UnknownPageGroupAction.readGroupsError(err.message)))
-    //         )
-    //     }
-    //     )
-    // ));
 
     create$ = createEffect(() => this.actions$.pipe(
-        ofType(UnknownPageGroupAction.createGroup),
-        map((action) => action.group),
-        map((group: FireGroup) => ({
-            ...group,
-            created: firebase.firestore.FieldValue.serverTimestamp()
-        })),
-        switchMap((request: FireGroup) =>
-            from(this.afs.collection('groups').add(request)).pipe(
-                map(res => ({ ...request, id: res.id })),
+        ofType(GroupFormAction.createGroup),
+        concatLatestFrom((action) => [
+            of(formGroupToNewFireGroup(action.formGroup)),
+            this.store.select(selectUserId),
+        ]),
+        switchMap(([{ formGroup }, fireGroup, userId]) =>
+            this.groupService.addGroupRequest(fireGroup, userId).pipe(
+                map(res => (formGroupToNewGroup(formGroup, res.id))),
                 map((group: Group) => UnknownPageGroupAction.createGroupSuccess({ group })),
                 catchError(err => of(UnknownPageGroupAction.createGroupError(err.message)))
             )
@@ -73,28 +64,29 @@ export class GroupsEffects {
     ));
 
     update$ = createEffect(() => this.actions$.pipe(
-        ofType(UnknownPageGroupAction.updateGroup),
-        map((action) => action.group),
-        map((group: Group) => ({
-            ...group,
-            updated: firebase.firestore.FieldValue.serverTimestamp()
-        })),
-        switchMap((group) =>
-            from(this.afs.collection('groups').doc(group.id).set(group)).pipe(
-                map(() => UnknownPageGroupAction.updateGroupSuccess({ id: group.id, changes: group })),
+        ofType(GroupFormAction.updateGroup),
+        concatLatestFrom((action) => [
+            of(formGroupToUpdatedFireGroup(action.formGroup)),
+            this.store.select(selectUserId),
+        ]),
+        switchMap(([{ formGroup, groupId }, fireGroup, userId]) =>
+            this.groupService.updateGroupRequest(fireGroup, userId, groupId).pipe(
+                map(() => UnknownPageGroupAction.updateGroupSuccess({ id: groupId, changes: formGroup })),
                 catchError(err => of(UnknownPageGroupAction.updateGroupError(err.message)))
             )
         )
     ));
 
-    delete$ = createEffect(() => this.actions$.pipe(
-        ofType(UnknownPageGroupAction.deleteGroup),
-        map((action) => action.id),
-        switchMap(id =>
-            from(this.afs.collection('groups').doc(id).delete()).pipe(
-                map(() => UnknownPageGroupAction.deleteGroupSuccess({ id })),
-                catchError(err => of(UnknownPageGroupAction.deleteGroupError(err.message)))
-            )
-        )
-    ));
-}
+//     delete$ = createEffect(() => this.actions$.pipe(
+//         ofType(UnknownPageGroupAction.deleteGroup),
+//         concatLatestFrom((action) => [
+//             this.store.select(selectUserId),
+//         ]),
+//         switchMap(([{ groupId }, userId]) =>
+//             this.groupService.deleteGroupRequest(userId, groupId).pipe(
+//                 map(() => UnknownPageGroupAction.deleteGroupSuccess({ id })),
+//                 catchError(err => of(UnknownPageGroupAction.deleteGroupError(err.message)))
+//             )
+//         )
+//     ));
+// }
