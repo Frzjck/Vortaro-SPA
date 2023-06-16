@@ -75,7 +75,7 @@ export class WordsEffects {
         ]),
         switchMap(([{ wordId, groupId }, userId]) =>
             this.wordService.deleteWordRequest(userId, groupId, wordId).pipe(
-                map(() => WordAPIResponseAction.deleteWordSuccess({ wordId })),
+                map(() => WordAPIResponseAction.deleteWordSuccess({ wordId, groupId })),
                 catchError(err => of(WordAPIResponseAction.deleteWordError(err.message)))
             )
         )

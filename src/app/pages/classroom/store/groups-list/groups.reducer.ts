@@ -44,6 +44,15 @@ export const reducer = createReducer(
         return adapter.updateOne({ id: groupId, changes: updatedFireGroup }, state);
     }
     ),
+    on(WordAPIResponseAction.deleteWordSuccess, (state, { wordId, groupId }) => {
+        const group = state.entities[groupId];
+        const updatedGroup = {
+            ...group,
+            wordIds: [...group.wordIds.filter(id => id !== wordId)],
+        };
+        return adapter.updateOne({ id: groupId, changes: updatedGroup }, state);
+    }
+    ),
 
     on(UnknownPageGroupAction.deleteGroup, (state) => ({ ...state, loading: true, error: null })),
     on(UnknownPageGroupAction.deleteGroupSuccess, (state, { id }) => adapter.removeOne(id, state)),

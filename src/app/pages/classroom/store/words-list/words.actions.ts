@@ -14,7 +14,7 @@ export const WordAPIResponseAction = createActionGroup(
             "Update Word Success": props<{ wordId: string, changes: Partial<Word> }>(),
             "Update Word Error": props<{ error: string }>(),
 
-            "Delete Word Success": props<{ wordId: string }>(),
+            "Delete Word Success": props<{ wordId: string, groupId: string }>(),
             "Delete Word Error": props<{ error: string }>(),
         },
     }
