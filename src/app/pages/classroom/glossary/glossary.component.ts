@@ -15,6 +15,7 @@ import { Group } from '@classroom/store/groups-list/groups.models';
 import { UnknownPageGroupAction } from '@classroom/store/groups-list/groups.actions';
 import { GlossaryGroupPanelAction } from './components/group-action-panel/group-action-panel.actions';
 import { UnknownPageWordAction } from '../store/words-list/words.actions';
+import { GroupFormComponent } from './components/group-form/group-form.component';
 
 
 
@@ -26,7 +27,7 @@ export interface GlossaryStateInterface {
   selector: 'app-glossary',
   standalone: true,
 
-  imports: [CommonModule, MatExpansionModule, WordGridComponent, MatIconModule, GroupActionPanelComponent, LetDirective],
+  imports: [CommonModule, MatExpansionModule, WordGridComponent, MatIconModule, GroupActionPanelComponent, LetDirective, GroupFormComponent],
   templateUrl: './glossary.component.html',
   styleUrls: ['./glossary.component.scss'],
 })
