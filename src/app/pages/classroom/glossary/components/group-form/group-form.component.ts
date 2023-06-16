@@ -1,12 +1,14 @@
 import { CommonModule } from '@angular/common';
 
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Group } from '@app/pages/classroom/store/groups-list/groups.models';
 import { FormFieldComponent } from '@app/shared/controls/form-field/form-field.component';
 import { InputComponent } from '@app/shared/controls/input/input.component';
+import { markFormGroupTouched } from '@app/shared/utils/form';
 
 import { Store } from '@ngrx/store';
-import { markFormGroupTouched } from '@app/shared/utils/form';
+import { GroupFormAction } from './group-form.actions';
 
 @Component({
     selector: 'app-group-form',
@@ -17,16 +19,24 @@ import { markFormGroupTouched } from '@app/shared/utils/form';
     styles: [],
 })
 export class GroupFormComponent implements OnInit {
-    @Input() groupId: string;
+    @Input() group: Group;
     coreForm: FormGroup;
 
     constructor(private store: Store, private fb: FormBuilder, private cdr: ChangeDetectorRef) { }
 
     ngOnInit(): void {
         this.coreForm = this.fb.group({
-            original: new FormControl(null, [Validators.required]),
-            translation: new FormControl(null, [Validators.required]),
+            name: new FormControl(null, [Validators.required]),
         })
     }
-
+    onSubmit() {
+        if (!this.coreForm.valid) {
+            markFormGroupTouched(this.coreForm);
+            this.coreForm.updateValueAndValidity();
+            this.cdr.detectChanges();
+        } else {
+            if (this.group) this.store.dispatch(GroupFormAction.updateGroup({ formGroup: this.coreForm.value, groupId: this.group.id }));
+            else this.store.dispatch(GroupFormAction.createGroup({ formGroup: this.coreForm.value }));
+        }
+    }
 }
