@@ -13,8 +13,6 @@ import { Word } from '../store/words-list/words.models';
 })
 export class WordService {
 
-  exerciseMode: string;
-
   constructor(private db: AngularFirestore) { }
 
   getWordsFromServer(userId) {
