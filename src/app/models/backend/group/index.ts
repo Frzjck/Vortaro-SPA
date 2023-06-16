@@ -5,7 +5,13 @@ export interface FireGroup {
     averageProficiency: number;
     shared_with?: string[];
     wordIds: string[];
+}
 
+
+
+export interface FireGroupCreateRequest extends Omit<FireGroup, "averageProficiency"> {
     created: firebase.firestore.FieldValue;
-    updated?: firebase.firestore.FieldValue;
+}
+export interface FireGroupUpdateRequest extends Omit<FireGroup, "averageProficiency"> {
+    updated: firebase.firestore.FieldValue;
 }
