@@ -1,5 +1,5 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import { Group, FireGroup } from './groups.models';
+import { Group } from './groups.models';
 
 export const GroupAPIResponseAction = createActionGroup(
     {

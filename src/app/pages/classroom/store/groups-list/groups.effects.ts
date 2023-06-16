@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { createEffect, Actions, ofType, concatLatestFrom } from '@ngrx/effects';
 
-import firebase from "firebase/compat/app";
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 
-import { from, of } from 'rxjs';
-import { map, switchMap, catchError, take, tap } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { map, switchMap, catchError, take } from 'rxjs/operators';
 
 
 import { GroupAPIResponseAction, UnknownPageGroupAction } from './groups.actions';
