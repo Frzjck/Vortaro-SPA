@@ -17,16 +17,3 @@ export const WordFormAction = createActionGroup(
         },
     }
 )
-
-export const WordFormAPIAction = createActionGroup(
-    {
-        source: 'Word Form API',
-        events: {
-            "Create Word Success": props<{ groupId: string, word: Word }>(),
-            "Create Word Error": props<{ error: string }>(),
-
-            "Update Word Success": props<{ id: string, changes: Partial<Word> }>(),
-            "Update Word Error": props<{ error: string }>(),
-        },
-    }
-)

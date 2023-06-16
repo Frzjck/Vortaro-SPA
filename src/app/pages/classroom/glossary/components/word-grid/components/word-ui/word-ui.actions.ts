@@ -7,7 +7,7 @@ export const GlossaryWordUIAction = createActionGroup(
             "Unfold Additional Translations Word": props<{ wordId: string }>(),
             "Fold Additional Translations Word": props<{ wordId: string }>(),
             "Edit Word": props<{ wordId: string }>(),
-            "Delete Word": props<{ wordId: string }>(),
+            "Delete Word": props<{ wordId: string, groupId: string }>(),
         },
     }
 )
