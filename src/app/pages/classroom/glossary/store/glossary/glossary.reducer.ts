@@ -11,7 +11,7 @@ export interface GlossaryStateModel {
     unfoldedWords: string[];
 
     editingGroupId: string;
-    editingGroupNameId: string;
+    renamingGroupId: string;
     editingWordId: string;
     addNewWordMode: boolean;
 }
@@ -20,7 +20,7 @@ const initialState = {
     unfoldedWords: [],
 
     editingGroupId: null,
-    editingGroupNameId: null,
+    renamingGroupId: null,
     editingWordId: null,
     addNewWordMode: false,
 };
@@ -78,7 +78,7 @@ export const glossaryFeature = createFeature({
 
     ),
 
-    extraSelectors: ({ selectUnfoldedWords, selectEditingGroupId, selectEditingGroupNameId, selectEditingWordId, selectAddNewWordMode }) => {
+    extraSelectors: ({ selectUnfoldedWords, selectEditingGroupId, selectRenamingGroupId, selectEditingWordId, selectAddNewWordMode }) => {
 
 
         const selectIsAllFolded = createSelector(
@@ -97,7 +97,7 @@ export const glossaryFeature = createFeature({
         );
 
         const selectIsEditingGroupName = createSelector(
-            selectEditingGroupNameId,
+            selectRenamingGroupId,
             (editingGroupNameId) => !!editingGroupNameId
         );
 
