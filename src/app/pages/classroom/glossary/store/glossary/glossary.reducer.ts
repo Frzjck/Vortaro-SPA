@@ -33,14 +33,14 @@ export const glossaryFeature = createFeature({
     name: "glossary",
     reducer: createReducer(
         initialState,
+
+        // --------------- Glossary  ---------------
+
+
+        // --------------- Glossary Group Panel ---------------
         on(GlossaryGroupPanelAction.foldAdditionalTranslationsGroup, (state) => ({
             ...state,
             unfoldedWords: initialState.unfoldedWords,
-        })),
-
-        on(GlossaryWordUIAction.foldAdditionalTranslationsWord, (state, { wordId }) => ({
-            ...state,
-            unfoldedWords: state.unfoldedWords.filter((id) => id !== wordId),
         })),
 
         on(GlossaryGroupPanelAction.unfoldAdditionalTranslationsWords, (state, { wordIds }) => ({
@@ -48,14 +48,20 @@ export const glossaryFeature = createFeature({
             unfoldedWords: wordIds,
         })),
 
-        on(GlossaryWordUIAction.unfoldAdditionalTranslationsWord, (state, { wordId }) => ({
-            ...state,
-            unfoldedWords: state.unfoldedWords.concat(wordId),
-        })),
-
         on(GlossaryGroupPanelAction.toggleEditGroup, (state, { groupId }) => ({
             ...initialState,
             editingGroupId: state.editingGroupId === groupId ? null : groupId,
+        })),
+
+        // --------------- Glossary Word UI ---------------
+        on(GlossaryWordUIAction.foldAdditionalTranslationsWord, (state, { wordId }) => ({
+            ...state,
+            unfoldedWords: state.unfoldedWords.filter((id) => id !== wordId),
+        })),
+
+        on(GlossaryWordUIAction.unfoldAdditionalTranslationsWord, (state, { wordId }) => ({
+            ...state,
+            unfoldedWords: state.unfoldedWords.concat(wordId),
         })),
 
         on(GlossaryWordUIAction.editWord, (state, { wordId }) => ({
@@ -63,19 +69,21 @@ export const glossaryFeature = createFeature({
             editingWordId: wordId,
         })),
 
+        // ---------------  Word Form ---------------
         on(WordFormAction.cancelEditWord, WordAPIResponseAction.updateWordSuccess, (state) => ({
             ...state,
             editingWordId: initialState.editingWordId,
         })),
 
-        on(GlossaryWordGridAction.activateNewWordMode, (state) => ({
-            ...state,
-            newWordMode: true,
-        })),
-
         on(WordFormAction.cancelNewWordMode, WordAPIResponseAction.createWordSuccess, (state) => ({
             ...state,
             newWordMode: false,
+        })),
+
+        // ---------------  Word Grid ---------------
+        on(GlossaryWordGridAction.activateNewWordMode, (state) => ({
+            ...state,
+            newWordMode: true,
         })),
 
     ),
