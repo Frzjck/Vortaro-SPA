@@ -13,10 +13,10 @@
               <i
                 class="far fa-edit"
                 *ngIf="isEditingCurrentGroup$(group.id) | async"
-                appStopPropagation
               ></i>
             </span>
-            <!-- <app-group-form ></app-group-form> -->
+            <app-group-form [group]="group"></app-group-form>
+
             <div class="bars-wrap">
               <app-rating-ui
                 uiType="bars"
@@ -39,7 +39,7 @@
         </mat-action-row>
       </mat-expansion-panel>
       <div class="add-group-div">
-        <button class="btn btn-add-group" mat-button appStopPropagation>
+        <button class="btn btn-add-group" mat-button>
           Create New Group <mat-icon>add_box</mat-icon>
         </button>
         <app-group-form></app-group-form>
