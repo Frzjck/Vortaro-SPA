@@ -23,7 +23,6 @@ export const formGroupToNewGroup = (group: FormGroup, id: string): Group => {
 export const formGroupToUpdatedFireGroup = (group: FormGroup): FireGroupUpdateRequest => {
     return {
         ...group,
-        wordIds: [],
         updated: firebase.firestore.FieldValue.serverTimestamp()
     };
 };

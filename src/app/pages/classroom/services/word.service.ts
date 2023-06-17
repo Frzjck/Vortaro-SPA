@@ -27,7 +27,7 @@ export class WordService {
   }
 
   updateWordRequest(word: FireWordUpdateRequest, userId: string, groupId: string, wordId: string) {
-    return from(this.db.collection(`/users/${userId}/groups/${groupId}/words`).doc(wordId).set(word))
+    return from(this.db.collection(`/users/${userId}/groups/${groupId}/words`).doc(wordId).update(word))
   }
 
   deleteWordRequest(userId: string, groupId: string, wordId: string) {

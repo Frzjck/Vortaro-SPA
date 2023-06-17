@@ -16,7 +16,7 @@ export class GroupService {
     }
 
     updateGroupRequest(group: FireGroupUpdateRequest, userId: string, groupId: string) {
-        return from(this.db.collection(`/users/${userId}/groups`).doc(groupId).set(group))
+        return from(this.db.collection(`/users/${userId}/groups`).doc(groupId).update(group))
     }
 
     deleteGroupRequest(userId: string, groupId: string) {

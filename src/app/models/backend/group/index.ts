@@ -12,6 +12,6 @@ export interface FireGroup {
 export interface FireGroupCreateRequest extends Omit<FireGroup, "averageProficiency"> {
     created: firebase.firestore.FieldValue;
 }
-export interface FireGroupUpdateRequest extends Omit<FireGroup, "averageProficiency"> {
+export interface FireGroupUpdateRequest extends Omit<FireGroup, "averageProficiency" | "wordIds"> {
     updated: firebase.firestore.FieldValue;
 }

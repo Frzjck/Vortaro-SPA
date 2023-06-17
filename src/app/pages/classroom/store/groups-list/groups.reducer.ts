@@ -30,19 +30,23 @@ export const reducer = createReducer(
     on(GroupAPIResponseAction.createGroupError, (state, { error }) => ({ ...state, loading: false, error: error })),
 
     on(GroupFormAction.updateGroup, (state) => ({ ...state, loading: true, error: null })),
-    on(GroupAPIResponseAction.updateGroupSuccess, (state, { id, changes }) => (adapter.updateOne({
-        id: id,
-        changes: changes
-    }, state))),
+    on(GroupAPIResponseAction.updateGroupSuccess, (state, { groupId, changes }) => {
+        const oldGroup = state.entities[groupId];
+        const updatedGroup = { ...oldGroup, ...changes }
+        return (adapter.updateOne({
+            id: groupId,
+            changes: updatedGroup
+        }, state))
+    }),
     on(GroupAPIResponseAction.updateGroupError, (state, { error }) => ({ ...state, loading: false, error: error })),
 
     on(WordAPIResponseAction.createWordSuccess, (state, { groupId, word }) => {
-        const fireGroup = state.entities[groupId];
-        const updatedFireGroup = {
-            ...fireGroup,
-            wordIds: [...fireGroup.wordIds, word.id],
+        const oldGroup = state.entities[groupId];
+        const updatedGroup = {
+            ...oldGroup,
+            wordIds: [...oldGroup.wordIds, word.id],
         };
-        return adapter.updateOne({ id: groupId, changes: updatedFireGroup }, state);
+        return adapter.updateOne({ id: groupId, changes: updatedGroup }, state);
     }
     ),
     on(WordAPIResponseAction.deleteWordSuccess, (state, { wordId, groupId }) => {
