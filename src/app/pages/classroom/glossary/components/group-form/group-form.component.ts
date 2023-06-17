@@ -9,11 +9,12 @@ import { markFormGroupTouched } from '@app/shared/utils/form';
 
 import { Store } from '@ngrx/store';
 import { GroupFormAction } from './group-form.actions';
+import { StopPropagationDirective } from '@app/shared/directives/stop-propagation.directive';
 
 @Component({
     selector: 'app-group-form',
     standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, FormFieldComponent, InputComponent],
+    imports: [CommonModule, ReactiveFormsModule, FormFieldComponent, InputComponent, StopPropagationDirective],
     // changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: './group-form.component.html',
     styles: [],

@@ -1,15 +1,12 @@
-<form [formGroup]="coreForm" novalidate autocomplete="off">
-  <app-form-field
-    class="translation-field"
-    [control]="coreForm.controls.translation"
-  >
+<form [formGroup]="coreForm" novalidate autocomplete="off" appStopPropagation>
+  <app-form-field class="translation-field" [control]="coreForm.controls.name">
     <app-input
       class="translationInput"
-      formControlName="translation"
+      formControlName="name"
       matInput
-      placeholder="Translation"
+      placeholder="Group Name"
       maxlength="21"
     />
-    <button>submit</button>
+    <button (click)="onSubmit()">submit</button>
   </app-form-field>
 </form>
