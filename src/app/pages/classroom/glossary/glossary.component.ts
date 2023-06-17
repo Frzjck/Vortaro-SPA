@@ -10,7 +10,7 @@ import { GroupActionPanelComponent } from './components/group-action-panel/group
 import { Observable } from 'rxjs/internal/Observable';
 import { Word } from '../store/words-list/words.models';
 import { Store } from '@ngrx/store';
-import { selectGroupActionPanelVM, selectGroupsAndWords, selectIsEditingCurrentGroup } from './store/glossary/glossary.reducer';
+import { selectGroupActionPanelVM, selectGroupsAndWords, selectIsEditingCurrentGroup, selectIsRenamingCurrentGroup, selectNewGroupMode } from './store/glossary/glossary.reducer';
 import { Group } from '@classroom/store/groups-list/groups.models';
 import { UnknownPageGroupAction } from '@classroom/store/groups-list/groups.actions';
 import { GlossaryGroupPanelAction } from './components/group-action-panel/group-action-panel.actions';
@@ -56,7 +56,17 @@ export class GlossaryComponent {
     }, 800);
   }
 
-  preventCollapse() { }
+  preventCollapse() {
+
+  }
+
+  activateNewGroupMode() {
+
+  }
+
+  activateRenameGroup(groupId) {
+
+  }
 
   groupAction(params) {
     switch (params.option) {
