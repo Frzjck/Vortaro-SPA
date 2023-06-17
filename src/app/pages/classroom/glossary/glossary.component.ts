@@ -39,6 +39,8 @@ export class GlossaryComponent {
 
   groupActionPanelVM$ = (groupId) => this.store.select(selectGroupActionPanelVM(groupId));
   isEditingCurrentGroup$ = (groupId) => this.store.select(selectIsEditingCurrentGroup(groupId));
+  isRenamingCurrentGroup$ = (groupId) => this.store.select(selectIsRenamingCurrentGroup(groupId));
+  isNewGroupMode$ = this.store.select(selectNewGroupMode);
 
 
 
