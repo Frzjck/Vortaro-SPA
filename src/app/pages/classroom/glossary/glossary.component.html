@@ -19,7 +19,7 @@
             </span>
             <app-group-form
               [group]="group"
-              *ngIf="isRenamingCurrentGroup$ | async"
+              *ngIf="isRenamingCurrentGroup$(group.id) | async"
             ></app-group-form>
 
             <div class="bars-wrap">
