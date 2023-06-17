@@ -13,6 +13,7 @@
               <i
                 class="far fa-edit"
                 *ngIf="isEditingCurrentGroup$(group.id) | async"
+                appStopPropagation
               ></i>
             </span>
             <app-group-form [group]="group"></app-group-form>

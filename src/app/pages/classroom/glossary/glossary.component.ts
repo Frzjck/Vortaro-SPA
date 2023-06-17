@@ -16,6 +16,7 @@ import { UnknownPageGroupAction } from '@classroom/store/groups-list/groups.acti
 import { GlossaryGroupPanelAction } from './components/group-action-panel/group-action-panel.actions';
 import { UnknownPageWordAction } from '../store/words-list/words.actions';
 import { GroupFormComponent } from './components/group-form/group-form.component';
+import { StopPropagationDirective } from '@app/shared/directives/stop-propagation.directive';
 
 
 
@@ -27,7 +28,7 @@ export interface GlossaryStateInterface {
   selector: 'app-glossary',
   standalone: true,
 
-  imports: [CommonModule, MatExpansionModule, WordGridComponent, MatIconModule, GroupActionPanelComponent, LetDirective, GroupFormComponent],
+  imports: [CommonModule, MatExpansionModule, WordGridComponent, MatIconModule, GroupActionPanelComponent, LetDirective, GroupFormComponent, StopPropagationDirective],
   templateUrl: './glossary.component.html',
   styleUrls: ['./glossary.component.scss'],
 })
