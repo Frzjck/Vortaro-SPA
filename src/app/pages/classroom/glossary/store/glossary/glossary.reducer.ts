@@ -13,7 +13,8 @@ export interface GlossaryStateModel {
     editingGroupId: string;
     renamingGroupId: string;
     editingWordId: string;
-    addNewWordMode: boolean;
+    newWordMode: boolean;
+    newGroupMode: boolean;
 }
 
 const initialState = {
@@ -22,7 +23,8 @@ const initialState = {
     editingGroupId: null,
     renamingGroupId: null,
     editingWordId: null,
-    addNewWordMode: false,
+    newWordMode: false,
+    newGroupMode: false,
 };
 
 
@@ -68,17 +70,17 @@ export const glossaryFeature = createFeature({
 
         on(GlossaryWordGridAction.activateNewWordMode, (state) => ({
             ...state,
-            addNewWordMode: true,
+            newWordMode: true,
         })),
 
         on(WordFormAction.cancelNewWordMode, WordAPIResponseAction.createWordSuccess, (state) => ({
             ...state,
-            addNewWordMode: false,
+            newWordMode: false,
         })),
 
     ),
 
-    extraSelectors: ({ selectUnfoldedWords, selectEditingGroupId, selectRenamingGroupId, selectEditingWordId, selectAddNewWordMode }) => {
+    extraSelectors: ({ selectUnfoldedWords, selectEditingGroupId, selectRenamingGroupId, selectEditingWordId, selectNewWordMode }) => {
 
 
         const selectIsAllFolded = createSelector(
@@ -96,9 +98,14 @@ export const glossaryFeature = createFeature({
             (editingGroupId) => editingGroupId === groupId
         );
 
-        const selectIsEditingGroupName = createSelector(
+        const selectIsRenamingGroup = createSelector(
             selectRenamingGroupId,
             (editingGroupNameId) => !!editingGroupNameId
+        );
+
+        const selectIsRenamingCurrentGroup = (groupId) => createSelector(
+            selectRenamingGroupId,
+            (renamingGroupId) => renamingGroupId === groupId
         );
 
         const selectIsWordUnfolded = (wordId: string) => createSelector(
@@ -146,7 +153,7 @@ export const glossaryFeature = createFeature({
         const selectWordGridStateVM = (groupId: string) => createSelector(
             selectIsEditingCurrentGroup(groupId),
             selectEditingWordId,
-            selectAddNewWordMode,
+            selectNewWordMode,
             (isEditingCurrentGroup, editingWordId, isAddingNewWord) => ({
                 isEditingCurrentGroup,
                 editingWordId,
@@ -174,6 +181,7 @@ export const glossaryFeature = createFeature({
             selectGroupsAndWords,
             selectIsWordUnfolded,
             selectIsEditingCurrentGroup,
+            selectIsRenamingCurrentGroup,
 
         }
     },
@@ -193,6 +201,6 @@ export const {
     selectGroupsAndWords,
     selectIsWordUnfolded,
     selectIsEditingCurrentGroup,
-
-
+    selectIsRenamingCurrentGroup,
+    selectNewGroupMode,
 } = glossaryFeature;
