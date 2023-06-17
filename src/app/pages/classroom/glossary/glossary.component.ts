@@ -17,6 +17,7 @@ import { GlossaryGroupPanelAction } from './components/group-action-panel/group-
 import { UnknownPageWordAction } from '../store/words-list/words.actions';
 import { GroupFormComponent } from './components/group-form/group-form.component';
 import { StopPropagationDirective } from '@app/shared/directives/stop-propagation.directive';
+import { GlossaryPageAction } from './store/glossary/glossary.actions';
 
 
 
@@ -61,11 +62,11 @@ export class GlossaryComponent {
   }
 
   activateNewGroupMode() {
-
+    this.store.dispatch(GlossaryPageAction.newGroupMode())
   }
 
   activateRenameGroup(groupId) {
-
+    this.store.dispatch(GlossaryPageAction.renameGroupMode({ groupId }))
   }
 
   groupAction(params) {

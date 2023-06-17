@@ -6,6 +6,7 @@ import { GlossaryWordUIAction } from "../../components/word-grid/components/word
 import { WordFormAction } from "../../components/word-grid/components/word-form/word-form.actions";
 import { GlossaryWordGridAction } from "../../components/word-grid/word-grid.actions";
 import { WordAPIResponseAction } from "@app/pages/classroom/store/words-list/words.actions";
+import { GlossaryPageAction } from "./glossary.actions";
 
 export interface GlossaryStateModel {
     unfoldedWords: string[];
@@ -35,7 +36,23 @@ export const glossaryFeature = createFeature({
         initialState,
 
         // --------------- Glossary  ---------------
+        on(GlossaryPageAction.newGroupMode, (state) => ({
+            ...state,
+            newGroupMode: true,
+        })),
+        on(GlossaryPageAction.cancelNewGroupMode, (state) => ({
+            ...state,
+            newGroupMode: false,
+        })),
 
+        on(GlossaryPageAction.renameGroupMode, (state, { groupId }) => ({
+            ...state,
+            renamingGroupId: groupId,
+        })),
+        on(GlossaryPageAction.cancelRenameGroupMode, (state) => ({
+            ...state,
+            renamingGroupId: initialState.renamingGroupId,
+        })),
 
         // --------------- Glossary Group Panel ---------------
         on(GlossaryGroupPanelAction.foldAdditionalTranslationsGroup, (state) => ({
