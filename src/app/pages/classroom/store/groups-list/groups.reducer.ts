@@ -55,7 +55,7 @@ export const reducer = createReducer(
     }
     ),
 
-    on(UnknownPageGroupAction.deleteGroup, (state) => ({ ...state, loading: true, error: null })),
-    on(UnknownPageGroupAction.deleteGroupSuccess, (state, { id }) => adapter.removeOne(id, state)),
-    on(UnknownPageGroupAction.deleteGroupError, (state, { error }) => ({ ...state, loading: false, error: error })),
+    // on(UnknownPageGroupAction.deleteGroup, (state) => ({ ...state, loading: true, error: null })),
+    // on(UnknownPageGroupAction.deleteGroupSuccess, (state, { id }) => adapter.removeOne(id, state)),
+    // on(UnknownPageGroupAction.deleteGroupError, (state, { error }) => ({ ...state, loading: false, error: error })),
 );
