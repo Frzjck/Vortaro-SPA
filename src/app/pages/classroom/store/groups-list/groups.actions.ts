@@ -11,10 +11,10 @@ export const GroupAPIResponseAction = createActionGroup(
             "Create Group Success": props<{ group: Group }>(),
             "Create Group Error": props<{ error: string }>(),
 
-            "Update Group Success": props<{ id: string, changes: Partial<Group> }>(),
+            "Update Group Success": props<{ groupId: string, changes: Partial<Group> }>(),
             "Update Group Error": props<{ error: string }>(),
 
-            "Delete Group Success": props<{ id: string }>(),
+            "Delete Group Success": props<{ groupId: string }>(),
             "Delete Group Error": props<{ error: string }>(),
         },
     }

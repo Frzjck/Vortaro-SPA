@@ -70,7 +70,7 @@ export class GroupsEffects {
         ]),
         switchMap(([{ formGroup, groupId }, fireGroup, userId]) =>
             this.groupService.updateGroupRequest(fireGroup, userId, groupId).pipe(
-                map(() => GroupAPIResponseAction.updateGroupSuccess({ id: groupId, changes: formGroup })),
+                map(() => GroupAPIResponseAction.updateGroupSuccess({ groupId, changes: formGroup })),
                 catchError(err => of(GroupAPIResponseAction.updateGroupError(err.message)))
             )
         )
