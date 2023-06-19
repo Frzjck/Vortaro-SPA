@@ -40,4 +40,9 @@ export class GroupFormComponent implements OnInit {
             else this.store.dispatch(GroupFormAction.createGroup({ formGroup: this.coreForm.value }));
         }
     }
+
+    onCancel() {
+        if (this.group) this.store.dispatch(GroupFormAction.cancelRenameGroup());
+        else this.store.dispatch(GroupFormAction.cancelNewGroupMode());
+    }
 }
