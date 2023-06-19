@@ -7,6 +7,8 @@ import { WordFormAction } from "../../components/word-grid/components/word-form/
 import { GlossaryWordGridAction } from "../../components/word-grid/word-grid.actions";
 import { WordAPIResponseAction } from "@app/pages/classroom/store/words-list/words.actions";
 import { GlossaryPageAction } from "./glossary.actions";
+import { GroupFormAction } from "../../components/group-form/group-form.actions";
+import { GroupAPIResponseAction } from "@app/pages/classroom/store/groups-list/groups.actions";
 
 export interface GlossaryStateModel {
     unfoldedWords: string[];
@@ -40,18 +42,10 @@ export const glossaryFeature = createFeature({
             ...state,
             newGroupMode: true,
         })),
-        on(GlossaryPageAction.cancelNewGroupMode, (state) => ({
-            ...state,
-            newGroupMode: false,
-        })),
 
         on(GlossaryPageAction.renameGroupMode, (state, { groupId }) => ({
             ...state,
             renamingGroupId: groupId,
-        })),
-        on(GlossaryPageAction.cancelRenameGroupMode, (state) => ({
-            ...state,
-            renamingGroupId: initialState.renamingGroupId,
         })),
 
         // --------------- Glossary Group Panel ---------------
@@ -84,6 +78,18 @@ export const glossaryFeature = createFeature({
         on(GlossaryWordUIAction.editWord, (state, { wordId }) => ({
             ...state,
             editingWordId: wordId,
+        })),
+
+        // ---------------  Group Form ---------------
+
+        on(GroupFormAction.cancelRenameGroup, GroupAPIResponseAction.updateGroupSuccess, (state) => ({
+            ...state,
+            renamingGroupId: initialState.renamingGroupId,
+        })),
+
+        on(GroupFormAction.cancelNewGroupMode, GroupAPIResponseAction.createGroupSuccess, (state) => ({
+            ...state,
+            newGroupMode: false,
         })),
 
         // ---------------  Word Form ---------------
