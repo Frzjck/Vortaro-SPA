@@ -9,9 +9,6 @@ export const GlossaryPageAction = createActionGroup(
         events: {
             "New Group Mode": emptyProps(),
             "Rename Group Mode": props<{ groupId: string }>(),
-
-            "Cancel New Group Mode": emptyProps(),
-            "Cancel Rename Group Mode": emptyProps(),
         },
     }
 )
