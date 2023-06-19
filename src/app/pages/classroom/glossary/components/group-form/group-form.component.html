@@ -7,6 +7,7 @@
       placeholder="Group Name"
       maxlength="21"
     />
-    <button (click)="onSubmit()">submit</button>
+    <button (click)="onSubmit()" appStopPropagation>submit</button>
+    <button (click)="onCancel()" appStopPropagation>cancel</button>
   </app-form-field>
 </form>
