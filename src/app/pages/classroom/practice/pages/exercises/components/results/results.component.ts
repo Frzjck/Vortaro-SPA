@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { LetDirective } from '@ngrx/component';
 import { Word } from '@classroom/store/words-list/words.models';
 import { selectExerciseWords, selectResultScores } from '@practice/store/practice/practice.reducer';
-import { ResultsPageAction } from '@practice/store/practice/practice.actions';
+import { ResultsPageAction } from './results.actions';
 
 
 @Component({
