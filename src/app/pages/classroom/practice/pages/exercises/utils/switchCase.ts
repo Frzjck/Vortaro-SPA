@@ -1,6 +1,7 @@
 import { Observable, OperatorFunction, iif, defer, from } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
+// Custom Pipe
 type ConditionFunction<T, R> = (value: T) => boolean;
 type CaseFunction<T, R> = (value: T) => Observable<R>;
 
