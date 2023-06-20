@@ -32,11 +32,3 @@ export const ResultsPageAction = createActionGroup(
     }
 )
 
-export const ExerciseContainerPageAPI = createActionGroup(
-    {
-        source: 'Exercise Container Page API',
-        events: {
-            "Store Exercise Words": props<{ exerciseWords: Word[] }>(),
-        },
-    }
-)

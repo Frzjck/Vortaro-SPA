@@ -11,9 +11,8 @@ import { ResultsComponent } from './components/results/results.component';
 import { SpellingComponent } from './components/modes/spelling/spelling.component';
 import { selectWordsByGroupId } from '@classroom/store/words-list/words.selectors';
 import { getRandomWords, getWorstWords, selectCurrentExerciseMode, selectExerciseStatus } from '@practice/store/practice/practice.reducer';
-import { ExerciseContainerPageAPI } from '@practice/store/practice/practice.actions';
 import { Word } from '@app/pages/classroom/store/words-list/words.models';
-import { ExerciseContainerPageAction } from './exercise-container.actions';
+import { ExerciseContainerPageAPI, ExerciseContainerPageAction } from './exercise-container.actions';
 
 @Component({
   selector: 'app-exercises',
