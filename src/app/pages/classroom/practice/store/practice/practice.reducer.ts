@@ -1,12 +1,13 @@
 import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
 
-import { ExerciseContainerPageAPI, ExerciseContainerPageAction, ExercisePageAction, ResultsPageAction } from './practice.actions';
+import { ExerciseContainerPageAPI, ExercisePageAction, ResultsPageAction } from './practice.actions';
 import { getParams } from '@app/store/router/router.selector';
 import { shuffle } from '@exercises/utils/shuffleArray';
 import { ExerciseModeType, TestingAgainstType } from '@app/store/app/app.reducer';
 import { Word } from '@app/pages/classroom/store/words-list/words.models';
 import { selectGroupEntities } from '@app/pages/classroom/store/groups-list/groups.selectors';
 import { selectWordEntities, selectWords } from '@app/pages/classroom/store/words-list/words.selectors';
+import { ExerciseContainerPageAction } from '../../pages/exercises/exercise-container.actions';
 
 
 
