@@ -19,7 +19,8 @@ export const { selectAll, selectEntities, selectTotal } = adapter.getSelectors(g
 
 export const selectGroupEntities = createSelector(
     selectEntities,
-    groupEntities => groupEntities)
+    groupEntities => groupEntities
+);
 
 export const selectGroups = createSelector(
     selectAll,

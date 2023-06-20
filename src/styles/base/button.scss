@@ -1,16 +1,21 @@
 .app-button {
-   
-    padding: 8px 20px;
-   
-    background: transparent;
-    border-radius: 25px;
-    border: 2px solid $primary;
-    transition: 0.25s;
-    margin: 0 4px;
+  padding: 8px 20px;
 
-    &:hover, &:focus {
-        background: $primary;
-        border: 2px solid  $primary;
-        color: $on-primary;
-    }
+  background: transparent;
+  border-radius: 25px;
+  border: 2px solid $primary;
+  transition: 0.25s;
+  margin: 0 4px;
+
+  &:hover {
+    background: $primary;
+    border: 2px solid $primary;
+    color: $on-primary;
+  }
+  &:focus {
+    outline: 2px solid LightSkyBlue;
+  }
+  &:active {
+    filter: brightness(120%);
+  }
 }

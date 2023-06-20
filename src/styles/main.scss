@@ -6,14 +6,15 @@
 
 @import "base";
 @import "layout";
+@import "vendor";
 
 html,
 body {
-    height: 100%;
-    margin: 0;
-    font-family: $base-font-family;
-    font-size: $base-font-size;
-    line-height: $base-line-height;
-    background: $base;
-    color: $on-base;
+  height: 100%;
+  margin: 0;
+  font-family: $base-font-family;
+  font-size: $base-font-size;
+  line-height: $base-line-height;
+  background: $base;
+  color: $on-base;
 }

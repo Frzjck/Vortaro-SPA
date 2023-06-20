@@ -2,7 +2,8 @@ import { Directive, OnInit, OnDestroy, ElementRef } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
-import { Theme, selectActiveTheme, selectThemeProperty } from '@app/store/app';
+import { selectActiveTheme, selectThemeProperty } from '@app/store/app/app.selectors';
+import { Theme } from '@app/store/app/app.reducer';
 
 // Angular Directive Theme Source https://medium.com/@amcdnl/theming-angular-with-css-variables-3c78a5b20b24
 @Directive({

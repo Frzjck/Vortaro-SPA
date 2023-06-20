@@ -1,0 +1,40 @@
+.mat-mdc-snack-bar-container {
+  &.mat-snackbar {
+    &_error {
+      .mdc-snackbar__surface {
+        background-color: $error !important;
+        .mat-mdc-snack-bar-label {
+          color: $on-error !important;
+        }
+      }
+    }
+
+    &_success {
+      .mdc-snackbar__surface {
+        background-color: $success !important;
+        .mat-mdc-snack-bar-label {
+          color: $on-success !important;
+        }
+      }
+    }
+  }
+}
+
+// .mat-mdc-snack-bar-container {
+//   &.mat-snackbar {
+//     &_error {
+//       --mdc-snackbar-container-color: red;
+//       --mdc-snackbar-supporting-text-color: white;
+//     }
+
+//     &_success {
+//       --mdc-snackbar-container-color: green;
+//       --mdc-snackbar-supporting-text-color: white;
+//     }
+//   }
+// }
+
+// .mdc-snackbar__surface::before {
+//   background-color: red !important;
+//   z-index: -1;
+// }

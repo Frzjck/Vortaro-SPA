@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Store, select } from '@ngrx/store';
-import { User, getUser, userSignOut } from "@app/store/user";
 import { Observable } from 'rxjs';
+import { User } from '@app/store/user/user.models';
+import { selectUser } from '@app/store/user/user.selectors';
+import { UnknownPageUserAction } from '@app/store/user/user.actions';
 
 @Component({
   selector: 'app-navbar',
@@ -39,7 +41,7 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.user$ = this.store.pipe(select(getUser));
+    this.user$ = this.store.pipe(select(selectUser));
 
     this.breakPointObs
       .observe(['(max-width: 768px)', '(min-width: 768px)'])
@@ -74,7 +76,7 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
-    this.store.dispatch(userSignOut());
+    this.store.dispatch(UnknownPageUserAction.userSignOut());
   }
 
   onFocusoutSettings() { }

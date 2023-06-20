@@ -1,95 +1,67 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Word } from '@app/pages/classroom/store/words-list';
+import { CommonModule } from '@angular/common';
+
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormFieldComponent } from '@app/shared/controls/form-field/form-field.component';
+import { InputComponent } from '@app/shared/controls/input/input.component';
+import { AdditionalTranslationsComponent } from './additional-translations/additional-translations.component';
+import { FormFooterComponent } from './form-footer/form-footer.component';
+import { WordFormService } from './services/word-form.service';
+import { Store } from '@ngrx/store';
+import { markFormGroupTouched } from '@app/shared/utils/form';
+import { Word } from '@classroom/store/words-list/words.models';
+import { WordFormAction } from './word-form.actions';
 
 @Component({
   selector: 'app-word-form',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, FormFieldComponent, InputComponent, AdditionalTranslationsComponent, FormFooterComponent,],
+  providers: [WordFormService],
+  // changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './word-form.component.html',
   styleUrls: ['./word-form.component.scss'],
 })
 export class WordFormComponent implements OnInit {
   @Input() word: Word;
-  @Input() group: Word;//tododelete
-  wordForm: FormGroup;
-  // @Output() onFinishSubmit = new EventEmitter();
-  constructor(
-  ) { }
+  @Input() groupId: string;
+  coreForm: FormGroup;
 
-  additionalTrArray: string[];
+  constructor(private store: Store, private fb: FormBuilder, private footer: WordFormService, private cdr: ChangeDetectorRef,) { }
 
   ngOnInit(): void {
+    this.footer.addTips$.subscribe(() => this.createTipsControl());
+    this.footer.submitWordForm$.subscribe(() => this.onSubmit());
+    this.footer.closeForm$.subscribe(() => this.onClose());
+
+    this.coreForm = this.fb.group({
+      original: new FormControl(null, [Validators.required]),
+      translation: new FormControl(null, [Validators.required]),
+    })
+
     if (this.word) {
-      this.wordForm = new FormGroup({
-        word: new FormControl(this.word.original, [Validators.required]),
-        translation: new FormControl(this.word.translation, [
-          Validators.required,
-        ]),
-        tips: new FormControl(this.word.tips),
-        additionalTr: new FormControl(this.additionalTrToString()),
-      });
-    } else {
-      this.wordForm = new FormGroup({
-        word: new FormControl(null, [Validators.required]),
-        translation: new FormControl(null, [Validators.required]),
-        tips: new FormControl(),
-        additionalTr: new FormControl(),
-      });
+      this.coreForm.patchValue({ original: this.word.original, translation: this.word.translation });
+      if (this.word.tips) this.createTipsControl(this.word.tips)
     }
+  }
+
+
+  createTipsControl(value?: string) {
+    this.coreForm.addControl("tips", new FormControl(value));
   }
 
   onSubmit() {
-    // if (this.word) {
-    //   this.wordService
-    //     .editOrCreate(
-    //       this.wordForm.value.word,
-    //       this.wordForm.value.translation,
-    //       this.wordForm.value.tips,
-    //       undefined,
-    //       this.word.id,
-    //       this.formatAdditionalTr()
-    //     )
-    //     .subscribe(() => {
-    //       this.groupService.loadGroups();
-    //       this.wordService.getWordsFromServer();
-    //     });
-    // } else {
-    //   this.wordService
-    //     .editOrCreate(
-    //       this.wordForm.value.word,
-    //       this.wordForm.value.translation,
-    //       this.wordForm.value.tips,
-    //       this.group.id,
-    //       undefined,
-    //       this.formatAdditionalTr()
-    //     )
-    //     .subscribe(() => {
-    //       this.wordService.getWordsFromServer();
-    //       this.groupService.loadGroups();
-    //     });
-    // }
-    // this.additionalTrArray = undefined;
-    // this.onFinishSubmit.emit();
+    if (!this.coreForm.valid) {
+      markFormGroupTouched(this.coreForm);
+      this.coreForm.updateValueAndValidity();
+      this.cdr.detectChanges();
+    } else {
+      if (this.word) this.store.dispatch(WordFormAction.updateWord({ formWord: this.coreForm.value, wordId: this.word.id, groupId: this.groupId }));
+      else this.store.dispatch(WordFormAction.createWord({ formWord: this.coreForm.value, groupId: this.groupId }));
+    }
   }
 
   onClose() {
-    // this.onFinishSubmit.emit();
-  }
-
-  formatAdditionalTr() {
-    if (this.wordForm.value.additionalTr) {
-      this.additionalTrArray = [];
-      this.additionalTrArray = this.wordForm.value.additionalTr
-        .split(',')
-        .map((tr) => {
-          return tr.trim();
-        });
-      return this.additionalTrArray;
-    } else {
-      return [];
-    }
-  }
-  additionalTrToString() {
-    let string = this.word.additionalTr.join(', ');
-    return string;
+    if (this.word) this.store.dispatch(WordFormAction.cancelEditWord())
+    else this.store.dispatch(WordFormAction.cancelNewWordMode())
   }
 }

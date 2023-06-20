@@ -13,9 +13,22 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { LetDirective } from '@ngrx/component';
 import { ProgressBarComponent } from '@exercises/shared/progress-bar/progress-bar.component';
-import { ExercisePageAction, selectSpellingViewModel } from '@practice/store/practice';
-import { ExerciseService } from '@exercises/exercise.service';
+import { ExerciseService } from '@exercises/services/exercise.service';
 import { AutoFocus } from '@exercises/shared/directives/auto-focus.directive';
+import { Observable } from 'rxjs';
+import { Word } from '@classroom/store/words-list/words.models';
+import { TestingAgainstType } from '@app/store/app/app.reducer';
+import { selectSpellingViewModel } from '@practice/store/practice/practice.selectors';
+import { ExercisePageAction } from '@practice/store/practice/practice.actions';
+
+interface spellingVMInterface {
+  currentWord: Word;
+  testingAgainst: TestingAgainstType;
+  isLastAnswerCorrect: boolean;
+  progress: number;
+  answerInput: string;
+  isAnswerLocked: boolean;
+}
 
 @Component({
   selector: 'app-spelling',
@@ -25,7 +38,8 @@ import { AutoFocus } from '@exercises/shared/directives/auto-focus.directive';
   styleUrls: ['./spelling.component.scss'],
 })
 export class SpellingComponent implements OnInit {
-  vm$;
+  vm$: Observable<spellingVMInterface>;
+
   @ViewChild('wordInput') private wordInput: ElementRef;
 
   constructor(

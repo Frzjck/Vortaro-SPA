@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
-import { Word } from '@app/pages/classroom/store/words-list';
+import { Word } from '@classroom/store/words-list/words.models';
 
 @Component({
   selector: 'app-extra-tr-card',
@@ -9,7 +9,7 @@ import { Word } from '@app/pages/classroom/store/words-list';
   imports: [CommonModule, MatCardModule],
   template: `
   <mat-card class="extra-tr-card">
-    <span class="translation" *ngFor="let translation of word.additionalTr">
+    <span class="translation" *ngFor="let translation of word.additionalTranslations">
       {{ translation }}
     </span>
   </mat-card>

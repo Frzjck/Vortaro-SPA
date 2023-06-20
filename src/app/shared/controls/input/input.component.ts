@@ -1,14 +1,20 @@
-import { Component, EventEmitter, Input, OnInit, Output, forwardRef } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, forwardRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-input',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   template: `
-  <input type="text" class="app-input" [value]="value" [placeholder]="placeholder || ''"
-    [attr.disabled]="isDisabled ? true : null" (keyup)="onKeyup($event.target.value)" (blur)="onBlur()">
+  <input type="text" class="app-input" 
+    [placeholder]="placeholder || ''"
+    [attr.disabled]="isDisabled ? true : null"
+    (keyup)="onKeyup($event.target.value)" 
+    (blur)="onBlur()"
+    [(ngModel)]="value"
+    >
   `,
   styleUrls: ['./input.component.scss'],
   providers: [
@@ -20,23 +26,21 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ],
 })
 
-export class InputComponent implements OnInit, ControlValueAccessor {
+export class InputComponent implements ControlValueAccessor {
   @Input() placeholder: string;
   @Output() changed = new EventEmitter<string>();
 
-  value: string;
   isDisabled: boolean;
+  value: string;
 
   constructor() {
-
-  }
-  ngOnInit(): void {
 
   }
 
   private propagateChange: any = () => { };
   private propagateTouched: any = () => { };
 
+  // https://stackoverflow.com/questions/76389471/angular-retaining-input-value-after-form-reset
   writeValue(value: string): void {
     this.value = value;
   }

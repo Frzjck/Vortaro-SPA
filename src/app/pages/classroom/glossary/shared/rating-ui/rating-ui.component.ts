@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Score } from '@app/pages/classroom/store/words-list';
+import { Score } from '@app/models/backend/word';
 
 @Component({
   selector: 'app-rating-ui',

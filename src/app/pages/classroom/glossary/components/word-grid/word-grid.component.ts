@@ -7,9 +7,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { ExtraTrCardComponent } from './components/extra-tr-card/extra-tr-card.component';
 import { WordUiComponent } from './components/word-ui/word-ui.component';
-import { Word } from '@app/pages/classroom/store/words-list';
-import { GlossaryStateFacade } from '../../glossary.state.facade';
 import { LetDirective } from '@ngrx/component';
+import { WordFormComponent } from './components/word-form/word-form.component';
+import { Observable } from 'rxjs';
+import { Word } from '@classroom/store/words-list/words.models';
+import { Store } from '@ngrx/store';
+import { selectWordGridStateVM, selectIsWordUnfolded } from '@glossary/store/glossary/glossary.reducer';
+import { GlossaryWordUIAction } from './components/word-ui/word-ui.actions';
+import { GlossaryWordGridAction } from './word-grid.actions';
 
 
 export interface WordGridInputInterface {
@@ -18,15 +23,15 @@ export interface WordGridInputInterface {
 }
 
 export interface WordGridStateInterface {
-  editingGroupId: string;
-  isEditingGroup: boolean;
+  isEditingCurrentGroup: boolean;
+  editingWordId: string;
   isAddingNewWord: boolean;
 }
 
 @Component({
   selector: 'app-word-grid',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule, ExtraTrCardComponent, WordUiComponent, MatIconModule, LetDirective],
+  imports: [CommonModule, MatCardModule, MatButtonModule, ExtraTrCardComponent, WordUiComponent, MatIconModule, LetDirective, WordFormComponent],
   templateUrl: './word-grid.component.html',
   styleUrls: ['./word-grid.component.scss'],
   animations: [
@@ -46,34 +51,40 @@ export interface WordGridStateInterface {
 })
 export class WordGridComponent {
   @Input() wordGridInput: WordGridInputInterface;
-  // wordGridState$: Observable<WordGridStateInterface> = this.state.wordGridState$;
 
-  constructor(public state: GlossaryStateFacade) {
-  }
+  wordGridStateVM$ = (groupId: string): Observable<WordGridStateInterface> => this.store.select(selectWordGridStateVM(groupId));
+
+  isWordUnfolded$ = (wordId) => this.store.select(selectIsWordUnfolded(wordId));
+
+  constructor(public store: Store) { }
 
   wordAction(params) {
     switch (params.option) {
       case "unfoldTranslations":
-        this.state.unfoldTranslationsWord(params.id)
+        this.store.dispatch(GlossaryWordUIAction.unfoldAdditionalTranslationsWord({ wordId: params.id }));
         break;
       case "foldTranslations":
-        this.state.foldTranslationsWord(params.id)
+        this.store.dispatch(GlossaryWordUIAction.foldAdditionalTranslationsWord({ wordId: params.id }));
         break;
       case "edit":
-        // this.onEditWord(params.id)
+        this.store.dispatch(GlossaryWordUIAction.editWord({ wordId: params.id }))
         break;
       case "delete":
         if (confirm('Are you sure you want to delete ')) {
-          this.state.deleteWord(params.id)
+          this.store.dispatch(GlossaryWordUIAction.deleteWord({ wordId: params.id, groupId: this.wordGridInput.groupId }))
         }
         break;
     }
   }
 
+
+
   hasAddTranslations(word) {
-    return word?.additionalTr?.length > 0
+    return word?.additionalTranslations?.length > 0
   }
-  onAddNewWord() { }
+  onActivateNewWordMode() {
+    this.store.dispatch(GlossaryWordGridAction.activateNewWordMode())
+  }
 
 
   onDeleteWord(id) {

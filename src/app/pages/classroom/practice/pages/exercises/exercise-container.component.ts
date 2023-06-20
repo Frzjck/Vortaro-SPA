@@ -6,11 +6,13 @@ import { RouterModule } from '@angular/router';
 
 import { switchCase } from './utils/switchCase';
 import { getParams } from '@app/store/router/router.selector';
-import { Word, selectWordsByGroupId } from '@classroom/store/words-list';
 import { QuizComponent } from './components/modes/quiz/quiz.component';
 import { ResultsComponent } from './components/results/results.component';
 import { SpellingComponent } from './components/modes/spelling/spelling.component';
-import { ExerciseContainerPageAPI, ExerciseContainerPageAction, getRandomWords, getWorstWords, selectCurrentExerciseMode, selectExerciseStatus } from '@practice/store/practice';
+import { selectWordsByGroupId } from '@classroom/store/words-list/words.selectors';
+import { getRandomWords, getWorstWords, selectCurrentExerciseMode, selectExerciseStatus } from '@practice/store/practice/practice.reducer';
+import { ExerciseContainerPageAPI, ExerciseContainerPageAction } from '@practice/store/practice/practice.actions';
+import { Word } from '@app/pages/classroom/store/words-list/words.models';
 
 @Component({
   selector: 'app-exercises',

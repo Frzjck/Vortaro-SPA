@@ -13,10 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from '@app/app-routing.module';
 import { AppComponent } from '@app/app.component';
 import { HomepageComponent } from '@app/pages/static/homepage/homepage.component';
-import { StopPropagationDirective } from '@app/shared/directives/stop-propagation.directive';
 import { SettingsPopupComponent } from '@app/components/navbar/components/settings-popup/settings-popup.component';
-import { NavbarComponent } from './components';
-import { ClassroomModule } from './pages/classroom/classroom.module';
 import { ThemeModule } from './theme';
 
 // Environment
@@ -47,18 +44,23 @@ import { CustomSerializer } from './store/router/custom-serializer';
 import { LetDirective } from '@ngrx/component';
 
 
+import { NotificationModule } from './services';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { StopPropagationDirective } from './shared/directives/stop-propagation.directive';
+
+
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     SettingsPopupComponent,
     HomepageComponent,
-    StopPropagationDirective,
   ],
   imports: [
-    ClassroomModule,
+    NotificationModule.forRoot(),
     BrowserModule,
     AppRoutingModule,
+    StopPropagationDirective,
     LetDirective,
     MatCardModule,
     MatRadioModule,

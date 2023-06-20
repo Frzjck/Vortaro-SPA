@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Store } from '@ngrx/store';
-import { selectIsPixies } from './store/app';
+import { selectIsPixies } from '@app/store/app/app.selectors';
 
 
 @Component({

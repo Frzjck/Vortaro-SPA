@@ -1,29 +1,37 @@
-<div class="grid-container">
+<div
+  class="grid-container"
+  *ngrxLet="wordGridStateVM$(wordGridInput.groupId) as vm"
+>
   <div class="wordCardDiv" *ngFor="let word of wordGridInput.words">
-    <ng-container
-      *ngrxLet="{
-        isUnfolded: state.isWordUnfolded$(word.id),
-        isEditingGroup: state.isEditingGroupId$(wordGridInput.groupId)
-      } as vm"
-    >
-      <mat-card class="mat-elevation-z4">
-        <span>
-          <b>{{ word.original | titlecase }}</b> -
-          {{ word.translation | titlecase }}
-        </span>
-        <app-word-ui
-          [wordUiViewInput]="{
-            eye: !vm.isUnfolded && hasAddTranslations(word),
-            eyeSlash: vm.isUnfolded && hasAddTranslations(word),
-            editingMode: vm.isEditingGroup,
+    <ng-container *ngrxLet="isWordUnfolded$(word.id) as isUnfolded">
+      <ng-container [ngSwitch]="vm.editingWordId">
+        <mat-card *ngSwitchDefault class="mat-elevation-z4">
+          <span>
+            <b>{{ word.original | titlecase }}</b> -
+            {{ word.translation | titlecase }}
+          </span>
+          <app-word-ui
+            [wordUiViewInput]="{
+            eye: !isUnfolded && hasAddTranslations(word),
+            eyeSlash: isUnfolded && hasAddTranslations(word),
+            editingMode: vm.isEditingCurrentGroup,
             word: word,
           }"
-          (iconPressed)="wordAction($event)"
-        ></app-word-ui>
-      </mat-card>
+            (iconPressed)="wordAction($event)"
+          ></app-word-ui>
+        </mat-card>
+        <mat-card *ngIf="word">
+          <app-word-form
+            *ngSwitchCase="word.id"
+            [word]="word"
+            [groupId]="wordGridInput.groupId"
+          ></app-word-form>
+        </mat-card>
+      </ng-container>
+
       <div
         class="extraTranslations"
-        *ngIf="vm.isUnfolded && hasAddTranslations(word)"
+        *ngIf="isUnfolded && hasAddTranslations(word)"
         @expandDown
       >
         <app-extra-tr-card [word]="word"></app-extra-tr-card>
@@ -32,18 +40,19 @@
   </div>
   <div
     class="mat-elevation-z4 add-word-div"
-    (click)="onAddNewWord()"
-    *ngIf="state.isEditingGroupId$(wordGridInput.groupId) | async"
+    (click)="onActivateNewWordMode()"
+    *ngIf="vm.isEditingCurrentGroup && !vm.isAddingNewWord"
   >
     <button mat-button class="btn btn-new-word">
       Add New Word <mat-icon>add_box</mat-icon>
     </button>
   </div>
-  <!-- <div class="wordCardDiv" *ngIf="showOnEdit(groupId) && newWordMode === true">
+  <div
+    class="wordCardDiv"
+    *ngIf="vm.isEditingCurrentGroup && vm.isAddingNewWord"
+  >
     <mat-card>
-      <app-word-form
-        [group]="group"
-      ></app-word-form>
+      <app-word-form [groupId]="wordGridInput.groupId"></app-word-form>
     </mat-card>
-  </div> -->
+  </div>
 </div>

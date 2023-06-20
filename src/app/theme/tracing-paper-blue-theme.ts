@@ -1,4 +1,4 @@
-import { Theme } from "@app/store/app";
+import { Theme } from "@app/store/app/app.reducer";
 
 export const tracingPaperBlue: Theme = {
   name: 'Nautical Twilight',

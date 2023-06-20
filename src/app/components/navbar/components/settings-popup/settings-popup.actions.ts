@@ -1,6 +1,6 @@
+import { ExerciseModeType } from '@app/store/app/app.reducer';
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
 
-import { ExerciseModeType } from '@app/store/app';
 
 
 export const SettingsPopupAction = createActionGroup(

@@ -83,7 +83,3 @@ export class GroupActionPanelComponent {
     });
   }
 }
-
-// {{
-//   editMode === true && groupEditId === group.id ? "Save" : "Edit"
-// }}
