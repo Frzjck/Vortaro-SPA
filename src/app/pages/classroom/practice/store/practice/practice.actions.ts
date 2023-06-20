@@ -1,4 +1,3 @@
-import { Word } from '@app/pages/classroom/store/words-list/words.models';
 import { ExerciseModeType, TestingAgainstType } from '@app/store/app/app.reducer';
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
 
@@ -23,12 +22,5 @@ export const ExercisePageAction = createActionGroup(
     }
 )
 
-export const ResultsPageAction = createActionGroup(
-    {
-        source: 'Results Page',
-        events: {
-            "Reset Exercise State": emptyProps(),
-        },
-    }
-)
+
 
