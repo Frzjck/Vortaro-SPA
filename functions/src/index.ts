@@ -29,3 +29,9 @@ export const onDeleteWordUpdateGroupWordIdArray = functions.firestore.document("
         transaction.set(groupRef, group);
     });
 })
+
+
+
+export const submitExerciseResults = functions.https.onCall((data, context) => {
+
+})

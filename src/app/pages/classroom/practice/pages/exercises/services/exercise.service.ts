@@ -35,4 +35,12 @@ export class ExerciseService {
     //dispatch resultScores update to store result
     //dispatch correct answer to store so it can be highlighted
   }
+
+
+
+
+  sendResults() {
+
+    // Create Fire Function To Submit Results
+  }
 }
