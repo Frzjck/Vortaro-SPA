@@ -1,6 +1,7 @@
 import * as functions from "firebase-functions";
 
 import { db } from "./init";
+import { testUserApp } from "./test-func";
 
 // // Start writing functions
 // // https://firebase.google.com/docs/functions/typescript
@@ -31,7 +32,9 @@ export const onDeleteWordUpdateGroupWordIdArray = functions.firestore.document("
 })
 
 
+export const updateScores = functions.https.onCall(async (data, context) => {
+    return { message: 'Documents updated successfully. submitResults$' };
+});
 
-export const submitExerciseResults = functions.https.onCall((data, context) => {
 
-})
+export const cloudFunctionEndpointTest = functions.https.onRequest(testUserApp);
