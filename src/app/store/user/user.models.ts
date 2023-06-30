@@ -1,7 +1,7 @@
-import firebase from "firebase/compat/app";
+import { User as FireUser } from '@angular/fire/auth';
 
 
-export interface User extends firebase.User { };
+export interface User extends FireUser { };
 
 export interface EmailPasswordCredentials {
     email: string;
