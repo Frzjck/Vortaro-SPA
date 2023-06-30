@@ -34,6 +34,18 @@ import {
   USE_EMULATOR as USE_FUNCTIONS_EMULATOR,
 } from "@angular/fire/compat/storage";
 
+
+
+import { initializeApp, provideFirebaseApp, getApp } from '@angular/fire/app';
+import { provideFunctions, getFunctions, connectFunctionsEmulator } from '@angular/fire/functions';
+import { provideAuth, getAuth, connectAuthEmulator } from '@angular/fire/auth';
+import {
+  initializeFirestore,
+  provideFirestore,
+  connectFirestoreEmulator,
+  getFirestore,
+  Firestore,
+} from '@angular/fire/firestore';
 // NgRx
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreModule } from '@ngrx/store';
@@ -88,6 +100,36 @@ import { StopPropagationDirective } from './shared/directives/stop-propagation.d
     StoreDevtoolsModule.instrument({
       maxAge: 15,
     }),
+    // provideFirebaseApp(() => initializeApp(environment.firebase.config)),
+    // provideFirestore(() => {
+    //   let firestore: Firestore;
+    //   if (environment.useEmulators) {
+    //     // Long polling required for Cypress
+    //     firestore = initializeFirestore(getApp(), {
+    //       experimentalForceLongPolling: true,
+    //     });
+    //     connectFirestoreEmulator(firestore, 'localhost', 8080);
+    //   } else {
+    //     firestore = getFirestore();
+    //   }
+    //   return firestore;
+    // }),
+    // provideAuth(() => {
+    //   const auth = getAuth();
+    //   if (environment.useEmulators) {
+    //     connectAuthEmulator(auth, 'http://localhost:9099', {
+    //       disableWarnings: true,
+    //     });
+    //   }
+    //   return auth;
+    // }),
+    // provideFunctions(() => {
+    //   const functions = getFunctions(getApp());
+    //   if (environment.useEmulators) {
+    //     connectFunctionsEmulator(functions, 'localhost', 5001);
+    //   }
+    //   return functions;
+    // }),
   ],
   providers: [
     {
@@ -102,12 +144,12 @@ import { StopPropagationDirective } from './shared/directives/stop-propagation.d
         ? ["localhost", 8080]
         : undefined,
     },
-    {
-      provide: USE_FUNCTIONS_EMULATOR,
-      useValue: environment.useEmulators
-        ? ["http://localhost:5001"]
-        : undefined,
-    },
+    // {
+    //   provide: USE_FUNCTIONS_EMULATOR,
+    //   useValue: environment.useEmulators
+    //     ? ["http://localhost:5001"]
+    //     : undefined,
+    // },
   ],
   bootstrap: [AppComponent],
 })
