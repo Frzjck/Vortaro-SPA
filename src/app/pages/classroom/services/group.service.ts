@@ -23,7 +23,7 @@ export class GroupService {
 
     updateGroupRequest(group: FireGroupUpdateRequest, userId: string, groupId: string) {
         const docRef = doc(this.firestore, `/users/${userId}/groups/${groupId}`);
-        return from(updateDoc(docRef, { group }));
+        return from(updateDoc(docRef, { ...group }));
     }
 
     deleteGroupRequest(userId: string, groupId: string) {

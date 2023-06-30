@@ -40,7 +40,7 @@ export class WordService {
 
   updateWordRequest(word: FireWordUpdateRequest, userId: string, groupId: string, wordId: string) {
     const docRef = doc(this.firestore, `/users/${userId}/groups/${groupId}/words/${wordId}`);
-    return from(updateDoc(docRef, { word }));
+    return from(updateDoc(docRef, { ...word }));
   }
 
   deleteWordRequest(userId: string, groupId: string, wordId: string) {
