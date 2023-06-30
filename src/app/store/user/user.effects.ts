@@ -1,28 +1,28 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { createEffect, Actions, ofType, ROOT_EFFECTS_INIT } from '@ngrx/effects';
 
-import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Auth, authState, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, UserCredential, signOut } from '@angular/fire/auth';
 
 import { from, of } from 'rxjs';
-import { map, switchMap, catchError, take, delay, } from 'rxjs/operators';
+import { map, switchMap, catchError, take, } from 'rxjs/operators';
 
 import { UnknownPageUserAction } from './user.actions';
-
-import firebase from 'firebase/compat/app';
-
 
 
 
 @Injectable()
 export class UserEffects {
+    private auth: Auth = inject(Auth);
+    authState$ = authState(this.auth);
+
     constructor(
         private actions$: Actions,
-        private afAuth: AngularFireAuth,
+        // private afAuth: AngularFireAuth,
     ) { }
 
     init$ = createEffect(() => this.actions$.pipe(
         ofType(ROOT_EFFECTS_INIT),
-        switchMap(() => this.afAuth.authState.pipe(take(1))),
+        switchMap(() => this.authState$.pipe(take(1))),
         switchMap(authState => {
             if (authState) {
                 return of(UnknownPageUserAction.userInitAuthorized({ uid: authState.uid, user: JSON.parse(JSON.stringify(authState)) }))
@@ -37,7 +37,7 @@ export class UserEffects {
         this.actions$.pipe(
             ofType(UnknownPageUserAction.userSignInEmail),
             map((action) => action.credentials),
-            switchMap((credentials) => from(this.afAuth.signInWithEmailAndPassword(credentials.email, credentials.password)).pipe(
+            switchMap((credentials) => from(signInWithEmailAndPassword(this.auth, credentials.email, credentials.password)).pipe(
                 map((res) => {
                     const user = res.user;
                     return UnknownPageUserAction.userSignInEmailSuccess({ uid: user.uid, user: JSON.parse(JSON.stringify(user)) });
@@ -54,8 +54,8 @@ export class UserEffects {
         this.actions$.pipe(
             ofType(UnknownPageUserAction.userSignInWithGoogle),
             switchMap(() => {
-                return from(this.afAuth.signInWithPopup(new firebase.auth.GoogleAuthProvider())).pipe(
-                    map((res: firebase.auth.UserCredential) => {
+                return from(signInWithPopup(this.auth, new GoogleAuthProvider())).pipe(
+                    map((res: UserCredential) => {
                         const user = res.user;
                         return UnknownPageUserAction.userSignInWithGoogleSuccess({ uid: user.uid, user: JSON.parse(JSON.stringify(user)) });
                     }),
@@ -73,7 +73,7 @@ export class UserEffects {
         this.actions$.pipe(
             ofType(UnknownPageUserAction.userSignOut),
             switchMap(() => {
-                return from(this.afAuth.signOut()).pipe(
+                return from(signOut(this.auth)).pipe(
                     map(() => {
                         return UnknownPageUserAction.userSignOutSuccess();
                     }),
