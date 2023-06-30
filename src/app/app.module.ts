@@ -20,21 +20,6 @@ import { ThemeModule } from './theme';
 import { environment } from "@env/environment";
 
 // Firebase
-import { AngularFireModule } from "@angular/fire/compat";
-import {
-  AngularFirestoreModule,
-  USE_EMULATOR as USE_FIRESTORE_EMULATOR,
-} from "@angular/fire/compat/firestore";
-import {
-  AngularFireAuthModule,
-  USE_EMULATOR as USE_AUTH_EMULATOR,
-} from "@angular/fire/compat/auth";
-import {
-  AngularFireStorageModule,
-  USE_EMULATOR as USE_FUNCTIONS_EMULATOR,
-} from "@angular/fire/compat/storage";
-
-
 
 import { initializeApp, provideFirebaseApp, getApp } from '@angular/fire/app';
 import { provideFunctions, getFunctions, connectFunctionsEmulator } from '@angular/fire/functions';
@@ -82,10 +67,6 @@ import { StopPropagationDirective } from './shared/directives/stop-propagation.d
     HttpClientModule,
     BrowserAnimationsModule,
     MatIconModule,
-    AngularFireModule.initializeApp(environment.firebase.config),
-    AngularFireStorageModule,
-    AngularFireAuthModule,
-    AngularFirestoreModule,
     ThemeModule,
     StoreRouterConnectingModule.forRoot({
       serializer: CustomSerializer,
@@ -100,56 +81,39 @@ import { StopPropagationDirective } from './shared/directives/stop-propagation.d
     StoreDevtoolsModule.instrument({
       maxAge: 15,
     }),
-    // provideFirebaseApp(() => initializeApp(environment.firebase.config)),
-    // provideFirestore(() => {
-    //   let firestore: Firestore;
-    //   if (environment.useEmulators) {
-    //     // Long polling required for Cypress
-    //     firestore = initializeFirestore(getApp(), {
-    //       experimentalForceLongPolling: true,
-    //     });
-    //     connectFirestoreEmulator(firestore, 'localhost', 8080);
-    //   } else {
-    //     firestore = getFirestore();
-    //   }
-    //   return firestore;
-    // }),
-    // provideAuth(() => {
-    //   const auth = getAuth();
-    //   if (environment.useEmulators) {
-    //     connectAuthEmulator(auth, 'http://localhost:9099', {
-    //       disableWarnings: true,
-    //     });
-    //   }
-    //   return auth;
-    // }),
-    // provideFunctions(() => {
-    //   const functions = getFunctions(getApp());
-    //   if (environment.useEmulators) {
-    //     connectFunctionsEmulator(functions, 'localhost', 5001);
-    //   }
-    //   return functions;
-    // }),
+
+    provideFirebaseApp(() => initializeApp(environment.firebase.config)),
+
+    provideAuth(() => {
+      const auth = getAuth();
+      // if (!environment.production)
+      connectAuthEmulator(auth, `http://localhost:9099`)
+      return (auth);
+
+    }),
+
+    provideFirestore(() => {
+      let firestore: Firestore;
+      if (environment.useEmulators) {
+        // Long polling required for Cypress
+        firestore = initializeFirestore(getApp(), {
+          experimentalForceLongPolling: true,
+        });
+        connectFirestoreEmulator(firestore, 'localhost', 8080);
+      } else {
+        firestore = getFirestore();
+      }
+      return firestore;
+    }),
+
+    provideFunctions(() => {
+      const functions = getFunctions(getApp());
+      // if (environment.useEmulators)
+      connectFunctionsEmulator(functions, 'localhost', 5001);
+      return functions;
+    }),
   ],
   providers: [
-    {
-      provide: USE_AUTH_EMULATOR,
-      useValue: environment.useEmulators
-        ? ["http://localhost:9099"]
-        : undefined,
-    },
-    {
-      provide: USE_FIRESTORE_EMULATOR,
-      useValue: environment.useEmulators
-        ? ["localhost", 8080]
-        : undefined,
-    },
-    // {
-    //   provide: USE_FUNCTIONS_EMULATOR,
-    //   useValue: environment.useEmulators
-    //     ? ["http://localhost:5001"]
-    //     : undefined,
-    // },
   ],
   bootstrap: [AppComponent],
 })
