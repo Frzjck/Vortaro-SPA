@@ -1,8 +1,8 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, deleteDoc, updateDoc, addDoc, doc, collectionChanges  } from '@angular/fire/firestore';
+import { Firestore, collection, deleteDoc, updateDoc, addDoc, doc, collectionChanges } from '@angular/fire/firestore';
 
 
-import { catchError, from, map, take } from 'rxjs';
+import { from } from 'rxjs';
 import { FireGroupCreateRequest, FireGroupUpdateRequest } from '@app/models/backend/group';
 
 @Injectable({
