@@ -18,6 +18,7 @@ export const ExercisePageAction = createActionGroup(
 
             "Load Answer Choices": emptyProps(),
             "Store Answer Choices": props<{ answerChoices: string[] }>(),
+            "Todo Delete": emptyProps(),
         },
     }
 )
