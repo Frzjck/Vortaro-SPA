@@ -1,7 +1,9 @@
-import firebase from "firebase/compat/app";
 import { FormWord } from "../glossary/components/word-grid/components/word-form/models";
 import { FireWordCreateRequest, FireWordUpdateRequest } from "@app/models/backend/word";
 import { Word } from "../store/words-list/words.models";
+
+
+import { serverTimestamp } from '@angular/fire/firestore';
 
 // --------------------- Creation
 export const formWordToNewFireWord = (word: FormWord): FireWordCreateRequest => {
@@ -9,7 +11,7 @@ export const formWordToNewFireWord = (word: FormWord): FireWordCreateRequest => 
     return {
         ...word,
         additionalTranslations,
-        created: firebase.firestore.FieldValue.serverTimestamp(),
+        created: serverTimestamp(),
     };
 };
 
@@ -37,7 +39,7 @@ export const formWordToUpdatedFireWord = (word: FormWord): FireWordUpdateRequest
     return {
         ...word,
         additionalTranslations,
-        updated: firebase.firestore.FieldValue.serverTimestamp()
+        updated: serverTimestamp()
     };
 };
 
