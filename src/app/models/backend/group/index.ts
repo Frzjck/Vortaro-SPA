@@ -1,4 +1,4 @@
-import firebase from "firebase/compat/app";
+import { FieldValue } from '@angular/fire/firestore';
 
 export interface FireGroup {
     name: string;
@@ -10,8 +10,8 @@ export interface FireGroup {
 
 
 export interface FireGroupCreateRequest extends Omit<FireGroup, "averageProficiency"> {
-    created: firebase.firestore.FieldValue;
+    created: FieldValue;
 }
 export interface FireGroupUpdateRequest extends Omit<FireGroup, "averageProficiency" | "wordIds"> {
-    updated: firebase.firestore.FieldValue;
+    updated: FieldValue;
 }
