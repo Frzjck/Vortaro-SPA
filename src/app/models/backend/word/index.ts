@@ -1,4 +1,4 @@
-import firebase from "firebase/compat/app";
+import { FieldValue } from '@angular/fire/firestore';
 
 
 export type Score =
@@ -31,8 +31,8 @@ export interface FireWord {
     additionalTranslations?: string[];
 }
 export interface FireWordCreateRequest extends Omit<FireWord, "proficiency"> {
-    created: firebase.firestore.FieldValue;
+    created: FieldValue;
 }
 export interface FireWordUpdateRequest extends Omit<FireWord, "proficiency"> {
-    updated: firebase.firestore.FieldValue;
+    updated: FieldValue;
 }
