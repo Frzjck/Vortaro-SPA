@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { createEffect, Actions, ofType, concatLatestFrom } from '@ngrx/effects';
 
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-
 import { of } from 'rxjs';
 import { map, switchMap, catchError, take } from 'rxjs/operators';
 
@@ -25,7 +23,6 @@ export class GroupsEffects {
 
     constructor(
         private actions$: Actions,
-        private afs: AngularFirestore,
         private store: Store,
         private groupService: GroupService
     ) { }
@@ -36,7 +33,7 @@ export class GroupsEffects {
             this.store.select(selectUserId),
         ]),
         switchMap(([action, uid]) => {
-            return this.afs.collection(`/users/${uid}/groups`).snapshotChanges().pipe(
+            return this.groupService.getGroupsRequest(uid).pipe(
                 take(1),
                 map(changes => changes.map(x => extractDocumentChangeActionData(x))),
                 map((groups: Group[]) => GroupAPIResponseAction.readGroupsSuccess({ groups })),
