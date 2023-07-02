@@ -73,16 +73,16 @@ export class GroupsEffects {
         )
     ));
 
-    //     delete$ = createEffect(() => this.actions$.pipe(
-    //         ofType(UnknownPageGroupAction.deleteGroup),
-    //         concatLatestFrom((action) => [
-    //             this.store.select(selectUserId),
-    //         ]),
-    //         switchMap(([{ groupId }, userId]) =>
-    //             this.groupService.deleteGroupRequest(userId, groupId).pipe(
-    //                 map(() => GroupAPIResponseAction.deleteGroupSuccess({ id })),
-    //                 catchError(err => of(GroupAPIResponseAction.deleteGroupError(err.message)))
-    //             )
-    //         )
-    //     ));
+    delete$ = createEffect(() => this.actions$.pipe(
+        ofType(GlossaryGroupPanelAction.deleteGroup),
+        concatLatestFrom((action) => [
+            this.store.select(selectUserId),
+        ]),
+        switchMap(([{ groupId }, userId]) =>
+            this.groupService.deleteGroupRequest(userId, groupId).pipe(
+                map(() => GroupAPIResponseAction.deleteGroupSuccess({ groupId })),
+                catchError(err => of(GroupAPIResponseAction.deleteGroupError(err.message)))
+            )
+        )
+    ));
 }
