@@ -58,6 +58,10 @@ export const reducer = createReducer(
         return adapter.updateOne({ id: groupId, changes: updatedGroup }, state);
     }
     ),
+    on(GroupAPIResponseAction.deleteGroupSuccess, (state, { groupId }) => {
+        return adapter.removeOne(groupId, state);
+    }
+    ),
 
     // on(UnknownPageGroupAction.deleteGroup, (state) => ({ ...state, loading: true, error: null })),
     // on(UnknownPageGroupAction.deleteGroupSuccess, (state, { id }) => adapter.removeOne(id, state)),
