@@ -16,6 +16,9 @@ export const GroupAPIResponseAction = createActionGroup(
 
             "Delete Group Success": props<{ groupId: string }>(),
             "Delete Group Error": props<{ error: string }>(),
+
+            "Cascade Delete Words": emptyProps(),
+            "Cascade Delete Words2": props<{ wordIds: string[] }>(),
         },
     }
 )
@@ -26,6 +29,7 @@ export const UnknownPageGroupAction = createActionGroup(
         source: 'Unknown Page',
         events: {
             "Read Groups": emptyProps(),
+            "Delete Group": props<{ groupId: string }>(),
         },
     }
 ) 
