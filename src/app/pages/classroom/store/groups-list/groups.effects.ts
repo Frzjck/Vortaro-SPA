@@ -16,6 +16,8 @@ import { Store } from '@ngrx/store';
 import { GroupFormAction } from '../../glossary/components/group-form/group-form.actions';
 import { formGroupToNewFireGroup, formGroupToNewGroup, formGroupToUpdatedFireGroup } from '../../utils/groups.mapper';
 import { GroupService } from '../../services/group.service';
+import { GlossaryGroupPanelAction } from '../../glossary/components/group-action-panel/group-action-panel.actions';
+import { selectGroupById } from './groups.selectors';
 
 
 @Injectable()
@@ -84,5 +86,13 @@ export class GroupsEffects {
                 catchError(err => of(GroupAPIResponseAction.deleteGroupError(err.message)))
             )
         )
+    ));
+
+    cascadeDeleteLocalWords$ = createEffect(() => this.actions$.pipe(
+        ofType(GroupAPIResponseAction.deleteGroupSuccess),
+        concatLatestFrom((action) => [
+            this.store.select(selectGroupById(action.groupId)),
+        ]),
+        switchMap(([_,]) => of(GroupAPIResponseAction.cascadeDeleteWords()))
     ));
 }
